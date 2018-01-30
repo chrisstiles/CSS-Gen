@@ -9,7 +9,7 @@ postcss([ autoprefixer ]).process('display:flex').then(function (result) {
     result.warnings().forEach(function (warn) {
         console.warn(warn.toString());
     });
-    console.log(result.css);
+    console.log(result);
 });
 
 
