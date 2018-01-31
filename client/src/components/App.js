@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+// CSS Styles
+import '../css/general.css';
+// import './App.css';
+
 // Generator Pages
 import Home from './Home';
 import BoxShadow from './BoxShadow';
