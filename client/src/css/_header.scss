@@ -1,0 +1,22 @@
+$offset: 70px;
+
+#header {
+  border-bottom:1px solid #d0d0d0;
+  padding-bottom:10px;
+  position: relative;
+  z-index: 300;
+  margin-bottom:34px;
+  width:calc(100% + #{$offset});
+  margin-left:-$offset;
+  padding-left:$offset;
+
+  h1 {
+    color:#2ddab4;
+    font-weight:400;
+    font-size:28px;
+  }
+}
+
+#generator-wrapper #header {
+  width:calc(100% + #{$offset * 4});
+}

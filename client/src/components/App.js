@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 // CSS Styles
 import '../css/general.css';
-// import './App.css';
+
+// Layout Components
+import NavWindow from './NavWindow';
 
 // Generator Pages
 import Home from './Home';
@@ -19,15 +21,21 @@ import BoxShadow from './BoxShadow';
 //     console.log(result);
 // });
 
+const PrimaryLayout = () => (
+  <div>
+    <NavWindow />
+    <main id="main">
+      <Route exact path="/" component={Home} />
+      <Route exact path="/box-shadow-generator" component={BoxShadow} />
+    </main>
+  </div>
+)
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/box-shadow-generator" component={BoxShadow} />
-        </Switch>
+        <PrimaryLayout />
       </BrowserRouter>
     );
   }
