@@ -5,7 +5,7 @@ const Generator = props => {
   return (
     <div id="generator-wrapper">
       <Header title={props.title} />
-      <div id="generator" class="page-content">
+      <div id="generator" className="page-content">
         {props.children}
       </div>
     </div>
