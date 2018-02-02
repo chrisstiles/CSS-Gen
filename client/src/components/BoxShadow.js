@@ -5,8 +5,13 @@ import Sidebar from './Sidebar';
 const BoxShadow = () => {
   document.title = 'CSS Box Shadow Generator | CSS-GEN';
 
+  var props = {
+    horizontalShift: 0,
+    verticalShift: 0
+  }
+
   return (
-    <Generator title="CSS Box Shadow Generator">
+    <Generator cssRules={props} title="CSS Box Shadow Generator">
       <p>This is our content</p>
       <Sidebar>
         hello
