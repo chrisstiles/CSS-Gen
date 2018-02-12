@@ -2,17 +2,17 @@ import React from 'react';
 import Header from './Header';
 
 class Generator extends React.Component {
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {};
+  //   this.state = {};
 
-    for (var rule in props.cssRules) {
-      this.state[rule] = props.cssRules[rule];
-    }
+  //   for (var rule in props.cssRules) {
+  //     this.state[rule] = props.cssRules[rule];
+  //   }
 
-    console.log(this.state)
-  }
+  //   console.log(this.state)
+  // }
 
   render() {
     return (
