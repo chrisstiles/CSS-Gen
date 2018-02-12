@@ -2,6 +2,7 @@ import React from 'react';
 import Generator from './Generator';
 import Sidebar from './Sidebar';
 import Slider from './input/Slider';
+import _ from 'underscore';
 // import 'rc-slider/assets/index.css';
 
 class BoxShadow extends React.Component {
@@ -23,20 +24,27 @@ class BoxShadow extends React.Component {
   }
 
   componentWillMount() {
-    this.generateCSS();
+    // this.generateCSS();
+    this.setState({ style: this.generateCSS() })
   }
 
-  generateCSS() {
-    var css = `${this.state.horizontalShift}px ${this.state.verticalShift}px ${this.state.blurRadius}px ${this.state.spreadRadius}px rgba(0, 0, 0, ${this.state.shadowOpacity})`;
-    this.setState({ style: css });
+  generateCSS(styles) {
+    styles = styles || {};
+    var rules = _.extend({}, this.state, styles);
+    var css = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${rules.spreadRadius}px rgba(0, 0, 0, ${rules.shadowOpacity})`;
+    
+    return css;
+    // this.setState({ style: css });
   }
 
   handleChange(cssRule, value) {
     var newState = {};
     newState[cssRule] = value;
+    newState.style = this.generateCSS(newState);
+
+    console.log(newState)
 
     this.setState(newState);
-    this.generateCSS();
   }
 
   renderPreview() {

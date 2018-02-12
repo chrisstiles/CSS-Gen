@@ -33,6 +33,7 @@ class Slider extends RCSlider {
         handle={Handle}
         step={this.props.step || 1}
         onChange={this.handleSliderChange}
+        onAfterChange={this.handleSliderChange}
       />
     );
   }
