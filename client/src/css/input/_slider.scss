@@ -24,7 +24,7 @@
   left: 0;
   height: 4px;
   border-radius: 6px;
-  background-color: #2edbb4;
+  background-color: $accent-color;
 }
 
 .rc-slider-handle {
@@ -37,7 +37,7 @@
   cursor: -webkit-grab;
   cursor: grab;
   border-radius: 50%;
-  border: solid 3px #2edbb4;
+  border: solid 3px $accent-color;
   background-color: #fff;
   outline:none;
   transition:transform .2s ease;

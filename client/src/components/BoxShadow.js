@@ -86,6 +86,7 @@ class BoxShadow extends React.Component {
             handleChange={this.handleChange}
             defaultValue={this.state.blurRadius}
             min={0}
+            max={100}
            />
 
            Spread Radius: {this.state.spreadRadius}
