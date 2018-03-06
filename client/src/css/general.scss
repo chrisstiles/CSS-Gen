@@ -44,8 +44,10 @@ body {
 @import './_header.scss';
 @import './_generator.scss';
 @import './_sidebar.scss';
-@import './input/_slider.scss';
 
+// User Input
+@import './input/_input.scss';
+@import './input/_slider.scss';
 
 // Generator Previews
 @import './_box-shadow.scss';

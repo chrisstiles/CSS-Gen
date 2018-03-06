@@ -1,5 +1,6 @@
 import React from 'react';
 import RCSlider, { Handle as RCHandle } from 'rc-slider';
+import SliderTextInput from './SliderTextInput';
 
 const Handle = props => {
   const { value, dragging, index, ...restProps } = props;
@@ -18,23 +19,83 @@ class Slider extends RCSlider {
     super(props);
 
     this.handleSliderChange = this.handleSliderChange.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
+    this.handleTextBlur = this.handleTextBlur.bind(this);
+    this.tick = this.tick.bind(this);
   }
 
   handleSliderChange(value) {
     this.props.handleChange(this.props.name, value);
+    this.textInput.value = value;
+  }
+
+  handleTextChange(event, shouldSetDecimal) {
+    var value = Number(event.target.value);
+
+    if (!isNaN(value)) {
+      console.log(this.props.min)
+      console.log(this.props.max)
+      if (value < this.props.min) {
+        console.log(value)
+        this.props.handleChange(this.props.name, this.props.min);
+      } else if (value > this.props.max) {
+        console.log(value)
+        this.props.handleChange(this.props.name, this.props.max);
+      } else {
+        console.log(value)
+        this.props.handleChange(this.props.name, value);
+      }
+    }
+
+  }
+
+  handleTextBlur() {
+    this.textInput.value = this.props.value;
+  }
+
+  tick(up = true) {
+    const step = this.props.step || 1;
+    var newValue = up ? this.props.value + step : this.props.value - step;
+
+    // Get number of decimal places in newValue
+    const decimals = (String(newValue).split('.')[1] || []).length;
+
+    if (decimals > 2) {
+      newValue = Number(newValue.toFixed(2));
+    }
+
+    if (newValue >= this.props.min && newValue <= this.props.max) {
+      this.props.handleChange(this.props.name, newValue);
+      this.textInput.value = newValue;
+    }
   }
 
   render() {
     return (
-      <RCSlider
-        min={this.props.min || 0}
-        max={this.props.max || 200}
-        defaultValue={this.props.defaultValue || 0}
-        handle={Handle}
-        step={this.props.step || 1}
-        onChange={this.handleSliderChange}
-        onAfterChange={this.handleSliderChange}
-      />
+      <div className="field-wrapper">
+        <div className="title">
+          <SliderTextInput
+            className="slider-input"
+            defaultValue={this.props.value}
+            handleTextChange={this.handleTextChange}
+            handleTextBlur={this.handleTextBlur}
+            inputRef={el => this.textInput = el}
+            step={this.props.step || 1}
+            handleTick={this.tick}
+          />
+          {this.props.title}
+        </div>
+        <RCSlider
+          min={this.props.min || 0}
+          max={this.props.max || 200}
+          value={this.props.value || 0}
+          handle={Handle}
+          step={this.props.step || 1}
+          onChange={this.handleSliderChange}
+          onAfterChange={this.handleSliderChange}
+          tabIndex="-1"
+        />
+      </div>
     );
   }
 }

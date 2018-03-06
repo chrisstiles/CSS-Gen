@@ -2,6 +2,7 @@ import React from 'react';
 import Generator from './Generator';
 import Sidebar from './Sidebar';
 import Slider from './input/Slider';
+import CodeOutput from './CodeOutput';
 import _ from 'underscore';
 // import 'rc-slider/assets/index.css';
 
@@ -25,24 +26,21 @@ class BoxShadow extends React.Component {
 
   componentWillMount() {
     // this.generateCSS();
-    this.setState({ style: this.generateCSS() })
+    this.setState({ style: this.generateCSS() });
   }
 
   generateCSS(styles) {
     styles = styles || {};
-    var rules = _.extend({}, this.state, styles);
-    var css = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${rules.spreadRadius}px rgba(0, 0, 0, ${rules.shadowOpacity})`;
+    const rules = _.extend({}, this.state, styles);
+    const css = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${rules.spreadRadius}px rgba(0, 0, 0, ${rules.shadowOpacity})`;
     
     return css;
-    // this.setState({ style: css });
   }
 
   handleChange(cssRule, value) {
     var newState = {};
     newState[cssRule] = value;
     newState.style = this.generateCSS(newState);
-
-    console.log(newState)
 
     this.setState(newState);
   }
@@ -62,50 +60,55 @@ class BoxShadow extends React.Component {
       <Generator cssRules={this.props} title="CSS Box Shadow Generator">
         {this.renderPreview()}
         <Sidebar>
-          Horizontal Shift: {this.state.horizontalShift}<br />
           <Slider
+            title="Horizontal Shift"
             name="horizontalShift"
             handleChange={this.handleChange}
-            defaultValue={this.state.horizontalShift}
+            value={this.state.horizontalShift}
             min={-200}
             max={200}
-           />
+          />
 
-          Vertical Shift: {this.state.verticalShift}
           <Slider
-             name="verticalShift"
-             handleChange={this.handleChange}
-             defaultValue={this.state.verticalShift}
-             min={-200}
-             max={200}
-            />
+            title="Vertical Shift"
+            name="verticalShift"
+            handleChange={this.handleChange}
+            value={this.state.verticalShift}
+            min={-200}
+            max={200}
+          />
 
-          Blur Radius: {this.state.blurRadius}
           <Slider
+            title="Blur Radius"
             name="blurRadius"
             handleChange={this.handleChange}
-            defaultValue={this.state.blurRadius}
+            value={this.state.blurRadius}
             min={0}
             max={100}
-           />
+          />
 
-           Spread Radius: {this.state.spreadRadius}
-           <Slider
-             name="spreadRadius"
-             handleChange={this.handleChange}
-             defaultValue={this.state.spreadRadius}
-             min={0}
-            />
-
-          Shadow Opacity: {this.state.shadowOpacity}
           <Slider
+            title="Spread Radius"
+            name="spreadRadius"
+            handleChange={this.handleChange}
+            value={this.state.spreadRadius}
+            min={0}
+          />
+
+          <Slider
+            title="Shadow Opacity"
             name="shadowOpacity"
             handleChange={this.handleChange}
-            defaultValue={this.state.shadowOpacity}
+            value={this.state.shadowOpacity}
             step={.01}
             min={0}
             max={1}
-           />
+          />
+
+          <CodeOutput
+            property="box-shadow"
+            generateCSS={() => this.generateCSS()}
+          />
         </Sidebar>
       </Generator>
     );
