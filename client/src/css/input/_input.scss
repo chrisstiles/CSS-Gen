@@ -15,7 +15,7 @@
   float: right;
   width: 50px;
   height: 27px;
-  padding: 0 6px 1px 6px;
+  padding: 0 6px;
   font-size: 15px;
   -webkit-appearance: none;
   apperance: none;
@@ -26,4 +26,26 @@
   line-height: normal;
   position: relative;
   top: -8px;
+  font-family: $main-font;
+}
+
+.button {
+  -webkit-appearance: none;
+  apperance: none;
+  font-family: $main-font;
+  background-color:$accent-color;
+  font-weight:600;
+  font-size:15px;
+  padding:12px 15px 11px 15px;
+  line-height:1em;
+  outline: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  display:inline-block;
+
+  &:hover {
+    background-color: $accent-color-hover;
+  }
 }

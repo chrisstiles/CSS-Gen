@@ -24,6 +24,10 @@ class Slider extends RCSlider {
     this.tick = this.tick.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.textInput.value = nextProps.value;
+  }
+
   handleSliderChange(value) {
     this.props.handleChange(this.props.name, value);
     this.textInput.value = value;
@@ -33,16 +37,11 @@ class Slider extends RCSlider {
     var value = Number(event.target.value);
 
     if (!isNaN(value)) {
-      console.log(this.props.min)
-      console.log(this.props.max)
       if (value < this.props.min) {
-        console.log(value)
         this.props.handleChange(this.props.name, this.props.min);
       } else if (value > this.props.max) {
-        console.log(value)
         this.props.handleChange(this.props.name, this.props.max);
       } else {
-        console.log(value)
         this.props.handleChange(this.props.name, value);
       }
     }
@@ -93,7 +92,7 @@ class Slider extends RCSlider {
           step={this.props.step || 1}
           onChange={this.handleSliderChange}
           onAfterChange={this.handleSliderChange}
-          tabIndex="-1"
+          tabIndex={-1}
         />
       </div>
     );

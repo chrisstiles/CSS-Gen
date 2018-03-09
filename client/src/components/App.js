@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 // CSS Styles
 import '../css/general.css';
@@ -9,29 +10,41 @@ import NavWindow from './NavWindow';
 
 // Generator Pages
 import Home from './Home';
-import BoxShadow from './BoxShadow';
+import BoxShadow from './generators/BoxShadow';
 
-// import autoprefixer from 'autoprefixer';
-// import postcss from 'postcss';
 
-// postcss([ autoprefixer ]).process('display:flex').then(function (result) {
-//     result.warnings().forEach(function (warn) {
-//         console.warn(warn.toString());
-//     });
-//     console.log(result);
-// });
+var addNotification;
+const notificationTypes = {
+  info: 'info',
+  warning: 'warning',
+  success: 'success',
+  error: 'error'
+}
 
-const PrimaryLayout = () => (
-  <div>
-    <NavWindow />
-    <main id="main">
-      <Route exact path="/" component={Home} />
-      <Route exact path="/box-shadow-generator" component={BoxShadow} />
-    </main>
-  </div>
-)
+class PrimaryLayout extends React.Component {
+  constructor() {
+    super();
 
-class App extends Component {
+    addNotification = this.createNotification.bind(this);
+  }
+
+  createNotification(type, message) {
+    NotificationManager[type](message, null, 3700);
+  }
+
+  render() {
+    return (
+      <div>
+        <NotificationContainer />
+        <NavWindow />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/box-shadow-generator" component={BoxShadow} />
+      </div>
+    );
+  }
+}
+
+class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
@@ -40,5 +53,7 @@ class App extends Component {
     );
   }
 }
+
+export { addNotification, notificationTypes };
 
 export default App;

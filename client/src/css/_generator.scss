@@ -1,3 +1,35 @@
 #generator-wrapper {
   margin-right: 385px;
+  position:relative;
+}
+
+/* Preview Window */
+
+.generator-preview {
+  background-color:#fff;
+}
+
+.resize-wrapper {
+  position:relative;
+}
+
+.generator-preview span > div {
+  &:nth-child(5),
+  &:nth-child(7) {
+    cursor: nesw-resize !important;
+  }
+
+  &:nth-child(6),
+  &:nth-child(8) {
+    cursor: nwse-resize !important;
+  }
+}
+
+.drag-handle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  cursor:move;
 }

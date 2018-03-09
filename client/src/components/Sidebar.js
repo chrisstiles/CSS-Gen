@@ -1,9 +1,14 @@
 import React from 'react';
+import CodeOutput from './CodeOutput';
 
-const Sidebar = props => {
+const Sidebar = ({ property, children, generateCSS }) => {
   return (
     <div id="sidebar">
-      {props.children}
+      {children}
+      <CodeOutput
+        property={property}
+        generateCSS={generateCSS}
+      />
     </div>
   );
 }

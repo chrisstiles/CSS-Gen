@@ -1,17 +1,28 @@
 import React from 'react';
-import Header from './Header';
+import Page from './Page';
+import Sidebar from './Sidebar';
 
-class Generator extends React.Component {
-  render() {
-    return (
+const Generator = ({ title, property, generateCSS, renderInputs, heading, children, toolbar, previewWindow }) => {
+  return (
+    <Page
+      title={title}
+      heading={heading}
+      toolbar={toolbar}
+    >
       <div id="generator-wrapper">
-        <Header title={this.props.title} />
         <div id="generator" className="page-content">
-          {this.props.children}
+          {previewWindow}
+          <Sidebar
+            property={property}
+            generateCSS={generateCSS}
+          >
+            {renderInputs()}
+          </Sidebar>
+          {children}
         </div>
       </div>
-    );
-  }
+    </Page>
+  );
 }
 
 export default Generator;

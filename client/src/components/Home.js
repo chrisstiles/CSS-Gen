@@ -1,10 +1,15 @@
 import React from 'react';
-import Header from './Header';
+import Page from './Page';
 
 const Home = () => {
-  document.title = 'CSS-GEN';
-
-  return <Header title="This is the home page" />
+  return (
+    <Page
+      title="CSS Gen"
+      heading="This is the home page"
+    >
+      This is my home page content
+    </Page>
+  );
 }
 
 export default Home;

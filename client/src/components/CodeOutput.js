@@ -2,14 +2,18 @@ import React from 'react';
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import prettify from 'postcss-prettify';
+import { addNotification, notificationTypes } from './App';
 
 class CodeOutput extends React.Component {
   constructor(props) {
     super(props);
 
     this.getCSS = this.getCSS.bind(this);
+    this.copyCSS = this.copyCSS.bind(this);
 
     this.state = { css: '' };
+
+    this.canShowCopyNotification = true;
   }
 
   componentWillMount() {
@@ -33,16 +37,58 @@ class CodeOutput extends React.Component {
         
         _this.setState({ css: result.css });
     });
+  }
 
+  copyCSS() {
+    const hiddenField = document.createElement('textarea');
+
+    hiddenField.style.position = 'fixed';
+    hiddenField.style.opacity = 0;
+    hiddenField.style.top = -500;
+    hiddenField.value = this.state.css;
+
+    document.body.appendChild(hiddenField);
+
+    hiddenField.select();
+
+    try {
+      document.execCommand('copy');
+
+      if (this.canShowCopyNotification) {
+        this.canShowCopyNotification = false;
+
+        addNotification(notificationTypes.success, 'Copied!');  
+
+        var _this = this;
+
+        setTimeout(function() {
+          _this.canShowCopyNotification = true;
+        }, 400);
+      }
+      
+    } catch (err) {
+      console.log('Unable to copy');
+    }
+
+    document.body.removeChild(hiddenField);
   }
 
   render() {
     return (
-      <textarea
-        id="output"
-        value={this.state.css}
-        readOnly="readonly"
-      />
+      <div id="output-wrapper">
+        <textarea
+          id="output"
+          autoCorrect="off"
+          spellCheck="false"
+          value={this.state.css}
+        />
+        <button 
+          onClick={this.copyCSS}
+          className="button"
+        >
+          Copy to Clipboard
+        </button>
+      </div>
     );
   }
 }

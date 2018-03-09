@@ -6,16 +6,43 @@
   width:380px;
   background-color:#ececec;
   z-index: 100;
-  padding:142px 35px 35px 35px;
+  padding:35px;
+  overflow:scroll;
 }
 
 /* Output CSS */
 
+#output-wrapper {
+  margin-top:29px;
+  padding:15px;
+  width: calc(100% + 70px);
+  margin-left: -35px;
+  border-top: 2px solid #dadada;
+
+  .button {
+    float:right;
+  }
+}
+
 #output {
   width:100%;
   font-size:12px;
-  padding:10px;
+  padding:13px 15px;
   background-color:#fff;
   line-height:1.4em;
   resize:none;
+  margin-bottom:15px;
+  appearance:none;
+  -webkit-appearance:none;
+  outline:none;
+  border:none;
+  height:80px;
+  color:$dark-grey;
+  font-weight:600;
+  float:left;
+
+  &:focus {
+    border:3px solid #dedede;
+    padding:10px 12px;
+  }
 }

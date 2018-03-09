@@ -22,15 +22,81 @@ body {
   background-color: #f7f7f7;
   margin: 0;
   padding: 0;
-  font-family: 'Montserrat', sans-serif; }
+  font-family: "Montserrat", sans-serif; }
 
 #main {
-  padding: 55px 50px 60px 390px; }
+  padding: 43px 50px 60px 390px; }
 
 .page-content {
   color: #4e4e4e;
   font-weight: 300;
   font-size: 20px; }
+
+.notification-container {
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 7px;
+  right: 0;
+  z-index: 999999;
+  width: 320px;
+  padding: 15px 18px 13px 18px;
+  max-height: calc(100% - 30px);
+  overflow-x: hidden;
+  overflow-y: auto; }
+
+.notification {
+  box-sizing: border-box;
+  padding: 15px;
+  border-radius: 2px;
+  color: #fff;
+  background-color: #ccc;
+  box-shadow: 0px 2px 7px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  font-size: 1em;
+  line-height: 1.2em;
+  position: relative;
+  opacity: 0.9;
+  margin-top: 15px; }
+
+.notification .title {
+  font-size: 1em;
+  line-height: 1.2em;
+  font-weight: bold;
+  margin: 0 0 5px 0; }
+
+.notification:hover,
+.notification:focus {
+  opacity: 1; }
+
+.notification-enter {
+  visibility: hidden;
+  opacity: 0; }
+
+.notification-enter.notification-enter-active {
+  visibility: visible;
+  transition: all 0.4s;
+  opacity: 0.9; }
+
+.notification-leave {
+  visibility: visible;
+  opacity: 0.9; }
+
+.notification-leave.notification-leave-active {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.4s; }
+
+.notification-info {
+  background-color: #2f96b4; }
+
+.notification-success {
+  background-color: #55b155; }
+
+.notification-warning {
+  background-color: #f89406; }
+
+.notification-error {
+  background-color: #bd362f; }
 
 #nav-window {
   position: fixed;
@@ -47,25 +113,51 @@ body {
 #nav-window a.current {
   color: orange; }
 
-#header {
-  border-bottom: 1px solid #d0d0d0;
-  padding-bottom: 10px;
+#header,
+#toolbar {
+  border-bottom: 1px solid #dedede;
   position: relative;
-  z-index: 300;
-  margin-bottom: 34px;
-  width: calc(100% + 70px);
-  margin-left: -70px;
-  padding-left: 70px; }
+  z-index: 100; }
+
+#header {
+  padding: 55px 50px 27px 390px;
+  background-color: rgba(247, 247, 247, 0.95); }
   #header h1 {
     color: #2ddab4;
     font-weight: 400;
     font-size: 28px; }
 
-#generator-wrapper #header {
-  width: calc(100% + 280px); }
+#toolbar {
+  height: 69px;
+  padding: 0 50px 0 390px;
+  background-color: rgba(255, 255, 255, 0.87); }
+  #toolbar .button {
+    margin-top: 15px; }
 
 #generator-wrapper {
-  margin-right: 385px; }
+  margin-right: 385px;
+  position: relative; }
+
+/* Preview Window */
+.generator-preview {
+  background-color: #fff; }
+
+.resize-wrapper {
+  position: relative; }
+
+.generator-preview span > div:nth-child(5), .generator-preview span > div:nth-child(7) {
+  cursor: nesw-resize !important; }
+
+.generator-preview span > div:nth-child(6), .generator-preview span > div:nth-child(8) {
+  cursor: nwse-resize !important; }
+
+.drag-handle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  cursor: move; }
 
 #sidebar {
   position: fixed;
@@ -75,16 +167,38 @@ body {
   width: 380px;
   background-color: #ececec;
   z-index: 100;
-  padding: 142px 35px 35px 35px; }
+  padding: 35px;
+  overflow: scroll; }
 
 /* Output CSS */
+#output-wrapper {
+  margin-top: 29px;
+  padding: 15px;
+  width: calc(100% + 70px);
+  margin-left: -35px;
+  border-top: 2px solid #dadada; }
+  #output-wrapper .button {
+    float: right; }
+
 #output {
   width: 100%;
   font-size: 12px;
-  padding: 10px;
+  padding: 13px 15px;
   background-color: #fff;
   line-height: 1.4em;
-  resize: none; }
+  resize: none;
+  margin-bottom: 15px;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  border: none;
+  height: 80px;
+  color: #505050;
+  font-weight: 600;
+  float: left; }
+  #output:focus {
+    border: 3px solid #dedede;
+    padding: 10px 12px; }
 
 .field-wrapper {
   margin-bottom: 20px; }
@@ -98,7 +212,7 @@ body {
   float: right;
   width: 50px;
   height: 27px;
-  padding: 0 6px 1px 6px;
+  padding: 0 6px;
   font-size: 15px;
   -webkit-appearance: none;
   apperance: none;
@@ -108,7 +222,26 @@ body {
   color: #505050;
   line-height: normal;
   position: relative;
-  top: -8px; }
+  top: -8px;
+  font-family: "Montserrat", sans-serif; }
+
+.button {
+  -webkit-appearance: none;
+  apperance: none;
+  font-family: "Montserrat", sans-serif;
+  background-color: #2ddab4;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 12px 15px 11px 15px;
+  line-height: 1em;
+  outline: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  display: inline-block; }
+  .button:hover {
+    background-color: #21b393; }
 
 .rc-slider {
   position: relative;
@@ -378,5 +511,4 @@ body {
 
 #box-shadow-preview {
   width: 400px;
-  height: 400px;
-  background-color: #fff; }
+  height: 400px; }
