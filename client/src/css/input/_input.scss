@@ -11,9 +11,8 @@
   }
 }
 
-.slider-input {
-  float: right;
-  width: 50px;
+input[type="text"],
+input[type="number"] {
   height: 27px;
   padding: 0 6px;
   font-size: 15px;
@@ -21,12 +20,26 @@
   apperance: none;
   border: 1px solid #d2d2d2;
   outline: none;
-  font-weight: 600;
+  font-family: $main-font;
   color: #505050;
   line-height: normal;
+
+  &:focus {
+    border:1px solid $accent-color;
+  }
+}
+
+.number-input {
+  font-weight: 600;
+  font-size:16px;
+  width: 65px;
+}
+
+.slider-input {
+  float: right;
   position: relative;
   top: -8px;
-  font-family: $main-font;
+  width:50px;
 }
 
 .button {

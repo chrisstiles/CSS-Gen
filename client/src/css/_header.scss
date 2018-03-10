@@ -2,7 +2,6 @@
 
 #header,
 #toolbar {
-  
   border-bottom: 1px solid #dedede;
   position: relative;
   z-index: 100;
@@ -21,8 +20,44 @@
 
 #toolbar {
   height:69px;
-  padding:0 50px 0 390px;
+  padding:0 396px 0 390px;
   background-color: rgba(255, 255, 255, 0.87);
+
+  .toolbar-title {
+    float: left;
+    color: #505050;
+    text-align: right;
+    margin-right: 13px;
+    font-weight: 600;
+    height: 68px;
+    background-color: #f9f9f9;
+    line-height: 1.2em;
+    padding: 13px 25px 0 45px;
+    font-size: 18px;
+    margin-left: -45px;
+    border-right: 1px solid #dedede;
+  }
+
+  .item {
+    float:left;
+    margin-right:20px;
+
+    &:last-child {
+      margin-right:0;
+    }
+
+    &.input {
+      padding-top:10px;
+    }
+
+    label {
+      display:block;
+      margin-bottom:3px;
+      font-weight:600;
+      color:$dark-grey;
+      font-size:12px;
+    }
+  }
 
   .button {
     margin-top:15px;

@@ -39,6 +39,18 @@ body {
   font-size: 20px;
 }
 
+.left {
+  float:left;
+}
+
+.right {
+  float:right;
+}
+
+
+/* ------------------------- */
+/* Imports */
+
 @import './notifications.scss';
 @import './_nav-window.scss';
 @import './_header.scss';

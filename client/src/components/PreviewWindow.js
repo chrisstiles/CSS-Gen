@@ -11,8 +11,8 @@ class PreviewWindow extends React.Component {
   }
 
   handleResizeStart() {
-    const top = parseInt(this.resizeWrapper.style.top) || 0;
-    const left = parseInt(this.resizeWrapper.style.left) || 0;
+    const top = parseInt(this.resizeWrapper.style.top, 10) || 0;
+    const left = parseInt(this.resizeWrapper.style.left, 10) || 0;
 
     this.resizeWrapperPosition = {
       top: top,
@@ -38,6 +38,8 @@ class PreviewWindow extends React.Component {
         this.resizeWrapper.style.left = `${left}px`;
       }
     }
+
+    this.props.handlePreviewWindowResize();
   }
 
   resetWindow() {
@@ -63,6 +65,10 @@ class PreviewWindow extends React.Component {
               width: this.props.size.width,
               height: this.props.size.height,
             }}
+            minWidth={60}
+            maxWidth={3000}
+            minHeight={60}
+            maxHeight={3000}
             onResizeStart={this.handleResizeStart}
             onResize={this.handleResize}
           >

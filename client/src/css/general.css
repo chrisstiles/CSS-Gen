@@ -32,6 +32,14 @@ body {
   font-weight: 300;
   font-size: 20px; }
 
+.left {
+  float: left; }
+
+.right {
+  float: right; }
+
+/* ------------------------- */
+/* Imports */
 .notification-container {
   box-sizing: border-box;
   position: fixed;
@@ -129,8 +137,34 @@ body {
 
 #toolbar {
   height: 69px;
-  padding: 0 50px 0 390px;
+  padding: 0 396px 0 390px;
   background-color: rgba(255, 255, 255, 0.87); }
+  #toolbar .toolbar-title {
+    float: left;
+    color: #505050;
+    text-align: right;
+    margin-right: 13px;
+    font-weight: 600;
+    height: 68px;
+    background-color: #f9f9f9;
+    line-height: 1.2em;
+    padding: 13px 25px 0 45px;
+    font-size: 18px;
+    margin-left: -45px;
+    border-right: 1px solid #dedede; }
+  #toolbar .item {
+    float: left;
+    margin-right: 20px; }
+    #toolbar .item:last-child {
+      margin-right: 0; }
+    #toolbar .item.input {
+      padding-top: 10px; }
+    #toolbar .item label {
+      display: block;
+      margin-bottom: 3px;
+      font-weight: 600;
+      color: #505050;
+      font-size: 12px; }
   #toolbar .button {
     margin-top: 15px; }
 
@@ -208,9 +242,8 @@ body {
     margin-bottom: 10px;
     color: #505050; }
 
-.slider-input {
-  float: right;
-  width: 50px;
+input[type="text"],
+input[type="number"] {
   height: 27px;
   padding: 0 6px;
   font-size: 15px;
@@ -218,12 +251,23 @@ body {
   apperance: none;
   border: 1px solid #d2d2d2;
   outline: none;
-  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
   color: #505050;
-  line-height: normal;
+  line-height: normal; }
+  input[type="text"]:focus,
+  input[type="number"]:focus {
+    border: 1px solid #2ddab4; }
+
+.number-input {
+  font-weight: 600;
+  font-size: 16px;
+  width: 65px; }
+
+.slider-input {
+  float: right;
   position: relative;
   top: -8px;
-  font-family: "Montserrat", sans-serif; }
+  width: 50px; }
 
 .button {
   -webkit-appearance: none;

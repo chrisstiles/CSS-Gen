@@ -3,6 +3,7 @@ import Generator from '../Generator';
 import Sliders from '../input/Sliders';
 import Toolbar from './toolbars/Toolbar';
 import PreviewWindow from '../PreviewWindow';
+import NumberInput from '../input/NumberInput';
 import _ from 'underscore';
 
 const sliders = [
@@ -33,6 +34,11 @@ class BoxShadow extends React.Component {
     this.reset = this.reset.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handlePreviewWindowResize = this.handlePreviewWindowResize.bind(this);
+    this.handleToolbarTextChange = this.handleToolbarTextChange.bind(this);
+    this.handleToolbarTextBlur = this.handleToolbarTextBlur.bind(this);
+
+    this.defaultPreviewSize = { width: 400, height: 400 };
   }
 
   componentWillMount() {
@@ -53,6 +59,12 @@ class BoxShadow extends React.Component {
   reset() {
     this.previewWindow.resetWindow(); 
     this.setState(this.initialState);
+
+    const width = this.defaultPreviewSize.width;
+    const height = this.defaultPreviewSize.height;
+
+    this.widthInput.value = width;
+    this.heightInput.value = height;
   }
 
   handleChange(cssRule, value) {
@@ -61,6 +73,37 @@ class BoxShadow extends React.Component {
     newState.style = this.generateCSS(newState);
 
     this.setState(newState);
+  }
+
+  handlePreviewWindowResize() {
+    const { width, height } = this.previewWindow.resizable.state;
+
+    this.widthInput.value = width;
+    this.heightInput.value = height;
+  }
+
+  handleToolbarTextChange(event) {
+    const el = event.target;
+    const type = el.getAttribute('name');
+
+    var state = {};
+    state[type] = el.value;
+
+    this.previewWindow.resizable.setState(state);
+  }
+
+  handleToolbarTextBlur(event) {
+    const { minWidth, minHeight, maxWidth, maxHeight } = this.previewWindow.resizable.props;
+    var { width, height } = this.previewWindow.resizable.state;
+
+    if ( width < minWidth ) width = minWidth;
+    if ( height < minHeight ) height = minHeight;
+
+    if ( width > maxWidth ) width = maxWidth;
+    if ( height > maxHeight ) height = maxHeight;
+
+    this.widthInput.value = width;
+    this.heightInput.value = height;
   }
 
   renderInputs() {
@@ -77,13 +120,40 @@ class BoxShadow extends React.Component {
     return (
       <Toolbar
         ref={toolbar => { this.toolbar = toolbar }}
-      >
-        <button
-          className="button"
-          onClick={() => { this.reset(); }}
-        >
-          Reset Window
-        </button>
+      > 
+        <div className="toolbar-title">Preview<br /> Window</div>
+        <div className="item input">
+          <label>Width:</label>
+          <NumberInput 
+            type="text"
+            defaultValue={this.defaultPreviewSize.width}
+            inputRef={el => this.widthInput = el}
+            name="width"
+            onChange={this.handleToolbarTextChange}
+            onBlur={this.handleToolbarTextBlur}
+          />
+        </div>
+
+        <div className="item input">
+          <label>Height:</label>
+          <NumberInput 
+            type="text"
+            defaultValue={this.defaultPreviewSize.height}
+            name="height"
+            inputRef={el => this.heightInput = el}
+            onChange={this.handleToolbarTextChange}
+            onBlur={this.handleToolbarTextBlur}
+          />
+        </div>
+
+        <div className="right">
+          <button
+            className="button"
+            onClick={this.reset}
+          >
+            Reset Window
+          </button>
+        </div>
       </Toolbar>
     );
   }
@@ -94,15 +164,12 @@ class BoxShadow extends React.Component {
         ref={previewWindow => { this.previewWindow = previewWindow }}
         style={{ boxShadow: this.state.style }}
         size={{ width: 400, height: 400 }}
+        handlePreviewWindowResize={this.handlePreviewWindowResize}
       />
     );
   }
 
   render() {
-    // const Toolbar = <Toolbar />;
-
-    // const Perv
-
     return (
       <Generator 
         title="CSS Box Shadow Generator | CSS-GEN"

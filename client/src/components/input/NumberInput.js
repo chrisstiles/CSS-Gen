@@ -1,6 +1,6 @@
 import React from 'react';
 
-class SliderTextInput extends React.Component {
+class NumberInput extends React.Component {
   constructor(props) {
     super(props);
 
@@ -11,11 +11,11 @@ class SliderTextInput extends React.Component {
   }
 
   handleChange(event) {
-    this.props.handleTextChange(event);
+    this.props.onChange(event);
   }
 
   handleBlur(event) {
-    this.props.handleTextBlur();
+    this.props.onBlur();
   }
 
   handleKeyDown(event) {
@@ -39,7 +39,8 @@ class SliderTextInput extends React.Component {
     return (
       <input
         type="text"
-        className="slider-input"
+        name={this.props.name}
+        className={`number-input ${this.props.className}`}
         defaultValue={this.props.defaultValue}
         onChange={this.handleChange}
         onBlur={this.handleBlur}
@@ -52,4 +53,4 @@ class SliderTextInput extends React.Component {
   }
 }
 
-export default SliderTextInput;
+export default NumberInput;

@@ -1,6 +1,6 @@
 import React from 'react';
 import RCSlider, { Handle as RCHandle } from 'rc-slider';
-import SliderTextInput from './SliderTextInput';
+import NumberInput from './NumberInput';
 
 const Handle = props => {
   const { value, dragging, index, ...restProps } = props;
@@ -73,11 +73,11 @@ class Slider extends RCSlider {
     return (
       <div className="field-wrapper">
         <div className="title">
-          <SliderTextInput
+          <NumberInput
             className="slider-input"
             defaultValue={this.props.value}
-            handleTextChange={this.handleTextChange}
-            handleTextBlur={this.handleTextBlur}
+            onChange={this.handleTextChange}
+            onBlur={this.handleTextBlur}
             inputRef={el => this.textInput = el}
             step={this.props.step || 1}
             handleTick={this.tick}
