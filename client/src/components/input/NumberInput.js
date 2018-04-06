@@ -23,10 +23,10 @@ class NumberInput extends React.Component {
 
     if (keyCode === 38) {
       // Up arrow is pressed
-      this.props.handleTick(true);
+      this.props.handleTick(true, this.props.name);
     } else if (keyCode === 40) {
       // Down arrow is pressed
-      this.props.handleTick(false);
+      this.props.handleTick(false, this.props.name);
     }
   }
 
@@ -48,6 +48,7 @@ class NumberInput extends React.Component {
         step={this.props.step}
         onKeyDown={this.handleKeyDown}
         onClick={this.handleClick}
+        autoComplete="off"
       />
     );
   }

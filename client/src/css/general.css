@@ -287,6 +287,13 @@ input[type="number"] {
   .button:hover {
     background-color: #21b393; }
 
+/* Color Picker */
+.color-preview {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #dedede;
+  border-radius: 3px; }
+
 .rc-slider {
   position: relative;
   height: 14px;

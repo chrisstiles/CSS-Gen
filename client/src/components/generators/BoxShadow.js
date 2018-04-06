@@ -4,6 +4,7 @@ import Sliders from '../input/Sliders';
 import Toolbar from './toolbars/Toolbar';
 import PreviewWindow from '../PreviewWindow';
 import NumberInput from '../input/NumberInput';
+import ColorPicker from '../input/ColorPicker';
 import _ from 'underscore';
 
 const sliders = [
@@ -25,6 +26,7 @@ class BoxShadow extends React.Component {
       blurRadius: 28,
       spreadRadius: 0,
       shadowOpacity: 0.25,
+      backgroundColor: 'rgba(255, 255, 255, 1)',
       style: ''
     };
 
@@ -37,6 +39,8 @@ class BoxShadow extends React.Component {
     this.handlePreviewWindowResize = this.handlePreviewWindowResize.bind(this);
     this.handleToolbarTextChange = this.handleToolbarTextChange.bind(this);
     this.handleToolbarTextBlur = this.handleToolbarTextBlur.bind(this);
+    this.handleToolbarTick = this.handleToolbarTick.bind(this);
+    this.handleColorPickerChange = this.handleColorPickerChange.bind(this);
 
     this.defaultPreviewSize = { width: 400, height: 400 };
   }
@@ -52,7 +56,7 @@ class BoxShadow extends React.Component {
     styles = styles || {};
     const rules = _.extend({}, this.state, styles);
     const css = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${rules.spreadRadius}px rgba(0, 0, 0, ${rules.shadowOpacity})`;
-    
+
     return css;
   }
 
@@ -75,24 +79,46 @@ class BoxShadow extends React.Component {
     this.setState(newState);
   }
 
-  handlePreviewWindowResize() {
-    const { width, height } = this.previewWindow.resizable.state;
+  handlePreviewWindowResize(newValue, type) {
 
-    this.widthInput.value = width;
-    this.heightInput.value = height;
+    if (newValue === undefined || type === undefined) {
+
+      const { width, height } = this.previewWindow.resizable.state;
+
+      this.widthInput.value = width;
+      this.heightInput.value = height;
+
+    } else {
+      
+      var input;
+      if (type === 'width') {
+        input = this.widthInput;
+      } else {
+        input = this.heightInput;
+      }
+
+      input.value = newValue;
+
+    }
+    
   }
 
   handleToolbarTextChange(event) {
     const el = event.target;
-    const type = el.getAttribute('name');
 
-    var state = {};
-    state[type] = el.value;
+    if (!isNaN(el.value)) {
+      const type = el.getAttribute('name');
 
-    this.previewWindow.resizable.setState(state);
+      var state = {};
+      state[type] = el.value;
+
+      this.previewWindow.resizable.setState(state);
+    }
+
   }
 
   handleToolbarTextBlur(event) {
+
     const { minWidth, minHeight, maxWidth, maxHeight } = this.previewWindow.resizable.props;
     var { width, height } = this.previewWindow.resizable.state;
 
@@ -104,6 +130,14 @@ class BoxShadow extends React.Component {
 
     this.widthInput.value = width;
     this.heightInput.value = height;
+  }
+
+  handleToolbarTick(up, type) {
+    this.previewWindow.handleTick(up, type);
+  }
+
+  handleColorPickerChange(color) {
+    this.setState({ backgroundColor: color });
   }
 
   renderInputs() {
@@ -131,6 +165,7 @@ class BoxShadow extends React.Component {
             name="width"
             onChange={this.handleToolbarTextChange}
             onBlur={this.handleToolbarTextBlur}
+            handleTick={this.handleToolbarTick}
           />
         </div>
 
@@ -143,6 +178,14 @@ class BoxShadow extends React.Component {
             inputRef={el => this.heightInput = el}
             onChange={this.handleToolbarTextChange}
             onBlur={this.handleToolbarTextBlur}
+            handleTick={this.handleToolbarTick}
+          />
+        </div>
+
+        <div className="item">
+          <ColorPicker
+            backgroundColor={this.state.backgroundColor}
+            onChange={this.handleColorPickerChange}
           />
         </div>
 
@@ -163,6 +206,7 @@ class BoxShadow extends React.Component {
       <PreviewWindow
         ref={previewWindow => { this.previewWindow = previewWindow }}
         style={{ boxShadow: this.state.style }}
+        backgroundColor={this.state.backgroundColor}
         size={{ width: 400, height: 400 }}
         handlePreviewWindowResize={this.handlePreviewWindowResize}
       />
