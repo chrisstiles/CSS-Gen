@@ -41,6 +41,7 @@
   .item {
     float:left;
     margin-right:20px;
+    height: 68px;
 
     &:last-child {
       margin-right:0;
@@ -56,6 +57,11 @@
       font-weight:600;
       color:$dark-grey;
       font-size:12px;
+    }
+
+    &.border {
+      border-right: 1px solid #dedede;
+      padding-right:13px;
     }
   }
 

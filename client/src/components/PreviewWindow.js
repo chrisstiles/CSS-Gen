@@ -56,28 +56,15 @@ class PreviewWindow extends React.Component {
     const max = this.constraints[type].max;
 
     if (newValue >= min && newValue <= max) {
-      // console.log(this.resizable.state[type])
-
       var newState = {};
       newState[type] = newValue;
 
       this.resizable.setState(newState);
       this.props.handlePreviewWindowResize(newValue, type);
-
-      // this.props.handleChange(this.props.name, newValue);
-      // this.textInput.value = newValue;
     }
   }
 
-  generateStyles() {
-    const css = {
-      backgroundColor: this.props.backgroundColor
-    };
-
-    return _.extend({}, css, this.props.style);
-  }
-
-  resetWindow() {
+  reset() {
     this.resizeWrapper.style.top = 0;
     this.resizeWrapper.style.left = 0;
     this.draggable.setState({ x: 0, y: 0 });
@@ -92,7 +79,7 @@ class PreviewWindow extends React.Component {
       >
         <div className="resize-wrapper" ref={el => { this.resizeWrapper = el; }}>
           <Resizable
-            style={this.generateStyles()}
+            style={this.props.style}
             id="box-shadow-preview"
             ref={resizable => { this.resizable = resizable; }}
             className="generator-preview"

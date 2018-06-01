@@ -71,3 +71,11 @@ input[type="number"] {
   border:1px solid #dedede;
   border-radius:3px;
 }
+
+.chrome-picker {
+  position:relative;
+  z-index: 200;
+  top:100%;
+  width: 226px !important;
+  left:-113px;
+}

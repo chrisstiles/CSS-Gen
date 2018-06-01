@@ -61,7 +61,8 @@ class BoxShadow extends React.Component {
   }
 
   reset() {
-    this.previewWindow.resetWindow(); 
+    this.previewWindow.reset(); 
+    this.colorPicker.reset();
     this.setState(this.initialState);
 
     const width = this.defaultPreviewSize.width;
@@ -118,7 +119,6 @@ class BoxShadow extends React.Component {
   }
 
   handleToolbarTextBlur(event) {
-
     const { minWidth, minHeight, maxWidth, maxHeight } = this.previewWindow.resizable.props;
     var { width, height } = this.previewWindow.resizable.state;
 
@@ -169,7 +169,7 @@ class BoxShadow extends React.Component {
           />
         </div>
 
-        <div className="item input">
+        <div className="item input border">
           <label>Height:</label>
           <NumberInput 
             type="text"
@@ -186,6 +186,7 @@ class BoxShadow extends React.Component {
           <ColorPicker
             backgroundColor={this.state.backgroundColor}
             onChange={this.handleColorPickerChange}
+            ref={colorPicker => { this.colorPicker = colorPicker }}
           />
         </div>
 
@@ -205,8 +206,7 @@ class BoxShadow extends React.Component {
     return (
       <PreviewWindow
         ref={previewWindow => { this.previewWindow = previewWindow }}
-        style={{ boxShadow: this.state.style }}
-        backgroundColor={this.state.backgroundColor}
+        style={{ boxShadow: this.state.style, backgroundColor: this.state.backgroundColor }}
         size={{ width: 400, height: 400 }}
         handlePreviewWindowResize={this.handlePreviewWindowResize}
       />

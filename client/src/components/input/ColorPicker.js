@@ -11,14 +11,13 @@ class ColorPicker extends React.Component {
         r: '255',
         g: '255',
         b: '255',
-        a: '1',
+        a: '1'
       },
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.generateColorCSS = this.generateColorCSS.bind(this);
   }
 
   handleClick() {
@@ -41,23 +40,41 @@ class ColorPicker extends React.Component {
     return color;
   }
 
+  reset() {
+    this.setState({
+      color: {
+        r: '255',
+        g: '255',
+        b: '255',
+        a: '1'
+      }
+    });
+  }
+
   render() {
     const color = this.generateColorCSS();
+    const cover = {
+      position: 'fixed',
+      top: '0px',
+      right: '0px',
+      bottom: '0px',
+      left: '0px'
+    };
 
     return (
       <div>
         <div 
           className="color-preview" 
           style={{ backgroundColor: this.props.backgroundColor }}
-          onClick={ this.handleClick }
+          onClick={this.handleClick}
         >
         <div />
         </div>
         { this.state.displayColorPicker ? <div>
-          <div onClick={ this.handleClose }/>
+          <div style={cover} onClick={this.handleClose} />
           <ChromePicker 
-            color={ this.state.color } 
-            onChange={ this.handleChange } 
+            color={this.state.color} 
+            onChange={this.handleChange}
           />
         </div> : null }
 

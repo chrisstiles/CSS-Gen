@@ -154,7 +154,8 @@ body {
     border-right: 1px solid #dedede; }
   #toolbar .item {
     float: left;
-    margin-right: 20px; }
+    margin-right: 20px;
+    height: 68px; }
     #toolbar .item:last-child {
       margin-right: 0; }
     #toolbar .item.input {
@@ -165,6 +166,9 @@ body {
       font-weight: 600;
       color: #505050;
       font-size: 12px; }
+    #toolbar .item.border {
+      border-right: 1px solid #dedede;
+      padding-right: 13px; }
   #toolbar .button {
     margin-top: 15px; }
 
@@ -293,6 +297,13 @@ input[type="number"] {
   height: 60px;
   border: 1px solid #dedede;
   border-radius: 3px; }
+
+.chrome-picker {
+  position: relative;
+  z-index: 200;
+  top: 100%;
+  width: 226px !important;
+  left: -113px; }
 
 .rc-slider {
   position: relative;
