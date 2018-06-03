@@ -69,3 +69,14 @@
     margin-top:15px;
   }
 }
+
+
+/* Media Queries */
+
+@media screen and (max-width: 1250px) {
+  #toolbar {
+    padding-left:320px;
+    padding-right:314px;
+  }
+}
+

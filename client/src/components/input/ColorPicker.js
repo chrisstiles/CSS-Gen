@@ -30,7 +30,7 @@ class ColorPicker extends React.Component {
 
   handleChange(color) {
     this.setState({ color: color.rgb });
-    this.props.onChange(this.generateColorCSS());
+    this.props.onChange(this.generateColorCSS(), color);
   };
 
   generateColorCSS() {
@@ -52,7 +52,6 @@ class ColorPicker extends React.Component {
   }
 
   render() {
-    const color = this.generateColorCSS();
     const cover = {
       position: 'fixed',
       top: '0px',
@@ -61,11 +60,13 @@ class ColorPicker extends React.Component {
       left: '0px'
     };
 
+    const color = typeof this.props.backgroundColor === 'object' ? this.props.backgroundColor.hex : this.props.backgroundColor;
+
     return (
       <div>
         <div 
           className="color-preview" 
-          style={{ backgroundColor: this.props.backgroundColor }}
+          style={{ backgroundColor: color }}
           onClick={this.handleClick}
         >
         <div />
@@ -75,6 +76,7 @@ class ColorPicker extends React.Component {
           <ChromePicker 
             color={this.state.color} 
             onChange={this.handleChange}
+            disableAlpha={this.props.disableAlpha}
           />
         </div> : null }
 

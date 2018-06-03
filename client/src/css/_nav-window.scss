@@ -14,3 +14,12 @@
 #nav-window a.current {
 	color:orange;
 }
+
+
+/* Media Queries */
+
+@media screen and (max-width: 1250px) {
+  #nav-window {
+    width:270px;
+  }
+}

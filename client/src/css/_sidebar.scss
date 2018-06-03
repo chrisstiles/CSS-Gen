@@ -46,3 +46,11 @@
     padding:10px 12px;
   }
 }
+
+/* Media Queries */
+
+@media screen and (max-width: 1250px) {
+  #sidebar {
+    width:300px;
+  }
+}
