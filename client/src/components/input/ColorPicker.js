@@ -74,7 +74,7 @@ class ColorPicker extends React.Component {
         { this.state.displayColorPicker ? <div>
           <div style={cover} onClick={this.handleClose} />
           <ChromePicker 
-            color={this.state.color} 
+            color={color}
             onChange={this.handleChange}
             disableAlpha={this.props.disableAlpha}
           />

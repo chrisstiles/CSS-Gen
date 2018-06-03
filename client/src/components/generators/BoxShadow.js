@@ -81,6 +81,7 @@ class BoxShadow extends React.Component {
   reset() {
     this.previewWindow.reset(); 
     this.previewWindowColorPicker.reset();
+    this.shadowColorPicker.reset();
     this.setState(this.initialState);
 
     const width = this.defaultPreviewSize.width;
@@ -181,6 +182,7 @@ class BoxShadow extends React.Component {
             backgroundColor={this.state.shadowColor}
             disableAlpha={true}
             onChange={this.handleShadowColorPickerChange}
+            ref={colorPicker => { this.shadowColorPicker = colorPicker }}
           />
         </div>
         <Sliders
