@@ -72,7 +72,7 @@ class Slider extends RCSlider {
   render() {
     return (
       <div className="field-wrapper">
-        <div className="title">
+        <label className="title">
           <NumberInput
             className="slider-input"
             defaultValue={this.props.value}
@@ -83,7 +83,7 @@ class Slider extends RCSlider {
             handleTick={this.tick}
           />
           {this.props.title}
-        </div>
+        </label>
         <RCSlider
           min={this.props.min || 0}
           max={this.props.max || 200}

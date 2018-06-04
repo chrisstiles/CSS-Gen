@@ -33,3 +33,12 @@
   left: 10px;
   cursor:move;
 }
+
+
+/* Media Queries */
+
+@media screen and (max-width: 1250px) {
+  #generator-wrapper {
+    margin-right:300px;
+  }
+}

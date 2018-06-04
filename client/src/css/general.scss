@@ -48,6 +48,15 @@ body {
 }
 
 
+/* Media Queries */
+
+@media screen and (max-width: 1250px) {
+  #main {
+    padding-left:340px;
+  }
+}
+
+
 /* ------------------------- */
 /* Imports */
 

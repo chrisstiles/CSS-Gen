@@ -4,6 +4,7 @@ import Sliders from '../input/Sliders';
 import Toolbar from './toolbars/Toolbar';
 import PreviewWindow from '../PreviewWindow';
 import NumberInput from '../input/NumberInput';
+import Toggle from '../input/Toggle';
 import ColorPicker from '../input/ColorPicker';
 import _ from 'underscore';
 
@@ -26,7 +27,17 @@ class BoxShadow extends React.Component {
       blurRadius: 28,
       spreadRadius: 0,
       shadowOpacity: 0.25,
+      shadowColor: {
+        hex: '#000000',
+        rgb: {
+          r: 0,
+          g: 0,
+          b: 0,
+          a: 1
+        }
+      },
       backgroundColor: 'rgba(255, 255, 255, 1)',
+      inset: false,
       style: ''
     };
 
@@ -40,7 +51,9 @@ class BoxShadow extends React.Component {
     this.handleToolbarTextChange = this.handleToolbarTextChange.bind(this);
     this.handleToolbarTextBlur = this.handleToolbarTextBlur.bind(this);
     this.handleToolbarTick = this.handleToolbarTick.bind(this);
-    this.handleColorPickerChange = this.handleColorPickerChange.bind(this);
+    this.handlePreviewWindowColorPickerChange = this.handlePreviewWindowColorPickerChange.bind(this);
+    this.handleShadowColorPickerChange = this.handleShadowColorPickerChange.bind(this);
+    this.handleToggleChange = this.handleToggleChange.bind(this);
 
     this.defaultPreviewSize = { width: 400, height: 400 };
   }
@@ -52,17 +65,23 @@ class BoxShadow extends React.Component {
     this.initialState.style = css;
   }
 
-  generateCSS(styles) {
-    styles = styles || {};
+  generateCSS(styles = {}) {
     const rules = _.extend({}, this.state, styles);
-    const css = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${rules.spreadRadius}px rgba(0, 0, 0, ${rules.shadowOpacity})`;
+    const color = rules.color === undefined ? this.state.shadowColor.rgb : rules.color.rgb;
+
+    var css = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${rules.spreadRadius}px rgba(${color.r}, ${color.g}, ${color.b}, ${rules.shadowOpacity})`;
+
+    if ((rules.inset !== undefined && rules.inset) || (rules.inset === undefined && this.state.inset)) {
+      css = `inset ${css}`;
+    }
 
     return css;
   }
 
   reset() {
     this.previewWindow.reset(); 
-    this.colorPicker.reset();
+    this.previewWindowColorPicker.reset();
+    this.shadowColorPicker.reset();
     this.setState(this.initialState);
 
     const width = this.defaultPreviewSize.width;
@@ -136,17 +155,42 @@ class BoxShadow extends React.Component {
     this.previewWindow.handleTick(up, type);
   }
 
-  handleColorPickerChange(color) {
+  handlePreviewWindowColorPickerChange(color) {
     this.setState({ backgroundColor: color });
+  }
+
+  handleShadowColorPickerChange(color, colorObject) {
+    const css = this.generateCSS({ color: colorObject });
+    this.setState({ shadowColor: colorObject, style: css });
+  }
+
+  handleToggleChange(value) {
+    const css = this.generateCSS({ inset: value });
+    this.setState({ style: css, inset: value });
   }
 
   renderInputs() {
     return (
-      <Sliders
-        sliders={sliders}
-        handleChange={this.handleChange}
-        {...this.state}
-      />
+      <div>
+        <Toggle
+          onChange={this.handleToggleChange}
+          label="Inset"
+          className=""
+        />
+        <div className="field-wrapper">
+          <ColorPicker
+            backgroundColor={this.state.shadowColor}
+            disableAlpha={true}
+            onChange={this.handleShadowColorPickerChange}
+            ref={colorPicker => { this.shadowColorPicker = colorPicker }}
+          />
+        </div>
+        <Sliders
+          sliders={sliders}
+          handleChange={this.handleChange}
+          {...this.state}
+        />
+      </div>
     );
   }
 
@@ -186,8 +230,8 @@ class BoxShadow extends React.Component {
           <label>Background Color:</label>
           <ColorPicker
             backgroundColor={this.state.backgroundColor}
-            onChange={this.handleColorPickerChange}
-            ref={colorPicker => { this.colorPicker = colorPicker }}
+            onChange={this.handlePreviewWindowColorPickerChange}
+            ref={colorPicker => { this.previewWindowColorPicker = colorPicker }}
           />
         </div>
 

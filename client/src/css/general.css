@@ -38,6 +38,11 @@ body {
 .right {
   float: right; }
 
+/* Media Queries */
+@media screen and (max-width: 1250px) {
+  #main {
+    padding-left: 340px; } }
+
 /* ------------------------- */
 /* Imports */
 .notification-container {
@@ -121,6 +126,11 @@ body {
 #nav-window a.current {
   color: orange; }
 
+/* Media Queries */
+@media screen and (max-width: 1250px) {
+  #nav-window {
+    width: 270px; } }
+
 #header,
 #toolbar {
   border-bottom: 1px solid #dedede;
@@ -173,6 +183,12 @@ body {
   #toolbar .button {
     margin-top: 15px; }
 
+/* Media Queries */
+@media screen and (max-width: 1250px) {
+  #toolbar {
+    padding-left: 320px;
+    padding-right: 314px; } }
+
 #generator-wrapper {
   margin-right: 385px;
   position: relative; }
@@ -197,6 +213,11 @@ body {
   bottom: 10px;
   left: 10px;
   cursor: move; }
+
+/* Media Queries */
+@media screen and (max-width: 1250px) {
+  #generator-wrapper {
+    margin-right: 300px; } }
 
 #sidebar {
   position: fixed;
@@ -239,13 +260,19 @@ body {
     border: 3px solid #dedede;
     padding: 10px 12px; }
 
+/* Media Queries */
+@media screen and (max-width: 1250px) {
+  #sidebar {
+    width: 300px; } }
+
 .field-wrapper {
   margin-bottom: 20px; }
   .field-wrapper .title {
     font-size: 16px;
     font-weight: 600;
-    margin-bottom: 10px;
-    color: #505050; }
+    margin-bottom: 0px;
+    color: #505050;
+    display: block; }
 
 input[type="text"],
 input[type="number"] {
@@ -306,6 +333,42 @@ input[type="number"] {
   width: 226px !important;
   left: -113px; }
 
+/* Toggle Switch */
+.toggle-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+  margin-top: 3px; }
+  .toggle-wrapper input {
+    display: none; }
+    .toggle-wrapper input:checked + .toggle {
+      background-color: #2ddab4; }
+      .toggle-wrapper input:checked + .toggle:before {
+        transform: translateX(22px); }
+    .toggle-wrapper input:focus + .toggle {
+      box-shadow: 0 0 1px #2ddab4; }
+  .toggle-wrapper .toggle {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #bbbbbb;
+    transition: .15s;
+    border-radius: 34px; }
+    .toggle-wrapper .toggle:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .15s;
+      border-radius: 50%; }
+
 .rc-slider {
   position: relative;
   height: 14px;
@@ -316,7 +379,8 @@ input[type="number"] {
   touch-action: none;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+  margin-top: 10px; }
 
 .rc-slider-rail {
   position: absolute;
