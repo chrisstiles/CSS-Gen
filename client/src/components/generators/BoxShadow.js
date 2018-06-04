@@ -182,7 +182,8 @@ class BoxShadow extends React.Component {
           />
         </div>
 
-        <div className="item">
+        <div className="item input border">
+          <label>Background Color:</label>
           <ColorPicker
             backgroundColor={this.state.backgroundColor}
             onChange={this.handleColorPickerChange}
