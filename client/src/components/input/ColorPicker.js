@@ -63,7 +63,7 @@ class ColorPicker extends React.Component {
     const color = typeof this.props.backgroundColor === 'object' ? this.props.backgroundColor.hex : this.props.backgroundColor;
 
     return (
-      <div>
+      <div className="color-picker-wrapper">
         <div 
           className="color-preview" 
           style={{ backgroundColor: color }}

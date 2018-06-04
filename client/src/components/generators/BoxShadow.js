@@ -172,18 +172,22 @@ class BoxShadow extends React.Component {
   renderInputs() {
     return (
       <div>
-        <Toggle
-          onChange={this.handleToggleChange}
-          label="Inset"
-          className=""
-        />
-        <div className="field-wrapper">
-          <ColorPicker
-            backgroundColor={this.state.shadowColor}
-            disableAlpha={true}
-            onChange={this.handleShadowColorPickerChange}
-            ref={colorPicker => { this.shadowColorPicker = colorPicker }}
-          />
+        <div className="row">
+          <div className="field-wrapper left">
+            <Toggle
+              onChange={this.handleToggleChange}
+              label="Inset"
+              className="left"
+            />
+          </div>
+          <div className="field-wrapper left">
+            <ColorPicker
+              backgroundColor={this.state.shadowColor}
+              disableAlpha={true}
+              onChange={this.handleShadowColorPickerChange}
+              ref={colorPicker => { this.shadowColorPicker = colorPicker }}
+            />
+          </div>
         </div>
         <Sliders
           sliders={sliders}

@@ -16,7 +16,7 @@ class Toggle extends React.Component {
 
 	render() {
 		return (
-			<div className="field-wrapper">
+			<div>
 				<div className="title">{this.props.label}</div>
 				<label className="toggle-wrapper">
 					<input

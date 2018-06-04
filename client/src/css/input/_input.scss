@@ -1,5 +1,11 @@
 @import '../_variables.scss';
 
+.row:after {
+  clear:both;
+  content:"";
+  display:block;
+}
+
 .field-wrapper {
   margin-bottom:20px;
 
@@ -66,6 +72,10 @@ input[type="number"] {
 
 /* Color Picker */
 
+.color-picker-wrapper {
+  position:relative;
+}
+
 .color-preview {
   width:60px;
   height:60px;
@@ -74,11 +84,11 @@ input[type="number"] {
 }
 
 .chrome-picker {
-  position:relative;
+  position:absolute;
   z-index: 200;
-  top:100%;
   width: 226px !important;
-  left:-113px;
+  left:50%;
+  margin-left:-113px;
 }
 
 

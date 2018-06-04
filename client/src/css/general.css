@@ -264,6 +264,11 @@ body {
   #sidebar {
     width: 300px; } }
 
+.row:after {
+  clear: both;
+  content: "";
+  display: block; }
+
 .field-wrapper {
   margin-bottom: 20px; }
   .field-wrapper .title {
@@ -319,6 +324,9 @@ input[type="number"] {
     background-color: #21b393; }
 
 /* Color Picker */
+.color-picker-wrapper {
+  position: relative; }
+
 .color-preview {
   width: 60px;
   height: 60px;
@@ -326,11 +334,11 @@ input[type="number"] {
   border-radius: 3px; }
 
 .chrome-picker {
-  position: relative;
+  position: absolute;
   z-index: 200;
-  top: 100%;
   width: 226px !important;
-  left: -113px; }
+  left: 50%;
+  margin-left: -113px; }
 
 /* Toggle Switch */
 .toggle-wrapper {
