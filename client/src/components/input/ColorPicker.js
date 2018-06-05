@@ -20,7 +20,8 @@ class ColorPicker extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleClick() {
+  handleClick(e) {
+    this.previewWidth = e.target.offsetWidth;
     this.setState({ displayColorPicker: !this.state.displayColorPicker });
   };
 
@@ -57,10 +58,12 @@ class ColorPicker extends React.Component {
       top: '0px',
       right: '0px',
       bottom: '0px',
-      left: '0px'
+      left: '0px',
+      zIndex: '9998'
     };
 
     const color = typeof this.props.backgroundColor === 'object' ? this.props.backgroundColor.hex : this.props.backgroundColor;
+    const margin = this.previewWidth ? this.previewWidth / 2 : 0;
 
     return (
       <div className="color-picker-wrapper">
@@ -73,11 +76,13 @@ class ColorPicker extends React.Component {
         </div>
         { this.state.displayColorPicker ? <div>
           <div style={cover} onClick={this.handleClose} />
-          <ChromePicker 
-            color={color}
-            onChange={this.handleChange}
-            disableAlpha={this.props.disableAlpha}
-          />
+          <div style={{ marginLeft: margin }}>
+            <ChromePicker 
+              color={color}
+              onChange={this.handleChange}
+              disableAlpha={this.props.disableAlpha}
+            />
+          </div>
         </div> : null }
 
       </div>

@@ -186,7 +186,7 @@ class BoxShadow extends React.Component {
           <div className="field-wrapper right">
             <Toggle
               onChange={this.handleToggleChange}
-              label="Inset Shadow"
+              label="Inset"
               className="left"
             />
           </div>

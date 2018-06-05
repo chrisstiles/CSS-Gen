@@ -3,21 +3,60 @@
   top:0;
   right:0;
   bottom:0;
-  width:380px;
+  width:382px;
   background-color:#ececec;
   z-index: 100;
-  padding:35px;
+  border-left: 2px solid #dadada;
+
+  .sidebar-title {
+    width: calc(100% + 54px);
+    margin-left: -27px;
+    margin-bottom: 20px;
+    text-align: center;
+    background: #e5e5e5;
+    color: #828282;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 8px 0 9px 0;
+    line-height: 1;
+    border-bottom: 1px solid #dadada;
+    border-top: 2px solid #dadada;
+  }
+}
+
+#sidebar-controls {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:197px;
   overflow:scroll;
+  padding:20px 27px;
+
+  .sidebar-title:first-child {
+    margin-top: -20px;
+    border-top:none;
+    padding-top:9px;
+  }
 }
 
 /* Output CSS */
 
 #output-wrapper {
-  margin-top:29px;
   padding:15px;
-  width: calc(100% + 70px);
-  margin-left: -35px;
-  border-top: 2px solid #dadada;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 197px;
+
+  .sidebar-title {
+    width: calc(100% + 30px);
+    margin-left: -15px;
+    margin-top: -15px;
+    margin-bottom: 15px;
+  }
 
   .button {
     float:right;

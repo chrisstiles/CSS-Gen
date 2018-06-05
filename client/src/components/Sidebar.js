@@ -4,7 +4,10 @@ import CodeOutput from './CodeOutput';
 const Sidebar = ({ property, children, generateCSS }) => {
   return (
     <div id="sidebar">
-      {children}
+    	<div id="sidebar-controls">
+    		<div className="sidebar-title">Controls</div>
+      	{children}
+      </div>
       <CodeOutput
         property={property}
         generateCSS={generateCSS}

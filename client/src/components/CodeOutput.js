@@ -76,6 +76,7 @@ class CodeOutput extends React.Component {
   render() {
     return (
       <div id="output-wrapper">
+        <div className="sidebar-title">Code Output</div>
         <textarea
           id="output"
           autoCorrect="off"

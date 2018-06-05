@@ -139,7 +139,7 @@ body {
 
 #header {
   padding: 55px 50px 27px 390px;
-  background-color: rgba(247, 247, 247, 0.95); }
+  background-color: rgba(247, 247, 247, 0.8); }
   #header h1 {
     color: #2ddab4;
     font-weight: 400;
@@ -229,19 +229,51 @@ body {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 380px;
+  width: 382px;
   background-color: #ececec;
   z-index: 100;
-  padding: 35px;
-  overflow: scroll; }
+  border-left: 2px solid #dadada; }
+  #sidebar .sidebar-title {
+    width: calc(100% + 54px);
+    margin-left: -27px;
+    margin-bottom: 20px;
+    text-align: center;
+    background: #e5e5e5;
+    color: #828282;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 8px 0 9px 0;
+    line-height: 1;
+    border-bottom: 1px solid #dadada;
+    border-top: 2px solid #dadada; }
+
+#sidebar-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 197px;
+  overflow: scroll;
+  padding: 20px 27px; }
+  #sidebar-controls .sidebar-title:first-child {
+    margin-top: -20px;
+    border-top: none;
+    padding-top: 9px; }
 
 /* Output CSS */
 #output-wrapper {
-  margin-top: 29px;
   padding: 15px;
-  width: calc(100% + 70px);
-  margin-left: -35px;
-  border-top: 2px solid #dadada; }
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 197px; }
+  #output-wrapper .sidebar-title {
+    width: calc(100% + 30px);
+    margin-left: -15px;
+    margin-top: -15px;
+    margin-bottom: 15px; }
   #output-wrapper .button {
     float: right; }
 
@@ -283,6 +315,8 @@ body {
       margin-right: 0; }
   .field-wrapper.right {
     text-align: right; }
+    .field-wrapper.right .toggle-wrapper {
+      margin-right: -3px; }
   .field-wrapper .title {
     font-size: 16px;
     font-weight: 600;
@@ -324,7 +358,7 @@ input[type="number"] {
   background-color: #2ddab4;
   font-weight: 600;
   font-size: 15px;
-  padding: 12px 15px 11px 15px;
+  padding: 11px 15px 12px 15px;
   line-height: 1em;
   outline: none;
   border: none;
@@ -349,9 +383,10 @@ input[type="number"] {
 
 .chrome-picker {
   position: fixed;
-  z-index: 200;
+  z-index: 9999;
   width: 226px !important;
-  margin-top: 5px; }
+  margin-top: 5px;
+  transform: translateX(-50%); }
 
 /* Toggle Switch */
 .toggle-wrapper {
