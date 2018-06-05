@@ -164,7 +164,7 @@ body {
     border-right: 1px solid #dedede; }
   #toolbar .item {
     float: left;
-    margin-right: 20px;
+    margin-right: 13px;
     height: 68px; }
     #toolbar .item:last-child {
       margin-right: 0; }
@@ -179,6 +179,12 @@ body {
     #toolbar .item.border {
       border-right: 1px solid #dedede;
       padding-right: 13px; }
+    #toolbar .item .color-preview {
+      width: 113px;
+      height: 27px;
+      border: 1px solid #d2d2d2;
+      border-radius: 0;
+      margin: 0; }
   #toolbar .button {
     margin-top: 15px; }
 
@@ -271,6 +277,12 @@ body {
 
 .field-wrapper {
   margin-bottom: 20px; }
+  .field-wrapper.left {
+    margin-right: 12px; }
+    .field-wrapper.left:last-child {
+      margin-right: 0; }
+  .field-wrapper.right {
+    text-align: right; }
   .field-wrapper .title {
     font-size: 16px;
     font-weight: 600;
@@ -328,17 +340,18 @@ input[type="number"] {
   position: relative; }
 
 .color-preview {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border: 1px solid #dedede;
-  border-radius: 3px; }
+  border-radius: 3px;
+  margin-top: 2px;
+  margin-bottom: 3px; }
 
 .chrome-picker {
-  position: absolute;
+  position: fixed;
   z-index: 200;
   width: 226px !important;
-  left: 50%;
-  margin-left: -113px; }
+  margin-top: 5px; }
 
 /* Toggle Switch */
 .toggle-wrapper {

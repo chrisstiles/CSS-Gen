@@ -174,18 +174,20 @@ class BoxShadow extends React.Component {
       <div>
         <div className="row">
           <div className="field-wrapper left">
-            <Toggle
-              onChange={this.handleToggleChange}
-              label="Inset"
-              className="left"
-            />
-          </div>
-          <div className="field-wrapper left">
+            <label className="title">Shadow Color</label>
             <ColorPicker
               backgroundColor={this.state.shadowColor}
               disableAlpha={true}
               onChange={this.handleShadowColorPickerChange}
               ref={colorPicker => { this.shadowColorPicker = colorPicker }}
+            />
+          </div>
+
+          <div className="field-wrapper right">
+            <Toggle
+              onChange={this.handleToggleChange}
+              label="Inset Shadow"
+              className="left"
             />
           </div>
         </div>
@@ -230,7 +232,8 @@ class BoxShadow extends React.Component {
           />
         </div>
 
-        <div className="item">
+        <div className="item input border">
+          <label>Background Color:</label>
           <ColorPicker
             backgroundColor={this.state.backgroundColor}
             onChange={this.handlePreviewWindowColorPickerChange}
@@ -257,7 +260,8 @@ class BoxShadow extends React.Component {
         style={{ boxShadow: this.state.style, backgroundColor: this.state.backgroundColor }}
         size={{ width: 400, height: 400 }}
         handlePreviewWindowResize={this.handlePreviewWindowResize}
-      />
+      >
+      </PreviewWindow>
     );
   }
 

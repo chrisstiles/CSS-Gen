@@ -21,11 +21,11 @@ class ColorPicker extends React.Component {
   }
 
   handleClick() {
-    this.setState({ displayColorPicker: !this.state.displayColorPicker })
+    this.setState({ displayColorPicker: !this.state.displayColorPicker });
   };
 
   handleClose() {
-    this.setState({ displayColorPicker: false })
+    this.setState({ displayColorPicker: false });
   };
 
   handleChange(color) {
@@ -35,7 +35,7 @@ class ColorPicker extends React.Component {
 
   generateColorCSS() {
     const { r, g, b, a } = this.state.color;
-    const color = `rgba(${r}, ${g}, ${b}, ${a})`
+    const color = `rgba(${r}, ${g}, ${b}, ${a})`;
 
     return color;
   }
