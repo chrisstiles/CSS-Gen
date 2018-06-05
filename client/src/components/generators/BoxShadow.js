@@ -36,7 +36,10 @@ class BoxShadow extends React.Component {
           a: 1
         }
       },
-      backgroundColor: 'rgba(255, 255, 255, 1)',
+      // backgroundColor: 'rgba(255, 255, 255, 1)',
+      previewWindow: {
+        backgroundColor: 'rgba(255, 255, 255, 1)'
+      },
       inset: false,
       style: ''
     };
@@ -53,6 +56,7 @@ class BoxShadow extends React.Component {
     this.handleToolbarTick = this.handleToolbarTick.bind(this);
     this.handlePreviewWindowColorPickerChange = this.handlePreviewWindowColorPickerChange.bind(this);
     this.handleShadowColorPickerChange = this.handleShadowColorPickerChange.bind(this);
+    this.handleColorPickerOpen = this.handleColorPickerOpen.bind(this);
     this.handleToggleChange = this.handleToggleChange.bind(this);
 
     this.defaultPreviewSize = { width: 400, height: 400 };
@@ -156,12 +160,26 @@ class BoxShadow extends React.Component {
   }
 
   handlePreviewWindowColorPickerChange(color) {
-    this.setState({ backgroundColor: color });
+    this.setState({
+      previewWindow: {
+        backgroundColor: color
+      }
+    });
   }
 
   handleShadowColorPickerChange(color, colorObject) {
     const css = this.generateCSS({ color: colorObject });
     this.setState({ shadowColor: colorObject, style: css });
+  }
+
+  handleColorPickerOpen(picker) {
+    if (picker === this.shadowColorPicker) {
+      this.previewWindowColorPicker.handleClose();
+    }
+
+    if (picker === this.previewWindowColorPicker) {
+      this.shadowColorPicker.handleClose();
+    }
   }
 
   handleToggleChange(value) {
@@ -180,6 +198,7 @@ class BoxShadow extends React.Component {
               disableAlpha={true}
               onChange={this.handleShadowColorPickerChange}
               ref={colorPicker => { this.shadowColorPicker = colorPicker }}
+              onOpen={this.handleColorPickerOpen}
             />
           </div>
 
@@ -235,9 +254,10 @@ class BoxShadow extends React.Component {
         <div className="item input border">
           <label>Background Color:</label>
           <ColorPicker
-            backgroundColor={this.state.backgroundColor}
+            backgroundColor={this.state.previewWindow.backgroundColor}
             onChange={this.handlePreviewWindowColorPickerChange}
             ref={colorPicker => { this.previewWindowColorPicker = colorPicker }}
+            onOpen={this.handleColorPickerOpen}
           />
         </div>
 
@@ -257,7 +277,7 @@ class BoxShadow extends React.Component {
     return (
       <PreviewWindow
         ref={previewWindow => { this.previewWindow = previewWindow }}
-        style={{ boxShadow: this.state.style, backgroundColor: this.state.backgroundColor }}
+        style={{ boxShadow: this.state.style, backgroundColor: this.state.previewWindow.backgroundColor }}
         size={{ width: 400, height: 400 }}
         handlePreviewWindowResize={this.handlePreviewWindowResize}
       >

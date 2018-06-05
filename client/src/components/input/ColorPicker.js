@@ -1,5 +1,6 @@
 import React from 'react';
 import ChromePicker from 'react-color';
+import tinycolor from 'tinycolor2';
 
 class ColorPicker extends React.Component {
   constructor(props) {
@@ -18,10 +19,24 @@ class ColorPicker extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.keyEvent = this.keyEvent.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.keyEvent, false);
+  }
+
+  componentWillUnmount(){
+    document.removeEventListener('keydown', this.keyEvent, false);
   }
 
   handleClick(e) {
     this.previewWidth = e.target.offsetWidth;
+
+    if (this.props.onOpen) {
+      this.props.onOpen(this);
+    }
+
     this.setState({ displayColorPicker: !this.state.displayColorPicker });
   };
 
@@ -39,6 +54,12 @@ class ColorPicker extends React.Component {
     const color = `rgba(${r}, ${g}, ${b}, ${a})`;
 
     return color;
+  }
+
+  keyEvent(event) {
+    if (event.keyCode === 27) {
+      this.handleClose();
+    }
   }
 
   reset() {
@@ -63,13 +84,29 @@ class ColorPicker extends React.Component {
     };
 
     const color = typeof this.props.backgroundColor === 'object' ? this.props.backgroundColor.hex : this.props.backgroundColor;
-    const margin = this.previewWidth ? this.previewWidth / 2 : 0;
+    const margin = this.previewWidth ? this.previewWidth / 2 : 0
+
+    const previewStyle = {
+      backgroundColor: color
+    };
+
+    // If color is dark enough, change grey border
+    const colorTest = tinycolor(color);
+    
+    if (colorTest) {
+      const luminance = colorTest.getLuminance();
+      const brightness = colorTest.getBrightness();
+
+      if (luminance < .58 && brightness < 200) {
+        previewStyle.borderColor = color;
+      }
+    }
 
     return (
       <div className="color-picker-wrapper">
         <div 
           className="color-preview" 
-          style={{ backgroundColor: color }}
+          style={previewStyle}
           onClick={this.handleClick}
         >
         <div />
