@@ -47,8 +47,8 @@ class PreviewWindow extends React.Component {
     this.props.handlePreviewWindowResize();
   }
 
-  handleTick(up = true, type = 'width') {
-    const step = 1;
+  handleTick(up = true, type = 'width', shiftHeld) {
+    const step = shiftHeld ? 10 : 1;
     var newValue = up ? Number(this.resizable.state[type]) + step : Number(this.resizable.state[type]) - step;
 
     const min = this.constraints[type].min;

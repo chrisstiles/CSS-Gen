@@ -20,13 +20,14 @@ class NumberInput extends React.Component {
 
   handleKeyDown(event) {
     const keyCode = event.keyCode;
+    const shiftHeld = event.shiftKey;
 
     if (keyCode === 38) {
       // Up arrow is pressed
-      this.props.handleTick(true, this.props.name);
+      this.props.handleTick(true, this.props.name, shiftHeld);
     } else if (keyCode === 40) {
       // Down arrow is pressed
-      this.props.handleTick(false, this.props.name);
+      this.props.handleTick(false, this.props.name, shiftHeld);
     }
   }
 
