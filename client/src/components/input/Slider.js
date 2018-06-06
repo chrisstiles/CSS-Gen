@@ -52,8 +52,17 @@ class Slider extends RCSlider {
     this.textInput.value = this.props.value;
   }
 
-  tick(up = true) {
-    const step = this.props.step || 1;
+  tick(up = true, type, shiftHeld) {
+    var step = this.props.step || 1;
+
+    if (shiftHeld) {
+      if (step === 1) {
+        step = 10;
+      } else if (step === .01) {
+        step = .1;
+      }
+    }
+
     var newValue = up ? this.props.value + step : this.props.value - step;
 
     // Get number of decimal places in newValue
@@ -63,10 +72,20 @@ class Slider extends RCSlider {
       newValue = Number(newValue.toFixed(2));
     }
 
-    if (newValue >= this.props.min && newValue <= this.props.max) {
-      this.props.handleChange(this.props.name, newValue);
-      this.textInput.value = newValue;
+    // Adjust new value for max or minimum
+    if (newValue < this.props.min) {
+      newValue = this.props.min;
+    } else if (newValue > this.props.max) {
+      newValue = this.props.max;
     }
+
+    // Update slider and text input
+    this.props.handleChange(this.props.name, newValue);
+    this.textInput.value = newValue;
+
+    // if (newValue >= this.props.min && newValue <= this.props.max) {
+      
+    // } else if (newValue < this.props.min)
   }
 
   render() {

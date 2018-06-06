@@ -198,7 +198,6 @@ class BoxShadow extends React.Component {
 
   handleToolbarTick(up, type, shiftHeld) {
     this.previewWindow.handleTick(up, type, shiftHeld);
-    // this.generatePreviewCSS();
   }
 
   handlePreviewWindowColorPickerChange(color) {
