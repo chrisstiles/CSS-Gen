@@ -96,8 +96,8 @@ class BoxShadow extends React.Component {
       css = '';
     } else {
       css = `
-        width: ${rules.width};
-        height: ${rules.height};
+        width: ${rules.width}px;
+        height: ${rules.height}px;
         background-color: ${rules.backgroundColor};
       `;
     }
@@ -346,7 +346,7 @@ class BoxShadow extends React.Component {
         size={{ width: this.initialPreviewWindowState.width, height: this.initialPreviewWindowState.height }}
         handlePreviewWindowResize={this.handlePreviewWindowResize}
       >
-        {this.state.previewWindow.width} x {this.state.previewWindow.height}
+        {this.state.previewWindow.width}px x {this.state.previewWindow.height}px
       </PreviewWindow>
     );
   }
