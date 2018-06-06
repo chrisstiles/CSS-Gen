@@ -1,4 +1,26 @@
 #box-shadow-preview {
-  width: 400px;
-  height:400px;
+  width: 300px;
+  height:300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius:5px;
+
+  .preview-text {
+    display:inline-block;
+    background:rgba(255, 255, 255, .9);
+    font-size:15px;
+    text-align:center;
+    padding:10px 13px 9px 13px;
+    border-radius:2px;
+    color:#7d7d7d;
+    font-weight:600;
+
+    span {
+      display:block;
+      margin-bottom:3px;
+      font-size:12px;
+    }
+  }
 }

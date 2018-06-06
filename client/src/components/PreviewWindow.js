@@ -7,8 +7,8 @@ class PreviewWindow extends React.Component {
     super(props);
 
     this.constraints = {
-      width: { min: 60, max: 3000 },
-      height: { min: 60, max: 3000 }
+      width: { min: 160, max: 3000 },
+      height: { min: 80, max: 3000 }
     }
 
     this.handleResizeStart = this.handleResizeStart.bind(this);
@@ -88,7 +88,7 @@ class PreviewWindow extends React.Component {
         <div className="resize-wrapper" ref={el => { this.resizeWrapper = el; }}>
           <Resizable
             style={this.props.style}
-            id="box-shadow-preview"
+            id={this.props.id}
             ref={resizable => { this.resizable = resizable; }}
             className="generator-preview"
             defaultSize={{

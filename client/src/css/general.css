@@ -19,13 +19,13 @@ html {
   -moz-osx-font-smoothing: grayscale; }
 
 body {
-  background-color: #f7f7f7;
+  background-color: #ffffff;
   margin: 0;
   padding: 0;
   font-family: "Montserrat", sans-serif; }
 
 #main {
-  padding: 43px 50px 60px 390px; }
+  padding: 30px 50px 60px 335px; }
 
 .page-content {
   color: #4e4e4e;
@@ -118,8 +118,9 @@ body {
   border-radius: 6px;
   z-index: 4000;
   min-height: 510px;
-  width: 320px;
-  box-shadow: 0px 10px 42px 0px rgba(0, 0, 0, 0.11);
+  width: 280px;
+  box-shadow: 0px 9px 29px 0px rgba(184, 185, 218, 0.36);
+  border: 1px solid rgba(72, 52, 212, 0.25);
   padding: 30px; }
 
 #nav-window a.current {
@@ -137,16 +138,16 @@ body {
   z-index: 100; }
 
 #header {
-  padding: 55px 50px 27px 370px;
+  padding: 45px 50px 18px 335px;
   background-color: rgba(247, 247, 247, 0.8); }
   #header h1 {
-    color: #2ddab4;
+    color: #4834d4;
     font-weight: 400;
     font-size: 28px; }
 
 #toolbar {
   height: 69px;
-  padding: 0 355px 0 370px;
+  padding: 0 355px 0 330px;
   background-color: rgba(255, 255, 255, 0.87); }
   #toolbar .toolbar-title {
     float: left;
@@ -325,20 +326,24 @@ body {
     display: block; }
 
 input[type="text"],
-input[type="number"] {
-  height: 27px;
+input[type="number"],
+.chrome-picker input {
+  height: 27px !important;
   padding: 0 6px;
   font-size: 15px;
   -webkit-appearance: none;
   apperance: none;
-  border: 1px solid #d2d2d2;
+  border: 1px solid #d2d2d2 !important;
   outline: none;
   font-family: "Montserrat", sans-serif;
   color: #505050;
-  line-height: normal; }
+  line-height: normal;
+  box-shadow: none !important;
+  border-radius: 0 !important; }
   input[type="text"]:focus,
-  input[type="number"]:focus {
-    border: 1px solid #2ddab4; }
+  input[type="number"]:focus,
+  .chrome-picker input:focus {
+    border: 1px solid #4834d4 !important; }
 
 .number-input {
   font-weight: 600;
@@ -355,7 +360,7 @@ input[type="number"] {
   -webkit-appearance: none;
   apperance: none;
   font-family: "Montserrat", sans-serif;
-  background-color: #2ddab4;
+  background-color: #4834d4;
   font-weight: 600;
   font-size: 15px;
   padding: 11px 15px 12px 15px;
@@ -367,7 +372,7 @@ input[type="number"] {
   border-radius: 3px;
   display: inline-block; }
   .button:hover {
-    background-color: #21b393; }
+    background-color: #5b49d8; }
 
 /* Color Picker */
 .color-picker-wrapper {
@@ -388,6 +393,8 @@ input[type="number"] {
   width: 226px !important;
   margin-top: 5px;
   transform: translateX(-50%); }
+  .chrome-picker input {
+    outline: none; }
 
 /* Toggle Switch */
 .toggle-wrapper {
@@ -399,11 +406,11 @@ input[type="number"] {
   .toggle-wrapper input {
     display: none; }
     .toggle-wrapper input:checked + .toggle {
-      background-color: #2ddab4; }
+      background-color: #4834d4; }
       .toggle-wrapper input:checked + .toggle:before {
         transform: translateX(22px); }
     .toggle-wrapper input:focus + .toggle {
-      box-shadow: 0 0 1px #2ddab4; }
+      box-shadow: 0 0 1px #4834d4; }
   .toggle-wrapper .toggle {
     position: absolute;
     cursor: pointer;
@@ -450,7 +457,7 @@ input[type="number"] {
   left: 0;
   height: 4px;
   border-radius: 6px;
-  background-color: #2ddab4; }
+  background-color: #4834d4; }
 
 .rc-slider-handle {
   position: absolute;
@@ -462,7 +469,7 @@ input[type="number"] {
   cursor: -webkit-grab;
   cursor: grab;
   border-radius: 50%;
-  border: solid 3px #2ddab4;
+  border: solid 3px #4834d4;
   background-color: #fff;
   outline: none;
   transition: transform .2s ease;
@@ -693,5 +700,23 @@ input[type="number"] {
   border-top-color: #6c6c6c; }
 
 #box-shadow-preview {
-  width: 400px;
-  height: 400px; }
+  width: 300px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: 5px; }
+  #box-shadow-preview .preview-text {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 15px;
+    text-align: center;
+    padding: 10px 13px 9px 13px;
+    border-radius: 2px;
+    color: #7d7d7d;
+    font-weight: 600; }
+    #box-shadow-preview .preview-text span {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 12px; }

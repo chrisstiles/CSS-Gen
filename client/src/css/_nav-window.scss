@@ -1,3 +1,5 @@
+@import './_variables.scss';
+
 #nav-window {
 	position: fixed;
 	top: 25px;
@@ -6,8 +8,9 @@
 	border-radius: 6px;
 	z-index: 4000;
 	min-height: 510px;
-	width: 320px;
-	box-shadow: 0px 10px 42px 0px rgba(0,0,0,0.11);
+	width: 280px;
+	box-shadow: 0px 9px 29px 0px rgba(184, 185, 218, 0.36);
+	border:1px solid rgba($accent-color, .25);
 	padding:30px;
 }
 

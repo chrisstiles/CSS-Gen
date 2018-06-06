@@ -82,10 +82,6 @@ class Slider extends RCSlider {
     // Update slider and text input
     this.props.handleChange(this.props.name, newValue);
     this.textInput.value = newValue;
-
-    // if (newValue >= this.props.min && newValue <= this.props.max) {
-      
-    // } else if (newValue < this.props.min)
   }
 
   render() {

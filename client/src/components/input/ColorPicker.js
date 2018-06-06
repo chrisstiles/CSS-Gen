@@ -57,7 +57,7 @@ class ColorPicker extends React.Component {
   }
 
   keyEvent(event) {
-    if (event.keyCode === 27) {
+    if (event.keyCode === 27 || event.keyCode === 13) {
       this.handleClose();
     }
   }

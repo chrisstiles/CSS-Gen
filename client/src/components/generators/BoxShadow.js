@@ -22,10 +22,10 @@ class BoxShadow extends React.Component {
 
     this.state = {
       horizontalShift: 0,
-      verticalShift: 8,
-      blurRadius: 28,
+      verticalShift: 12,
+      blurRadius: 40,
       spreadRadius: 0,
-      shadowOpacity: 0.25,
+      shadowOpacity: 0.15,
       shadowColor: {
         hex: '#000000',
         rgb: {
@@ -344,8 +344,12 @@ class BoxShadow extends React.Component {
         style={{ boxShadow: this.state.outputCSS, backgroundColor: this.state.previewWindow.backgroundColor }}
         size={{ width: this.initialPreviewWindowState.width, height: this.initialPreviewWindowState.height }}
         handlePreviewWindowResize={this.handlePreviewWindowResize}
+        id="box-shadow-preview"
       >
-        {this.state.previewWindow.width}px x {this.state.previewWindow.height}px
+        <div className="preview-text">
+          <span>Preview</span>
+          {this.state.previewWindow.width}px x {this.state.previewWindow.height}px
+        </div>
       </PreviewWindow>
     );
   }
