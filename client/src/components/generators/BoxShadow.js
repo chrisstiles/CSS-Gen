@@ -280,7 +280,7 @@ class BoxShadow extends React.Component {
       <Toolbar
         ref={toolbar => { this.toolbar = toolbar }}
       > 
-        <div className="toolbar-title">Preview<br /> Window</div>
+        <div className="toolbar-title">Preview<br /> Settings</div>
         <div className="item input">
           <label>Width:</label>
           <NumberInput 
