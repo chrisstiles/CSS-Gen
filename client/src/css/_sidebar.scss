@@ -30,7 +30,7 @@
   top:0;
   left:0;
   right:0;
-  bottom:227px;
+  bottom:230px;
   overflow:scroll;
   padding:20px 27px;
 
@@ -49,7 +49,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 227px;
+  height: 230px;
 
   .sidebar-title {
     width: calc(100% + 30px);
@@ -60,6 +60,10 @@
 
   .button {
     float:right;
+  }
+
+  .field-wrapper {
+    margin-top:-4px;
   }
 }
 
@@ -75,7 +79,7 @@
   -webkit-appearance:none;
   outline:none;
   border:none;
-  height:110px;
+  height:100px;
   color:$dark-grey;
   font-weight:600;
   float:left;

@@ -32,6 +32,12 @@
     color: $dark-grey;
     display: block;
   }
+
+  &.small {
+    .title {
+      font-size:13px;
+    }
+  }
 }
 
 input[type="text"],

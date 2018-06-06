@@ -2,6 +2,8 @@ import React from 'react';
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import prettify from 'postcss-prettify';
+import Toggle from './input/Toggle';
+import _ from 'underscore';
 import { addNotification, notificationTypes } from './App';
 
 class CodeOutput extends React.Component {
@@ -11,9 +13,13 @@ class CodeOutput extends React.Component {
     this.getCSS = this.getCSS.bind(this);
     this.copyCSS = this.copyCSS.bind(this);
 
-    this.state = { css: '' };
+    this.state = { 
+      css: '',
+      showBrowserPrefixes: true
+    };
 
     this.canShowCopyNotification = true;
+    this.handleToggleChange = this.handleToggleChange.bind(this);
   }
 
   componentWillMount(test) {
@@ -33,16 +39,24 @@ class CodeOutput extends React.Component {
     this.getCSS(newProps);
   }
 
-  getCSS(newProps) {
+  getCSS(newProps, showBrowserPrefixes) {
     var css = `${newProps.property}: ${newProps.outputCSS};`;
 
     if (newProps.previewCSS) {
       css += newProps.previewCSS;
     }
 
-    var _this = this;
+    // Add plugins to format code and add prefixes if necessary
+    const plugins = [prettify];
+    const showPrefixes = showBrowserPrefixes === undefined ? this.state.showBrowserPrefixes : showBrowserPrefixes;
 
-    postcss([ autoprefixer({ browsers: ['ie >= 9', '> 2%'] }), prettify ])
+    if (showPrefixes && this.props.browserPrefixes) {
+      plugins.unshift(autoprefixer({ browsers: ['ie >= 9', '> 2%'] }));
+    }
+
+    const _this = this;
+
+    postcss(plugins)
       .process(css, { from: undefined })
       .then(function (result) {
         result.warnings().forEach(function (warn) {
@@ -88,6 +102,25 @@ class CodeOutput extends React.Component {
     document.body.removeChild(hiddenField);
   }
 
+  handleToggleChange(value) {
+    this.setState({ showBrowserPrefixes: value });
+    this.getCSS(this.props, value);
+  }
+
+  renderPrefixesToggle() {
+    if (this.props.browserPrefixes) {
+      return (
+        <div className="field-wrapper left small">
+          <Toggle
+            onChange={this.handleToggleChange}
+            label="Browser Prefixes"
+            defaultChecked={this.state.showBrowserPrefixes}
+          />
+        </div>
+      );
+    }
+  }
+
   render() {
     return (
       <div id="output-wrapper">
@@ -99,6 +132,7 @@ class CodeOutput extends React.Component {
           value={this.state.css}
           readOnly
         />
+        {this.renderPrefixesToggle()}
         <button 
           onClick={this.copyCSS}
           className="button"
