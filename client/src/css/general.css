@@ -19,7 +19,7 @@ html {
   -moz-osx-font-smoothing: grayscale; }
 
 body {
-  background-color: #ffffff;
+  background-color: #fdfdfd;
   margin: 0;
   padding: 0;
   font-family: "Montserrat", sans-serif; }
@@ -120,7 +120,7 @@ body {
   min-height: 510px;
   width: 280px;
   box-shadow: 0px 9px 29px 0px rgba(184, 185, 218, 0.36);
-  border: 1px solid rgba(72, 52, 212, 0.25);
+  border: 1px solid rgba(72, 52, 212, 0.23);
   padding: 30px; }
 
 #nav-window a.current {
@@ -196,8 +196,10 @@ body {
     padding-right: 314px; } }
 
 #generator-wrapper {
-  margin-right: 330px;
+  margin-right: 323px;
   position: relative; }
+  #generator-wrapper .page-content {
+    padding-top: 15px; }
 
 /* Preview Window */
 .generator-preview {
@@ -699,15 +701,17 @@ input[type="number"],
   border-width: 4px 4px 0;
   border-top-color: #6c6c6c; }
 
-#box-shadow-preview {
+#generator-wrapper #box-shadow-preview {
   width: 300px;
   height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
-  border-radius: 5px; }
-  #box-shadow-preview .preview-text {
+  border-radius: 5px;
+  left: 50%;
+  margin-left: -150px; }
+  #generator-wrapper #box-shadow-preview .preview-text {
     display: inline-block;
     background: rgba(255, 255, 255, 0.9);
     font-size: 15px;
@@ -716,7 +720,7 @@ input[type="number"],
     border-radius: 2px;
     color: #7d7d7d;
     font-weight: 600; }
-    #box-shadow-preview .preview-text span {
+    #generator-wrapper #box-shadow-preview .preview-text span {
       display: block;
       margin-bottom: 3px;
       font-size: 12px; }

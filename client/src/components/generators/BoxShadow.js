@@ -358,6 +358,7 @@ class BoxShadow extends React.Component {
     return (
       <Generator 
         title="CSS Box Shadow Generator | CSS-GEN"
+        className="box-shadow"
         property="box-shadow"
         heading="CSS Box Shadow Generator"
         toolbar={this.renderToolbar()}

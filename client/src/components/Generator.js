@@ -2,29 +2,89 @@ import React from 'react';
 import Page from './Page';
 import Sidebar from './Sidebar';
 
-const Generator = (props) => {
-  const { title, property, outputCSS, renderInputs, heading, children, toolbar, previewWindow, previewCSS } = props;
-  return (
-    <Page
-      title={title}
-      heading={heading}
-      toolbar={toolbar}
-    >
-      <div id="generator-wrapper">
-        <div id="generator" className="page-content">
-          {previewWindow}
-          <Sidebar
-            property={property}
-            outputCSS={outputCSS}
-            previewCSS={previewCSS}
+class Generator extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { keys: '' };
+
+    this.handleKeydown = this.handleKeydown.bind(this);
+    this.handleKeyup = this.handleKeyup.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeydown, false);
+    document.addEventListener('keyup', this.handleKeyup, false);
+    document.addEventListener('keydown', this.props.handleKeydown, false);
+    document.addEventListener('keyup', this.props.handleKeyup, false);
+  }
+
+  componentWillUnmount(){
+    document.removeEventListener('keydown', this.handleKeydown, false);
+    document.removeEventListener('keyup', this.handleKeyup, false);
+    document.removeEventListener('keydown', this.props.handleKeydown, false);
+    document.removeEventListener('keyup', this.props.handleKeyup, false);
+  }
+
+  handleKeydown(event) {
+    // Adds classes to the generator for common keys pressed
+    var keys = [];
+
+    // Shift key
+    if (event.shiftKey) {
+      keys.push('key-shift');
+    }
+
+    // Command or control keys
+    if (event.metaKey || event.ctrlKey) {
+      keys.push('key-meta');
+    }
+
+    // Alt or option keys
+    if (event.altKey) {
+      keys.push('key-alt');
+    }
+
+    const keyString = keys.length ? ` ${keys.join(' ')}` : '';
+    this.setState({ keys:  keyString});
+  }
+
+  handleKeyup(event) {
+    this.setState({ keys: '' });
+  }
+
+  render() {
+    const cssClasses = `${this.props.className}${this.state.keys}`;
+
+    return (
+      <Page
+        title={this.props.title}
+        heading={this.props.heading}
+        toolbar={this.props.toolbar}
+      >
+        <div 
+          id="generator-wrapper"
+          className={cssClasses}
+        >
+          <div 
+            id="generator" 
+            className="page-content"
+
           >
-            {renderInputs()}
-          </Sidebar>
-          {children}
+            {this.props.previewWindow}
+            <Sidebar
+              property={this.props.property}
+              outputCSS={this.props.outputCSS}
+              previewCSS={this.props.previewCSS}
+            >
+              {this.props.renderInputs()}
+            </Sidebar>
+            {this.props.children}
+          </div>
         </div>
-      </div>
-    </Page>
-  );
+      </Page>
+    );
+  }
 }
 
 export default Generator;
