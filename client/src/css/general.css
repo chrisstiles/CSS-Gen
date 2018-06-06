@@ -253,7 +253,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 237px;
+  bottom: 227px;
   overflow: scroll;
   padding: 20px 27px; }
   #sidebar-controls .sidebar-title:first-child {
@@ -268,7 +268,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 237px; }
+  height: 227px; }
   #output-wrapper .sidebar-title {
     width: calc(100% + 30px);
     margin-left: -15px;
@@ -289,7 +289,7 @@ body {
   -webkit-appearance: none;
   outline: none;
   border: none;
-  height: 120px;
+  height: 110px;
   color: #505050;
   font-weight: 600;
   float: left; }
