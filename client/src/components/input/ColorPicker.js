@@ -46,14 +46,16 @@ class ColorPicker extends React.Component {
 
   handleChange(color) {
     this.setState({ color: color.rgb });
-    this.props.onChange(this.generateColorCSS(), color);
+    if (this.props.onChange) {
+      this.props.onChange(this.generateColorCSS(color.rgb), color);
+    }
   };
 
-  generateColorCSS() {
-    const { r, g, b, a } = this.state.color;
-    const color = `rgba(${r}, ${g}, ${b}, ${a})`;
+  generateColorCSS(color = this.state.color) {
+    const { r, g, b, a } = color;
+    const colorString = `rgba(${r}, ${g}, ${b}, ${a})`;
 
-    return color;
+    return colorString;
   }
 
   keyEvent(event) {
