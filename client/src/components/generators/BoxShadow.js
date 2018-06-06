@@ -346,6 +346,7 @@ class BoxShadow extends React.Component {
         size={{ width: this.initialPreviewWindowState.width, height: this.initialPreviewWindowState.height }}
         handlePreviewWindowResize={this.handlePreviewWindowResize}
       >
+        {this.state.previewWindow.width} x {this.state.previewWindow.height}
       </PreviewWindow>
     );
   }
