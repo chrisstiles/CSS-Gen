@@ -34,8 +34,9 @@ class CodeOutput extends React.Component {
         result.warnings().forEach(function (warn) {
             console.warn(warn.toString());
         });
-        
+
         _this.setState({ css: result.css });
+        
     });
   }
 

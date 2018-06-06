@@ -1,7 +1,7 @@
 import React from 'react';
 import CodeOutput from './CodeOutput';
 
-const Sidebar = ({ property, children, generateCSS }) => {
+const Sidebar = ({ property, children, generateCSS, outputPreviewStyles, previewStyles }) => {
   return (
     <div id="sidebar">
     	<div id="sidebar-controls">

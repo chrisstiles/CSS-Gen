@@ -37,8 +37,11 @@ class BoxShadow extends React.Component {
         }
       },
       // backgroundColor: 'rgba(255, 255, 255, 1)',
+      outputPreviewStyles: false,
       previewWindow: {
-        backgroundColor: 'rgba(255, 255, 255, 1)'
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+        width: 400,
+        height: 400
       },
       inset: false,
       style: ''
@@ -47,6 +50,7 @@ class BoxShadow extends React.Component {
     this.initialState = this.state;
 
     this.generateCSS = this.generateCSS.bind(this);
+    this.generatePreviewCSS = this.generatePreviewCSS.bind(this);
     this.reset = this.reset.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -82,6 +86,15 @@ class BoxShadow extends React.Component {
     return css;
   }
 
+  generatePreviewCSS() {
+    const css = `
+      width: ${this.state.previewWindow.width};
+      height: ${this.state.previewWindow.height};
+    `;
+
+    return css;
+  }
+
   reset() {
     this.previewWindow.reset(); 
     this.previewWindowColorPicker.reset();
@@ -111,6 +124,10 @@ class BoxShadow extends React.Component {
 
       this.widthInput.value = width;
       this.heightInput.value = height;
+
+      // this.setState({
+
+      // });
 
     } else {
       
@@ -160,11 +177,9 @@ class BoxShadow extends React.Component {
   }
 
   handlePreviewWindowColorPickerChange(color) {
-    this.setState({
-      previewWindow: {
-        backgroundColor: color
-      }
-    });
+    this.setState({ previewWindow: { ...this.state.previewWindow, backgroundColor: color } });
+
+    console.log(this.state.previewWindow)
   }
 
   handleShadowColorPickerChange(color, colorObject) {
@@ -182,9 +197,17 @@ class BoxShadow extends React.Component {
     }
   }
 
-  handleToggleChange(value) {
-    const css = this.generateCSS({ inset: value });
-    this.setState({ style: css, inset: value });
+  handleToggleChange(value, event) {
+    const name = event.target.name;
+
+    if (name === 'inset') {
+      const css = this.generateCSS({ inset: value });
+      this.setState({ style: css, inset: value });
+    } else {
+      const newState = {};
+      newState[name] = value;
+      this.setState(newState);
+    }
   }
 
   renderInputs() {
@@ -207,6 +230,7 @@ class BoxShadow extends React.Component {
               onChange={this.handleToggleChange}
               label="Inset"
               className="left"
+              name="inset"
             />
           </div>
         </div>
@@ -261,12 +285,21 @@ class BoxShadow extends React.Component {
           />
         </div>
 
+        <div className="item input border">
+          <Toggle
+            onChange={this.handleToggleChange}
+            label="Output Preview CSS:"
+            className="left"
+            name="outputPreviewStyles"
+          />
+        </div>
+
         <div className="right">
           <button
             className="button"
             onClick={this.reset}
           >
-            Reset Window
+            Reset Preview
           </button>
         </div>
       </Toolbar>

@@ -2,7 +2,8 @@ import React from 'react';
 import Page from './Page';
 import Sidebar from './Sidebar';
 
-const Generator = ({ title, property, generateCSS, renderInputs, heading, children, toolbar, previewWindow }) => {
+const Generator = (props) => {
+  const { title, property, generateCSS, renderInputs, heading, children, toolbar, previewWindow, previewStyles } = props;
   return (
     <Page
       title={title}

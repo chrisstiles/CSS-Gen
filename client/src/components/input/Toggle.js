@@ -11,18 +11,25 @@ class Toggle extends React.Component {
 		const el = event.target;
 		const value = el.type === 'checkbox' ? el.checked : el.value;
 
-		this.props.onChange(value);
+		this.props.onChange(value, event);
+	}
+
+	renderLabel() {
+		if (this.props.label) {
+			return <label className="title">{this.props.label}</label>;
+		}
 	}
 
 	render() {
 		return (
 			<div>
-				<div className="title">{this.props.label}</div>
+				{ this.renderLabel() }
 				<label className="toggle-wrapper">
 					<input
 						name={this.props.name}
 						type="checkbox"
 						onChange={this.handleChange}
+						defaultChecked={this.props.defaultChecked}
 					/>
 					<span className="toggle"></span>
 				</label>
