@@ -16,16 +16,30 @@ class CodeOutput extends React.Component {
     this.canShowCopyNotification = true;
   }
 
-  componentWillMount() {
-    this.getCSS();
+  componentWillMount(test) {
+    const css = {
+      property: this.props.property,
+      outputCSS: this.props.outputCSS
+    }
+
+    if (this.props.previewCSS) {
+      css.previewCSS = this.props.previewCSS;
+    }
+
+    this.getCSS(css);
   }
 
-  componentWillReceiveProps() {
-    this.getCSS();
+  componentWillReceiveProps(newProps) {
+    this.getCSS(newProps);
   }
 
-  getCSS() {
-    var css = `${this.props.property}: ${this.props.generateCSS()};`;
+  getCSS(newProps) {
+    var css = `${newProps.property}: ${newProps.outputCSS};`;
+
+    if (newProps.previewCSS) {
+      css += newProps.previewCSS;
+    }
+
     var _this = this;
 
     postcss([ autoprefixer({ browsers: ['ie >= 9', '> 2%'] }), prettify ])
@@ -83,6 +97,7 @@ class CodeOutput extends React.Component {
           autoCorrect="off"
           spellCheck="false"
           value={this.state.css}
+          readOnly
         />
         <button 
           onClick={this.copyCSS}

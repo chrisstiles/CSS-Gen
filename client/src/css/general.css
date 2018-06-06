@@ -138,7 +138,7 @@ body {
   z-index: 100; }
 
 #header {
-  padding: 55px 50px 27px 390px;
+  padding: 55px 50px 27px 370px;
   background-color: rgba(247, 247, 247, 0.8); }
   #header h1 {
     color: #2ddab4;
@@ -147,7 +147,7 @@ body {
 
 #toolbar {
   height: 69px;
-  padding: 0 396px 0 390px;
+  padding: 0 355px 0 370px;
   background-color: rgba(255, 255, 255, 0.87); }
   #toolbar .toolbar-title {
     float: left;
@@ -158,13 +158,13 @@ body {
     height: 68px;
     background-color: #f9f9f9;
     line-height: 1.2em;
-    padding: 13px 25px 0 45px;
-    font-size: 18px;
-    margin-left: -45px;
+    padding: 14px 19px 0 45px;
+    font-size: 16px;
+    margin-left: -50px;
     border-right: 1px solid #dedede; }
   #toolbar .item {
     float: left;
-    margin-right: 13px;
+    margin-right: 7px;
     height: 68px; }
     #toolbar .item:last-child {
       margin-right: 0; }
@@ -178,9 +178,10 @@ body {
       font-size: 12px; }
     #toolbar .item.border {
       border-right: 1px solid #dedede;
-      padding-right: 13px; }
+      padding-right: 13px;
+      margin-right: 13px; }
     #toolbar .item .color-preview {
-      width: 113px;
+      width: 77px;
       height: 27px;
       border: 1px solid #d2d2d2;
       border-radius: 0;
@@ -195,7 +196,7 @@ body {
     padding-right: 314px; } }
 
 #generator-wrapper {
-  margin-right: 385px;
+  margin-right: 330px;
   position: relative; }
 
 /* Preview Window */
@@ -229,7 +230,7 @@ body {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 382px;
+  width: 340px;
   background-color: #ececec;
   z-index: 100;
   border-left: 2px solid #dadada; }
@@ -379,7 +380,8 @@ input[type="number"] {
   border: 1px solid #dedede;
   border-radius: 3px;
   margin-top: 2px;
-  margin-bottom: 3px; }
+  margin-bottom: 3px;
+  cursor: pointer; }
 
 .chrome-picker {
   position: fixed;

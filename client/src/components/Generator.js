@@ -3,7 +3,7 @@ import Page from './Page';
 import Sidebar from './Sidebar';
 
 const Generator = (props) => {
-  const { title, property, generateCSS, renderInputs, heading, children, toolbar, previewWindow, previewStyles } = props;
+  const { title, property, outputCSS, renderInputs, heading, children, toolbar, previewWindow, previewCSS } = props;
   return (
     <Page
       title={title}
@@ -15,7 +15,8 @@ const Generator = (props) => {
           {previewWindow}
           <Sidebar
             property={property}
-            generateCSS={generateCSS}
+            outputCSS={outputCSS}
+            previewCSS={previewCSS}
           >
             {renderInputs()}
           </Sidebar>

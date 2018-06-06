@@ -1,7 +1,7 @@
 import React from 'react';
 import CodeOutput from './CodeOutput';
 
-const Sidebar = ({ property, children, generateCSS, outputPreviewStyles, previewStyles }) => {
+const Sidebar = ({ property, children, outputCSS, previewCSS }) => {
   return (
     <div id="sidebar">
     	<div id="sidebar-controls">
@@ -10,7 +10,8 @@ const Sidebar = ({ property, children, generateCSS, outputPreviewStyles, preview
       </div>
       <CodeOutput
         property={property}
-        generateCSS={generateCSS}
+        outputCSS={outputCSS}
+        previewCSS={previewCSS}
       />
     </div>
   );

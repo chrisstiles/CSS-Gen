@@ -49,18 +49,27 @@ class PreviewWindow extends React.Component {
 
   handleTick(up = true, type = 'width') {
     const step = 1;
-    var newValue = up ? this.resizable.state[type] + step : this.resizable.state[type] - step;
+    var newValue = up ? Number(this.resizable.state[type]) + step : Number(this.resizable.state[type]) - step;
 
     const min = this.constraints[type].min;
     const max = this.constraints[type].max;
 
-    if (newValue >= min && newValue <= max) {
-      var newState = {};
-      newState[type] = newValue;
+    var newState = {};
+    var value;
 
-      this.resizable.setState(newState);
-      this.props.handlePreviewWindowResize(newValue, type);
+    if (newValue >= min && newValue <= max) {
+      newState[type] = newValue;
+      value = newValue;
+    } else if (newValue < min) {
+      newState[type] = min;
+      value = min;
+    } else {
+      newState[type] = max;
+      value = max;
     }
+
+    this.resizable.setState(newState);
+    this.props.handlePreviewWindowResize(value, type);
   }
 
   reset() {

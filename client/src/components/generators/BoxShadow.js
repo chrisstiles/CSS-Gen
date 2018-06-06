@@ -23,7 +23,6 @@ class BoxShadow extends React.Component {
     this.state = {
       horizontalShift: 0,
       verticalShift: 8,
-      shadowColor: '#000',
       blurRadius: 28,
       spreadRadius: 0,
       shadowOpacity: 0.25,
@@ -36,18 +35,18 @@ class BoxShadow extends React.Component {
           a: 1
         }
       },
-      // backgroundColor: 'rgba(255, 255, 255, 1)',
-      outputPreviewStyles: false,
+      outputCSS: '',
+      previewCSS: '',
       previewWindow: {
         backgroundColor: 'rgba(255, 255, 255, 1)',
-        width: 400,
-        height: 400
+        width: 300,
+        height: 300
       },
-      inset: false,
-      style: ''
+      inset: false
     };
 
     this.initialState = this.state;
+    this.initialPreviewWindowState = this.state.previewWindow;
 
     this.generateCSS = this.generateCSS.bind(this);
     this.generatePreviewCSS = this.generatePreviewCSS.bind(this);
@@ -62,15 +61,18 @@ class BoxShadow extends React.Component {
     this.handleShadowColorPickerChange = this.handleShadowColorPickerChange.bind(this);
     this.handleColorPickerOpen = this.handleColorPickerOpen.bind(this);
     this.handleToggleChange = this.handleToggleChange.bind(this);
-
-    this.defaultPreviewSize = { width: 400, height: 400 };
+    this.handlePreviewCSSToggle = this.handlePreviewCSSToggle.bind(this);
   }
 
   componentWillMount() {
     const css = this.generateCSS();
 
-    this.setState({ style: css });
-    this.initialState.style = css;
+    this.setState({ outputCSS: css });
+    this.initialState.outputCSS = css;
+  }
+
+  componentDidMount() {
+    this.generatePreviewCSS();
   }
 
   generateCSS(styles = {}) {
@@ -86,23 +88,34 @@ class BoxShadow extends React.Component {
     return css;
   }
 
-  generatePreviewCSS() {
-    const css = `
-      width: ${this.state.previewWindow.width};
-      height: ${this.state.previewWindow.height};
-    `;
+  generatePreviewCSS(styles = {}) {
+    const rules = _.extend({}, this.state.previewWindow, styles);
 
-    return css;
+    var css;
+    if (!this.outputPreviewStyles) {
+      css = '';
+    } else {
+      css = `
+        width: ${rules.width};
+        height: ${rules.height};
+        background-color: ${rules.backgroundColor};
+      `;
+    }
+
+    return css.trim();
   }
 
   reset() {
     this.previewWindow.reset(); 
     this.previewWindowColorPicker.reset();
     this.shadowColorPicker.reset();
-    this.setState(this.initialState);
 
-    const width = this.defaultPreviewSize.width;
-    const height = this.defaultPreviewSize.height;
+    const state = _.extend({}, this.initialState, { previewCSS: this.generatePreviewCSS(this.initialPreviewWindowState) });
+
+    this.setState(state);
+
+    const width = this.initialPreviewWindowState.width;
+    const height = this.initialPreviewWindowState.height;
 
     this.widthInput.value = width;
     this.heightInput.value = height;
@@ -111,23 +124,19 @@ class BoxShadow extends React.Component {
   handleChange(cssRule, value) {
     var newState = {};
     newState[cssRule] = value;
-    newState.style = this.generateCSS(newState);
+    newState.outputCSS = this.generateCSS(newState);
 
     this.setState(newState);
   }
 
   handlePreviewWindowResize(newValue, type) {
-
+    var width, height;
     if (newValue === undefined || type === undefined) {
-
-      const { width, height } = this.previewWindow.resizable.state;
+      width = this.previewWindow.resizable.state.width;
+      height = this.previewWindow.resizable.state.height;
 
       this.widthInput.value = width;
       this.heightInput.value = height;
-
-      // this.setState({
-
-      // });
 
     } else {
       
@@ -140,8 +149,14 @@ class BoxShadow extends React.Component {
 
       input.value = newValue;
 
+      width = this.widthInput.value;
+      height = this.heightInput.value;
     }
-    
+
+    this.setState({ 
+      previewWindow: { ...this.state.previewWindow, width, height },
+      previewCSS: this.generatePreviewCSS({ width, height }) 
+    });
   }
 
   handleToolbarTextChange(event) {
@@ -153,9 +168,13 @@ class BoxShadow extends React.Component {
       var state = {};
       state[type] = el.value;
 
+      this.setState({ 
+        previewWindow: { ...this.state.previewWindow, state },
+        previewCSS: this.generatePreviewCSS(state) 
+      });
+
       this.previewWindow.resizable.setState(state);
     }
-
   }
 
   handleToolbarTextBlur(event) {
@@ -170,21 +189,28 @@ class BoxShadow extends React.Component {
 
     this.widthInput.value = width;
     this.heightInput.value = height;
+
+    this.setState({ 
+      previewWindow: { ...this.state.previewWindow, width, height },
+      previewCSS: this.generatePreviewCSS({ width, height }) 
+    });
   }
 
   handleToolbarTick(up, type) {
     this.previewWindow.handleTick(up, type);
+    this.generatePreviewCSS();
   }
 
   handlePreviewWindowColorPickerChange(color) {
-    this.setState({ previewWindow: { ...this.state.previewWindow, backgroundColor: color } });
-
-    console.log(this.state.previewWindow)
+    this.setState({ 
+      previewWindow: { ...this.state.previewWindow, backgroundColor: color },
+      previewCSS: this.generatePreviewCSS({ backgroundColor: color })
+    });
   }
 
   handleShadowColorPickerChange(color, colorObject) {
     const css = this.generateCSS({ color: colorObject });
-    this.setState({ shadowColor: colorObject, style: css });
+    this.setState({ shadowColor: colorObject, outputCSS: css });
   }
 
   handleColorPickerOpen(picker) {
@@ -202,12 +228,18 @@ class BoxShadow extends React.Component {
 
     if (name === 'inset') {
       const css = this.generateCSS({ inset: value });
-      this.setState({ style: css, inset: value });
+      this.setState({ outputCSS: css, inset: value });
     } else {
-      const newState = {};
-      newState[name] = value;
-      this.setState(newState);
+      const state = {};
+      state[name] = value;
+
+      this.setState(state);
     }
+  }
+
+  handlePreviewCSSToggle(value) {
+    this.outputPreviewStyles = value;
+    this.setState({ previewCSS: this.generatePreviewCSS() });
   }
 
   renderInputs() {
@@ -253,7 +285,7 @@ class BoxShadow extends React.Component {
           <label>Width:</label>
           <NumberInput 
             type="text"
-            defaultValue={this.defaultPreviewSize.width}
+            defaultValue={this.initialPreviewWindowState.width}
             inputRef={el => this.widthInput = el}
             name="width"
             onChange={this.handleToolbarTextChange}
@@ -266,7 +298,7 @@ class BoxShadow extends React.Component {
           <label>Height:</label>
           <NumberInput 
             type="text"
-            defaultValue={this.defaultPreviewSize.height}
+            defaultValue={this.initialPreviewWindowState.height}
             name="height"
             inputRef={el => this.heightInput = el}
             onChange={this.handleToolbarTextChange}
@@ -276,7 +308,7 @@ class BoxShadow extends React.Component {
         </div>
 
         <div className="item input border">
-          <label>Background Color:</label>
+          <label>Background:</label>
           <ColorPicker
             backgroundColor={this.state.previewWindow.backgroundColor}
             onChange={this.handlePreviewWindowColorPickerChange}
@@ -287,8 +319,8 @@ class BoxShadow extends React.Component {
 
         <div className="item input border">
           <Toggle
-            onChange={this.handleToggleChange}
-            label="Output Preview CSS:"
+            onChange={this.handlePreviewCSSToggle}
+            label="Output CSS:"
             className="left"
             name="outputPreviewStyles"
           />
@@ -299,7 +331,7 @@ class BoxShadow extends React.Component {
             className="button"
             onClick={this.reset}
           >
-            Reset Preview
+            Reset
           </button>
         </div>
       </Toolbar>
@@ -310,8 +342,8 @@ class BoxShadow extends React.Component {
     return (
       <PreviewWindow
         ref={previewWindow => { this.previewWindow = previewWindow }}
-        style={{ boxShadow: this.state.style, backgroundColor: this.state.previewWindow.backgroundColor }}
-        size={{ width: 400, height: 400 }}
+        style={{ boxShadow: this.state.outputCSS, backgroundColor: this.state.previewWindow.backgroundColor }}
+        size={{ width: this.initialPreviewWindowState.width, height: this.initialPreviewWindowState.height }}
         handlePreviewWindowResize={this.handlePreviewWindowResize}
       >
       </PreviewWindow>
@@ -326,7 +358,8 @@ class BoxShadow extends React.Component {
         heading="CSS Box Shadow Generator"
         toolbar={this.renderToolbar()}
         previewWindow={this.renderPreviewWindow()}
-        generateCSS={this.generateCSS}
+        outputCSS={this.state.outputCSS}
+        previewCSS={this.state.previewCSS}
         renderInputs={this.renderInputs}
       />
     );
