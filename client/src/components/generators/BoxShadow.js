@@ -347,8 +347,9 @@ class BoxShadow extends React.Component {
         id="box-shadow-preview"
       >
         <div className="preview-text">
-          <span>Preview</span>
-          {this.state.previewWindow.width}px x {this.state.previewWindow.height}px
+          Preview
+          <span className="dimensions">{this.state.previewWindow.width}px x {this.state.previewWindow.height}px</span>
+          <span className="instructions">You can drag and resize this window</span>
         </div>
       </PreviewWindow>
     );

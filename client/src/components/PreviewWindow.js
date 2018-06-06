@@ -7,8 +7,8 @@ class PreviewWindow extends React.Component {
     super(props);
 
     this.constraints = {
-      width: { min: 160, max: 3000 },
-      height: { min: 80, max: 3000 }
+      width: { min: 200, max: 3000 },
+      height: { min: 100, max: 3000 }
     };
 
     this.state = {
@@ -47,94 +47,19 @@ class PreviewWindow extends React.Component {
     // If resizing from one of these directions, 
     // we should change the position of the element manually
     const directions = ['top', 'left', 'topLeft', 'bottomLeft', 'topRight'];
-
-    var top = this.resizeWrapperPosition.top;
-    var left = this.resizeWrapperPosition.left;
-
-    const altWidth = event.altKey ? (delta.width / 2) : 0;
-    const altHeight = event.altKey ? (delta.height / 2) : 0;
-
-    // if (event.altKey) {
-    //   left += ;
-    //   top += (delta.height / 2);
-    // }
+    const top = this.resizeWrapperPosition.top - delta.height;
+    const left = this.resizeWrapperPosition.left - delta.width;
 
     if (directions.includes(direction)) {
-      // left = left - (delta.width + altWidth);
-      // top = top - (delta.height + altHeight);
-
-      left -= delta.width;
-      top -= delta.height;
-
-      if (event.altKey) {
-        left += altWidth;
-        top += altHeight;
-      }
-    } else {
-      if (event.altKey) {
-        left -= altWidth;
-        top -= altHeight;
+      if (direction === 'bottomLeft') {
+        this.resizeWrapper.style.left = `${left}px`;
+      } else if (direction === 'topRight') {
+        this.resizeWrapper.style.top = `${top}px`;
+      } else {
+        this.resizeWrapper.style.top = `${top}px`;
+        this.resizeWrapper.style.left = `${left}px`;
       }
     }
-
-    if (event.altKey) {
-      const newSize = {
-        width: this.props.size.width + altWidth,
-        height: this.props.size.height + altHeight,
-      };
-
-      console.log(newSize)
-
-      this.resizable.setState(newSize);
-    }
-
-    
-
-    // console.log(direction)
-
-    switch (direction) {
-      case 'top':
-        this.resizeWrapper.style.top = `${top}px`;
-        this.resizeWrapper.style.left = `${left}px`;
-        break;
-      
-      case 'right':
-        this.resizeWrapper.style.left = `${left}px`;
-        break;
-
-      case 'left':
-        this.resizeWrapper.style.top = `${top}px`;
-        this.resizeWrapper.style.left = `${left}px`;
-        break;
-
-      case 'topRight':
-        this.resizeWrapper.style.top = `${top}px`;
-        break;
-
-      case 'bottomRight':
-
-        break;
-
-      case 'bottomLeft':
-        this.resizeWrapper.style.left = `${left}px`;
-        break;
-
-      case 'topLeft':
-        this.resizeWrapper.style.top = `${top}px`;
-        this.resizeWrapper.style.left = `${left}px`;
-        break;
-    }
-    
-    // if (directions.includes(direction)) {
-    //   if (direction === 'bottomLeft') {
-    //     this.resizeWrapper.style.left = `${left}px`;
-    //   } else if (direction === 'topRight') {
-    //     this.resizeWrapper.style.top = `${top}px`;
-    //   } else {
-    //     this.resizeWrapper.style.top = `${top}px`;
-    //     this.resizeWrapper.style.left = `${left}px`;
-    //   }
-    // }
 
     this.props.handlePreviewWindowResize();
   }

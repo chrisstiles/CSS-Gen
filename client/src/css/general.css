@@ -714,13 +714,18 @@ input[type="number"],
   #generator-wrapper #box-shadow-preview .preview-text {
     display: inline-block;
     background: rgba(255, 255, 255, 0.9);
-    font-size: 15px;
+    font-size: 12px;
     text-align: center;
     padding: 10px 13px 9px 13px;
     border-radius: 2px;
     color: #7d7d7d;
-    font-weight: 600; }
-    #generator-wrapper #box-shadow-preview .preview-text span {
+    font-weight: 600;
+    width: 180px; }
+    #generator-wrapper #box-shadow-preview .preview-text .dimensions {
       display: block;
-      margin-bottom: 3px;
-      font-size: 12px; }
+      margin: 3px 0 8px 0;
+      font-size: 15px; }
+    #generator-wrapper #box-shadow-preview .preview-text .instructions {
+      font-size: 11px;
+      color: #a2a2a2;
+      font-weight: 500; }
