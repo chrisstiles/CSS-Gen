@@ -98,7 +98,6 @@ class BorderRadius extends React.Component {
   reset() {
     this.previewWindow.reset(); 
     this.previewWindowColorPicker.reset();
-    this.shadowColorPicker.reset();
 
     const state = _.extend({}, this.initialState, { previewCSS: this.generatePreviewCSS(this.initialPreviewWindowState) });
 
