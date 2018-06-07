@@ -11,6 +11,7 @@ import NavWindow from './NavWindow';
 // Generator Pages
 import Home from './Home';
 import BoxShadow from './generators/BoxShadow';
+import BorderRadius from './generators/BorderRadius';
 
 
 var addNotification;
@@ -39,6 +40,7 @@ class PrimaryLayout extends React.Component {
         <NavWindow />
         <Route exact path="/" component={Home} />
         <Route exact path="/box-shadow-generator" component={BoxShadow} />
+        <Route exact path="/border-radius-generator" component={BorderRadius} />
       </div>
     );
   }
