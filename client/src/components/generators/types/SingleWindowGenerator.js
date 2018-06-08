@@ -2,7 +2,7 @@ import React from 'react';
 import Generator from '../../Generator';
 import SingleWindowToolbar from '../toolbars/SingleWindowToolbar';
 import SingleWindowPreview from '../previews/SingleWindowPreview';
-import { cssToJs } from '../../../util/helpers';
+import { cssToJs, numberInConstraints } from '../../../util/helpers';
 import _ from 'underscore';
 
 class SingleWindowGenerator extends React.Component {
@@ -18,7 +18,7 @@ class SingleWindowGenerator extends React.Component {
       previewCSS: ''
     };
 
-    this.initialState = props.defaultStyles;
+    this.initialState = _.extend({}, this.state, props.defaultStyles);
 
     this.reset = this.reset.bind(this);
 
@@ -50,39 +50,37 @@ class SingleWindowGenerator extends React.Component {
   }
 
   reset() {
-    this.previewWindow.reset();
+    this.setState(this.initialState);
+    this.preview.reset();
     this.props.resetStyles(this.initialState);
   }
 
   handleToolbarTextChange(event) {
     const el = event.target;
 
-    if (!isNaN(el.value)) {
-      const type = el.getAttribute('name');
+    // if (!isNaN(el.value)) {
+    //   const type = el.getAttribute('name');
+    //   const { min, max } = this.preview.constraints[type];
 
-      var state = {};
-      state[type] = el.value;
-      state.previewCSS = this.generatePreviewCSS(state);
+    //   var state = {};
 
-      this.setState(state);
-      this.previewWindow.resizable.setState(state);
-    }
+    //   state[type] = numberInConstraints(el.value, min, max);
+
+    //   state.previewCSS = this.generatePreviewCSS(state);
+
+    //   this.setState(state);
+    //   console.log('der')
+    // } else {
+    //   console.log('herebb')
+    // }
+    console.log('flump')
   }
 
   handleToolbarTextBlur(event) {
-    const { minWidth, minHeight, maxWidth, maxHeight } = this.previewWindow.resizable.props;
-    var { width, height } = this.previewWindow.resizable.state;
-
-    if ( width < minWidth ) width = minWidth;
-    if ( height < minHeight ) height = minHeight;
-
-    if ( width > maxWidth ) width = maxWidth;
-    if ( height > maxHeight ) height = maxHeight;
-
-    // this.toolbar.setDimensionInputs({ width, height });
-
-    this.toolbar.widthInput.value = width;
-    this.toolbar.heightInput.value = height;
+    console.log('asdfasdf')
+    const { maxWidth, maxHeight, minWidth, minHeight } = this.preview.resizable.props;
+    const width = numberInConstraints(this.state.width, minWidth, maxWidth);
+    const height = numberInConstraints(this.state.height, minHeight, maxHeight);
 
     this.setState({ 
       width: width,
@@ -92,7 +90,17 @@ class SingleWindowGenerator extends React.Component {
   }
 
   handleToolbarTick(up, type, shiftHeld) {
-    this.previewWindow.handleTick(up, type, shiftHeld);
+    const step = shiftHeld ? 10 : 1;
+    const { min, max } = this.preview.constraints[type];
+    const state = {};
+
+    var newValue = up ? this.state[type] + step : this.state[type] - step;
+
+    newValue = numberInConstraints(newValue, min, max);
+    state[type] = newValue;
+
+    console.log(newValue, state)
+    this.setState(state);
   }
 
   handleColorPickerChange(color) {
@@ -103,34 +111,14 @@ class SingleWindowGenerator extends React.Component {
   }
 
   handlePreviewCSSChange(value) {
+    console.log('strump')
     this.outputPreviewStyles = value;
     this.setState({ previewCSS: this.generatePreviewCSS() });
   }
 
-  handlePreviewWindowResize(newValue, type) {
-    var width, height;
-    if (newValue === undefined || type === undefined) {
-      width = this.previewWindow.resizable.state.width;
-      height = this.previewWindow.resizable.state.height;
-
-      this.toolbar.widthInput.value = width;
-      this.toolbar.heightInput.value = height;
-
-    } else {
-      
-      var input;
-      if (type === 'width') {
-        input = this.toolbar.widthInput;
-      } else {
-        input = this.toolbar.heightInput;
-      }
-
-      input.value = newValue;
-
-      width = this.toolbar.widthInput.value;
-      height = this.toolbar.heightInput.value;
-    }
-
+  handlePreviewWindowResize(size) {
+    const { width, height } = size;
+    console.log('crump')
     this.setState({ 
       width: width,
       height: height,
@@ -146,7 +134,7 @@ class SingleWindowGenerator extends React.Component {
         previewBackgroundColor={this.state.backgroundColor}
         reset={this.reset}
         onTextInputChange={this.handleToolbarTextChange}
-        onTextInputBlur={this.handleToolbarTextChange}
+        onTextInputBlur={this.handleToolbarTextBlur}
         onTextInputTick={this.handleToolbarTick}
         onColorPickerChange={this.handleColorPickerChange}
         onPreviewCSSChange={this.handlePreviewCSSChange}
@@ -164,9 +152,9 @@ class SingleWindowGenerator extends React.Component {
 
     return (
       <SingleWindowPreview
-        ref={previewWindow => { this.previewWindow = previewWindow }}
+        ref={previewWindow => { this.preview = previewWindow }}
         style={style}
-        size={{ width: this.props.defaultPreviewSize.width, height: this.props.defaultPreviewSize.height }}
+        size={{ width: this.state.width, height: this.state.height }}
         onResize={this.handlePreviewWindowResize}
         id={this.props.previewID}
       >

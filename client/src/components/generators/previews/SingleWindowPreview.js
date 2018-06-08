@@ -61,32 +61,9 @@ class SingleWindowPreview extends React.Component {
       }
     }
 
-    this.props.onResize();
-  }
+    const { width, height } = this.resizable.state;
 
-  handleTick(up = true, type = 'width', shiftHeld) {
-    const step = shiftHeld ? 10 : 1;
-    var newValue = up ? Number(this.resizable.state[type]) + step : Number(this.resizable.state[type]) - step;
-
-    const min = this.constraints[type].min;
-    const max = this.constraints[type].max;
-
-    var newState = {};
-    var value;
-
-    if (newValue >= min && newValue <= max) {
-      newState[type] = newValue;
-      value = newValue;
-    } else if (newValue < min) {
-      newState[type] = min;
-      value = min;
-    } else {
-      newState[type] = max;
-      value = max;
-    }
-
-    this.resizable.setState(newState);
-    this.props.onResize(value, type);
+    this.props.onResize({ width, height });
   }
 
   reset() {
@@ -108,7 +85,7 @@ class SingleWindowPreview extends React.Component {
             id={this.props.id}
             ref={resizable => { this.resizable = resizable; }}
             className="generator-preview"
-            defaultSize={{
+            size={{
               width: this.props.size.width,
               height: this.props.size.height,
             }}

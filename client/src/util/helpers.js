@@ -11,3 +11,13 @@ export function cssToJs(name) {
   
   return output;
 }
+
+export function numberInConstraints(num, min, max) {
+  if (num > max) {
+    return max;
+  } else if (num < min) {
+    return min;
+  } else {
+    return num;
+  }
+}

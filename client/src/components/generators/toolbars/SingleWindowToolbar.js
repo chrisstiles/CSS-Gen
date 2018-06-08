@@ -5,22 +5,18 @@ import ColorPicker from '../../input/ColorPicker';
 import Toggle from '../../input/Toggle';
 
 class SingleWindowToolbar extends React.Component {
-  constructor(props) {
-    super(props);
+  componentWillReceiveProps(newProps) {
+    const activeElement = document.activeElement;
 
-    this.reset = this.reset.bind(this);
-  }
+    // if (this.widthInput !== activeElement) {
+      // this.widthInput.value = newProps.previewWidth;  
+    // }
 
-  reset(state) {
-    this.colorPicker.reset();
+    // if (this.heightInput !== activeElement) {
+      // this.heightInput.value = newProps.previewHeight;
+    // }
 
-    const width = state.width;
-    const height = state.height;
-
-    this.widthInput.value = width;
-    this.heightInput.value = height;
-
-    this.props.reset();
+    // console.log(newProps)
   }
 
   render() {
@@ -33,12 +29,13 @@ class SingleWindowToolbar extends React.Component {
           <label>Width:</label>
           <NumberInput 
             type="text"
-            defaultValue={this.props.previewWidth}
+            value={this.props.previewWidth}
             inputRef={el => this.widthInput = el}
             name="width"
             onChange={this.props.onTextInputChange}
             onBlur={this.props.onTextInputBlur}
             handleTick={this.props.onTextInputTick}
+            test={true}
           />
         </div>
 
@@ -46,7 +43,7 @@ class SingleWindowToolbar extends React.Component {
           <label>Height:</label>
           <NumberInput 
             type="text"
-            defaultValue={this.props.previewHeight}
+            value={this.props.previewHeight}
             name="height"
             inputRef={el => this.heightInput = el}
             onChange={this.props.onTextInputChange}
@@ -77,7 +74,7 @@ class SingleWindowToolbar extends React.Component {
         <div className="right">
           <button
             className="button"
-            onClick={this.reset}
+            onClick={this.props.reset}
           >
             Reset
           </button>
