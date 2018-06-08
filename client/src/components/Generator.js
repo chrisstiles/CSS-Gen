@@ -6,7 +6,12 @@ class Generator extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { keys: '' };
+    this.state = { 
+      keys: '',
+      outputCSS: ''
+    };
+
+    // this.initialState = props.defaultStyles;
 
     this.handleKeydown = this.handleKeydown.bind(this);
     this.handleKeyup = this.handleKeyup.bind(this);
@@ -24,6 +29,13 @@ class Generator extends React.Component {
     document.removeEventListener('keyup', this.handleKeyup, false);
     document.removeEventListener('keydown', this.props.handleKeydown, false);
     document.removeEventListener('keyup', this.props.handleKeyup, false);
+  }
+
+  componentWillMount() {
+    const css = this.props.generateCSS();
+  
+    this.setState({ outputCSS: css });
+    // this.initialState.outputCSS = css;
   }
 
   handleKeydown(event) {
@@ -74,7 +86,7 @@ class Generator extends React.Component {
             {this.props.previewWindow}
             <Sidebar
               property={this.props.property}
-              outputCSS={this.props.outputCSS}
+              outputCSS={this.state.outputCSS}
               previewCSS={this.props.previewCSS}
               browserPrefixes={this.props.browserPrefixes}
             >
