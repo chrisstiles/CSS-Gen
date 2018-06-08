@@ -15,7 +15,7 @@ class NumberInput extends React.Component {
   }
 
   handleBlur(event) {
-    this.props.onBlur();
+    this.props.onBlur(event);
   }
 
   handleKeyDown(event) {

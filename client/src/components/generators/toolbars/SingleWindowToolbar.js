@@ -23,16 +23,6 @@ class SingleWindowToolbar extends React.Component {
     this.props.reset();
   }
 
-  // setDimensionInputs({ width, height }) {
-  //   if (width !== undefined) {
-  //     this.widthInput.value = width;
-  //   }
-
-  //   if (height !== undefined) {
-  //     this.heightInput.value = height;
-  //   }
-  // }
-
   render() {
     return (
       <Toolbar

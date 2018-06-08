@@ -9,8 +9,10 @@ class SingleWindowGenerator extends React.Component {
   constructor(props) {
     super(props);
 
+    const backgroundColor = props.defaultStyles.backgroundColor || '#ffffff';
+
     this.state = {
-      backgroundColor: 'rgba(255, 255, 255, 1)',
+      backgroundColor: backgroundColor,
       width: props.defaultPreviewSize.width,
       height: props.defaultPreviewSize.height,
       previewCSS: ''
@@ -19,6 +21,9 @@ class SingleWindowGenerator extends React.Component {
     this.initialState = props.defaultStyles;
 
     this.reset = this.reset.bind(this);
+
+    this.renderToolbar = this.renderToolbar.bind(this);
+    this.renderPreview = this.renderPreview.bind(this);
     this.handleToolbarTextChange = this.handleToolbarTextChange.bind(this);
     this.handleToolbarTextBlur = this.handleToolbarTextBlur.bind(this);
     this.handleToolbarTick = this.handleToolbarTick.bind(this);
@@ -28,7 +33,7 @@ class SingleWindowGenerator extends React.Component {
   }
 
   generatePreviewCSS(styles = {}) {
-    const rules = _.extend({}, this.state.previewWindow, styles);
+    const rules = _.extend({}, this.state, styles);
 
     var css;
     if (!this.outputPreviewStyles) {
@@ -116,9 +121,9 @@ class SingleWindowGenerator extends React.Component {
       
       var input;
       if (type === 'width') {
-        input = this.widthInput;
+        input = this.toolbar.widthInput;
       } else {
-        input = this.heightInput;
+        input = this.toolbar.heightInput;
       }
 
       input.value = newValue;
@@ -141,19 +146,17 @@ class SingleWindowGenerator extends React.Component {
         previewHeight={this.state.height}
         previewBackgroundColor={this.state.backgroundColor}
         reset={this.reset}
-
         onTextInputChange={this.handleToolbarTextChange}
         onTextInputBlur={this.handleToolbarTextChange}
         onTextInputTick={this.handleToolbarTick}
         onColorPickerChange={this.handleColorPickerChange}
-        // onColorPickerOpen={this.props.onColorPickerOpen}
-        onPreviewCSSChange={this.props.handlePreviewCSSChange}
+        onPreviewCSSChange={this.handlePreviewCSSChange}
         ref={toolbar => { this.toolbar = toolbar }}
       />
     );
   }
 
-  renderPreviewWindow() {
+  renderPreview() {
     const style = {};
     const property = cssToJs(this.props.property);
 
@@ -184,13 +187,13 @@ class SingleWindowGenerator extends React.Component {
         className={this.props.className}
         property={this.props.property}
         heading={this.props.heading}
-        toolbar={this.renderToolbar()}
-        previewWindow={this.renderPreviewWindow()}
+        renderToolbar={this.renderToolbar}
+        renderPreview={this.renderPreview}
         previewCSS={this.state.previewCSS}
         renderInputs={this.props.renderInputs}
         generateCSS={this.props.generateCSS}
         reset={this.reset}
-        browserPrefixes={true}
+        browserPrefixes={this.props.browserPrefixes}
       />
     );
   }

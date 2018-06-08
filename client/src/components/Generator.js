@@ -11,8 +11,6 @@ class Generator extends React.Component {
       outputCSS: ''
     };
 
-    // this.initialState = props.defaultStyles;
-
     this.handleKeydown = this.handleKeydown.bind(this);
     this.handleKeyup = this.handleKeyup.bind(this);
   }
@@ -32,10 +30,11 @@ class Generator extends React.Component {
   }
 
   componentWillMount() {
-    const css = this.props.generateCSS();
-  
-    this.setState({ outputCSS: css });
-    // this.initialState.outputCSS = css;
+    this.setState({ outputCSS: this.props.generateCSS() });
+  }
+
+  componentWillReceiveProps() {
+    this.setState({ outputCSS: this.props.generateCSS() });
   }
 
   handleKeydown(event) {
@@ -72,7 +71,7 @@ class Generator extends React.Component {
       <Page
         title={this.props.title}
         heading={this.props.heading}
-        toolbar={this.props.toolbar}
+        toolbar={this.props.renderToolbar()}
       >
         <div 
           id="generator-wrapper"
@@ -83,7 +82,7 @@ class Generator extends React.Component {
             className="page-content"
 
           >
-            {this.props.previewWindow}
+            {this.props.renderPreview()}
             <Sidebar
               property={this.props.property}
               outputCSS={this.state.outputCSS}

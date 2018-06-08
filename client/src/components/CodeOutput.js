@@ -3,7 +3,6 @@ import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import prettify from 'postcss-prettify';
 import Toggle from './input/Toggle';
-import _ from 'underscore';
 import { addNotification, notificationTypes } from './App';
 
 class CodeOutput extends React.Component {

@@ -2,6 +2,9 @@ import React from 'react';
 import ChromePicker from 'react-color';
 import tinycolor from 'tinycolor2';
 
+// Only one picker should be open at a time
+var currentPicker = null;
+
 class ColorPicker extends React.Component {
   constructor(props) {
     super(props);
@@ -33,14 +36,17 @@ class ColorPicker extends React.Component {
   handleClick(e) {
     this.previewWidth = e.target.offsetWidth;
 
-    if (this.props.onOpen) {
-      this.props.onOpen(this);
+    if (currentPicker) {
+      currentPicker.handleClose();
     }
+
+    currentPicker = this;
 
     this.setState({ displayColorPicker: !this.state.displayColorPicker });
   };
 
   handleClose() {
+    currentPicker = null;
     this.setState({ displayColorPicker: false });
   };
 
