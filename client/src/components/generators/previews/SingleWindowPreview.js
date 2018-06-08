@@ -6,11 +6,6 @@ class SingleWindowPreview extends React.Component {
   constructor(props) {
     super(props);
 
-    this.constraints = {
-      width: { min: 200, max: 3000 },
-      height: { min: 100, max: 3000 }
-    };
-
     this.state = {
       lockAspectRatio: false
     };
@@ -89,10 +84,10 @@ class SingleWindowPreview extends React.Component {
               width: this.props.size.width,
               height: this.props.size.height,
             }}
-            minWidth={this.constraints.width.min}
-            maxWidth={this.constraints.width.max}
-            minHeight={this.constraints.height.min}
-            maxHeight={this.constraints.height.max}
+            minWidth={this.props.constraints.width.min}
+            maxWidth={this.props.constraints.width.max}
+            minHeight={this.props.constraints.height.min}
+            maxHeight={this.props.constraints.height.max}
             onResizeStart={this.handleResizeStart}
             onResizeStop={this.handleResizeStop}
             onResize={this.handleResize}

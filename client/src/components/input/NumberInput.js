@@ -1,48 +1,58 @@
 import React from 'react';
+import { numberInConstraints } from '../../util/helpers';
 
 class NumberInput extends React.Component {
   constructor(props) {
     super(props);
 
+    this.getValue = this.getValue.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.setRefs = this.setRefs.bind(this);
-
-    this.state = {
-      value: this.props.value
-    }
   }
 
   componentWillReceiveProps(newProps) {
-    // console.log(newProps)
-    // console.log(document.activeElement, this.inputRef)
-    if (!this.hasFocus && newProps.value !== undefined) {
-      // console.log(this.element)
-      this.setState(newProps)
-      console.log(this.element)
-      // this.element.value = newProps.value;
+    if ((!this.hasFocus || this.didTick) && newProps.value !== undefined) {
+      this.didTick = false;
+      this.element.value = newProps.value;
+    }
+  }
+
+  getValue() {
+    const value = this.element.value;
+
+    if (!isNaN(value)) {
+      return numberInConstraints(value, this.props.min, this.props.max);
+    } else {
+      return this.props.value;
     }
   }
 
   handleChange(event) {
-    const value = event.target.value;
+    // var value = event.target.value;
 
-    if (!isNaN(value)) {
-      this.props.onChange(event);
-    }
+    // if (!isNaN(value)) {
+    //   value = numberInConstraints(value, this.props.min, this.props.max);
+    //   this.props.onChange(value, event);
+    // }
+
+    this.props.onChange(this.getValue(), event);
   }
 
   handleFocus() {
-    console.log('here')
     this.hasFocus = true;
   }
 
-  handleBlur(event) {
-    console.log('there')
-    this.props.onBlur(event);
+  handleBlur(value, event) {
+    this.element.value = this.getValue();
+
+    if (this.props.onBlur) {
+      this.props.onBlur(event);
+    }
+
     this.hasFocus = false;
   }
 
@@ -53,9 +63,11 @@ class NumberInput extends React.Component {
     if (keyCode === 38) {
       // Up arrow is pressed
       this.props.handleTick(true, this.props.name, shiftHeld);
+      this.didTick = true;
     } else if (keyCode === 40) {
       // Down arrow is pressed
       this.props.handleTick(false, this.props.name, shiftHeld);
+      this.didTick = true;
     }
   }
 
@@ -66,7 +78,10 @@ class NumberInput extends React.Component {
 
   setRefs(el) {
     this.element = el;
-    this.props.inputRef(el);
+
+    if (this.props.inputRef) {
+      this.props.inputRef(el);
+    }
   }
 
   render() {
@@ -78,7 +93,6 @@ class NumberInput extends React.Component {
         name={this.props.name}
         className={`number-input${className}`}
         defaultValue={this.props.value}
-        // value={this.props.value}
         onChange={this.handleChange}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}

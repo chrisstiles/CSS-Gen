@@ -5,21 +5,10 @@ import ColorPicker from '../../input/ColorPicker';
 import Toggle from '../../input/Toggle';
 
 class SingleWindowToolbar extends React.Component {
-  componentWillReceiveProps(newProps) {
-    const activeElement = document.activeElement;
-
-    // if (this.widthInput !== activeElement) {
-      // this.widthInput.value = newProps.previewWidth;  
-    // }
-
-    // if (this.heightInput !== activeElement) {
-      // this.heightInput.value = newProps.previewHeight;
-    // }
-
-    // console.log(newProps)
-  }
-
   render() {
+    const { minWidth, maxWidth } = this.props.previewConstraints.width;
+    const { minHeight, maxHeight } = this.props.previewConstraints.height;
+
     return (
       <Toolbar
         ref={toolbar => { this.toolbar = toolbar }}
@@ -30,12 +19,12 @@ class SingleWindowToolbar extends React.Component {
           <NumberInput 
             type="text"
             value={this.props.previewWidth}
-            inputRef={el => this.widthInput = el}
             name="width"
             onChange={this.props.onTextInputChange}
-            onBlur={this.props.onTextInputBlur}
+            // onBlur={this.props.onTextInputBlur}
             handleTick={this.props.onTextInputTick}
-            test={true}
+            min={minWidth}
+            max={maxWidth}
           />
         </div>
 
@@ -45,10 +34,11 @@ class SingleWindowToolbar extends React.Component {
             type="text"
             value={this.props.previewHeight}
             name="height"
-            inputRef={el => this.heightInput = el}
             onChange={this.props.onTextInputChange}
-            onBlur={this.props.onTextInputBlur}
+            // onBlur={this.props.onTextInputBlur}
             handleTick={this.props.onTextInputTick}
+            min={minHeight}
+            max={maxHeight}
           />
         </div>
 

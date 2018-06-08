@@ -12,7 +12,34 @@ export function cssToJs(name) {
   return output;
 }
 
-export function numberInConstraints(num, min, max) {
+export function numberInConstraints(num, min = null, max = null) {
+	const hasMin = min !== null && min !== undefined;
+	const hasMax = max !== null && max !== undefined;
+
+	// No minimum or maximum
+	if (!hasMin && !hasMax) {
+		return num;
+	}
+
+	// Has minimum but no maximum
+	if (hasMin && !hasMax) {
+		if (num > min) {
+			return num;
+		} else {
+			return min;
+		}
+	}
+
+	// Has maximum but no minimum
+	if (hasMax && !hasMin) {
+		if (num < max) {
+			return num;
+		} else {
+			return max;
+		}
+	}
+
+	// Has both minimum and maximum
   if (num > max) {
     return max;
   } else if (num < min) {

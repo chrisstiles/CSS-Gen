@@ -25,12 +25,12 @@ class Slider extends RCSlider {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.textInput.value = nextProps.value;
+    // this.textInput.value = nextProps.value;
   }
 
   handleSliderChange(value) {
     this.props.handleChange(this.props.name, value);
-    this.textInput.value = value;
+    // this.textInput.value = value;
   }
 
   handleTextChange(event, shouldSetDecimal) {
@@ -49,7 +49,7 @@ class Slider extends RCSlider {
   }
 
   handleTextBlur() {
-    this.textInput.value = this.props.value;
+    // this.textInput.value = this.props.value;
   }
 
   tick(up = true, type, shiftHeld) {
@@ -81,27 +81,32 @@ class Slider extends RCSlider {
 
     // Update slider and text input
     this.props.handleChange(this.props.name, newValue);
-    this.textInput.value = newValue;
+    // this.textInput.value = newValue;
   }
 
   render() {
+    const min = this.props.min || 0;
+    const max = this.props.max || 200;
+
     return (
       <div className="field-wrapper">
         <label className="title">
           <NumberInput
             className="slider-input"
-            defaultValue={this.props.value}
+            value={this.props.value}
             onChange={this.handleTextChange}
             onBlur={this.handleTextBlur}
-            inputRef={el => this.textInput = el}
+            // inputRef={el => this.textInput = el}
             step={this.props.step || 1}
             handleTick={this.tick}
+            min={min}
+            max={max}
           />
           {this.props.title}
         </label>
         <RCSlider
-          min={this.props.min || 0}
-          max={this.props.max || 200}
+          min={min}
+          max={max}
           value={this.props.value || 0}
           handle={Handle}
           step={this.props.step || 1}
