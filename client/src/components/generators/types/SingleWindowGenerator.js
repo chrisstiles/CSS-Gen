@@ -31,8 +31,6 @@ class SingleWindowGenerator extends React.Component {
     this.renderToolbar = this.renderToolbar.bind(this);
     this.renderPreview = this.renderPreview.bind(this);
     this.handleToolbarTextChange = this.handleToolbarTextChange.bind(this);
-    this.handleToolbarTextBlur = this.handleToolbarTextBlur.bind(this);
-    this.handleToolbarTick = this.handleToolbarTick.bind(this);
     this.handleColorPickerChange = this.handleColorPickerChange.bind(this);
     this.handlePreviewWindowResize = this.handlePreviewWindowResize.bind(this);
     this.handlePreviewCSSChange = this.handlePreviewCSSChange.bind(this);
@@ -56,44 +54,24 @@ class SingleWindowGenerator extends React.Component {
   }
 
   reset() {
-    this.setState(this.initialState);
+    const previewCSS = this.generatePreviewCSS(this.initialState);
+    const state = _.extend({}, this.initialState, { previewCSS });
+
+    this.setState(state);
     this.preview.reset();
+
+    
+
     this.props.resetStyles(this.initialState);
   }
 
   handleToolbarTextChange(value, event) {
     const el = event.target;
     const type = el.getAttribute('name');
-    // const { min, max } = this.preview.constraints[type];
     const state = {};
 
     state[type] = value;
     state.previewCSS = this.generatePreviewCSS(state);
-
-    this.setState(state);
-  }
-
-  handleToolbarTextBlur(value, event) {
-    const { maxWidth, maxHeight, minWidth, minHeight } = this.preview.resizable.props;
-    const width = numberInConstraints(this.state.width, minWidth, maxWidth);
-    const height = numberInConstraints(this.state.height, minHeight, maxHeight);
-
-    this.setState({ 
-      width: width,
-      height: height,
-      previewCSS: this.generatePreviewCSS({ width, height }) 
-    });
-  }
-
-  handleToolbarTick(up, type, shiftHeld) {
-    const step = shiftHeld ? 10 : 1;
-    const { min, max } = this.preview.constraints[type];
-    const state = {};
-
-    var newValue = up ? this.state[type] + step : this.state[type] - step;
-
-    newValue = numberInConstraints(newValue, min, max);
-    state[type] = newValue;
 
     this.setState(state);
   }
@@ -128,7 +106,6 @@ class SingleWindowGenerator extends React.Component {
         previewConstraints={this.previewConstraints}
         reset={this.reset}
         onTextInputChange={this.handleToolbarTextChange}
-        // onTextInputBlur={this.handleToolbarTextBlur}
         onTextInputTick={this.handleToolbarTick}
         onColorPickerChange={this.handleColorPickerChange}
         onPreviewCSSChange={this.handlePreviewCSSChange}

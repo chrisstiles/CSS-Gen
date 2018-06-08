@@ -9,6 +9,7 @@ class NumberInput extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+    this.handleTick = this.handleTick.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.setRefs = this.setRefs.bind(this);
@@ -25,20 +26,13 @@ class NumberInput extends React.Component {
     const value = this.element.value;
 
     if (!isNaN(value)) {
-      return numberInConstraints(value, this.props.min, this.props.max);
+      return Number(numberInConstraints(value, this.props.min, this.props.max));
     } else {
-      return this.props.value;
+      return Number(this.props.value);
     }
   }
 
   handleChange(event) {
-    // var value = event.target.value;
-
-    // if (!isNaN(value)) {
-    //   value = numberInConstraints(value, this.props.min, this.props.max);
-    //   this.props.onChange(value, event);
-    // }
-
     this.props.onChange(this.getValue(), event);
   }
 
@@ -56,17 +50,38 @@ class NumberInput extends React.Component {
     this.hasFocus = false;
   }
 
+  handleTick(up, event, shiftHeld) {
+    var step = this.props.step || 1;
+
+    if (shiftHeld) {
+      if (step === 1) {
+        step = 10;
+      } else if (step === .01) {
+        step = .1;
+      }
+    }
+
+    var newValue = up ? this.props.value + step : this.props.value - step;
+    newValue = numberInConstraints(newValue, this.props.min, this.props.max);
+
+    this.props.onChange(newValue, event);
+
+    if (this.props.onTick) {
+      this.props.onTick(up, event, shiftHeld);
+    }
+  }
+
   handleKeyDown(event) {
     const keyCode = event.keyCode;
     const shiftHeld = event.shiftKey;
 
     if (keyCode === 38) {
       // Up arrow is pressed
-      this.props.handleTick(true, this.props.name, shiftHeld);
+      this.handleTick(true, event, shiftHeld);
       this.didTick = true;
     } else if (keyCode === 40) {
       // Down arrow is pressed
-      this.props.handleTick(false, this.props.name, shiftHeld);
+      this.handleTick(false, event, shiftHeld);
       this.didTick = true;
     }
   }

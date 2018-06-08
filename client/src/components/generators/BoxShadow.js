@@ -60,9 +60,9 @@ class BoxShadow extends React.Component {
     this.setState(state);
   }
 
-  handleChange(cssRule, value) {
+  handleChange(value, name) {
     var newState = {};
-    newState[cssRule] = value;
+    newState[name] = value;
 
     this.setState(newState);
   }
@@ -106,7 +106,7 @@ class BoxShadow extends React.Component {
         </div>
         <Sliders
           sliders={sliders}
-          handleChange={this.handleChange}
+          onChange={this.handleChange}
           {...this.state}
         />
       </div>
