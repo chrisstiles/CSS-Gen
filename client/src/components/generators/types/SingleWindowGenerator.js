@@ -51,7 +51,6 @@ class SingleWindowGenerator extends React.Component {
 
   reset() {
     this.previewWindow.reset();
-    this.toolbar.reset(this.initialState);
     this.props.resetStyles(this.initialState);
   }
 
