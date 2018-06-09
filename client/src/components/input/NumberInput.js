@@ -62,6 +62,13 @@ class NumberInput extends React.Component {
     }
 
     var newValue = up ? this.props.value + step : this.props.value - step;
+
+    const decimals = (String(newValue).split('.')[1] || []).length;
+
+    if (decimals > 2) {
+      newValue = Number(newValue.toFixed(2));
+    }
+    
     newValue = numberInConstraints(newValue, this.props.min, this.props.max);
 
     this.props.onChange(newValue, event);
