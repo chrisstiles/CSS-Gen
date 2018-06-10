@@ -29,8 +29,13 @@ class Slider extends RCSlider {
     const min = this.props.min || 0;
     const max = this.props.max || 200;
 
+    var className = 'field-wrapper';
+    if (this.props.className) {
+      className += ` ${this.props.className}`;
+    }
+
     return (
-      <div className="field-wrapper">
+      <div className={className}>
         <label className="title">
           <NumberInput
             className="slider-input"

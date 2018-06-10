@@ -1,8 +1,8 @@
 import React from 'react';
-import SingleWindowGenerator from './types/SingleWindowGenerator';
-import Sliders from '../input/Sliders';
-import Toggle from '../input/Toggle';
-import ColorPicker from '../input/ColorPicker';
+import SingleWindowGenerator from '../types/SingleWindowGenerator';
+import Sliders from '../../input/Sliders';
+import Toggle from '../../input/Toggle';
+import ColorPicker from '../../input/ColorPicker';
 import _ from 'underscore';
 
 const sliders = [
@@ -61,10 +61,10 @@ class BoxShadow extends React.Component {
   }
 
   handleChange(value, name) {
-    var newState = {};
-    newState[name] = value;
+    const state = {};
+    state[name] = value;
 
-    this.setState(newState);
+    this.setState(state);
   }
 
   handleShadowColorPickerChange(color, colorObject) {
@@ -124,7 +124,7 @@ class BoxShadow extends React.Component {
         generateCSS={this.generateCSS}
         renderInputs={this.renderInputs}
         resetStyles={this.reset}
-        defaultPreviewSize={{ width: 300, height: 300 }}
+        previewSize={{ width: 300, height: 300 }}
         defaultStyles={this.state}
       />
     );

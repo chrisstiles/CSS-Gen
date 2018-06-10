@@ -12,6 +12,10 @@ export function cssToJs(name) {
   return output;
 }
 
+export function jsToCss(name) {
+	return name.replace(/([A-Z])/g, '-$1').toLowerCase();
+}
+
 export function numberInConstraints(num, min = null, max = null) {
 	const hasMin = min !== null && min !== undefined;
 	const hasMax = max !== null && max !== undefined;

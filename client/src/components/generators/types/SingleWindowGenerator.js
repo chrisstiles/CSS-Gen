@@ -2,19 +2,19 @@ import React from 'react';
 import Generator from '../../Generator';
 import SingleWindowToolbar from '../toolbars/SingleWindowToolbar';
 import SingleWindowPreview from '../previews/SingleWindowPreview';
-import { cssToJs, numberInConstraints } from '../../../util/helpers';
+import { cssToJs } from '../../../util/helpers';
 import _ from 'underscore';
 
 class SingleWindowGenerator extends React.Component {
   constructor(props) {
     super(props);
 
-    const backgroundColor = props.defaultStyles.backgroundColor || '#ffffff';
+    const backgroundColor = props.defaultStyles.backgroundColor || 'rgba(255, 255, 255, 1)';
 
     this.state = {
       backgroundColor: backgroundColor,
-      width: props.defaultPreviewSize.width,
-      height: props.defaultPreviewSize.height,
+      width: props.previewSize.width,
+      height: props.previewSize.height,
       outputPreviewStyles: false,
       previewCSS: ''
     };

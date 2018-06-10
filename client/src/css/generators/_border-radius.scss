@@ -1,0 +1,72 @@
+@import '../_variables.scss';
+
+#generator-wrapper.border-radius {
+	.corners-wrapper {
+		.section-title {
+			margin-bottom:25px;
+		}
+	}
+
+	.slider-image {
+		width:22px;
+		height:22px;
+		position: relative;
+    top: -8px;
+    margin-bottom: -3px;
+    left:-5px;
+
+		span {
+			position:absolute;
+			left:0;
+			right:0;
+			height:8px;
+
+			&:first-child {
+				top:0;
+			}
+
+			&:last-child {
+				bottom:0;
+			}
+
+			&:before,
+			&:after {
+				content:"";
+				width:8px;
+				height:8px;
+				border-radius:50%;
+				background-color:#bbbbbb;
+				position:absolute;
+				top:0;
+			}
+
+			&:before {
+				left:0;
+			}
+
+			&:after {
+				right:0;
+			}
+
+		}
+
+		&.top-left span:first-child:before,
+		&.top-right span:first-child:after,
+		&.bottom-left span:last-child:before,
+		&.bottom-right span:last-child:after {
+			background-color:$accent-color;
+		}
+
+		// &.top-right span:first-child:after {
+		// 	background-color:$accent-color;
+		// }
+
+		// &.bottom-left span:last-child:before {
+		// 	background-color:$accent-color;
+		// }
+
+		// &.bottom-right span:last-child:after {
+		// 	background-color:$accent-color;
+		// }
+	}
+}

@@ -10,8 +10,8 @@ import NavWindow from './NavWindow';
 
 // Generator Pages
 import Home from './Home';
-import BoxShadow from './generators/BoxShadow';
-import BorderRadius from './generators/BorderRadius';
+import BoxShadow from './generators/BoxShadow/';
+import BorderRadius from './generators/BorderRadius/';
 
 
 var addNotification;
