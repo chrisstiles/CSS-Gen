@@ -15,6 +15,7 @@ class SingleWindowGenerator extends React.Component {
       backgroundColor: backgroundColor,
       width: props.defaultPreviewSize.width,
       height: props.defaultPreviewSize.height,
+      outputPreviewStyles: false,
       previewCSS: ''
     };
 
@@ -39,16 +40,11 @@ class SingleWindowGenerator extends React.Component {
   generatePreviewCSS(styles = {}) {
     const rules = _.extend({}, this.state, styles);
 
-    var css;
-    if (!this.outputPreviewStyles) {
-      css = '';
-    } else {
-      css = `
-        width: ${rules.width}px;
-        height: ${rules.height}px;
-        background-color: ${rules.backgroundColor};
-      `;
-    }
+    const css = `
+      width: ${rules.width}px;
+      height: ${rules.height}px;
+      background-color: ${rules.backgroundColor};
+    `;
 
     return css.trim();
   }
@@ -59,8 +55,6 @@ class SingleWindowGenerator extends React.Component {
 
     this.setState(state);
     this.preview.reset();
-
-    
 
     this.props.resetStyles(this.initialState);
   }
@@ -84,8 +78,7 @@ class SingleWindowGenerator extends React.Component {
   }
 
   handlePreviewCSSChange(value) {
-    this.outputPreviewStyles = value;
-    this.setState({ previewCSS: this.generatePreviewCSS() });
+    this.setState({ outputPreviewStyles: value, previewCSS: this.generatePreviewCSS() });
   }
 
   handlePreviewWindowResize(size) {
@@ -104,6 +97,7 @@ class SingleWindowGenerator extends React.Component {
         previewHeight={this.state.height}
         previewBackgroundColor={this.state.backgroundColor}
         previewConstraints={this.previewConstraints}
+        outputPreviewStyles={this.state.outputPreviewStyles}
         reset={this.reset}
         onTextInputChange={this.handleToolbarTextChange}
         onTextInputTick={this.handleToolbarTick}
@@ -148,6 +142,7 @@ class SingleWindowGenerator extends React.Component {
         heading={this.props.heading}
         renderToolbar={this.renderToolbar}
         renderPreview={this.renderPreview}
+        outputPreviewStyles={this.state.outputPreviewStyles}
         previewCSS={this.state.previewCSS}
         renderInputs={this.props.renderInputs}
         generateCSS={this.props.generateCSS}

@@ -90,7 +90,6 @@ class BoxShadow extends React.Component {
               backgroundColor={this.state.shadowColor}
               disableAlpha={true}
               onChange={this.handleShadowColorPickerChange}
-              ref={colorPicker => { this.shadowColorPicker = colorPicker }}
               onOpen={this.handleColorPickerOpen}
             />
           </div>
@@ -98,6 +97,7 @@ class BoxShadow extends React.Component {
           <div className="field-wrapper right">
             <Toggle
               onChange={this.handleToggleChange}
+              checked={this.state.inset}
               label="Inset"
               className="left"
               name="inset"

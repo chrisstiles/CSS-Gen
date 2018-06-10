@@ -29,7 +29,7 @@ class Toggle extends React.Component {
 						name={this.props.name}
 						type="checkbox"
 						onChange={this.handleChange}
-						defaultChecked={this.props.defaultChecked}
+						checked={this.props.checked}
 					/>
 					<span className="toggle"></span>
 				</label>

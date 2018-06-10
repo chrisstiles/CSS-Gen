@@ -21,7 +21,7 @@ class CodeOutput extends React.Component {
     this.handleToggleChange = this.handleToggleChange.bind(this);
   }
 
-  componentWillMount(test) {
+  componentWillMount() {
     const css = {
       property: this.props.property,
       outputCSS: this.props.outputCSS
@@ -41,7 +41,7 @@ class CodeOutput extends React.Component {
   getCSS(newProps, showBrowserPrefixes) {
     var css = `${newProps.property}: ${newProps.outputCSS};`;
 
-    if (newProps.previewCSS) {
+    if (newProps.outputPreviewStyles && newProps.previewCSS) {
       css += newProps.previewCSS;
     }
 

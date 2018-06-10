@@ -86,6 +86,7 @@ class Generator extends React.Component {
             <Sidebar
               property={this.props.property}
               outputCSS={this.state.outputCSS}
+              outputPreviewStyles={this.props.outputPreviewStyles}
               previewCSS={this.props.previewCSS}
               browserPrefixes={this.props.browserPrefixes}
             >

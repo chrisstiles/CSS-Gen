@@ -56,7 +56,7 @@ class SingleWindowToolbar extends React.Component {
             onChange={this.props.onPreviewCSSChange}
             label="Output CSS:"
             className="left"
-            name="outputPreviewStyles"
+            checked={this.props.outputPreviewStyles}
           />
         </div>
 
