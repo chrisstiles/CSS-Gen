@@ -72,25 +72,25 @@ class BorderRadius extends React.Component {
       }
     });
 
-    // All corners are equal
     if (allEqual) {
+      // All corners are equal
       css.borderRadius = `${rules.radius}px`;
-    }
-
-    // Return shorthand CSS if some corners are equal
-    const topLeftBottomRightEqual = rules.topLeft === rules.bottomRight;
-    const topRightBottomLeftEqual = rules.topRight === rules.bottomLeft;
-
-    var borderRadius;
-    if (topLeftBottomRightEqual && topRightBottomLeftEqual) {
-      borderRadius = `${rules.topLeft}px ${rules.topRight}px`;
-    } else if (topRightBottomLeftEqual) {
-      borderRadius = `${rules.topLeft}px ${rules.topRight}px ${rules.bottomRight}px`;
     } else {
-      borderRadius = `${rules.topLeft}px ${rules.topRight}px ${rules.bottomRight}px ${rules.bottomLeft}px`;
-    }
+      // Return shorthand CSS if some corners are equal
+      const topLeftBottomRightEqual = rules.topLeft === rules.bottomRight;
+      const topRightBottomLeftEqual = rules.topRight === rules.bottomLeft;
 
-    css.borderRadius = borderRadius;
+      var borderRadius;
+      if (topLeftBottomRightEqual && topRightBottomLeftEqual) {
+        borderRadius = `${rules.topLeft}px ${rules.topRight}px`;
+      } else if (topRightBottomLeftEqual) {
+        borderRadius = `${rules.topLeft}px ${rules.topRight}px ${rules.bottomRight}px`;
+      } else {
+        borderRadius = `${rules.topLeft}px ${rules.topRight}px ${rules.bottomRight}px ${rules.bottomLeft}px`;
+      }
+
+      css.borderRadius = borderRadius;
+    }
 
     // Add border to preview if necessary
     if (rules.borderStyle !== 'none') {
