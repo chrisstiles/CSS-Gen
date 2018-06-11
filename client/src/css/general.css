@@ -213,6 +213,8 @@ body {
   border-radius: 5px;
   left: 50%;
   margin-left: -150px; }
+  .generator-preview.cb {
+    box-sizing: content-box !important; }
   .generator-preview .preview-text {
     display: inline-block;
     background: rgba(255, 255, 255, 0.9);

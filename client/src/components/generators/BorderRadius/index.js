@@ -3,6 +3,7 @@ import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import Slider from '../../input/Slider';
 import Sliders from '../../input/Sliders';
 import Select from '../../input/Select';
+import Toggle from '../../input/Toggle';
 import ColorPicker from '../../input/ColorPicker';
 import { jsToCss } from '../../../util/helpers';
 import _ from 'underscore';
@@ -49,7 +50,8 @@ class BorderRadius extends React.Component {
       backgroundColor: 'rgba(72, 52, 212, 1)',
       borderStyle: 'none',
       borderColor: '#323232',
-      borderWidth: 10
+      borderWidth: 10,
+      inset: true
     };
 
     this.generateCSS = this.generateCSS.bind(this);
@@ -57,6 +59,7 @@ class BorderRadius extends React.Component {
     this.renderInputs = this.renderInputs.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleColorChange = this.handleColorChange.bind(this);
+    this.handleToggleChange = this.handleToggleChange.bind(this);
   }
 
   generateCSS(styles = {}) {
@@ -97,6 +100,13 @@ class BorderRadius extends React.Component {
       css.border = `${rules.borderWidth}px ${rules.borderStyle} ${rules.borderColor}`;
     }
 
+    // Add box sizing for inset border
+    if (rules.inset) {
+      css.boxSizing = 'border-box';
+    } else {
+      css.boxSizing = 'content-box';
+    }
+
     return css;
   }
 
@@ -124,9 +134,18 @@ class BorderRadius extends React.Component {
     this.setState({ borderColor });
   }
 
+  handleToggleChange(value, event) {
+    const name = event.target.name;
+
+    const state = {};
+    state[name] = value;
+
+    this.setState(state);
+  }
+
   renderInputs() {
     const noBorder = this.state.borderStyle === 'none';
-    const disabledClassName = noBorder ? 'disabled' : '';
+    const disabledClassName = noBorder ? ' disabled' : '';
 
     return (
       <div>
@@ -165,7 +184,7 @@ class BorderRadius extends React.Component {
             scrollWrapper="#sidebar-controls"
             searchable={false}
           />
-          <div className={`field-wrapper align-right${noBorder ? ' disabled' : ''}`}>
+          <div className={`field-wrapper align-right${disabledClassName}`}>
             <label className="title">Border Color</label>
             <ColorPicker
               backgroundColor={this.state.borderColor}
@@ -174,7 +193,7 @@ class BorderRadius extends React.Component {
             />
           </div>
         </div>
-        <div className={disabledClassName}>
+        <div className={`inputs-row${disabledClassName}`}>
           <Slider
             title="Border Width"
             name="borderWidth"
@@ -183,6 +202,14 @@ class BorderRadius extends React.Component {
             min={0}
             max={50}
           />
+          <div className="field-wrapper align-right">
+            <Toggle
+              onChange={this.handleToggleChange}
+              checked={this.state.inset}
+              label="Inset Border"
+              name="inset"
+            />
+          </div>
         </div>
       </div>
     );

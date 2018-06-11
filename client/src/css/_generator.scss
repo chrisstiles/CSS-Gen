@@ -21,6 +21,10 @@
   left:50%;
   margin-left:-150px;
 
+  &.cb {
+    box-sizing:content-box !important;
+  }
+
   .preview-text {
     display:inline-block;
     background:rgba(255, 255, 255, .9);

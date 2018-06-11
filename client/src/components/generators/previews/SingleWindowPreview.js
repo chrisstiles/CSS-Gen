@@ -69,6 +69,14 @@ class SingleWindowPreview extends React.Component {
   }
 
   render() {
+    var className = 'generator-preview';
+    const css = {};
+    console.log(this.props.style)
+    if (this.props.style.boxSizing === 'content-box') {
+      className += ' cb';
+
+    }
+
     return (
       <Draggable 
         handle=".drag-handle"
@@ -79,7 +87,7 @@ class SingleWindowPreview extends React.Component {
             style={this.props.style}
             id={this.props.id}
             ref={resizable => { this.resizable = resizable; }}
-            className="generator-preview"
+            className={className}
             size={{
               width: this.props.size.width,
               height: this.props.size.height,
