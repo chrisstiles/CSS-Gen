@@ -39,7 +39,7 @@ class CodeOutput extends React.Component {
   }
 
   getCSS(newProps, showBrowserPrefixes) {
-    var css = `${newProps.property}: ${newProps.outputCSS};`;
+    var css = newProps.outputCSS;
 
     if (newProps.outputPreviewStyles && newProps.previewCSS) {
       css += newProps.previewCSS;

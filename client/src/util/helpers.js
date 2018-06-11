@@ -1,3 +1,5 @@
+import _ from 'underscore';
+
 export function cssToJs(name) {
   var split = name.split('-');
   var output = "";
@@ -51,4 +53,15 @@ export function numberInConstraints(num, min = null, max = null) {
   } else {
     return num;
   }
+}
+
+export function generateCSSString(css) {
+	var cssString = '';
+
+	_.each(css, (value, key) => {
+		key = jsToCss(key);
+		cssString += ` ${key}: ${value};`;
+	});
+
+	return cssString.trim();
 }

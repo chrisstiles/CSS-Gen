@@ -61,7 +61,7 @@ class Select extends React.Component {
 	getWrapperStyles() {
 		const selectRect = this.select.control.getBoundingClientRect();
 		const containerRect = this.scrollWrapper.getBoundingClientRect();
-		const borderLeftWidth = getComputedStyle(this.menuContainer, null).getPropertyValue('border-left-width');
+		const borderLeftWidth = getComputedStyle(this.scrollWrapper, null).getPropertyValue('border-left-width');
 		const scrollWrapperHeight = containerRect.height;
 
 		var top = selectRect.top + selectRect.height;
@@ -78,7 +78,7 @@ class Select extends React.Component {
 		const style = {
 			width: selectRect.width,
 			top: top - containerRect.top,
-			left: selectRect.left - containerRect.left,
+			left: selectRect.left - containerRect.left + parseInt(borderLeftWidth, 10),
 			maxHeight: maxHeight
 		}
 
@@ -133,6 +133,7 @@ class Select extends React.Component {
 					onOpen={this.handleOpen}
 					menuRenderer={this.renderMenu}
 					clearable={false}
+					onBlurResetsInput={false}
 					{...props}
 				/>
 			</div>

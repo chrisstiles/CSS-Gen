@@ -40,7 +40,7 @@
   }
 
   .title {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     margin-bottom: 0px;
     color: $dark-grey;
@@ -54,6 +54,8 @@
   }
 }
 
+$input-text-color: #505050;
+
 input[type="text"],
 input[type="number"],
 .chrome-picker input,
@@ -66,7 +68,7 @@ input[type="number"],
   border: 1px solid #d2d2d2 !important;
   outline: none;
   font-family: $main-font;
-  color: #505050;
+  color: $input-text-color;
   line-height: normal;
   box-shadow:none !important;
   border-radius: 0 !important;
@@ -116,6 +118,11 @@ input[type="number"],
 
 .color-wrapper {
   position:relative;
+
+  &.small .color-preview {
+    width:40px;
+    height:40px;
+  }
 }
 
 .color-picker-wrapper {
@@ -199,25 +206,97 @@ input[type="number"],
 
 /* Select Box */
 
+$select-height: 35px;
+
 .select-wrapper {
+  margin-bottom:22px;
+
   .title {
     margin-bottom:5px;
   }
 
-  .Select-control {
-    input {
-      padding: 0 6px;
+  .Select-menu-outer {
+    display:none;
+  }
+
+  .Select {
+    .Select-control,
+    .Select-input {
+      height:$select-height !important;
+      font-weight:600;
+    }
+
+    .Select-input {
+      display: block;
+    }
+
+    .Select-control {
+      padding:0 !important;
+      box-shadow:none !important;
+
+      input {
+        padding: 0;
+        width:100% !important;
+        height:$select-height;
+        line-height: normal;
+        color:$input-text-color;
+        font-weight:600;
+        font-wize:15px;
+      }
+
+      .Select-value,
+      .Select-input {
+        padding:0 5px 1px 9px !important;
+      }
+
+      .Select-value-label {
+        font-size: 15px;
+        color:$input-text-color !important;
+        line-height: $select-height !important;
+        display: block;
+      }
+
+      .Select-arrow {
+        border-width: 6px 4px 2px;
+        left: -2px;
+      }
+    }
+
+    &.is-focused {
+      .Select-control {
+        border:1px solid $accent-color !important;
+      }
     }
   }
+
 }
 
 .menu-wrapper {
   background-color:#fff;
   overflow:scroll;
+  border: 1px solid #C9C9CC;
+  margin-top:2px;
+  box-shadow: 0px 9px 23px 0px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  font-size: 13px;
+  font-weight: 600;
 
   &.has-container {
     position:absolute;
     z-index: 9999;
+  }
+
+  .Select-option {
+    padding: 7px 12px 8px 12px;
+    color:#5a5a5a !important;
+
+    &.is-focused {
+      background-color: #f9f9f9;
+    }
+
+    &.is-selected {
+      background-color:rgba($accent-color, .1);
+    }
   }
 }
 

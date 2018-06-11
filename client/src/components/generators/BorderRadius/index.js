@@ -1,7 +1,9 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
+import Slider from '../../input/Slider';
 import Sliders from '../../input/Sliders';
 import Select from '../../input/Select';
+import ColorPicker from '../../input/ColorPicker';
 import { jsToCss } from '../../../util/helpers';
 import _ from 'underscore';
 
@@ -45,16 +47,20 @@ class BorderRadius extends React.Component {
       bottomRight: defaultRadius,
       bottomLeft: defaultRadius,
       backgroundColor: 'rgba(72, 52, 212, 1)',
-      borderStyle: 'none'
+      borderStyle: 'none',
+      borderColor: '#323232',
+      borderWidth: 10
     };
 
     this.generateCSS = this.generateCSS.bind(this);
     this.reset = this.reset.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleColorChange = this.handleColorChange.bind(this);
   }
 
   generateCSS(styles = {}) {
+    const css = {}; // The object we will return
     const rules = _.extend({}, this.state, styles);
     
     const radii = [rules.topLeft, rules.topRight, rules.bottomRight, rules.bottomLeft];
@@ -68,20 +74,30 @@ class BorderRadius extends React.Component {
 
     // All corners are equal
     if (allEqual) {
-      return `${rules.radius}px`;
+      css.borderRadius = `${rules.radius}px`;
     }
 
     // Return shorthand CSS if some corners are equal
     const topLeftBottomRightEqual = rules.topLeft === rules.bottomRight;
     const topRightBottomLeftEqual = rules.topRight === rules.bottomLeft;
 
+    var borderRadius;
     if (topLeftBottomRightEqual && topRightBottomLeftEqual) {
-      return `${rules.topLeft}px ${rules.topRight}px`;
+      borderRadius = `${rules.topLeft}px ${rules.topRight}px`;
     } else if (topRightBottomLeftEqual) {
-      return `${rules.topLeft}px ${rules.topRight}px ${rules.bottomRight}px`;
+      borderRadius = `${rules.topLeft}px ${rules.topRight}px ${rules.bottomRight}px`;
     } else {
-      return `${rules.topLeft}px ${rules.topRight}px ${rules.bottomRight}px ${rules.bottomLeft}px`;
+      borderRadius = `${rules.topLeft}px ${rules.topRight}px ${rules.bottomRight}px ${rules.bottomLeft}px`;
     }
+
+    css.borderRadius = borderRadius;
+
+    // Add border to preview if necessary
+    if (rules.borderStyle !== 'none') {
+      css.border = `${rules.borderWidth}px ${rules.borderStyle} ${rules.borderColor}`;
+    }
+
+    return css;
   }
 
   reset(state) {
@@ -104,7 +120,14 @@ class BorderRadius extends React.Component {
     this.setState(state);
   }
 
+  handleColorChange(borderColor) {
+    this.setState({ borderColor });
+  }
+
   renderInputs() {
+    const noBorder = this.state.borderStyle === 'none';
+    const disabledClassName = noBorder ? 'disabled' : '';
+
     return (
       <div>
         <Sliders
@@ -121,25 +144,46 @@ class BorderRadius extends React.Component {
           />
         </div>
         <div className="divider" />
-        <Select
-          name="borderStyle"
-          value={this.state.borderStyle}
-          label="Border Type"
-          onChange={this.handleChange}
-          options={[
-            { value: 'none', label: 'None' },
-            { value: 'solid', label: 'Solid' },
-            { value: 'dotted', label: 'Dotted' },
-            { value: 'dashed', label: 'Dashed' },
-            { value: 'double', label: 'Double' },
-            { value: 'groove', label: 'Groove' },
-            { value: 'ridge', label: 'Ridge' },
-            { value: 'inset', label: 'Inset' },
-            { value: 'outset', label: 'Outset' }
-          ]}
-          menuContainer="#sidebar"
-          scrollWrapper="#sidebar-controls"
-        />
+        <div className="inputs-row">
+          <Select
+            name="borderStyle"
+            value={this.state.borderStyle}
+            label="Border Type"
+            onChange={this.handleChange}
+            options={[
+              { value: 'none', label: 'None' },
+              { value: 'solid', label: 'Solid' },
+              { value: 'dotted', label: 'Dotted' },
+              { value: 'dashed', label: 'Dashed' },
+              { value: 'double', label: 'Double' },
+              { value: 'groove', label: 'Groove' },
+              { value: 'ridge', label: 'Ridge' },
+              { value: 'inset', label: 'Inset' },
+              { value: 'outset', label: 'Outset' }
+            ]}
+            menuContainer="#sidebar"
+            scrollWrapper="#sidebar-controls"
+            searchable={false}
+          />
+          <div className={`field-wrapper align-right${noBorder ? ' disabled' : ''}`}>
+            <label className="title">Border Color</label>
+            <ColorPicker
+              backgroundColor={this.state.borderColor}
+              onChange={this.handleColorChange}
+              className="small"
+            />
+          </div>
+        </div>
+        <div className={disabledClassName}>
+          <Slider
+            title="Border Width"
+            name="borderWidth"
+            onChange={this.handleChange}
+            value={this.state.borderWidth}
+            min={0}
+            max={50}
+          />
+        </div>
       </div>
     );
   }

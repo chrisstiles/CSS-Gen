@@ -1,6 +1,7 @@
 import React from 'react';
 import Page from './Page';
 import Sidebar from './Sidebar';
+import { generateCSSString } from '../util/helpers';
 
 class Generator extends React.Component {
   constructor(props) {
@@ -30,11 +31,11 @@ class Generator extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({ outputCSS: this.props.generateCSS() });
+    this.setState({ outputCSS: generateCSSString(this.props.generateCSS()) });
   }
 
   componentWillReceiveProps() {
-    this.setState({ outputCSS: this.props.generateCSS() });
+    this.setState({ outputCSS: generateCSSString(this.props.generateCSS()) });
   }
 
   handleKeydown(event) {

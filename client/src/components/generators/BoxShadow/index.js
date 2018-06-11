@@ -53,7 +53,9 @@ class BoxShadow extends React.Component {
       css = `inset ${css}`;
     }
 
-    return css;
+    return {
+      boxShadow: css
+    };
   }
 
   reset(state) {
@@ -90,7 +92,6 @@ class BoxShadow extends React.Component {
               backgroundColor={this.state.shadowColor}
               disableAlpha={true}
               onChange={this.handleShadowColorPickerChange}
-              onOpen={this.handleColorPickerOpen}
             />
           </div>
 

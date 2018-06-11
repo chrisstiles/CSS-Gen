@@ -2,7 +2,6 @@ import React from 'react';
 import Generator from '../../Generator';
 import SingleWindowToolbar from '../toolbars/SingleWindowToolbar';
 import SingleWindowPreview from '../previews/SingleWindowPreview';
-import { cssToJs } from '../../../util/helpers';
 import _ from 'underscore';
 
 class SingleWindowGenerator extends React.Component {
@@ -109,10 +108,7 @@ class SingleWindowGenerator extends React.Component {
   }
 
   renderPreview() {
-    const style = {};
-    const property = cssToJs(this.props.property);
-
-    style[property] = this.props.generateCSS();
+    const style = this.props.generateCSS() || {};
     style.backgroundColor = this.state.backgroundColor;
 
     return (

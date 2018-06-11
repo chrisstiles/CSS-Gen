@@ -40,6 +40,12 @@ class ColorPicker extends React.Component {
     const topOffset = previewRect.top + window.scrollY + previewRect.height;
 
     this.previewTop = topOffset;
+    // console.log(previewRect.left + 226, window.innerWidth)
+    if ((previewRect.left + 226) > window.innerWidth) {
+      this.shiftLeft = true;
+    } else {
+      this.shiftLeft = false;
+    }
 
     if (currentPicker) {
       currentPicker.handleClose();
@@ -97,11 +103,19 @@ class ColorPicker extends React.Component {
     };
 
     const color = typeof this.props.backgroundColor === 'object' ? this.props.backgroundColor.hex : this.props.backgroundColor;
-    const margin = this.previewWidth ? this.previewWidth / 2 : 0;
+
+    var margin;
+    if (this.shiftLeft) {
+      margin = -113 + this.previewWidth;
+    } else {
+      margin = this.previewWidth ? this.previewWidth / 2 : 0;
+    }
+
+
 
     const wrapperStyle = {
       marginLeft: margin
-    }
+    };
 
     // Adjust top position in case user has scrolled
     if (this.previewTop) {
@@ -124,8 +138,13 @@ class ColorPicker extends React.Component {
       }
     }
 
+    var className = "color-wrapper";
+    if (this.props.className) {
+      className += ` ${this.props.className}`;
+    }
+
     return (
-      <div className="color-wrapper">
+      <div className={className}>
         <div 
           className="color-preview" 
           style={previewStyle}
