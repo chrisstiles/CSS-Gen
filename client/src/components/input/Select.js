@@ -20,6 +20,8 @@ class Select extends React.Component {
 		this.menuContainer = document.querySelector(this.props.menuContainer);
 		
 		if (this.menuContainer) {
+			this.scrollWrapper = this.props.scrollWrapper ? document.querySelector(this.props.scrollWrapper) : this.menuContainer;
+
 			window.addEventListener('scroll', this.scrollMenu, true);
 			window.addEventListener('resize', this.scrollMenu, true);
 		}
@@ -37,7 +39,7 @@ class Select extends React.Component {
 			return;
 		}
 
-		if (event.target === this.menuContainer || this.menuContainer.contains(event.target)) {
+		if (event.type === 'resize' || event.target === this.menuContainer || this.menuContainer.contains(event.target)) {
 			const styles = this.getWrapperStyles(event.target);
 
 			this.wrapper.style.top = `${styles.top}px`;
@@ -56,15 +58,15 @@ class Select extends React.Component {
 		}
 	}
 
-	getWrapperStyles(scrollWrapper) {
+	getWrapperStyles() {
 		const selectRect = this.select.control.getBoundingClientRect();
-		const containerRect = this.menuContainer.getBoundingClientRect();
+		const containerRect = this.scrollWrapper.getBoundingClientRect();
 		const borderLeftWidth = getComputedStyle(this.menuContainer, null).getPropertyValue('border-left-width');
-		const scrollWrapperHeight = scrollWrapper ? scrollWrapper.getBoundingClientRect().height : containerRect.height;
+		const scrollWrapperHeight = containerRect.height;
 
 		var top = selectRect.top + selectRect.height;
 		if (top >= (containerRect.top + scrollWrapperHeight)) {
-			top = containerRect.top + scrollWrapperHeight.height;
+			top = containerRect.top + scrollWrapperHeight;
 		}
 
 		var maxHeight = window.innerHeight - top - 25;
@@ -76,7 +78,7 @@ class Select extends React.Component {
 		const style = {
 			width: selectRect.width,
 			top: top - containerRect.top,
-			left: selectRect.left - containerRect.left - parseInt(borderLeftWidth, 10),
+			left: selectRect.left - containerRect.left,
 			maxHeight: maxHeight
 		}
 

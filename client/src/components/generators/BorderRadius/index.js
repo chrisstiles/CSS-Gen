@@ -138,6 +138,7 @@ class BorderRadius extends React.Component {
             { value: 'outset', label: 'Outset' }
           ]}
           menuContainer="#sidebar"
+          scrollWrapper="#sidebar-controls"
         />
       </div>
     );
