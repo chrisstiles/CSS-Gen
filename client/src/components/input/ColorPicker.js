@@ -36,6 +36,11 @@ class ColorPicker extends React.Component {
   handleClick(e) {
     this.previewWidth = e.target.offsetWidth;
 
+    const previewRect = e.target.getBoundingClientRect();
+    const topOffset = previewRect.top + window.scrollY + previewRect.height;
+
+    this.previewTop = topOffset;
+
     if (currentPicker) {
       currentPicker.handleClose();
     }
@@ -92,7 +97,16 @@ class ColorPicker extends React.Component {
     };
 
     const color = typeof this.props.backgroundColor === 'object' ? this.props.backgroundColor.hex : this.props.backgroundColor;
-    const margin = this.previewWidth ? this.previewWidth / 2 : 0
+    const margin = this.previewWidth ? this.previewWidth / 2 : 0;
+
+    const wrapperStyle = {
+      marginLeft: margin
+    }
+
+    // Adjust top position in case user has scrolled
+    if (this.previewTop) {
+      wrapperStyle.top = this.previewTop;
+    }
 
     const previewStyle = {
       backgroundColor: color
@@ -111,7 +125,7 @@ class ColorPicker extends React.Component {
     }
 
     return (
-      <div className="color-picker-wrapper">
+      <div className="color-wrapper">
         <div 
           className="color-preview" 
           style={previewStyle}
@@ -121,11 +135,15 @@ class ColorPicker extends React.Component {
         </div>
         { this.state.displayColorPicker ? <div>
           <div style={cover} onClick={this.handleClose} />
-          <div style={{ marginLeft: margin }}>
+          <div 
+            className="color-picker-wrapper"
+            style={wrapperStyle}
+          >
             <ChromePicker 
               color={color}
               onChange={this.handleChange}
               disableAlpha={this.props.disableAlpha}
+              style={{ opacity: .4 }}
             />
           </div>
         </div> : null }

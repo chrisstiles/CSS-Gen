@@ -136,7 +136,7 @@ class CodeOutput extends React.Component {
           onClick={this.copyCSS}
           className="button"
         >
-          Copy CSS
+          Copy
         </button>
       </div>
     );

@@ -2,6 +2,8 @@
 
 #generator-wrapper.border-radius {
 	.corners-wrapper {
+		margin-bottom:-40px;
+
 		.section-title {
 			margin-bottom:25px;
 		}
@@ -56,17 +58,5 @@
 		&.bottom-right span:last-child:after {
 			background-color:$accent-color;
 		}
-
-		// &.top-right span:first-child:after {
-		// 	background-color:$accent-color;
-		// }
-
-		// &.bottom-left span:last-child:before {
-		// 	background-color:$accent-color;
-		// }
-
-		// &.bottom-right span:last-child:after {
-		// 	background-color:$accent-color;
-		// }
 	}
 }

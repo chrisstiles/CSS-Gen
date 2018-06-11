@@ -56,7 +56,8 @@
 
 input[type="text"],
 input[type="number"],
-.chrome-picker input {
+.chrome-picker input,
+.select-wrapper .Select-control {
   height: 27px !important;
   padding: 0 6px;
   font-size: 15px;
@@ -113,8 +114,13 @@ input[type="number"],
 
 /* Color Picker */
 
-.color-picker-wrapper {
+.color-wrapper {
   position:relative;
+}
+
+.color-picker-wrapper {
+  position:fixed;
+  z-index: 9999;
 }
 
 .color-preview {
@@ -190,6 +196,30 @@ input[type="number"],
   }
 }
 
+
+/* Select Box */
+
+.select-wrapper {
+  .title {
+    margin-bottom:5px;
+  }
+
+  .Select-control {
+    input {
+      padding: 0 6px;
+    }
+  }
+}
+
+.menu-wrapper {
+  background-color:#fff;
+  overflow:scroll;
+
+  &.has-container {
+    position:absolute;
+    z-index: 9999;
+  }
+}
 
 
 

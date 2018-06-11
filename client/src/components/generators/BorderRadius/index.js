@@ -1,7 +1,7 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
-
 import Sliders from '../../input/Sliders';
+import Select from '../../input/Select';
 import { jsToCss } from '../../../util/helpers';
 import _ from 'underscore';
 
@@ -44,7 +44,8 @@ class BorderRadius extends React.Component {
       topRight: defaultRadius,
       bottomRight: defaultRadius,
       bottomLeft: defaultRadius,
-      backgroundColor: 'rgba(72, 52, 212, 1)'
+      backgroundColor: 'rgba(72, 52, 212, 1)',
+      borderStyle: 'none'
     };
 
     this.generateCSS = this.generateCSS.bind(this);
@@ -119,6 +120,25 @@ class BorderRadius extends React.Component {
             {...this.state}
           />
         </div>
+        <div className="divider" />
+        <Select
+          name="borderStyle"
+          value={this.state.borderStyle}
+          label="Border Type"
+          onChange={this.handleChange}
+          options={[
+            { value: 'none', label: 'None' },
+            { value: 'solid', label: 'Solid' },
+            { value: 'dotted', label: 'Dotted' },
+            { value: 'dashed', label: 'Dashed' },
+            { value: 'double', label: 'Double' },
+            { value: 'groove', label: 'Groove' },
+            { value: 'ridge', label: 'Ridge' },
+            { value: 'inset', label: 'Inset' },
+            { value: 'outset', label: 'Outset' }
+          ]}
+          menuContainer="#sidebar"
+        />
       </div>
     );
   }
