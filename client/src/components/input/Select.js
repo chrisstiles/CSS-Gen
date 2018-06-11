@@ -69,7 +69,7 @@ class Select extends React.Component {
 			top = containerRect.top + scrollWrapperHeight;
 		}
 
-		var maxHeight = window.innerHeight - top - 25;
+		var maxHeight = window.innerHeight - top - 35;
 
 		if (maxHeight > 350) {
 			maxHeight = 350;
@@ -77,7 +77,7 @@ class Select extends React.Component {
 
 		const style = {
 			width: selectRect.width,
-			top: top - containerRect.top,
+			top: top,
 			left: selectRect.left - containerRect.left + parseInt(borderLeftWidth, 10),
 			maxHeight: maxHeight
 		}

@@ -281,7 +281,8 @@ body {
   #sidebar > .sidebar-title {
     width: 100%;
     margin-left: 0;
-    height: 34px; }
+    height: 34px;
+    margin-bottom: 0; }
   #sidebar .section-title {
     text-align: center;
     font-size: 14px;
