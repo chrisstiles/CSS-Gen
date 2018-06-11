@@ -16,7 +16,7 @@ class NumberInput extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if ((!this.hasFocus || this.didTick) && newProps.value !== undefined) {
+    if ((!this.hasFocus || this.didTick || newProps.forceUpdate) && newProps.value !== undefined) {
       this.didTick = false;
       this.element.value = newProps.value;
     }

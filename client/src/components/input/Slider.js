@@ -19,10 +19,15 @@ class Slider extends RCSlider {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleBeforeChange = this.handleBeforeChange.bind(this);
   }
 
   handleChange(value) {
     this.props.onChange(value, this.props.name);
+  }
+
+  handleBeforeChange() {
+    document.activeElement.blur();
   }
 
   render() {
@@ -44,6 +49,7 @@ class Slider extends RCSlider {
             step={this.props.step || 1}
             min={min}
             max={max}
+            forceUpdate={this.props.dragging}
           />
           {this.props.title}
         </label>
@@ -53,6 +59,7 @@ class Slider extends RCSlider {
           value={this.props.value || 0}
           handle={Handle}
           step={this.props.step || 1}
+          onBeforeChange={this.handleBeforeChange}
           onChange={this.handleChange}
           tabIndex={-1}
         />
