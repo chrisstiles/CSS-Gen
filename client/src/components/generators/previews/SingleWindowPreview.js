@@ -7,7 +7,8 @@ class SingleWindowPreview extends React.Component {
     super(props);
 
     this.state = {
-      lockAspectRatio: false
+      lockAspectRatio: false,
+      resizing: false
     };
 
     this.handleResizeStart = this.handleResizeStart.bind(this);
@@ -27,12 +28,16 @@ class SingleWindowPreview extends React.Component {
     if (this.props.onResizeStart) {
       this.props.onResizeStart();
     }
+
+    this.setState({ resizing: true });
   }
 
   handleResizeStop(event, direction, el, delta) {
     if (this.props.onResizeStop) {
       this.props.onResizeStop();
     }
+
+    this.setState({ resizing: false });
   }
 
   handleResize(event, direction, el, delta) {
@@ -59,7 +64,7 @@ class SingleWindowPreview extends React.Component {
     var { width, height } = this.resizable.state;
 
     if (this.props.style.boxSizing === 'content-box' && this.props.style.borderWidth) {
-      const borderAdjustment = parseInt(this.props.style.borderWidth) * 2;
+      const borderAdjustment = parseInt(this.props.style.borderWidth, 10) * 2;
 
       width -= borderAdjustment;
       height -= borderAdjustment;
@@ -85,6 +90,10 @@ class SingleWindowPreview extends React.Component {
 
     if (this.props.style.boxSizing === 'content-box') {
       className += ' cb';
+    }
+
+    if (this.state.resizing) {
+      className += ' resizing';
     }
 
     return (
@@ -113,6 +122,7 @@ class SingleWindowPreview extends React.Component {
           >
             {this.props.children}
             <div className="drag-handle" />
+            <div className="resize-handle" />
           </Resizable>
         </div>
       </Draggable>

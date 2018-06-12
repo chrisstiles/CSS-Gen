@@ -237,6 +237,19 @@ body {
 
 .resize-wrapper {
   position: relative; }
+  .resize-wrapper:hover .resize-handle,
+  .resize-wrapper .resizing .resize-handle {
+    opacity: 1; }
+
+.resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: 2px dashed #ff6969;
+  opacity: 0;
+  pointer-events: none; }
 
 .generator-preview span > div:nth-child(5), .generator-preview span > div:nth-child(7) {
   cursor: nesw-resize !important; }

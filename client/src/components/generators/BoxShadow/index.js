@@ -3,6 +3,7 @@ import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import Sliders from '../../input/Sliders';
 import Toggle from '../../input/Toggle';
 import ColorPicker from '../../input/ColorPicker';
+import { generateCSSString } from '../../../util/helpers';
 import _ from 'underscore';
 
 const sliders = [
@@ -47,14 +48,17 @@ class BoxShadow extends React.Component {
     const rules = _.extend({}, this.state, styles);
     const color = rules.color === undefined ? this.state.shadowColor.rgb : rules.color.rgb;
 
-    var css = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${rules.spreadRadius}px rgba(${color.r}, ${color.g}, ${color.b}, ${rules.shadowOpacity})`;
+    var boxShadow = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${rules.spreadRadius}px rgba(${color.r}, ${color.g}, ${color.b}, ${rules.shadowOpacity})`;
 
     if ((rules.inset !== undefined && rules.inset) || (rules.inset === undefined && this.state.inset)) {
-      css = `inset ${css}`;
+      boxShadow = `inset ${boxShadow}`;
     }
 
+    const css = { boxShadow };
+
     return {
-      boxShadow: css
+      styles: css,
+      outputCSS: generateCSSString(css)
     };
   }
 
