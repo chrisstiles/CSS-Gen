@@ -24,8 +24,6 @@ class SingleWindowPreview extends React.Component {
       left: left
     };
 
-
-
     if (this.props.onResizeStart) {
       this.props.onResizeStart();
     }
@@ -60,19 +58,16 @@ class SingleWindowPreview extends React.Component {
 
     var { width, height } = this.resizable.state;
 
-    // var widthAdjustment, heightAdjustment;
-    if (this.props.style.boxSizing === 'content-box') {
-      // className += ' cb';
-      // width -= 20;
-      // height -= 20;
-      console.log('hello')
+    if (this.props.style.boxSizing === 'content-box' && this.props.style.borderWidth) {
+      const borderAdjustment = parseInt(this.props.style.borderWidth) * 2;
+
+      width -= borderAdjustment;
+      height -= borderAdjustment;
 
       this.resizable.setState({ 
-        width: width - 20, 
-        height: height - 20 });
-    } else {
-      // widthAdjustment = 0;
-      // heightAdjustment = 0;
+        width: width, 
+        height: height
+      });
     }
 
     this.props.onResize({ width, height });
@@ -86,17 +81,10 @@ class SingleWindowPreview extends React.Component {
   }
 
   render() {
-    console.log('testing')
     var className = 'generator-preview';
 
-    var widthAdjustment, heightAdjustment;
     if (this.props.style.boxSizing === 'content-box') {
       className += ' cb';
-      widthAdjustment = 20;
-      heightAdjustment = 20;
-    } else {
-      widthAdjustment = 0;
-      heightAdjustment = 0;
     }
 
     return (
@@ -111,8 +99,8 @@ class SingleWindowPreview extends React.Component {
             ref={resizable => { this.resizable = resizable; }}
             className={className}
             size={{
-              width: this.props.size.width + widthAdjustment,
-              height: this.props.size.height + heightAdjustment
+              width: this.props.size.width,
+              height: this.props.size.height
             }}
             minWidth={this.props.constraints.width.min}
             maxWidth={this.props.constraints.width.max}

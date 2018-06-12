@@ -1,7 +1,6 @@
 import React from 'react';
 import Page from './Page';
 import Sidebar from './Sidebar';
-import { generateCSSString } from '../util/helpers';
 
 class Generator extends React.Component {
   constructor(props) {
@@ -28,14 +27,6 @@ class Generator extends React.Component {
     document.removeEventListener('keyup', this.handleKeyup, false);
     document.removeEventListener('keydown', this.props.handleKeydown, false);
     document.removeEventListener('keyup', this.props.handleKeyup, false);
-  }
-
-  componentWillMount() {
-    this.setState({ outputCSS: generateCSSString(this.props.generateCSS()) });
-  }
-
-  componentWillReceiveProps() {
-    this.setState({ outputCSS: generateCSSString(this.props.generateCSS()) });
   }
 
   handleKeydown(event) {
@@ -86,7 +77,7 @@ class Generator extends React.Component {
             {this.props.renderPreview()}
             <Sidebar
               property={this.props.property}
-              outputCSS={this.state.outputCSS}
+              outputCSS={this.props.generateCSS().outputCSS}
               outputPreviewStyles={this.props.outputPreviewStyles}
               previewCSS={this.props.previewCSS}
               browserPrefixes={this.props.browserPrefixes}

@@ -5,7 +5,7 @@ import Sliders from '../../input/Sliders';
 import Select from '../../input/Select';
 import Toggle from '../../input/Toggle';
 import ColorPicker from '../../input/ColorPicker';
-import { jsToCss } from '../../../util/helpers';
+import { jsToCss, generateCSSString } from '../../../util/helpers';
 import _ from 'underscore';
 
 const minRadius = 0;
@@ -75,6 +75,8 @@ class BorderRadius extends React.Component {
       }
     });
 
+    // css.borderWidth = rules.borderWidth;
+
     if (allEqual) {
       // All corners are equal
       css.borderRadius = `${rules.radius}px`;
@@ -98,16 +100,25 @@ class BorderRadius extends React.Component {
     // Add border to preview if necessary
     if (rules.borderStyle !== 'none') {
       css.border = `${rules.borderWidth}px ${rules.borderStyle} ${rules.borderColor}`;
+
+      // Add box sizing for inset border
+      if (!rules.inset) {
+        css.boxSizing = 'content-box';
+      } else {
+        css.boxSizing = 'border-box';
+      }
     }
 
-    // Add box sizing for inset border
-    if (rules.inset) {
-      css.boxSizing = 'border-box';
-    } else {
-      css.boxSizing = 'content-box';
-    }
+    // Add output string
+    const outputCSS = generateCSSString(css);
 
-    return css;
+    // Add extra keys
+    css.borderWidth = `${rules.borderWidth}px`;
+    
+    return {
+      styles: css,
+      outputCSS: outputCSS
+    };
   }
 
   reset(state) {

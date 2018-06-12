@@ -108,7 +108,7 @@ class SingleWindowGenerator extends React.Component {
   }
 
   renderPreview() {
-    const style = this.props.generateCSS() || {};
+    const style = this.props.generateCSS().styles || {};
     style.backgroundColor = this.state.backgroundColor;
 
     return (
