@@ -1,18 +1,8 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
-import Sliders from '../../input/Sliders';
-import Toggle from '../../input/Toggle';
-import ColorPicker from '../../input/ColorPicker';
+import BoxShadowInputs from './BoxShadowInputs';
 import { generateCSSString } from '../../../util/helpers';
 import _ from 'underscore';
-
-const sliders = [
-  { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200 },
-  { title: 'Vertical Shift', name: 'verticalShift', min: -200, max: 200 },
-  { title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100 },
-  { title: 'Spread Radius', name: 'spreadRadius', min: 0, max: 100 },
-  { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 1, step: .01 }
-];
 
 class BoxShadow extends React.Component {
   constructor(props) {
@@ -37,11 +27,7 @@ class BoxShadow extends React.Component {
     };
 
     this.generateCSS = this.generateCSS.bind(this);
-    this.reset = this.reset.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleShadowColorPickerChange = this.handleShadowColorPickerChange.bind(this);
-    this.handleToggleChange = this.handleToggleChange.bind(this);
   }
 
   generateCSS(styles = {}) {
@@ -62,59 +48,12 @@ class BoxShadow extends React.Component {
     };
   }
 
-  reset(state) {
-    this.setState(state);
-  }
-
-  handleChange(value, name) {
-    const state = {};
-    state[name] = value;
-
-    this.setState(state);
-  }
-
-  handleShadowColorPickerChange(color, colorObject) {
-    this.setState({ shadowColor: colorObject });
-  }
-
-  handleToggleChange(value, event) {
-    const name = event.target.name;
-
-    const state = {};
-    state[name] = value;
-
-    this.setState(state);
-  }
-
   renderInputs() {
     return (
-      <div>
-        <div className="row">
-          <div className="field-wrapper left">
-            <label className="title">Shadow Color</label>
-            <ColorPicker
-              backgroundColor={this.state.shadowColor}
-              disableAlpha={true}
-              onChange={this.handleShadowColorPickerChange}
-            />
-          </div>
-
-          <div className="field-wrapper right">
-            <Toggle
-              onChange={this.handleToggleChange}
-              checked={this.state.inset}
-              label="Inset"
-              className="left"
-              name="inset"
-            />
-          </div>
-        </div>
-        <Sliders
-          sliders={sliders}
-          onChange={this.handleChange}
-          {...this.state}
-        />
-      </div>
+      <BoxShadowInputs
+        styles={this.state}
+        owner={this}
+      />
     );
   }
 
@@ -124,13 +63,13 @@ class BoxShadow extends React.Component {
         title="CSS Box Shadow Generator | CSS-GEN"
         previewID="box-shadow-preview"
         className="box-shadow"
-        property="box-shadow"
         heading="CSS Box Shadow Generator"
         generateCSS={this.generateCSS}
         renderInputs={this.renderInputs}
         resetStyles={this.reset}
         previewSize={{ width: 300, height: 300 }}
         defaultStyles={this.state}
+        owner={this}
       />
     );
   }

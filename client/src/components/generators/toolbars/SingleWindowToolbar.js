@@ -46,8 +46,6 @@ class SingleWindowToolbar extends React.Component {
           <ColorPicker
             backgroundColor={this.props.previewBackgroundColor}
             onChange={this.props.onColorPickerChange}
-            ref={colorPicker => { this.colorPicker = colorPicker }}
-            onOpen={this.props.onColorPickerOpen}
           />
         </div>
 

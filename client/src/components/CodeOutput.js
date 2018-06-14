@@ -22,10 +22,7 @@ class CodeOutput extends React.Component {
   }
 
   componentWillMount() {
-    const css = {
-      property: this.props.property,
-      outputCSS: this.props.outputCSS
-    }
+    const css = { outputCSS: this.props.outputCSS }
 
     if (this.props.previewCSS) {
       css.previewCSS = this.props.previewCSS;

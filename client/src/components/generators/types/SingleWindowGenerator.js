@@ -55,7 +55,11 @@ class SingleWindowGenerator extends React.Component {
     this.setState(state);
     this.preview.reset();
 
-    this.props.resetStyles(this.initialState);
+    this.props.owner.setState(this.initialState);
+
+    if (this.props.reset) {
+      this.props.reset();
+    }
   }
 
   handleToolbarTextChange(value, event) {
@@ -69,7 +73,7 @@ class SingleWindowGenerator extends React.Component {
     this.setState(state);
   }
 
-  handleColorPickerChange(color) {
+  handleColorPickerChange(color, name) {
     this.setState({ 
       backgroundColor: color,
       previewCSS: this.generatePreviewCSS({ backgroundColor: color })
@@ -134,7 +138,6 @@ class SingleWindowGenerator extends React.Component {
       <Generator 
         title={this.props.title}
         className={this.props.className}
-        property={this.props.property}
         heading={this.props.heading}
         renderToolbar={this.renderToolbar}
         renderPreview={this.renderPreview}
@@ -144,6 +147,7 @@ class SingleWindowGenerator extends React.Component {
         generateCSS={this.props.generateCSS}
         reset={this.reset}
         browserPrefixes={this.props.browserPrefixes}
+        presets={this.props.presets}
       />
     );
   }
