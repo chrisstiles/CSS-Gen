@@ -8,7 +8,7 @@ class Preset extends React.Component {
   }
 
   handleClick() {
-    this.props.onClick(this.props.styles);
+    this.props.setPreset(this.props.styles);
   }
 
   render() {

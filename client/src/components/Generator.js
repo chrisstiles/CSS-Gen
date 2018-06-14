@@ -13,6 +13,7 @@ class Generator extends React.Component {
 
     this.handleKeydown = this.handleKeydown.bind(this);
     this.handleKeyup = this.handleKeyup.bind(this);
+    this.renderPresets = this.renderPresets.bind(this);
   }
 
   componentDidMount() {
@@ -56,6 +57,12 @@ class Generator extends React.Component {
     this.setState({ keys: '' });
   }
 
+  renderPresets() {
+    if (this.props.renderPresets) {
+      return this.props.renderPresets(this.props.setPreset);
+    }
+  }
+
   render() {
     const cssClasses = `${this.props.className}${this.state.keys}`;
 
@@ -83,7 +90,7 @@ class Generator extends React.Component {
             >
               {this.props.renderInputs()}
             </Sidebar>
-            {this.props.children}
+            {this.renderPresets()}
           </div>
         </div>
       </Page>

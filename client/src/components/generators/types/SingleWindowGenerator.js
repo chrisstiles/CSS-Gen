@@ -30,6 +30,7 @@ class SingleWindowGenerator extends React.Component {
     this.reset = this.reset.bind(this);
     this.renderToolbar = this.renderToolbar.bind(this);
     this.renderPreview = this.renderPreview.bind(this);
+    this.setPreset = this.setPreset.bind(this);
     this.handleToolbarTextChange = this.handleToolbarTextChange.bind(this);
     this.handleColorPickerChange = this.handleColorPickerChange.bind(this);
     this.handlePreviewWindowResize = this.handlePreviewWindowResize.bind(this);
@@ -60,6 +61,16 @@ class SingleWindowGenerator extends React.Component {
     if (this.props.reset) {
       this.props.reset();
     }
+  }
+
+  setPreset(presetStyles = {}) {
+    const previewCSS = this.generatePreviewCSS(presetStyles);
+    const state = _.extend({}, this.initialState, { previewCSS });
+    state.backgroundColor = this.state.backgroundColor;
+    
+    this.setState(state);
+    this.preview.reset();
+    this.props.owner.setState(presetStyles);
   }
 
   handleToolbarTextChange(value, event) {
@@ -107,6 +118,7 @@ class SingleWindowGenerator extends React.Component {
         onColorPickerChange={this.handleColorPickerChange}
         onPreviewCSSChange={this.handlePreviewCSSChange}
         ref={toolbar => { this.toolbar = toolbar }}
+        renderPresets={this.props.renderPresets}
       />
     );
   }
@@ -141,13 +153,14 @@ class SingleWindowGenerator extends React.Component {
         heading={this.props.heading}
         renderToolbar={this.renderToolbar}
         renderPreview={this.renderPreview}
+        renderPresets={this.props.renderPresets}
+        setPreset={this.setPreset}
         outputPreviewStyles={this.state.outputPreviewStyles}
         previewCSS={this.state.previewCSS}
         renderInputs={this.props.renderInputs}
         generateCSS={this.props.generateCSS}
         reset={this.reset}
         browserPrefixes={this.props.browserPrefixes}
-        presets={this.props.presets}
       />
     );
   }

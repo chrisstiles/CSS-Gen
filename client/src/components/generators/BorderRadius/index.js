@@ -26,6 +26,7 @@ class BorderRadius extends React.Component {
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
+    this.renderPresets = this.renderPresets.bind(this);
   }
 
   generateCSS(styles = {}) {
@@ -40,8 +41,6 @@ class BorderRadius extends React.Component {
         allEqual = false;
       }
     });
-
-    // css.borderWidth = rules.borderWidth;
 
     if (allEqual) {
       // All corners are equal
@@ -96,6 +95,10 @@ class BorderRadius extends React.Component {
     );
   }
 
+  renderPresets(setPreset) {
+    return <BorderRadiusPresets setPreset={setPreset} />;
+  }
+
   render() {
     return (
       <SingleWindowGenerator 
@@ -106,10 +109,10 @@ class BorderRadius extends React.Component {
         heading="CSS Border Radius Generator"
         generateCSS={this.generateCSS}
         renderInputs={this.renderInputs}
+        renderPresets={this.renderPresets}
         resetStyles={this.reset}
         previewSize={{ width: 300, height: 300 }}
         defaultStyles={this.state}
-        presets={BorderRadiusPresets}
         owner={this}
       />
     );
