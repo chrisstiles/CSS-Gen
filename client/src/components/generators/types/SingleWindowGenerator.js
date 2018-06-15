@@ -138,7 +138,7 @@ class SingleWindowGenerator extends React.Component {
       >
         <div className="preview-text">
           Preview
-          <span className="dimensions">{this.state.width}px x {this.state.height}px</span>
+          <span className="dimensions">{this.props.styles.width}px x {this.props.styles.height}px</span>
           <span className="instructions">You can drag and resize this window</span>
         </div>
       </SingleWindowPreview>
