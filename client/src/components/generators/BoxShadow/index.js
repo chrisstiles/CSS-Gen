@@ -23,7 +23,9 @@ class BoxShadow extends React.Component {
           a: 1
         }
       },
-      inset: false
+      inset: false,
+      width: 300,
+      height: 300
     };
 
     this.generateCSS = this.generateCSS.bind(this);
@@ -67,8 +69,7 @@ class BoxShadow extends React.Component {
         generateCSS={this.generateCSS}
         renderInputs={this.renderInputs}
         resetStyles={this.reset}
-        previewSize={{ width: 300, height: 300 }}
-        defaultStyles={this.state}
+        styles={this.state}
         owner={this}
       />
     );

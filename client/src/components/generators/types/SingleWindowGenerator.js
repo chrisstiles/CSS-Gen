@@ -8,18 +8,18 @@ class SingleWindowGenerator extends React.Component {
   constructor(props) {
     super(props);
 
-    const backgroundColor = props.defaultStyles.backgroundColor || 'rgba(255, 255, 255, 1)';
+    const backgroundColor = props.styles.backgroundColor || 'rgba(255, 255, 255, 1)';
 
     this.state = {
       backgroundColor: backgroundColor,
-      width: props.previewSize.width,
-      height: props.previewSize.height,
+      width: props.styles.width,
+      height: props.styles.height,
       outputPreviewStyles: false,
       previewCSS: ''
     };
 
     // Save original state for resetting generator
-    this.initialState = _.extend({}, this.state, props.defaultStyles);
+    this.initialState = _.extend({}, this.state, props.styles);
 
     // Preview window size constrains
     this.previewConstraints = props.previewConstraints || {
@@ -63,14 +63,13 @@ class SingleWindowGenerator extends React.Component {
     }
   }
 
-  setPreset(presetStyles = {}) {
-    const previewCSS = this.generatePreviewCSS(presetStyles);
-    const state = _.extend({}, this.initialState, { previewCSS });
-    state.backgroundColor = this.state.backgroundColor;
-    
-    this.setState(state);
+  setPreset(presetStyles) {
+    const state = _.extend({}, this.initialState, presetStyles);
+    this.props.owner.setState(state);
     this.preview.reset();
-    this.props.owner.setState(presetStyles);
+
+    const previewCSS = this.generatePreviewCSS(state);
+    this.setState({ previewCSS });
   }
 
   handleToolbarTextChange(value, event) {
@@ -79,9 +78,11 @@ class SingleWindowGenerator extends React.Component {
     const state = {};
 
     state[type] = value;
-    state.previewCSS = this.generatePreviewCSS(state);
+    
+    this.props.owner.setState(state);
 
-    this.setState(state);
+    const previewCSS = this.generatePreviewCSS(state);
+    this.setState({ previewCSS });
   }
 
   handleColorPickerChange(color, name) {
@@ -97,18 +98,17 @@ class SingleWindowGenerator extends React.Component {
 
   handlePreviewWindowResize(size) {
     const { width, height } = size;
-    this.setState({ 
-      width: width,
-      height: height,
-      previewCSS: this.generatePreviewCSS({ width, height }) 
-    });
+    const previewCSS = this.generatePreviewCSS({ width, height });
+    
+    this.setState({ previewCSS });
+    this.props.owner.setState({ width, height })
   }
 
   renderToolbar() {
     return (
       <SingleWindowToolbar
-        previewWidth={this.state.width}
-        previewHeight={this.state.height}
+        previewWidth={this.props.styles.width}
+        previewHeight={this.props.styles.height}
         previewBackgroundColor={this.state.backgroundColor}
         previewConstraints={this.previewConstraints}
         outputPreviewStyles={this.state.outputPreviewStyles}
@@ -132,7 +132,7 @@ class SingleWindowGenerator extends React.Component {
         ref={previewWindow => { this.preview = previewWindow }}
         style={style}
         id={this.props.previewID}
-        size={{ width: this.state.width, height: this.state.height }}
+        size={{ width: this.props.styles.width, height: this.props.styles.height }}
         constraints={this.previewConstraints}
         onResize={this.handlePreviewWindowResize}
       >

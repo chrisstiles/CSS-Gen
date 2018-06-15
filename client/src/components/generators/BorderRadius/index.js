@@ -21,7 +21,9 @@ class BorderRadius extends React.Component {
       borderStyle: 'none',
       borderColor: '#323232',
       borderWidth: 10,
-      inset: true
+      inset: true,
+      width:300,
+      height:300
     };
 
     this.generateCSS = this.generateCSS.bind(this);
@@ -111,8 +113,7 @@ class BorderRadius extends React.Component {
         renderInputs={this.renderInputs}
         renderPresets={this.renderPresets}
         resetStyles={this.reset}
-        previewSize={{ width: 300, height: 300 }}
-        defaultStyles={this.state}
+        styles={this.state}
         owner={this}
       />
     );
