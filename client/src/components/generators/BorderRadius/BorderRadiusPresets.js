@@ -19,6 +19,20 @@ const presets = [
       bottomRight: 0
     },
     thumbnailStyles: { borderRadius: '10px 0px 0px 10px' }
+  },
+  {
+    styles: {
+      topLeft: 50,
+      topLeftUnits: '%',
+      topRight: 50,
+      topRightUnits: '%',
+      bottomLeft: 50,
+      bottomLeftUnits: '%',
+      bottomRight: 50,
+      bottomRightUnits: '%',
+      units: '%'
+    },
+    thumbnailStyles: { borderRadius: '50%' }
   }
 ];
 

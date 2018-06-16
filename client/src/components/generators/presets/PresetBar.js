@@ -20,7 +20,10 @@ class PresetBar extends React.Component {
 
     return (
       <div id="preset-bar" className="subheader">
-        {presetComponents}
+        <div className="title">Presets</div>
+        <div className="presets">
+          {presetComponents}
+        </div>
       </div>
     );
   }

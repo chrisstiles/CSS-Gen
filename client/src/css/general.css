@@ -299,7 +299,7 @@ p:last-child {
     margin-left: -27px;
     margin-bottom: 20px;
     text-align: center;
-    background: #e5e5e5;
+    background-color: #e5e5e5;
     color: #828282;
     font-size: 14px;
     font-weight: 600;
@@ -313,6 +313,11 @@ p:last-child {
     margin-left: 0;
     height: 34px;
     margin-bottom: 0; }
+    #sidebar > .sidebar-title:first-child {
+      border-top: none;
+      padding-top: 9px;
+      position: relative;
+      z-index: 9999; }
   #sidebar .section-title {
     text-align: center;
     font-size: 14px;
@@ -357,10 +362,6 @@ p:last-child {
   bottom: 230px;
   overflow: scroll;
   padding: 20px 27px; }
-  #sidebar-controls .sidebar-title:first-child {
-    margin-top: -20px;
-    border-top: none;
-    padding-top: 9px; }
 
 /* Output CSS */
 #output-wrapper {
@@ -410,13 +411,22 @@ p:last-child {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 15px;
   background-color: rgba(247, 247, 247, 0.8);
-  border-top: 1px solid #dedede;
-  display: flex; }
+  border-top: 1px solid #dedede; }
+  #preset-bar .title {
+    font-size: 14px;
+    line-height: 1;
+    font-weight: 600;
+    padding: 6px 15px;
+    color: #828282;
+    background-color: rgba(229, 229, 229, 0.24);
+    border-bottom: 1px solid #e7e7e7; }
+  #preset-bar .presets {
+    display: flex;
+    padding: 15px; }
   #preset-bar .preset {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     background-color: #fff;
     box-shadow: 0px 6px 18px 0px rgba(184, 185, 218, 0.27);
     border: 1px solid rgba(72, 52, 212, 0.2);
@@ -425,13 +435,13 @@ p:last-child {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all .2s;
+    transition: all .1s;
     margin-right: 15px; }
     #preset-bar .preset:hover {
       transform: scale(1.05); }
     #preset-bar .preset .thumbnail {
-      width: 35px;
-      height: 35px;
+      width: 30px;
+      height: 30px;
       background: #4834d4; }
 
 .row:after {
@@ -669,12 +679,11 @@ input[type="number"],
   border: 1px solid #C9C9CC;
   margin-top: 2px;
   box-shadow: 0px 9px 23px 0px rgba(0, 0, 0, 0.1);
-  z-index: 9999;
+  z-index: 9998;
   font-size: 13px;
   font-weight: 600; }
   .menu-wrapper.has-container {
-    position: absolute;
-    z-index: 9999; }
+    position: absolute; }
   .menu-wrapper .Select-option {
     padding: 7px 12px 8px 12px;
     color: #5a5a5a !important; }

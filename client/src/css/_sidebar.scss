@@ -13,7 +13,7 @@
     margin-left: -27px;
     margin-bottom: 20px;
     text-align: center;
-    background: #e5e5e5;
+    background-color: #e5e5e5;
     color: #828282;
     font-size: 14px;
     font-weight: 600;
@@ -29,6 +29,13 @@
     margin-left:0;
     height:34px;
     margin-bottom:0;
+
+    &:first-child {
+      border-top:none;
+      padding-top:9px;
+      position:relative;
+      z-index: 9999;
+    }
   }
 
   .section-title {
@@ -99,12 +106,6 @@
   bottom:230px;
   overflow:scroll;
   padding:20px 27px;
-
-  .sidebar-title:first-child {
-    margin-top: -20px;
-    border-top:none;
-    padding-top:9px;
-  }
 }
 
 /* Output CSS */
