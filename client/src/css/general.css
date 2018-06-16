@@ -512,7 +512,7 @@ input[type="number"],
 .has-units .slider-input,
 .has-units .units-select {
   float: right;
-  top: -10px; }
+  top: -8px; }
 
 .has-units .slider-input {
   width: 42px; }
@@ -966,6 +966,9 @@ input[type="number"],
   margin-bottom: -40px; }
   #generator-wrapper.border-radius .corners-wrapper .section-title {
     margin-bottom: 25px; }
+  #generator-wrapper.border-radius .corners-wrapper .slider-input,
+  #generator-wrapper.border-radius .corners-wrapper .units-select {
+    top: -10px; }
 
 #generator-wrapper.border-radius .slider-image {
   width: 22px;
