@@ -484,6 +484,32 @@ input[type="number"],
   top: -8px;
   width: 50px; }
 
+.has-units .slider-input,
+.has-units .units-select {
+  float: right;
+  top: -10px; }
+
+.has-units .slider-input {
+  width: 42px; }
+
+.has-units .select-wrapper.units-select {
+  left: -1px;
+  position: relative;
+  width: 31px;
+  cursor: pointer; }
+  .has-units .select-wrapper.units-select .Select-control {
+    background-color: #f6f6f6; }
+    .has-units .select-wrapper.units-select .Select-control:hover {
+      background-color: #efefef; }
+    .has-units .select-wrapper.units-select .Select-control .Select-value {
+      padding: 0 0 1px 0 !important;
+      text-align: center; }
+      .has-units .select-wrapper.units-select .Select-control .Select-value .Select-value-label {
+        color: #7a7a7a !important;
+        font-size: 13px; }
+  .has-units .select-wrapper.units-select .Select.is-focused .Select-control {
+    z-index: 200; }
+
 .button {
   -webkit-appearance: none;
   apperance: none;
@@ -581,10 +607,13 @@ input[type="number"],
     height: 35px !important;
     font-weight: 600; }
   .select-wrapper .Select .Select-input {
-    display: block; }
+    display: block;
+    background-color: transparent !important;
+    border: none !important; }
   .select-wrapper .Select .Select-control {
     padding: 0 !important;
-    box-shadow: none !important; }
+    box-shadow: none !important;
+    position: relative; }
     .select-wrapper .Select .Select-control input {
       padding: 0;
       width: 100% !important;
@@ -606,6 +635,18 @@ input[type="number"],
       left: -2px; }
   .select-wrapper .Select.is-focused .Select-control {
     border: 1px solid #4834d4 !important; }
+  .select-wrapper.small .Select .Select-control {
+    height: 27px !important; }
+  .select-wrapper.small .Select .Select-input {
+    height: calc(27px - 2px) !important; }
+  .select-wrapper.small .Select .Select-control input {
+    height: 27px; }
+  .select-wrapper.small .Select .Select-control .Select-value,
+  .select-wrapper.small .Select .Select-control .Select-value-label {
+    line-height: calc(27px - 2px) !important; }
+    .select-wrapper.small .Select .Select-control .Select-value.shift .Select-value-label,
+    .select-wrapper.small .Select .Select-control .Select-value-label.shift .Select-value-label {
+      line-height: calc(27px - 4px) !important; }
 
 .menu-wrapper {
   background-color: #fff;
@@ -626,6 +667,9 @@ input[type="number"],
       background-color: #f9f9f9; }
     .menu-wrapper .Select-option.is-selected {
       background-color: rgba(72, 52, 212, 0.1); }
+  .menu-wrapper.small .Select-option {
+    padding: 7px 0 8px 0;
+    text-align: center; }
 
 .rc-slider {
   position: relative;
@@ -905,7 +949,7 @@ input[type="number"],
   position: relative;
   top: -8px;
   margin-bottom: -3px;
-  left: -5px; }
+  left: -7px; }
   #generator-wrapper.border-radius .slider-image span {
     position: absolute;
     left: 0;

@@ -10,13 +10,19 @@ class BorderRadius extends React.Component {
     super(props);
 
     const defaultRadius = 10;
+    const defaultUnits = 'px';
 
     this.state = {
       radius: defaultRadius,
+      units: defaultUnits,
       topLeft: defaultRadius,
+      topLeftUnits: defaultUnits,
       topRight: defaultRadius,
+      topRightUnits: defaultUnits,
       bottomRight: defaultRadius,
+      bottomRightUnits: defaultUnits,
       bottomLeft: defaultRadius,
+      bottomLeftUnits: defaultUnits,
       backgroundColor: 'rgba(72, 52, 212, 1)',
       borderStyle: 'none',
       borderColor: '#323232',
@@ -42,11 +48,15 @@ class BorderRadius extends React.Component {
       if (rules.radius !== element) {
         allEqual = false;
       }
+
+      if (typeof element !== 'string') {
+        element = `${element}px`;
+      }
     });
 
     if (allEqual) {
       // All corners are equal
-      css.borderRadius = `${rules.radius}px`;
+      css.borderRadius = `${rules.radius}${rules.units}`;
     } else {
       // Return shorthand CSS if some corners are equal
       const topLeftBottomRightEqual = rules.topLeft === rules.bottomRight;
@@ -54,11 +64,11 @@ class BorderRadius extends React.Component {
 
       var borderRadius;
       if (topLeftBottomRightEqual && topRightBottomLeftEqual) {
-        borderRadius = `${rules.topLeft}px ${rules.topRight}px`;
+        borderRadius = `${rules.topLeft}${rules.topLeftUnits} ${rules.topRight}${rules.topRightUnits}`;
       } else if (topRightBottomLeftEqual) {
-        borderRadius = `${rules.topLeft}px ${rules.topRight}px ${rules.bottomRight}px`;
+        borderRadius = `${rules.topLeft}${rules.topLeftUnits} ${rules.topRight}${rules.topRightUnits} ${rules.bottomRight}${rules.bottomRightUnits}`;
       } else {
-        borderRadius = `${rules.topLeft}px ${rules.topRight}px ${rules.bottomRight}px ${rules.bottomLeft}px`;
+        borderRadius = `${rules.topLeft}${rules.topLeftUnits} ${rules.topRight}${rules.topRightUnits} ${rules.bottomRight}${rules.bottomRightUnits} ${rules.bottomLeft}${rules.bottomLeftUnits}`;
       }
 
       css.borderRadius = borderRadius;

@@ -87,13 +87,19 @@ class Select extends React.Component {
 
 	renderMenu(params) {
 		const options = defaultMenuRenderer(params);
+		
+		var className = 'menu-wrapper';
+		if (this.props.className && this.props.className.indexOf('small') !== -1) {
+			className += ' small';
+		}
 
 		if (this.menuContainer) {
 			const style = this.getWrapperStyles();
+			className += ' has-container';
 
 			const menu = (
 				<div 
-					className="menu-wrapper has-container"
+					className={className}
 					style={style}
 					ref={wrapper => { this.wrapper = wrapper }}
 				>
@@ -107,7 +113,7 @@ class Select extends React.Component {
 		  );
 		} else {
 			const menu = (
-				<div className="menu-wrapper">
+				<div className={className}>
 					{options}
 				</div>
 			);
@@ -127,7 +133,7 @@ class Select extends React.Component {
 
 		return(
 			<div className={className}>
-				<label className="title">{this.props.label}</label>
+				{this.props.label ? <label className="title">{this.props.label}</label> : null}
 				<ReactSelect
 					ref={select => { this.select = select }}
 					onOpen={this.handleOpen}

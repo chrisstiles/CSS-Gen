@@ -9,48 +9,69 @@ import { jsToCss } from '../../../util/helpers';
 const minRadius = 0;
 const maxRadius = 200;
 
-const radiusSlider = [
-  { title: 'All Corners', name: 'radius', min: minRadius, max: maxRadius, divider: true }
-];
-
-const cornerSliders = [
-  { name: 'topLeft', min: minRadius, max: maxRadius, className: 'half' },
-  { name: 'topRight', min: minRadius, max: maxRadius, className: 'half no-margin' },
-  { name: 'bottomLeft', min: minRadius, max: maxRadius, className: 'half' },
-  { name: 'bottomRight', min: minRadius, max: maxRadius, className: 'half no-margin' },
-];
-
-// Add elements as slider titles for individual corners
-cornerSliders.forEach(slider => {
-  const className = `slider-image ${jsToCss(slider.name)}`;
-  const title = (
-    <div className={className}>
-      <span></span>
-      <span></span>
-    </div>
-  );
-
-  slider.title = title;
-});
-
 class BorderRadiusInputs extends React.Component {
   constructor(props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
+
+    this.radiusSlider = [
+      { title: 'All Corners', name: 'radius', min: minRadius, max: maxRadius, divider: true, units: props.styles.units }
+    ];
+
+    this.cornerSliders = [
+      { name: 'topLeft', min: minRadius, max: maxRadius, className: 'half', units: props.styles.topLeftUnits },
+      { name: 'topRight', min: minRadius, max: maxRadius, className: 'half no-margin', units: props.styles.topRightUnits },
+      { name: 'bottomLeft', min: minRadius, max: maxRadius, className: 'half', units: props.styles.bottomLeftUnits },
+      { name: 'bottomRight', min: minRadius, max: maxRadius, className: 'half no-margin', units: props.styles.bottomRightUnits },
+    ];
+
+    // Add elements as slider titles for individual corners
+    this.cornerSliders.forEach(slider => {
+      const className = `slider-image ${jsToCss(slider.name)}`;
+      const title = (
+        <div className={className}>
+          <span></span>
+          <span></span>
+        </div>
+      );
+
+      slider.title = title;
+    });
   }
 
-  handleChange(value, name) {
+  componentWillReceiveProps(newProps) {
+    this.radiusSlider[0].units = newProps.styles.units;
+
+    this.cornerSliders.forEach(slider => {
+      const key = slider.name + 'Units';
+      slider.units = newProps.styles[key];
+    });
+  }
+
+  handleChange(value, name, units = 'px') {
     var state = {};
     state[name] = value;
-    
+
     // If this is the 'All Corners' slider,
     // change all corner radii
     if (name === 'radius') {
       state.topLeft = value;
+      state.topLeftUnits = units;
+
       state.topRight = value;
+      state.topRightUnits = units;
+
       state.bottomRight = value;
+      state.bottomRightUnits = units;
+
       state.bottomLeft = value;
+      state.bottomLeftUnits = units;
+
+      state.units = units;
+    } else {
+      const key = name + 'Units';
+      state[key] = units;
     }
 
     this.props.owner.setState(state);
@@ -64,14 +85,14 @@ class BorderRadiusInputs extends React.Component {
     return (
       <div>
         <Sliders
-          sliders={radiusSlider}
+          sliders={this.radiusSlider}
           onChange={this.handleChange}
           {...styles}
         />
         <div className="corners-wrapper">
           <div className="section-title">Individual Corners</div>
           <Sliders
-            sliders={cornerSliders}
+            sliders={this.cornerSliders}
             onChange={this.handleChange}
             {...styles}
           />
