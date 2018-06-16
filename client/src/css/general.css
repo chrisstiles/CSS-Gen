@@ -38,6 +38,9 @@ body {
 .right {
   float: right; }
 
+p:last-child {
+  margin-bottom: 0 !important; }
+
 /* Media Queries */
 @media screen and (max-width: 1250px) {
   #main {
@@ -138,12 +141,22 @@ body {
   z-index: 100; }
 
 #header {
-  padding: 45px 50px 18px 335px;
+  padding: 45px 350px 18px 335px;
   background-color: rgba(247, 247, 247, 0.8); }
   #header h1 {
     color: #4834d4;
     font-weight: 400;
     font-size: 28px; }
+  #header .intro {
+    margin-top: 5px;
+    margin-bottom: 3px;
+    font-weight: 400;
+    color: #6b6b6b;
+    font-size: 13px;
+    line-height: 1.4em;
+    max-width: 550px; }
+    #header .intro p {
+      margin-bottom: 8px; }
 
 #toolbar {
   height: 69px;
@@ -191,8 +204,10 @@ body {
 
 /* Media Queries */
 @media screen and (max-width: 1250px) {
+  #header,
   #toolbar {
-    padding-left: 320px;
+    padding-left: 320px; }
+  #toolbar {
     padding-right: 314px; } }
 
 #generator-wrapper {

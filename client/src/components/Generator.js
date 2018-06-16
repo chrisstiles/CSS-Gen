@@ -70,6 +70,7 @@ class Generator extends React.Component {
       <Page
         title={this.props.title}
         heading={this.props.heading}
+        intro={this.props.intro}
         toolbar={this.props.renderToolbar()}
       >
         <div 

@@ -19,7 +19,10 @@ class Page extends React.Component {
   render() {
     return (
       <div>
-        <Header title={this.props.heading} />
+        <Header 
+          title={this.props.heading} 
+          intro={this.props.intro}
+        />
         {this.props.toolbar}
         <main id="main">
           {this.props.children}

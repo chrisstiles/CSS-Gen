@@ -48,10 +48,6 @@ class BorderRadius extends React.Component {
       if (rules.radius !== element) {
         allEqual = false;
       }
-
-      if (typeof element !== 'string') {
-        element = `${element}px`;
-      }
     });
 
     if (allEqual) {
@@ -112,6 +108,8 @@ class BorderRadius extends React.Component {
   }
 
   render() {
+    const intro = <p>Use the controls on to the right to create any kind of border. Once you are done, copy your CSS from the code output box in the bottom right.</p>;
+
     return (
       <SingleWindowGenerator 
         title="CSS Border Radius Generator | CSS-GEN"
@@ -119,6 +117,7 @@ class BorderRadius extends React.Component {
         className="border-radius"
         property="border-radius"
         heading="CSS Border Radius Generator"
+        intro={intro}
         generateCSS={this.generateCSS}
         renderInputs={this.renderInputs}
         renderPresets={this.renderPresets}

@@ -1,10 +1,13 @@
 import React from 'react';
 
-const Header = props => {
+const Header = ({ title, intro, children }) => {
+	const introText = intro ? <div className="intro">{intro}</div> : null;
+
   return (
     <header id="header">
-      <h1>{props.title}</h1>
-      {props.children}
+      <h1>{title}</h1>
+      {introText}
+      {children}
     </header>
   );
 }

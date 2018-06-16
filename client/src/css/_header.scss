@@ -8,13 +8,27 @@
 }
 
 #header {
-  padding: 45px 50px 18px 335px;
+  padding: 45px 350px 18px 335px;
   background-color: rgba(247, 247, 247, 0.8);
 
   h1 {
     color:$accent-color;
     font-weight:400;
     font-size:28px;
+  }
+
+  .intro {
+    margin-top: 5px;
+    margin-bottom:3px;
+    font-weight: 400;
+    color: #6b6b6b;
+    font-size: 13px;
+    line-height: 1.4em;
+    max-width:550px;
+
+    p {
+      margin-bottom:8px;
+    }
   }
 }
 
@@ -83,8 +97,12 @@
 /* Media Queries */
 
 @media screen and (max-width: 1250px) {
+  #header,
   #toolbar {
     padding-left:320px;
+  }
+
+  #toolbar {
     padding-right:314px;
   }
 }

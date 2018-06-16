@@ -151,6 +151,7 @@ class SingleWindowGenerator extends React.Component {
         title={this.props.title}
         className={this.props.className}
         heading={this.props.heading}
+        intro={this.props.intro}
         renderToolbar={this.renderToolbar}
         renderPreview={this.renderPreview}
         renderPresets={this.props.renderPresets}

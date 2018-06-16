@@ -48,7 +48,7 @@ class Slider extends RCSlider {
       value = this.props.value / 100 * this.max;
     }
 
-    this.props.onChange(value, this.props.name, units);
+    this.props.onChange(parseInt(value, 10), this.props.name, units);
   }
 
   renderUnitSelect() {

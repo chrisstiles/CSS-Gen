@@ -7,9 +7,7 @@ const presets = [
       topLeft: 0,
       topRight: 50,
       bottomLeft: 50,
-      bottomRight: 0,
-      width:200,
-      height:600
+      bottomRight: 0
     },
     thumbnailStyles: { borderRadius: '0px 10px' }
   },
