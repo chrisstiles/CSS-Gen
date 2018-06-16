@@ -22,6 +22,8 @@ const presets = [
   },
   {
     styles: {
+      radius: 50,
+      units: '%',
       topLeft: 50,
       topLeftUnits: '%',
       topRight: 50,
@@ -30,7 +32,6 @@ const presets = [
       bottomLeftUnits: '%',
       bottomRight: 50,
       bottomRightUnits: '%',
-      units: '%'
     },
     thumbnailStyles: { borderRadius: '50%' }
   }
