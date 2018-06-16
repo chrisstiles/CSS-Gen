@@ -252,7 +252,7 @@ p:last-child {
 
 .resize-wrapper {
   position: relative; }
-  .resize-wrapper:hover .resize-handle,
+  .resize-wrapper .generator-preview:hover .resize-handle,
   .resize-wrapper .resizing .resize-handle {
     opacity: 1; }
 

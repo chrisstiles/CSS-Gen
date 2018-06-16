@@ -54,7 +54,7 @@
 .resize-wrapper {
   position:relative;
 
-  &:hover,
+  .generator-preview:hover,
   .resizing {
     .resize-handle {
       opacity:1;
