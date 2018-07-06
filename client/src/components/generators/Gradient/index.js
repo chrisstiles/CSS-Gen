@@ -1,5 +1,6 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
+import GradientInputs from './GradientInputs';
 
 class Gradient extends React.Component {
   constructor(props) {
@@ -27,7 +28,10 @@ class Gradient extends React.Component {
 
   renderInputs() {
     return (
-      <div>Hello</div>
+      <GradientInputs
+        styles={this.state}
+        owner={this}
+      />
     );
   }
 
