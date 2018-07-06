@@ -68,7 +68,6 @@ class BoxShadow extends React.Component {
         heading="CSS Box Shadow Generator"
         generateCSS={this.generateCSS}
         renderInputs={this.renderInputs}
-        resetStyles={this.reset}
         styles={this.state}
         owner={this}
       />

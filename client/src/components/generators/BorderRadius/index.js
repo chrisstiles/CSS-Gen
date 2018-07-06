@@ -121,7 +121,6 @@ class BorderRadius extends React.Component {
         generateCSS={this.generateCSS}
         renderInputs={this.renderInputs}
         renderPresets={this.renderPresets}
-        resetStyles={this.reset}
         styles={this.state}
         owner={this}
       />
