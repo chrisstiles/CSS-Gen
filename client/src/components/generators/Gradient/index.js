@@ -25,7 +25,11 @@ class Gradient extends React.Component {
   }
 
   generateCSS(styles = {}) {
-    const gradient = tinygradient(this.state.palette).css();
+    const palette = this.state.palette.map(({ pos, color }) => {
+      color = color.rgb || color;
+      return { pos, color };
+    });
+    const gradient = tinygradient(palette).css();
 
     return {
       styles: {

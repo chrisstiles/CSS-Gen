@@ -17,10 +17,13 @@ const toState = (palette) => ({
         hex: hex,
         rgb: hexToRgb(hex)
       };
+
+      console.log(stop)
     }
 
     if (stop.color.rgb && stop.color.rgb.a === undefined) {
       stop.color.rgb.a = 1;
+      console.log(stop)
     }
 
     return stop;
@@ -35,14 +38,15 @@ const fromState = (palette) => {
   const sortedPalette = palette.sort(compare);
   return sortedPalette.map(({ pos, color }) => {
     if (!pos.toFixed) {
-      console.log(pos)
+      // console.log(pos)
     } else {
       pos = pos.toFixed(3)
     }
 
     return {
       pos: pos,
-      color: getColorObject(color)
+      // color: getColorObject(color)
+      color: color
     };
     // return ({ pos: pos.toPrecision(3), color })
   });
@@ -73,11 +77,6 @@ class GradientPicker extends React.Component {
 
   componentWillUnmount(){
     window.removeEventListener('resize', this.setWidth, false);
-  }
-
-  componentWillReceiveProps(newProps) {
-    const palette = newProps.palette;
-    this.setState({ ...toState(palette) });
   }
 
   getWidth() {
@@ -183,7 +182,6 @@ class GradientPicker extends React.Component {
       return c;
     });
 
-
     this.setState({ palette });
     this.notifyChange(palette);
   }
@@ -191,21 +189,41 @@ class GradientPicker extends React.Component {
   handleOpacityChange(value) {
     let { palette, activeId } = this.state;
 
+    // if (this.activeStop.color.rgb === undefined) {
+    //   console.log(this.activeStop.color)
+    // }
+
+    // console.log(this.activeStop)
     this.activeStop.color.rgb.a = value;
+    // let { palette, activeId } = this.state;
+
+    // palette = palette.map(c => {
+
+    //   if (activeId === c.id) {
+    //     c.color.rgb.a = value;
+    //   }
+
+    //   return c;
+    // });
 
     this.setState({ palette });
     this.notifyChange(palette);
   }
 
-  componentWillReceiveProps({ palette: next }) {
-    const { palette: current } = this.props
-    const length = Math.min(next.length, current.length)
-    for (let i = 0; i < length; i++) {
-      if (next[i].pos !== current[i].pos || next[i].color !== current[i].color) {
-        this.setState({ ...toState(next) })
-        return
-      }
-    }
+  // componentWillReceiveProps({ palette: next }) {
+  //   const { palette: current } = this.props
+  //   const length = Math.min(next.length, current.length)
+  //   for (let i = 0; i < length; i++) {
+  //     if (next[i].pos !== current[i].pos || next[i].color !== current[i].color) {
+  //       this.setState({ ...toState(next) })
+  //       return
+  //     }
+  //   }
+  // }
+
+  componentWillReceiveProps(newProps) {
+    const palette = newProps.palette;
+    this.setState({ ...toState(palette) });
   }
 
   render() {
