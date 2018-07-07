@@ -16,9 +16,10 @@ class ColorPicker extends React.Component {
         g: '255',
         b: '255',
         a: '1'
-      },
+      }
     };
 
+    this.setPosition = this.setPosition.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -33,19 +34,28 @@ class ColorPicker extends React.Component {
     document.removeEventListener('keydown', this.keyEvent, false);
   }
 
-  handleClick(e) {
-    this.previewWidth = e.target.offsetWidth;
+  setPosition(el, includeLeftOffset) {
+    this.previewWidth = el.offsetWidth;
 
-    const previewRect = e.target.getBoundingClientRect();
+    const previewRect = el.getBoundingClientRect();
     const topOffset = previewRect.top + window.scrollY + previewRect.height;
 
     this.previewTop = topOffset;
-    // console.log(previewRect.left + 226, window.innerWidth)
-    if ((previewRect.left + 226) > window.innerWidth) {
+    this.previewLeft = includeLeftOffset ? previewRect.left : 'auto';
+
+    const leftOffset = includeLeftOffset ? this.previewLeft : 0;
+
+    console.log(this.previewLeft)
+
+    if ((previewRect.left + leftOffset + 226) > window.innerWidth) {
       this.shiftLeft = true;
     } else {
       this.shiftLeft = false;
     }
+  }
+
+  handleClick(e) {
+    this.setPosition(e.target);
 
     if (currentPicker) {
       currentPicker.handleClose();
@@ -93,6 +103,23 @@ class ColorPicker extends React.Component {
     });
   }
 
+  renderPreview(previewStyle) {
+    const renderPreview = this.props.renderPreview === undefined || this.props.renderPreview === true;
+    if (renderPreview) {
+      return (
+        <div 
+          className="color-preview" 
+          style={previewStyle}
+          onClick={this.handleClick}
+        />
+      );
+    } else {
+      if (this.preview) {
+        this.setPosition(this.preview, true);
+      }
+    }
+  }
+
   render() {
     const cover = {
       position: 'fixed',
@@ -103,7 +130,7 @@ class ColorPicker extends React.Component {
       zIndex: '9998'
     };
 
-    const color = typeof this.props.backgroundColor === 'object' ? this.props.backgroundColor.hex : this.props.backgroundColor;
+    const color = typeof this.props.color === 'object' ? this.props.color.hex : this.props.color;
 
     var margin;
     if (this.shiftLeft) {
@@ -111,8 +138,6 @@ class ColorPicker extends React.Component {
     } else {
       margin = this.previewWidth ? this.previewWidth / 2 : 0;
     }
-
-
 
     const wrapperStyle = {
       marginLeft: margin
@@ -122,6 +147,12 @@ class ColorPicker extends React.Component {
     if (this.previewTop) {
       wrapperStyle.top = this.previewTop;
     }
+
+    if (this.previewLeft) {
+      wrapperStyle.left = this.previewLeft;
+    }
+
+    console.log(wrapperStyle.left)
 
     const previewStyle = {
       backgroundColor: color
@@ -146,13 +177,7 @@ class ColorPicker extends React.Component {
 
     return (
       <div className={className}>
-        <div 
-          className="color-preview" 
-          style={previewStyle}
-          onClick={this.handleClick}
-        >
-        <div />
-        </div>
+        {this.renderPreview(previewStyle)}
         { this.state.displayColorPicker ? <div>
           <div style={cover} onClick={this.handleClose} />
           <div 

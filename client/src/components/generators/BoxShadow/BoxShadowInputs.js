@@ -32,7 +32,7 @@ class BoxShadowInputs extends React.Component {
           <div className="field-wrapper left">
             <label className="title">Shadow Color</label>
             <ColorPicker
-              backgroundColor={this.props.styles.shadowColor}
+              color={this.props.styles.shadowColor}
               disableAlpha={true}
               onChange={this.handleChange}
               name="shadowColor"

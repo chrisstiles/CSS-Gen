@@ -122,7 +122,7 @@ class BorderRadiusInputs extends React.Component {
           <div className={`field-wrapper align-right${disabledClassName}`}>
             <label className="title">Border Color</label>
             <ColorPicker
-              backgroundColor={styles.borderColor}
+              color={styles.borderColor}
               onChange={this.handleChange}
               className="small"
               name="borderColor"

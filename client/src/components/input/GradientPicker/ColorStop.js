@@ -17,7 +17,7 @@ class ColorStop extends React.Component {
 
   activate (pointX) {
     this.setState({ posStart: pointX, dragging: true })
-    this.props.onActivate(this.props.stop.id)
+    this.props.onActivate(this.props.stop.id, this.el)
     document.addEventListener('mousemove', this.handleMouseMove)
     document.addEventListener('mouseup', this.handleMouseUp)
   }
@@ -70,6 +70,7 @@ class ColorStop extends React.Component {
     return (
       <div className={ isActive ? 'cs active' : 'cs' }
            style={{ left: pos }}
+           ref={el => { this.el = el }}
            onMouseDown={ this.handleMouseDown }>
         <div style={{ backgroundColor: color }} />
       </div>

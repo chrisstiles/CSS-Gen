@@ -7,6 +7,12 @@ class Gradient extends React.Component {
     super(props);
 
     this.state = {
+      palette: [
+        { pos: 0.00, color: '#eef10b' },
+        { pos: 0.49, color: '#d78025' },
+        { pos: 0.72, color: '#d0021b' },
+        { pos: 1.00, color: '#7e20cf' }
+      ],
       orientation: 'linear',
       angle: 0,
       width: 500,

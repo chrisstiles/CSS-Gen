@@ -1,0 +1,35 @@
+.color-wrapper {
+  position:relative;
+
+  &.small .color-preview {
+    width:40px;
+    height:40px;
+  }
+}
+
+.color-picker-wrapper {
+  position:fixed;
+  z-index: 9999;
+}
+
+.color-preview {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #dedede;
+  border-radius: 3px;
+  margin-top: 2px;
+  margin-bottom: 3px;
+  cursor: pointer;
+}
+
+.chrome-picker {
+  position:fixed;
+  z-index: 9999;
+  width: 226px !important;
+  margin-top:5px;
+  transform:translateX(-50%);
+
+  input {
+    outline:none;
+  }
+}

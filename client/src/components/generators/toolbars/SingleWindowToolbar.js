@@ -44,7 +44,7 @@ class SingleWindowToolbar extends React.Component {
         <div className="item input border">
           <label>Background:</label>
           <ColorPicker
-            backgroundColor={this.props.previewBackgroundColor}
+            color={this.props.previewBackgroundColor}
             onChange={this.props.onColorPickerChange}
           />
         </div>

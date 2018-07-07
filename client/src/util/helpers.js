@@ -65,3 +65,24 @@ export function generateCSSString(css) {
 
 	return cssString.trim();
 }
+
+export function sidebarControlsWidth() {
+  const sidebarControls = document.getElementById('sidebar-controls');
+
+  if (sidebarControls) {
+    const computedStyle = getComputedStyle(sidebarControls);
+    const paddingLeft = parseFloat(computedStyle.paddingLeft);
+    const paddingRight = parseFloat(computedStyle.paddingRight);
+
+    return sidebarControls.offsetWidth - paddingLeft - paddingRight;
+  } else {
+    const windowWidth = window.innerWidth;
+
+    if (windowWidth <= 1250) {
+      return 244;
+    } else {
+      return 284;
+    }
+  }
+
+}

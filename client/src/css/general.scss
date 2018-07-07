@@ -74,6 +74,10 @@ p:last-child {
 // User Input
 @import './input/_input.scss';
 @import './input/_slider.scss';
+@import './input/_color-picker.scss';
+@import './input/_gradient-picker.scss';
+@import './input/_toggle-switch.scss';
+@import './input/_select-box.scss';
 
 // Generator Previews
 @import './generators/_border-radius.scss';
