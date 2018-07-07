@@ -45,6 +45,7 @@
     text-transform: uppercase;
     color: #828282;
     margin-bottom:9px;
+    margin-bottom:24px;
   }
 
   .sliders-wrapper {
@@ -70,6 +71,11 @@
     pointer-events:none;
   }
 
+  .shift-down {
+    position: relative;
+    top:10px;
+  }
+
   .inputs-row {
     display:table;
     width:100%;
@@ -78,6 +84,7 @@
     .field-wrapper {
       display: table-cell;
       padding:0 2px;
+      vertical-align: top;
 
       &:first-child {
         padding-left:0;

@@ -86,3 +86,68 @@ export function sidebarControlsWidth() {
   }
 
 }
+
+export function hexToRgb(hex) {
+  var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+  hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+  	return r + r + g + g + b + b;
+  });
+
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16),
+    a: 1
+  } : null;
+}
+
+export function getColorString(color) {
+	if (!color) {
+		return '';
+	}
+
+	if (typeof color === 'string') {
+		return color;
+	}
+
+	if (!color.rgb && color.hex) {
+		return color.hex;
+	}
+
+	if (color.hex && color.rgb.a === 1) {
+		return color.hex;
+	}
+
+	const colorObject = color.rgb ? color.rgb : color;
+	const { r, g, b, a } = colorObject;
+
+	if (a === undefined) {
+		return `rgb(${r}, ${g}, ${b})`;
+	} else {
+		return `rgb(${r}, ${g}, ${b}, ${a})`;
+	}
+}
+
+export function getColorObject(color) {
+	if (!color) {
+		return '';
+	}
+
+	if (typeof color === 'string') {
+		return color;
+	}
+
+	if (color.hex && color.rgb.a === 1) {
+		return color.hex;
+	}
+
+	return color.rgb;
+}
+
+
+
+
+
+
+

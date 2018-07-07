@@ -1,6 +1,7 @@
 import React from 'react';
 import ChromePicker from 'react-color';
 import tinycolor from 'tinycolor2';
+import { getColorString } from '../../util/helpers';
 
 // Only one picker should be open at a time
 var currentPicker = null;
@@ -45,8 +46,6 @@ class ColorPicker extends React.Component {
 
     const leftOffset = includeLeftOffset ? this.previewLeft : 0;
 
-    console.log(this.previewLeft)
-
     if ((previewRect.left + leftOffset + 226) > window.innerWidth) {
       this.shiftLeft = true;
     } else {
@@ -74,7 +73,16 @@ class ColorPicker extends React.Component {
   handleChange(color) {
     this.setState({ color: color.rgb });
     if (this.props.onChange) {
-      const returnColor = this.props.returnColorObject ? color : this.generateColorCSS(color.rgb);
+      const colorString = color.rgb.a === 1 ? color.hex : this.generateColorCSS(color.rgb);
+
+      var returnColor;
+      if (this.props.returnColorObject) {
+        color.css = colorString;
+        returnColor = color;
+      } else {
+        returnColor = colorString;
+      }
+
       this.props.onChange(returnColor, this.props.name);
     }
   };
@@ -130,7 +138,7 @@ class ColorPicker extends React.Component {
       zIndex: '9998'
     };
 
-    const color = typeof this.props.color === 'object' ? this.props.color.hex : this.props.color;
+    const color = this.props.color === 'string' ? this.props.color : getColorString(this.props.color);
 
     var margin;
     if (this.shiftLeft) {
@@ -151,8 +159,6 @@ class ColorPicker extends React.Component {
     if (this.previewLeft) {
       wrapperStyle.left = this.previewLeft;
     }
-
-    console.log(wrapperStyle.left)
 
     const previewStyle = {
       backgroundColor: color
@@ -185,7 +191,7 @@ class ColorPicker extends React.Component {
             style={wrapperStyle}
           >
             <ChromePicker 
-              color={color}
+              color={this.props.color}
               onChange={this.handleChange}
               disableAlpha={this.props.disableAlpha}
               style={{ opacity: .4 }}

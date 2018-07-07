@@ -1,6 +1,6 @@
 import React from 'react'
 import ColorStop from './ColorStop'
-import PropTypes from 'prop-types'
+import { getColorString } from '../../../util/helpers';
 
 class ColorStopsHolder extends React.Component {
   constructor (props) {
@@ -16,38 +16,21 @@ class ColorStopsHolder extends React.Component {
   }
 
   render () {
-    const { width, stops, onAddColor, ...rest } = this.props
+    const { width, stops, onAddColor, color, ...rest } = this.props
     const style = { width, height: 17, position: 'relative', cursor: 'crosshair' }
     return (
       <div className="csh" style={ style } onMouseDown={ this.handleMouseDown }>
         { stops.map(stop =>
-          <ColorStop key={ stop.id } stop={ stop } { ...rest } />
+          <ColorStop 
+            key={stop.id} 
+            stop={ stop } 
+            color={getColorString(color)} 
+            {...rest} />
         )}
       </div>
     )
   }
 }
 
-ColorStopsHolder.propTypes = {
-  width: PropTypes.number.isRequired,
-  stops: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      color: PropTypes.string.isRequired,
-      pos: PropTypes.number.isRequired,
-      isActive: PropTypes.bool.isRequired,
-      pointX: PropTypes.number
-    }).isRequired
-  ).isRequired,
-  limits: PropTypes.shape({
-    min: PropTypes.number.isRequired,
-    max: PropTypes.number.isRequired,
-    drop: PropTypes.number.isRequired
-  }).isRequired,
-  onAddColor: PropTypes.func.isRequired,
-  onPosChange: PropTypes.func.isRequired,
-  onActivate: PropTypes.func.isRequired,
-  onDeleteColor: PropTypes.func.isRequired
-}
 
 export default ColorStopsHolder

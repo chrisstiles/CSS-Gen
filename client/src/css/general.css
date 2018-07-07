@@ -324,7 +324,8 @@ p:last-child {
     font-weight: 600;
     text-transform: uppercase;
     color: #828282;
-    margin-bottom: 9px; }
+    margin-bottom: 9px;
+    margin-bottom: 24px; }
   #sidebar .sliders-wrapper:first-child {
     padding-top: 4px; }
   #sidebar .sliders-wrapper:after {
@@ -338,13 +339,17 @@ p:last-child {
   #sidebar .disabled {
     opacity: .3;
     pointer-events: none; }
+  #sidebar .shift-down {
+    position: relative;
+    top: 10px; }
   #sidebar .inputs-row {
     display: table;
     width: 100%;
     margin-bottom: 20px; }
     #sidebar .inputs-row .field-wrapper {
       display: table-cell;
-      padding: 0 2px; }
+      padding: 0 2px;
+      vertical-align: top; }
       #sidebar .inputs-row .field-wrapper:first-child {
         padding-left: 0; }
       #sidebar .inputs-row .field-wrapper:last-child {
@@ -824,6 +829,8 @@ input[type="number"],
 
 .color-wrapper {
   position: relative; }
+  .color-wrapper.no-title {
+    margin-top: -10px; }
   .color-wrapper.small .color-preview {
     width: 40px;
     height: 40px; }

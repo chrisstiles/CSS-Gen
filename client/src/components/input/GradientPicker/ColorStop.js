@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import './ColorStop.css'
+import { getColorString } from '../../../util/helpers';
 
 class ColorStop extends React.Component {
   constructor () {
@@ -72,28 +72,11 @@ class ColorStop extends React.Component {
            style={{ left: pos }}
            ref={el => { this.el = el }}
            onMouseDown={ this.handleMouseDown }>
-        <div style={{ backgroundColor: color }} />
+        <div style={{ backgroundColor: getColorString(color) }} />
       </div>
     )
   }
 }
 
-ColorStop.propTypes = {
-  stop: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    color: PropTypes.string.isRequired,
-    pos: PropTypes.number.isRequired,
-    isActive: PropTypes.bool.isRequired,
-    pointX: PropTypes.number
-  }).isRequired,
-  limits: PropTypes.shape({
-    min: PropTypes.number.isRequired,
-    max: PropTypes.number.isRequired,
-    drop: PropTypes.number.isRequired
-  }).isRequired,
-  onPosChange: PropTypes.func.isRequired,
-  onActivate: PropTypes.func.isRequired,
-  onDeleteColor: PropTypes.func.isRequired
-}
 
 export default ColorStop

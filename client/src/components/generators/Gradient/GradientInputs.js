@@ -20,7 +20,7 @@ class GradientInputs extends React.Component {
 
     return (
       <GradientPicker 
-        name="gradient"
+        name="palette"
         palette={styles.palette}
         onChange={this.handleChange}
       />

@@ -1,6 +1,7 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import GradientInputs from './GradientInputs';
+import tinygradient from 'tinygradient';
 
 class Gradient extends React.Component {
   constructor(props) {
@@ -23,12 +24,14 @@ class Gradient extends React.Component {
     this.renderInputs = this.renderInputs.bind(this);
   }
 
-  generateCSS() {
+  generateCSS(styles = {}) {
+    const gradient = tinygradient(this.state.palette).css();
+
     return {
       styles: {
-        background: 'linear-gradient(to right, rgba(30,87,153,1) 0%,rgba(125,185,232,1) 100%)'
+        background: gradient
       },
-      outputCSS: 'background: linear-gradient(to right, rgba(30,87,153,1) 0%,rgba(125,185,232,1) 100%);'
+      outputCSS: `background: ${gradient};`
     };
   }
 
