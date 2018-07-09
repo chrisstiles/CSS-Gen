@@ -1,6 +1,7 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import GradientInputs from './GradientInputs';
+import GradientPresets from './GradientPresets';
 import generateGradient from './generate-gradient';
 import _ from 'underscore';
 
@@ -45,6 +46,10 @@ class Gradient extends React.Component {
     );
   }
 
+  renderPresets(setPreset) {
+    return <GradientPresets setPreset={setPreset} />; 
+  }
+
   render() {
     const intro = <p>Make some gradients :D. Once you are done, copy your CSS from the code output box in the bottom right.</p>;
 
@@ -57,6 +62,7 @@ class Gradient extends React.Component {
         intro={intro}
         generateCSS={this.generateCSS}
         renderInputs={this.renderInputs}
+        renderPresets={this.renderPresets}
         hideToolbarBackground={true}
         resetStyles={this.reset}
         styles={this.state}
