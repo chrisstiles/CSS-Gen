@@ -41,6 +41,8 @@ class SingleWindowToolbar extends React.Component {
           />
         </div>
 
+        { !this.props.hideToolbarBackground ? 
+
         <div className="item input border">
           <label>Background:</label>
           <ColorPicker
@@ -48,6 +50,8 @@ class SingleWindowToolbar extends React.Component {
             onChange={this.props.onColorPickerChange}
           />
         </div>
+
+        : null }
 
         <div className="item input border">
           <Toggle

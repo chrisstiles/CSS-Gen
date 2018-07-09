@@ -119,6 +119,7 @@ class SingleWindowGenerator extends React.Component {
         onPreviewCSSChange={this.handlePreviewCSSChange}
         ref={toolbar => { this.toolbar = toolbar }}
         renderPresets={this.props.renderPresets}
+        hideToolbarBackground={this.props.hideToolbarBackground}
       />
     );
   }

@@ -1,5 +1,4 @@
 import React from 'react'
-import { getColorString } from '../../../util/helpers';
 
 const Palette = ({ palette, width, height }) => {
   const compare = ({ pos: pos1 }, { pos: pos2 }) => pos1 - pos2
@@ -16,7 +15,7 @@ const Palette = ({ palette, width, height }) => {
               <stop
                 key={ c.id }
                 offset={ c.pos }
-                style={{ stopColor: getColorString(c.color), stopOpacity: 1 }}
+                style={{ stopColor: c.color.toRgbString(), stopOpacity: 1 }}
               />
             )}
           </linearGradient>

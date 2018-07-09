@@ -1,63 +1,31 @@
 import React from 'react';
 import ColorStopsHolder from './ColorStopsHolder';
 import Palette from './Palette';
+import tinycolor from 'tinycolor2';
 import ColorPicker from '../ColorPicker';
 import Slider from '../Slider';
-import { sidebarControlsWidth, hexToRgb, getColorObject } from '../../../util/helpers';
+import { sidebarControlsWidth } from '../../../util/helpers';
 
 const HALF_STOP_WIDTH = 5;
 
-const toState = (palette) => ({
+const toState = (palette, activeId = 1, activeElement = null) => ({
   palette: palette.map((c, i) => {
     const stop = ({ id: i + 1, ...c });
-
-    if (typeof stop.color === 'string' && stop.color.indexOf('#') !== -1) {
-      const hex = stop.color;
-      stop.color = {
-        hex: hex,
-        rgb: hexToRgb(hex)
-      };
-
-      console.log(stop)
-    }
-
-    if (stop.color.rgb && stop.color.rgb.a === undefined) {
-      stop.color.rgb.a = 1;
-      console.log(stop)
-    }
-
+    const color = tinycolor(stop.color);
+    stop.color = color;
     return stop;
   }),
-  activeId: 1,
-  activeElement: null,
+  activeId: activeId,
+  activeElement: activeElement,
   pointX: null
 });
 
-const fromState = (palette) => {
-  const compare = ({ pos: pos1 }, { pos: pos2 }) => pos1 - pos2;
-  const sortedPalette = palette.sort(compare);
-  return sortedPalette.map(({ pos, color }) => {
-    if (!pos.toFixed) {
-      // console.log(pos)
-    } else {
-      pos = pos.toFixed(3)
-    }
-
-    return {
-      pos: pos,
-      // color: getColorObject(color)
-      color: color
-    };
-    // return ({ pos: pos.toPrecision(3), color })
-  });
-}
 
 class GradientPicker extends React.Component {
   constructor(props) {
     super(props);
 
-    const palette = props.palette;
-    this.state = { ...toState(palette) };
+    this.state = { ...toState(props.palette) };
 
     this.getWidth = this.getWidth.bind(this);
     this.setWidth = this.setWidth.bind(this);
@@ -79,6 +47,19 @@ class GradientPicker extends React.Component {
     window.removeEventListener('resize', this.setWidth, false);
   }
 
+  componentWillReceiveProps ({ palette: next }) {
+    const { palette: current } = this.props;
+    const length = Math.min(next.length, current.length);
+    const activeId = this.state.activeId;
+
+    for (let i = 0; i < length; i++) {
+      if (next[i].pos !== current[i].pos || next[i].color !== current[i].color) {
+        this.setState({ ...toState(next, activeId) });
+        return;
+      }
+    }
+  }
+
   getWidth() {
     return this.props.width !== undefined ? this.props.width : sidebarControlsWidth();
   }
@@ -93,16 +74,16 @@ class GradientPicker extends React.Component {
   }
 
   get nextId() {
-    return Math.max(...this.state.palette.map(c => c.id)) + 1
+    return Math.max(...this.state.palette.map(c => c.id)) + 1;
   }
 
   get activeStop() {
-    return this.state.palette.find(s => s.id === this.state.activeId)
+    return this.state.palette.find(s => s.id === this.state.activeId);
   }
 
   get mapStateToStops() {
-    const activeId = this.state.activeId
-    const pointX = this.state.pointX
+    const activeId = this.state.activeId;
+    const pointX = this.state.pointX;
     return this.state.palette.map(c => ({
       ...c,
       pos: this.width1 * c.pos - HALF_STOP_WIDTH,
@@ -113,10 +94,8 @@ class GradientPicker extends React.Component {
 
   renderColorPicker() {
     const { children } = this.props
-    const color = getColorObject(this.activeStop.color);
-
     const props = {
-      color: color,
+      color: this.activeStop.color,
       onChange: this.handleSelectColor
     }
     if (!children) {
@@ -135,14 +114,12 @@ class GradientPicker extends React.Component {
     return React.cloneElement(child, props)
   }
 
-  notifyChange(palette) {
-    // console.log(fromState(palette))
-    this.props.onChange(fromState(palette), this.props.name)
-    // this.props.onChange(palette, this.props.name);
+  handleChange(palette) {
+    this.props.onChange(palette, this.props.name);
   }
 
   handleActivate(activeId, activeElement) {
-    this.setState({ activeId, activeElement })
+    this.setState({ activeId, activeElement });
   }
 
   handleDeleteColor(id) {
@@ -150,23 +127,25 @@ class GradientPicker extends React.Component {
     const palette = this.state.palette.filter(c => c.id !== id)
     const activeId = palette.reduce((a, x) => x.pos < a.pos ? x : a, palette[0]).id
     this.setState({ palette, activeId })
-    this.notifyChange(palette)
+    this.handleChange(palette)
   }
 
   handlePosChange({ id, pos }) {
     const palette = this.state.palette.map(c =>
       id === c.id ? { ...c, pos: (pos + HALF_STOP_WIDTH) / this.width1 } : { ...c }
     )
-    this.setState({ palette })
-    this.notifyChange(palette)
+
+    this.setState({ palette });
+    this.handleChange(palette);
   }
 
   handleAddColor({ pos, pointX }) {
-    const color = this.activeStop.color
-    const entry = { id: this.nextId, pos: pos / this.width1, color }
-    const palette = [...this.state.palette, entry]
-    this.setState({ palette, pointX })
-    this.notifyChange(palette)
+    const color = this.activeStop.color;
+    const entry = { id: this.nextId, pos: pos / this.width1, color };
+    const palette = [...this.state.palette, entry];
+
+    this.setState({ palette, pointX });
+    this.handleChange(palette);
   }
 
   handleSelectColor(color) {
@@ -175,55 +154,28 @@ class GradientPicker extends React.Component {
     palette = palette.map(c => {
 
       if (activeId === c.id) {
-        const { hex, rgb } = color;
-        c.color = { hex, rgb };
+        c.color = tinycolor(color);
       }
 
       return c;
     });
 
-    this.setState({ palette });
-    this.notifyChange(palette);
+    this.handleChange(palette);
   }
 
   handleOpacityChange(value) {
     let { palette, activeId } = this.state;
 
-    // if (this.activeStop.color.rgb === undefined) {
-    //   console.log(this.activeStop.color)
-    // }
+    palette = palette.map(c => {
 
-    // console.log(this.activeStop)
-    this.activeStop.color.rgb.a = value;
-    // let { palette, activeId } = this.state;
+      if (activeId === c.id) {
+        c.color.setAlpha(value);
+      }
 
-    // palette = palette.map(c => {
+      return c;
+    });
 
-    //   if (activeId === c.id) {
-    //     c.color.rgb.a = value;
-    //   }
-
-    //   return c;
-    // });
-
-    this.setState({ palette });
-    this.notifyChange(palette);
-  }
-
-  // componentWillReceiveProps({ palette: next }) {
-  //   const { palette: current } = this.props
-  //   const length = Math.min(next.length, current.length)
-  //   for (let i = 0; i < length; i++) {
-  //     if (next[i].pos !== current[i].pos || next[i].color !== current[i].color) {
-  //       this.setState({ ...toState(next) })
-  //       return
-  //     }
-  //   }
-  // }
-
-  componentWillReceiveProps(newProps) {
-    const palette = newProps.palette;
-    this.setState({ ...toState(palette) });
+    this.handleChange(palette);
   }
 
   render() {
@@ -254,7 +206,7 @@ class GradientPicker extends React.Component {
             title="Opacity"
             name="opacity"
             onChange={this.handleOpacityChange}
-            value={this.activeStop.color.rgb.a}
+            value={this.activeStop.color.getAlpha()}
             min={0}
             max={1}
             step={.01}

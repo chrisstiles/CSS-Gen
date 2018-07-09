@@ -1,4 +1,5 @@
 import _ from 'underscore';
+import tinycolor from 'tinycolor2';
 
 export function cssToJs(name) {
   var split = name.split('-');
@@ -125,7 +126,7 @@ export function getColorString(color) {
 	if (a === undefined) {
 		return `rgb(${r}, ${g}, ${b})`;
 	} else {
-		return `rgb(${r}, ${g}, ${b}, ${a})`;
+		return `rgba(${r}, ${g}, ${b}, ${a})`;
 	}
 }
 
@@ -145,8 +146,29 @@ export function getColorObject(color) {
 	return color.rgb;
 }
 
+export function hexOrRgba(color) {
+	color = tinycolor(color);
 
+	if (color.getAlpha() === 1) {
+		return color.toHexString();
+	} else {
+		return color.toRgbString();
+	}
+}
 
+export function removeDuplicates(array, key) {
+	const newArray = [];
+	const values = []; 
+
+	array.forEach((element, index) => {
+	  if (values.indexOf(element[key]) === -1) {
+	    newArray.push(element);
+	    values.push(element[key]);
+	  }
+	});
+
+	return newArray;
+}
 
 
 

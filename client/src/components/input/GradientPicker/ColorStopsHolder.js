@@ -1,6 +1,5 @@
 import React from 'react'
 import ColorStop from './ColorStop'
-import { getColorString } from '../../../util/helpers';
 
 class ColorStopsHolder extends React.Component {
   constructor (props) {
@@ -24,7 +23,6 @@ class ColorStopsHolder extends React.Component {
           <ColorStop 
             key={stop.id} 
             stop={ stop } 
-            color={getColorString(color)} 
             {...rest} />
         )}
       </div>

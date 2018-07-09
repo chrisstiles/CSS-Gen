@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './ColorStop.css'
-import { getColorString } from '../../../util/helpers';
 
 class ColorStop extends React.Component {
   constructor () {
@@ -72,7 +71,7 @@ class ColorStop extends React.Component {
            style={{ left: pos }}
            ref={el => { this.el = el }}
            onMouseDown={ this.handleMouseDown }>
-        <div style={{ backgroundColor: getColorString(color) }} />
+        <div style={{ backgroundColor: color.toRgbString() }} />
       </div>
     )
   }
