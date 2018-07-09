@@ -4,6 +4,7 @@ import Palette from './Palette';
 import tinycolor from 'tinycolor2';
 import ColorPicker from '../ColorPicker';
 import Slider from '../Slider';
+import Select from '../Select';
 import { sidebarControlsWidth } from '../../../util/helpers';
 
 const HALF_STOP_WIDTH = 5;
@@ -29,6 +30,8 @@ class GradientPicker extends React.Component {
 
     this.getWidth = this.getWidth.bind(this);
     this.setWidth = this.setWidth.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleTypeChange = this.handleTypeChange.bind(this);
     this.handlePosChange = this.handlePosChange.bind(this);
     this.handleAddColor = this.handleAddColor.bind(this);
     this.handleActivate = this.handleActivate.bind(this);
@@ -114,8 +117,12 @@ class GradientPicker extends React.Component {
     return React.cloneElement(child, props)
   }
 
-  handleChange(palette) {
-    this.props.onChange(palette, this.props.name);
+  handleChange(value) {
+    this.props.onChange(value, this.props.name);
+  }
+
+  handleTypeChange(value) {
+    this.props.onChange(value, 'type');
   }
 
   handleActivate(activeId, activeElement) {
@@ -187,6 +194,20 @@ class GradientPicker extends React.Component {
 
     return (
       <div>
+        <Select
+          name="type"
+          value={this.props.type}
+          label="Gradient Type"
+          onChange={this.handleTypeChange}
+          options={[
+            { value: 'linear', label: 'Linear' },
+            { value: 'radial', label: 'Radial' }
+          ]}
+          menuContainer="#sidebar"
+          scrollWrapper="#sidebar-controls"
+          searchable={false}
+        />
+        <div className="divider" />
         <div className="inputs-row">
           <Palette width={width} height={height} palette={this.state.palette} />
           <ColorStopsHolder

@@ -41,7 +41,16 @@ class Gradient {
 		styles.background = this.palette[0].color;
 
 		// Gradient
-		var gradientCSS = `${this.property}(to left`;
+		var gradientCSS = `${this.property}(`;
+
+		switch (this.type) {
+			case 'linear':
+				gradientCSS += 'to left';
+				break;
+			case 'radial':
+				gradientCSS += 'circle at center';
+				break;
+		}
 
 		palette.forEach(stop => {
 			const pos = `${Math.round(stop.pos * 100)}%`; 
@@ -67,8 +76,8 @@ class Gradient {
 	}
 }
 
-function generateGradient(palette) {
-	return new Gradient(palette);
+function generateGradient(palette, type) {
+	return new Gradient(palette, type);
 }
 
 export default generateGradient;
