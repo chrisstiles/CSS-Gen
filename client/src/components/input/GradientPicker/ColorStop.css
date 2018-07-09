@@ -1,3 +1,8 @@
+.inputs-row .palette {
+  margin-top:8px;
+  margin-bottom:10px;
+}
+
 .inputs-row .csh {
   width: auto !important;
   height: auto !important;
@@ -5,7 +10,7 @@
   left: 0;
   right: 1px;
   top: 0;
-  bottom: -20px;
+  bottom: -10px;
   cursor: copy !important;
 }
 

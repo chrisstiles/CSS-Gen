@@ -50,7 +50,7 @@ class GradientPicker extends React.Component {
   componentWillReceiveProps ({ palette: next }) {
     const { palette: current } = this.props;
     const length = Math.min(next.length, current.length);
-    const activeId = this.state.activeId;
+    const activeId = this.state.activeId <= next.length ? this.state.activeId : 1;
 
     for (let i = 0; i < length; i++) {
       if (next[i].pos !== current[i].pos || next[i].color !== current[i].color) {
