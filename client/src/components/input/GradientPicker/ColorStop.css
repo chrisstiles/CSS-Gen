@@ -1,5 +1,21 @@
+.inputs-row .csh {
+  width: auto !important;
+  height: auto !important;
+  position: absolute !important;
+  left: 0;
+  right: 1px;
+  top: 0;
+  bottom: -20px;
+  cursor: copy !important;
+}
+
+.inputs-row .dragging.csh {
+  cursor: pointer !important;
+}
+
 .cs {
   background-position: right center;
+  bottom:3px;
   height: 17px;
   position: absolute;
   width: 11px;
@@ -19,4 +35,5 @@
 
 .active {
   background-position: left center;
+  z-index: 200;
 }

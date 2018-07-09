@@ -345,7 +345,8 @@ p:last-child {
   #sidebar .inputs-row {
     display: table;
     width: 100%;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    position: relative; }
     #sidebar .inputs-row .field-wrapper {
       display: table-cell;
       padding: 0 2px;

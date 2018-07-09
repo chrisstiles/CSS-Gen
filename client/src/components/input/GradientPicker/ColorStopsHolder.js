@@ -3,8 +3,14 @@ import ColorStop from './ColorStop'
 
 class ColorStopsHolder extends React.Component {
   constructor (props) {
-    super(props)
-    this.handleMouseDown = this.handleMouseDown.bind(this)
+    super(props);
+
+    this.state = {
+      dragging: false
+    };
+
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
   }
 
   handleMouseDown (e) {
@@ -14,16 +20,32 @@ class ColorStopsHolder extends React.Component {
     this.props.onAddColor({ pos, pointX: e.clientX })
   }
 
+  handleDrag(dragging) {
+    this.setState({ dragging });
+  }
+
   render () {
+    var className = 'csh';
+
+    if (this.state.dragging) {
+      className += ' dragging';
+    }
+
     const { width, stops, onAddColor, color, ...rest } = this.props
     const style = { width, height: 17, position: 'relative', cursor: 'crosshair' }
     return (
-      <div className="csh" style={ style } onMouseDown={ this.handleMouseDown }>
+      <div 
+        className={className} 
+        style={style} 
+        onMouseDown={this.handleMouseDown}
+      >
         { stops.map(stop =>
           <ColorStop 
             key={stop.id} 
-            stop={ stop } 
-            {...rest} />
+            stop={stop}
+            onDrag={this.handleDrag}
+            {...rest} 
+          />
         )}
       </div>
     )
