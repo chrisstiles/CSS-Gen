@@ -11,9 +11,9 @@ class Gradient extends React.Component {
 
     this.state = {
       palette: [
-        { pos: 0.00, color: '#eef10b' },
-        { pos: 0.10, color: '#d78025' },
-        { pos: 0.72, color: '#d0021b' },
+        { pos: 0.00, color: '#f1b50b' },
+        { pos: 0.36, color: '#d78025' },
+        { pos: 0.64, color: '#bd2c61' },
         { pos: 1.00, color: '#7e20cf' }
       ],
       type: 'linear',
