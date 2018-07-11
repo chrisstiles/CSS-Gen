@@ -38,7 +38,7 @@ class Gradient {
 		const styles = {};
 		
 		// Flat background as fallback
-		styles.background = this.palette[0].color;
+		// styles.background = this.palette[0].color;
 
 		// Gradient
 		var gradientCSS = `${this.property}(`;
@@ -50,6 +50,8 @@ class Gradient {
 			case 'radial':
 				gradientCSS += 'circle at center';
 				break;
+			default:
+				break;
 		}
 
 		palette.forEach(stop => {
@@ -59,18 +61,18 @@ class Gradient {
 
 		gradientCSS += ')';
 
-		styles.backgroundImage = gradientCSS;
+		styles.background = gradientCSS;
 
 		this.styles = styles;
 	}
 
 	generateCSS() {
-		const { background, backgroundImage } = this.styles;
+		const { background } = this.styles;
 		// Flat background as fallback
-		var css = `background: ${background};`;
+		var css = `background: ${this.palette[0].color};`;
 
 		// Add gradient CSS
-		css += ` background-image: ${backgroundImage};`
+		css += ` background: ${background};`
 
 		this.css = css;
 	}
