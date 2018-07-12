@@ -16,9 +16,11 @@ class Gradient extends React.Component {
         { pos: 0.64, color: '#bd2c61' },
         { pos: 1.00, color: '#7e20cf' }
       ],
-      type: 'linear',
+      type: 'radial',
       repeating: false,
       shape: 'circle',
+      extendKeyword: 'none',
+      position: 'center',
       angle: 0,
       width: 500,
       height:300

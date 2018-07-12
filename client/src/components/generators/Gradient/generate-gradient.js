@@ -6,7 +6,9 @@ class Gradient {
 			palette, 
 			type = 'linear', 
 			repeating = false,
-			shape = 'ellipse'
+			shape = 'ellipse',
+			extendKeyword = 'none',
+			position = 'center'
 		} = settings;
 
 		// Palette must have at least 2 stops
@@ -36,6 +38,8 @@ class Gradient {
 
 	  // Save radial specific CSS
 	  this.shape = shape;
+	  this.extendKeyword = extendKeyword;
+	  this.position = position;
 
 	  // Add repeating if necessary
 	  if (repeating) {
@@ -55,17 +59,22 @@ class Gradient {
 		// Gradient
 		var gradientCSS = `${this.property}(`;
 
-		switch (this.type) {
-			case 'linear':
-				gradientCSS += 'to left';
-				break;
-			case 'radial':
-				gradientCSS += `${this.shape} at center`;
-				break;
-			default:
-				break;
+		if (this.type === 'linear') {
+			// Linear gradients
+			gradientCSS += 'to left';
+		} else {
+			// Radial gradients
+			gradientCSS += `${this.shape}`;
+
+			if (this.extendKeyword !== 'none') {
+				gradientCSS += ` ${this.extendKeyword}`;
+			}
+
+			// Add position
+			gradientCSS += ` at ${this.position}`;
 		}
 
+		// Add color stops
 		palette.forEach(stop => {
 			const pos = `${Math.round(stop.pos * 100)}%`; 
 			gradientCSS += `, ${stop.color} ${pos}`;

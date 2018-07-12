@@ -186,14 +186,52 @@ class GradientPicker extends React.Component {
     } else {
       return (
         <div>
+          <div className="inputs-row">
+            <Select
+              name="shape"
+              value={this.props.shape}
+              label="Shape"
+              onChange={this.handleChange}
+              options={[
+                { value: 'circle', label: 'Circle' },
+                { value: 'ellipse', label: 'Ellipse' }
+              ]}
+              menuContainer="#sidebar"
+              scrollWrapper="#sidebar-controls"
+              searchable={false}
+            />
+            <Select
+              name="extendKeyword"
+              value={this.props.extendKeyword}
+              label="Extend To"
+              onChange={this.handleChange}
+              options={[
+                { value: 'none', label: 'None' },
+                { value: 'closest-side', label: 'Closest Side' },
+                { value: 'closest-corner', label: 'Closest Corner' },
+                { value: 'farthest-side', label: 'Farthest Side' },
+                { value: 'farthest-corner', label: 'Farthest Corner' }
+              ]}
+              menuContainer="#sidebar"
+              scrollWrapper="#sidebar-controls"
+              searchable={false}
+            />
+          </div>
           <Select
-            name="shape"
-            value={this.props.shape}
-            label="Gradient Shape"
+            name="position"
+            value={this.props.position}
+            label="Gradient Position"
             onChange={this.handleChange}
             options={[
-              { value: 'circle', label: 'Circle' },
-              { value: 'ellipse', label: 'Ellipse' }
+              { value: 'center', label: 'Center' },
+              { value: 'top', label: 'Top' },
+              { value: 'top right', label: 'Top Right' },
+              { value: 'right', label: 'Right' },
+              { value: 'bottom right', label: 'Bottom Right' },
+              { value: 'bottom', label: 'Bottom' },
+              { value: 'bottom left', label: 'Bottom Left' },
+              { value: 'left', label: 'Left' },
+              { value: 'top left', label: 'Top Left' }
             ]}
             menuContainer="#sidebar"
             scrollWrapper="#sidebar-controls"
