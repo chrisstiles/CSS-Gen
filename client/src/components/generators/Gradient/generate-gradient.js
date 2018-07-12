@@ -1,7 +1,7 @@
 import { hexOrRgba } from '../../../util/helpers';
 
 class Gradient {
-	constructor(palette, type = 'linear') {
+	constructor(palette, type = 'linear', repeating = false) {
 		// Palette must have at least 2 stops
 		if (!Array.isArray(palette) || palette.length < 2) {
 			console.error('Gradient must have at least 2 stops');
@@ -27,6 +27,11 @@ class Gradient {
 	  this.type = type;
 	  this.property = `${type}-gradient`;
 
+	  // Add repeating if necessary
+	  if (repeating) {
+	  	this.property = `repeating-${this.property}`;
+	  }
+
 	  // Generate styles Object
 	  this.generateStyles(sortedPalette);
 
@@ -37,9 +42,6 @@ class Gradient {
 	generateStyles(palette = this.palette) {
 		const styles = {};
 		
-		// Flat background as fallback
-		// styles.background = this.palette[0].color;
-
 		// Gradient
 		var gradientCSS = `${this.property}(`;
 
@@ -78,8 +80,8 @@ class Gradient {
 	}
 }
 
-function generateGradient(palette, type) {
-	return new Gradient(palette, type);
+function generateGradient(palette, type = 'linear', repeating = false) {
+	return new Gradient(palette, type, repeating);
 }
 
 export default generateGradient;

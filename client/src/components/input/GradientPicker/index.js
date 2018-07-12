@@ -5,6 +5,7 @@ import tinycolor from 'tinycolor2';
 import ColorPicker from '../ColorPicker';
 import Slider from '../Slider';
 import Select from '../Select';
+import Toggle from '../Toggle';
 import { sidebarControlsWidth } from '../../../util/helpers';
 
 const HALF_STOP_WIDTH = 5;
@@ -32,6 +33,7 @@ class GradientPicker extends React.Component {
     this.setWidth = this.setWidth.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
+    this.handleRepeatingChange = this.handleRepeatingChange.bind(this);
     this.handlePosChange = this.handlePosChange.bind(this);
     this.handleAddColor = this.handleAddColor.bind(this);
     this.handleActivate = this.handleActivate.bind(this);
@@ -125,6 +127,10 @@ class GradientPicker extends React.Component {
     this.props.onChange(value, 'type');
   }
 
+  handleRepeatingChange(value) {
+    this.props.onChange(value, 'repeating');
+  }
+
   handleActivate(activeId, activeElement) {
     this.setState({ activeId, activeElement });
   }
@@ -194,19 +200,29 @@ class GradientPicker extends React.Component {
 
     return (
       <div>
-        <Select
-          name="type"
-          value={this.props.type}
-          label="Gradient Type"
-          onChange={this.handleTypeChange}
-          options={[
-            { value: 'linear', label: 'Linear' },
-            { value: 'radial', label: 'Radial' }
-          ]}
-          menuContainer="#sidebar"
-          scrollWrapper="#sidebar-controls"
-          searchable={false}
-        />
+        <div className="inputs-row">
+          <Select
+            name="type"
+            value={this.props.type}
+            label="Gradient Type"
+            onChange={this.handleTypeChange}
+            options={[
+              { value: 'linear', label: 'Linear' },
+              { value: 'radial', label: 'Radial' }
+            ]}
+            menuContainer="#sidebar"
+            scrollWrapper="#sidebar-controls"
+            searchable={false}
+          />
+          <div className="field-wrapper right">
+            <Toggle
+              onChange={this.handleRepeatingChange}
+              checked={this.props.repeating}
+              label="Repeating"
+              name="repeating"
+            />
+          </div>
+        </div>
         <div className="divider" />
         <div className="inputs-row">
           <Palette width={width} height={height} palette={this.state.palette} />

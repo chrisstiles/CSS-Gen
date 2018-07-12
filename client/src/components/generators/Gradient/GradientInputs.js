@@ -22,6 +22,7 @@ class GradientInputs extends React.Component {
         name="palette"
         palette={styles.palette}
         type={styles.type}
+        repeating={styles.repeating}
         onChange={this.handleChange}
       />
     );
