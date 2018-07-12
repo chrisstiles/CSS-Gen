@@ -15,15 +15,13 @@ class GradientInputs extends React.Component {
   }
 
   render() {
-    const styles = this.props.styles;
+    const {width, height, ...styles} = this.props.styles;
 
     return (
       <GradientPicker 
         name="palette"
-        palette={styles.palette}
-        type={styles.type}
-        repeating={styles.repeating}
         onChange={this.handleChange}
+        {...styles}
       />
     );
   }

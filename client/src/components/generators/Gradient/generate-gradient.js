@@ -1,7 +1,14 @@
 import { hexOrRgba } from '../../../util/helpers';
 
 class Gradient {
-	constructor(palette, type = 'linear', repeating = false) {
+	constructor(settings) {
+		const { 
+			palette, 
+			type = 'linear', 
+			repeating = false,
+			shape = 'ellipse'
+		} = settings;
+
 		// Palette must have at least 2 stops
 		if (!Array.isArray(palette) || palette.length < 2) {
 			console.error('Gradient must have at least 2 stops');
@@ -27,6 +34,9 @@ class Gradient {
 	  this.type = type;
 	  this.property = `${type}-gradient`;
 
+	  // Save radial specific CSS
+	  this.shape = shape;
+
 	  // Add repeating if necessary
 	  if (repeating) {
 	  	this.property = `repeating-${this.property}`;
@@ -50,7 +60,7 @@ class Gradient {
 				gradientCSS += 'to left';
 				break;
 			case 'radial':
-				gradientCSS += 'circle at center';
+				gradientCSS += `${this.shape} at center`;
 				break;
 			default:
 				break;
@@ -80,8 +90,8 @@ class Gradient {
 	}
 }
 
-function generateGradient(palette, type = 'linear', repeating = false) {
-	return new Gradient(palette, type, repeating);
+function generateGradient(settings) {
+	return new Gradient(settings);
 }
 
 export default generateGradient;

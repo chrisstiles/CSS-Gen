@@ -31,8 +31,6 @@ class GradientPicker extends React.Component {
     this.getWidth = this.getWidth.bind(this);
     this.setWidth = this.setWidth.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleTypeChange = this.handleTypeChange.bind(this);
-    this.handleRepeatingChange = this.handleRepeatingChange.bind(this);
     this.handlePosChange = this.handlePosChange.bind(this);
     this.handleAddColor = this.handleAddColor.bind(this);
     this.handleActivate = this.handleActivate.bind(this);
@@ -118,16 +116,8 @@ class GradientPicker extends React.Component {
     return React.cloneElement(child, props)
   }
 
-  handleChange(value) {
-    this.props.onChange(value, this.props.name);
-  }
-
-  handleTypeChange(value) {
-    this.props.onChange(value, 'type');
-  }
-
-  handleRepeatingChange(value) {
-    this.props.onChange(value, 'repeating');
+  handleChange(value, name = this.props.name) {
+    this.props.onChange(value, name);
   }
 
   handleActivate(activeId, activeElement) {
@@ -190,6 +180,30 @@ class GradientPicker extends React.Component {
     this.handleChange(palette);
   }
 
+  renderTypeSettings() {
+    if (this.props.type === 'linear') {
+      return 'Linear';
+    } else {
+      return (
+        <div>
+          <Select
+            name="shape"
+            value={this.props.shape}
+            label="Gradient Shape"
+            onChange={this.handleChange}
+            options={[
+              { value: 'circle', label: 'Circle' },
+              { value: 'ellipse', label: 'Ellipse' }
+            ]}
+            menuContainer="#sidebar"
+            scrollWrapper="#sidebar-controls"
+            searchable={false}
+          />
+        </div>
+      );
+    }
+  }
+
   render() {
     const drop = 50;
     const width = this.state.width;
@@ -230,8 +244,8 @@ class GradientPicker extends React.Component {
           <Select
             name="type"
             value={this.props.type}
-            label="Gradient Type"
-            onChange={this.handleTypeChange}
+            label="Type"
+            onChange={this.handleChange}
             options={[
               { value: 'linear', label: 'Linear' },
               { value: 'radial', label: 'Radial' }
@@ -242,13 +256,14 @@ class GradientPicker extends React.Component {
           />
           <div className="field-wrapper right">
             <Toggle
-              onChange={this.handleRepeatingChange}
+              onChange={this.handleChange}
               checked={this.props.repeating}
               label="Repeating"
               name="repeating"
             />
           </div>
         </div>
+        {this.renderTypeSettings()}
       </div>
     )
   }

@@ -18,8 +18,9 @@ class Gradient extends React.Component {
       ],
       type: 'linear',
       repeating: false,
+      shape: 'circle',
       angle: 0,
-      width: 300,
+      width: 500,
       height:300
     };
 
@@ -30,7 +31,7 @@ class Gradient extends React.Component {
   generateCSS(styles = {}) {
     // const css = {}; // The object we will return
     const rules = _.extend({}, this.state, styles);
-    const gradient = generateGradient(rules.palette, rules.type, rules.repeating);
+    const gradient = generateGradient(rules);
 
     return {
       styles: gradient.styles,
