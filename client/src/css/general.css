@@ -359,6 +359,8 @@ p:last-child {
         text-align: right; }
         #sidebar .inputs-row .field-wrapper.align-right .color-wrapper {
           float: right; }
+    #sidebar .inputs-row .rc-slider {
+      margin-bottom: 0; }
 
 #sidebar-controls {
   position: absolute;
@@ -861,6 +863,44 @@ input[type="number"],
 .palette,
 .csh {
   width: 100% !important; }
+
+.inputs-row .palette {
+  margin-top: 1px;
+  margin-bottom: 10px; }
+
+.inputs-row:first-child > .palette {
+  margin-top: 8px; }
+
+.inputs-row .csh {
+  width: auto !important;
+  height: auto !important;
+  position: absolute !important;
+  left: 0;
+  right: 1px;
+  top: 0;
+  bottom: -10px;
+  cursor: copy !important; }
+  .inputs-row .csh.dragging {
+    cursor: pointer !important; }
+
+.cs {
+  background-position: right center;
+  bottom: 3px;
+  height: 17px;
+  position: absolute;
+  width: 11px;
+  cursor: pointer;
+  background-image: url("../images/color-stop.png");
+  background-size: 22px 17px; }
+  .cs.active {
+    background-position: left center;
+    z-index: 200; }
+  .cs div {
+    height: 8px;
+    left: 2px;
+    width: 7px;
+    position: absolute;
+    top: 7px; }
 
 .toggle-wrapper {
   position: relative;

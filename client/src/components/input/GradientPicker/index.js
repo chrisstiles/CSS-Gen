@@ -152,7 +152,7 @@ class GradientPicker extends React.Component {
   }
 
   handleAddColor({ pos, pointX }) {
-    const color = this.activeStop.color;
+    const color = this.activeStop.color.clone();
     const entry = { id: this.nextId, pos: pos / this.width1, color };
     const palette = [...this.state.palette, entry];
 
@@ -199,31 +199,7 @@ class GradientPicker extends React.Component {
 
     return (
       <div>
-        <div className="inputs-row">
-          <Select
-            name="type"
-            value={this.props.type}
-            label="Gradient Type"
-            onChange={this.handleTypeChange}
-            options={[
-              { value: 'linear', label: 'Linear' },
-              { value: 'radial', label: 'Radial' }
-            ]}
-            menuContainer="#sidebar"
-            scrollWrapper="#sidebar-controls"
-            searchable={false}
-          />
-          <div className="field-wrapper right">
-            <Toggle
-              onChange={this.handleRepeatingChange}
-              checked={this.props.repeating}
-              label="Repeating"
-              name="repeating"
-            />
-          </div>
-        </div>
-        <div className="divider" />
-        <div className="inputs-row">
+        <div className="inputs-row gradient-wrapper">
           <Palette width={width} height={height} palette={this.state.palette} />
           <ColorStopsHolder
             width={ width }
@@ -248,6 +224,30 @@ class GradientPicker extends React.Component {
             step={.01}
           />
           {this.renderColorPicker()}
+        </div>
+        <div className="divider" />
+        <div className="inputs-row">
+          <Select
+            name="type"
+            value={this.props.type}
+            label="Gradient Type"
+            onChange={this.handleTypeChange}
+            options={[
+              { value: 'linear', label: 'Linear' },
+              { value: 'radial', label: 'Radial' }
+            ]}
+            menuContainer="#sidebar"
+            scrollWrapper="#sidebar-controls"
+            searchable={false}
+          />
+          <div className="field-wrapper right">
+            <Toggle
+              onChange={this.handleRepeatingChange}
+              checked={this.props.repeating}
+              label="Repeating"
+              name="repeating"
+            />
+          </div>
         </div>
       </div>
     )
