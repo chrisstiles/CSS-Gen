@@ -4,29 +4,27 @@ import './ColorStop.css'
 
 class ColorStop extends React.Component {
   constructor () {
-    super();
-    this.handleMouseDown = this.handleMouseDown.bind(this);
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    this.handleMouseUp = this.handleMouseUp.bind(this);
+    super()
+    this.handleMouseDown = this.handleMouseDown.bind(this)
+    this.handleMouseMove = this.handleMouseMove.bind(this)
+    this.handleMouseUp = this.handleMouseUp.bind(this)
     this.state = {
       posStart: 0,
       dragging: false
-    };
+    }
   }
 
   activate (pointX) {
-    this.setState({ posStart: pointX, dragging: true });
-    this.props.onActivate(this.props.stop.id, this.el);
-    this.props.onDrag(true);
-    document.addEventListener('mousemove', this.handleMouseMove);
-    document.addEventListener('mouseup', this.handleMouseUp);
+    this.setState({ posStart: pointX, dragging: true })
+    this.props.onActivate(this.props.stop.id)
+    document.addEventListener('mousemove', this.handleMouseMove)
+    document.addEventListener('mouseup', this.handleMouseUp)
   }
 
   deactivate () {
-    this.setState({ dragging: false });
-    this.props.onDrag(false);
-    document.removeEventListener('mousemove', this.handleMouseMove);
-    document.removeEventListener('mouseup', this.handleMouseUp);
+    this.setState({ dragging: false })
+    document.removeEventListener('mousemove', this.handleMouseMove)
+    document.removeEventListener('mouseup', this.handleMouseUp)
   }
 
   componentDidMount () {
@@ -73,11 +71,10 @@ class ColorStop extends React.Component {
            style={{ left: pos }}
            ref={el => { this.el = el }}
            onMouseDown={ this.handleMouseDown }>
-        <div style={{ backgroundColor: color.toRgbString() }} />
+        <div style={{ backgroundColor: color }} />
       </div>
     )
   }
 }
-
 
 export default ColorStop

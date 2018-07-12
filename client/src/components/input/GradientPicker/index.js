@@ -10,7 +10,7 @@ import { sidebarControlsWidth } from '../../../util/helpers';
 
 const HALF_STOP_WIDTH = 5;
 
-const toState = (palette, activeId = 1, activeElement = null) => ({
+const toState = (palette, activeId = 1, pointX = null, activeElement = null) => ({
   palette: palette.map((c, i) => {
     const stop = ({ id: i + 1, ...c });
     const color = tinycolor(stop.color);
@@ -19,7 +19,7 @@ const toState = (palette, activeId = 1, activeElement = null) => ({
   }),
   activeId: activeId,
   activeElement: activeElement,
-  pointX: null
+  pointX: pointX
 });
 
 
@@ -56,10 +56,12 @@ class GradientPicker extends React.Component {
     const { palette: current } = this.props;
     const length = Math.min(next.length, current.length);
     const activeId = this.state.activeId <= next.length ? this.state.activeId : 1;
+    // const pointX = this.state.pointX || null;
+    // console.log(pointX)
 
     for (let i = 0; i < length; i++) {
       if (next[i].pos !== current[i].pos || next[i].color !== current[i].color) {
-        this.setState({ ...toState(next, activeId) });
+        this.setState({ ...toState(next, activeId, pointX) });
         return;
       }
     }
