@@ -218,27 +218,14 @@ class GradientPicker extends React.Component {
               searchable={false}
             />
           </div>
-          <Select
-            name="position"
-            value={this.props.position}
+          <PositionSelect
             label="Gradient Position"
-            onChange={this.handleChange}
-            options={[
-              { value: 'center', label: 'Center' },
-              { value: 'top', label: 'Top' },
-              { value: 'top right', label: 'Top Right' },
-              { value: 'right', label: 'Right' },
-              { value: 'bottom right', label: 'Bottom Right' },
-              { value: 'bottom', label: 'Bottom' },
-              { value: 'bottom left', label: 'Bottom Left' },
-              { value: 'left', label: 'Left' },
-              { value: 'top left', label: 'Top Left' }
-            ]}
-            menuContainer="#sidebar"
-            scrollWrapper="#sidebar-controls"
-            searchable={false}
+            name="position"
+            position={this.props.position}
+            positionX={this.props.positionX}
+            positionY={this.props.positionY}
+            onClick={this.handleChange}
           />
-          <PositionSelect />
         </div>
       );
     }

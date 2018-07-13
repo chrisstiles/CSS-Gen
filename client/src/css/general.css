@@ -1012,12 +1012,13 @@ input[type="number"],
     text-align: center; }
 
 .position-select {
-  width: 100px;
-  height: 100px;
+  float: left;
+  width: 105px;
+  height: 105px;
   position: relative; }
   .position-select .position {
-    width: 33.33333px;
-    height: 33.33333px;
+    width: 35px;
+    height: 35px;
     position: absolute;
     cursor: pointer; }
     .position-select .position:before, .position-select .position:after {
@@ -1027,11 +1028,13 @@ input[type="number"],
     .position-select .position.center {
       top: 50%;
       left: 50%;
-      margin-left: -16.66667px;
-      margin-top: -16.66667px;
+      margin-left: -17.5px;
+      margin-top: -17.5px;
       background-color: #bbbbbb; }
       .position-select .position.center:hover {
         background-color: #959595; }
+      .position-select .position.center.active {
+        background-color: #4834d4 !important; }
     .position-select .position.top-left {
       top: 0;
       left: 0; }
@@ -1064,7 +1067,7 @@ input[type="number"],
     .position-select .position.top {
       top: 0;
       left: 50%;
-      margin-left: -16.66667px; }
+      margin-left: -17.5px; }
       .position-select .position.top:after {
         content: "";
         position: absolute;
@@ -1110,7 +1113,7 @@ input[type="number"],
     .position-select .position.right {
       top: 50%;
       right: 0;
-      margin-top: -16.66667px; }
+      margin-top: -17.5px; }
       .position-select .position.right:before {
         content: "";
         position: absolute;
@@ -1155,7 +1158,7 @@ input[type="number"],
           background-color: #4834d4 !important; }
     .position-select .position.bottom {
       left: 50%;
-      margin-left: -16.66667px;
+      margin-left: -17.5px;
       bottom: 0; }
       .position-select .position.bottom:after {
         content: "";
@@ -1202,7 +1205,7 @@ input[type="number"],
     .position-select .position.left {
       top: 50%;
       left: 0;
-      margin-top: -16.66667px; }
+      margin-top: -17.5px; }
       .position-select .position.left:before {
         content: "";
         position: absolute;
@@ -1216,6 +1219,14 @@ input[type="number"],
           background-color: #4834d4 !important; }
         .position-select .position.left.active.center {
           background-color: #4834d4 !important; }
+
+.position-select-wrapper .title {
+  margin-bottom: 10px; }
+
+.position-select-wrapper .offset-sliders {
+  float: right;
+  width: calc(100% - 105px);
+  padding-left: 25px; }
 
 #generator-wrapper.border-radius .corners-wrapper {
   margin-bottom: -40px; }

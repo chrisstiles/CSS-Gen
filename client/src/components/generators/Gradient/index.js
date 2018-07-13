@@ -21,6 +21,8 @@ class Gradient extends React.Component {
       shape: 'circle',
       extendKeyword: 'none',
       position: 'center',
+      positionX: 0,
+      positionY: 0,
       angle: 0,
       width: 500,
       height:300

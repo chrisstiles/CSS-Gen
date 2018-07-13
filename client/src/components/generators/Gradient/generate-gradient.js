@@ -2,13 +2,15 @@ import { hexOrRgba } from '../../../util/helpers';
 
 class Gradient {
 	constructor(settings) {
-		const { 
+		var { 
 			palette, 
 			type = 'linear', 
 			repeating = false,
 			shape = 'ellipse',
 			extendKeyword = 'none',
-			position = 'center'
+			position = 'center',
+			positionX = 0,
+			positionY = 0
 		} = settings;
 
 		// Palette must have at least 2 stops
@@ -39,7 +41,31 @@ class Gradient {
 	  // Save radial specific CSS
 	  this.shape = shape;
 	  this.extendKeyword = extendKeyword;
+
+	  // Radial gradient position
+	  const singlePosition = ['top', 'right', 'bottom', 'left'].indexOf(position) !== -1;
+	  
+	  // Add x and y adjustments to position
+	  var positionAdjusted = false;
+	  if (['center', 'top', 'bottom'].indexOf(position) === -1 && positionX) {
+	  	position = position.replace('left', `left ${positionX}px`);
+	  	position = position.replace('right', `right ${positionX}px`);
+	  	positionAdjusted = true;
+	  }
+
+	  if (['center', 'left', 'right'].indexOf(position) === -1 && positionY) {
+	  	position = position.replace('top', `top ${positionY}px`);
+	  	position = position.replace('bottom', `bottom ${positionY}px`);
+	  	positionAdjusted = true;
+	  }
+
+	  if (positionAdjusted && singlePosition) {
+	  	position = `center ${position}`;
+	  }
+
 	  this.position = position;
+	  this.positionX = positionX;
+	  this.positionY = positionY;
 
 	  // Add repeating if necessary
 	  if (repeating) {
@@ -72,6 +98,7 @@ class Gradient {
 
 			// Add position
 			gradientCSS += ` at ${this.position}`;
+
 		}
 
 		// Add color stops

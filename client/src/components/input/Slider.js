@@ -28,7 +28,9 @@ class Slider extends RCSlider {
   }
 
   handleChange(value) {
-    this.props.onChange(value, this.props.name, this.props.units);
+    if (!this.props.disabled) {
+      this.props.onChange(value, this.props.name, this.props.units);
+    }
   }
 
   handleBeforeChange() {
@@ -36,7 +38,7 @@ class Slider extends RCSlider {
   }
 
   handleUnitChange(units) {
-    if (this.props.units === units) {
+    if (this.props.units === units || this.props.disabled) {
       return;
     }
 
@@ -84,6 +86,10 @@ class Slider extends RCSlider {
 
     if (this.props.units) {
       className +=  ' has-units';
+    }
+
+    if (this.props.disabled) {
+      className += ' disabled';
     }
 
     return (
