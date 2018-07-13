@@ -2,6 +2,7 @@ import React from 'react';
 import ColorStopsHolder from './ColorStopsHolder';
 import Palette from './Palette';
 import tinycolor from 'tinycolor2';
+import AngleInput from 'angle-input/react';
 import ColorPicker from '../ColorPicker';
 import Slider from '../Slider';
 import Select from '../Select';
@@ -183,7 +184,14 @@ class GradientPicker extends React.Component {
 
   renderTypeSettings() {
     if (this.props.type === 'linear') {
-      return 'Linear';
+      return (
+        <AngleInput
+          defaultValue={0}
+          max={360}
+          min={0}
+          step={1}
+        />
+      );
     } else {
       return (
         <div>
