@@ -1,0 +1,174 @@
+.position-select {
+  $size: 100;
+  $inactive-color: #bbbbbb;
+  $inactive-hover-color: darken($inactive-color, 15%);
+
+  width: #{$size}px;
+  height: #{$size}px;
+  position:relative;
+  $position-size: $size / 3;
+  $half-size: $position-size / 2;
+  $border-width: 8px;
+  $gap: 10;
+
+  .position {
+    width: #{$position-size}px;
+    height: #{$position-size}px;
+    position:absolute;
+    cursor:pointer;
+
+    @mixin position-bar($orientation, $position, $gap-location: 'both') {
+      $gap-adjust-large: #{$gap * .65}px;
+      $gap-adjust-small: #{$gap * .35}px;
+
+      @if $orientation == 'vertical' {
+        &:before {
+          content: "";
+          position:absolute;
+          width: $border-width;
+
+          @if $position == 'left' {
+            left: 0;
+          } @else {
+            right: 0;
+          }
+
+          @if $gap-location == 'top' {
+            top: $gap-adjust-large;
+            bottom: 0;
+          } @else if $gap-location == 'bottom' {
+            top: 0;
+            bottom: $gap-adjust-large;
+          } @else {
+            top: $gap-adjust-small;
+            bottom: $gap-adjust-small;
+          }
+        }
+      } @else {
+        &:after {
+          content: "";
+          position:absolute;
+          height: $border-width;
+
+          @if $position == 'top' {
+            top: 0;
+          } @else {
+            bottom: 0;
+          }
+
+          @if $gap-location == 'left' {
+            left: $gap-adjust-large;
+            right: 0;
+          } @else if $gap-location == 'right' {
+            left: 0;
+            right: $gap-adjust-large;
+          } @else {
+            left: $gap-adjust-small;
+            right: $gap-adjust-small;
+          }
+        }
+      }
+
+      &.active {
+        cursor:default !important;
+
+        &:before,
+        &:after {
+          background-color:$accent-color !important;
+        }
+
+        &.center {
+          background-color:$accent-color !important;
+        }
+      }
+    }
+
+    &:before,
+    &:after {
+      background-color:$inactive-color;
+    }
+
+    &:hover {
+      &:before,
+      &:after {
+        background-color:$inactive-hover-color;
+      }
+    }
+
+    &.center {
+      top:50%;
+      left:50%;
+      margin-left: -#{$half-size}px;
+      margin-top: -#{$half-size}px;
+      background-color:$inactive-color;
+
+      &:hover {
+        background-color:$inactive-hover-color;
+      }
+    }
+
+    &.top-left {
+      top:0;
+      left:0;
+
+      @include position-bar('horizontal', 'top', 'right');
+      @include position-bar('vertical', 'left', 'bottom');
+    }
+
+    &.top {
+      top:0;
+      left:50%;
+      margin-left: -#{$half-size}px;
+
+      @include position-bar('horizontal', 'top', 'both');
+    }
+
+    &.top-right {
+      top:0;
+      right:0;
+
+      @include position-bar('horizontal', 'top', 'left');
+      @include position-bar('vertical', 'right', 'bottom');
+    }
+
+    &.right {
+      top:50%;
+      right:0;
+      margin-top: -#{$half-size}px;
+
+      @include position-bar('vertical', 'right', 'both');
+    }
+
+    &.bottom-right {
+      right:0;
+      bottom:0;
+
+      @include position-bar('horizontal', 'bottom', 'left');
+      @include position-bar('vertical', 'right', 'top');
+    }
+
+    &.bottom {
+      left:50%;
+      margin-left: -#{$half-size}px;
+      bottom:0;
+
+      @include position-bar('horizontal', 'bottom', 'both');
+    }
+
+    &.bottom-left {
+      bottom:0;
+      left:0;
+
+      @include position-bar('horizontal', 'bottom', 'right');
+      @include position-bar('vertical', 'left', 'top');
+    }
+
+    &.left {
+      top:50%;
+      left:0;
+      margin-top: -#{$half-size}px;
+
+      @include position-bar('vertical', 'left', 'both');
+    }
+  }
+}

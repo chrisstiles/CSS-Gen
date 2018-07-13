@@ -6,6 +6,7 @@ import ColorPicker from '../ColorPicker';
 import Slider from '../Slider';
 import Select from '../Select';
 import Toggle from '../Toggle';
+import PositionSelect from '../PositionSelect';
 import { sidebarControlsWidth } from '../../../util/helpers';
 
 const HALF_STOP_WIDTH = 5;
@@ -237,6 +238,7 @@ class GradientPicker extends React.Component {
             scrollWrapper="#sidebar-controls"
             searchable={false}
           />
+          <PositionSelect />
         </div>
       );
     }
