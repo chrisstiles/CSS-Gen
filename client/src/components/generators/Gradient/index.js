@@ -73,6 +73,7 @@ class Gradient extends React.Component {
         resetStyles={this.reset}
         styles={this.state}
         owner={this}
+        browserPrefixes={true}
       />
     );
   }

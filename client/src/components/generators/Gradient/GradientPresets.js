@@ -30,6 +30,24 @@ const presets = [
 			backgroundImage: 'radial-gradient(circle at center, #f1b50b 0%, #d78025 40%, rgba(208, 2, 27, 0.8) 69%, #cf206e 100%)',
 			backgroundColor: 'transparent'
 		}
+	},
+	{
+		styles: {
+			type: 'radial',
+			palette: [
+				{ pos: 0.00, color: 'rgba(255, 239, 24, 0.56)' },
+				{ pos: 0.09, color: 'rgba(255, 239, 24, 0.72)' },
+				{ pos: 0.13, color: 'rgba(215, 128, 37, 0)' },
+				{ pos: 0.25, color: 'rgba(215, 128, 37, 0.13)' },
+				{ pos: 1.00, color: '#2081cf ' }
+			],
+			position: 'top right',
+			positionX: 7,
+			positionY: -6
+		},
+		thumbnailStyles: {
+			background: 'radial-gradient(circle at top -6px right 7px, rgba(255, 239, 24, 0.56) 0%, rgba(255, 239, 24, 0.72) 9%, rgba(215, 128, 37, 0) 13%, rgba(215, 128, 37, 0.13) 25%, #2081cf 100%)'
+		}
 	}
 ];
 

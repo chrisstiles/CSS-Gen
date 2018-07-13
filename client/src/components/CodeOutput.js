@@ -47,7 +47,7 @@ class CodeOutput extends React.Component {
     const showPrefixes = showBrowserPrefixes === undefined ? this.state.showBrowserPrefixes : showBrowserPrefixes;
 
     if (showPrefixes && this.props.browserPrefixes) {
-      plugins.unshift(autoprefixer({ browsers: ['ie >= 9', '> 2%'] }));
+      plugins.unshift(autoprefixer({ browsers: ['ie >= 8', '> 4%'] }));
     }
 
     const _this = this;
