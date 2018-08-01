@@ -26,7 +26,6 @@ class GradientPicker extends React.Component {
 
     this.state = { ...toState(props.palette) };
 
-    this.getWidth = this.getWidth.bind(this);
     this.setWidth = this.setWidth.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handlePosChange = this.handlePosChange.bind(this);
@@ -36,7 +35,7 @@ class GradientPicker extends React.Component {
     this.handleSelectColor = this.handleSelectColor.bind(this);
     this.handleOpacityChange = this.handleOpacityChange.bind(this);
 
-    this.state.width = this.getWidth();
+    this.state.width = sidebarControlsWidth();
   }
 
   componentDidMount() {
@@ -60,12 +59,8 @@ class GradientPicker extends React.Component {
     }
   }
 
-  getWidth() {
-    return this.props.width !== undefined ? this.props.width : sidebarControlsWidth();
-  }
-
   setWidth() {
-    const width = this.getWidth();
+    const width = sidebarControlsWidth();
     this.setState({ width });
   }
 

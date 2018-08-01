@@ -16,14 +16,14 @@ class BorderRadiusInputs extends React.Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.radiusSlider = [
-      { title: 'All Corners', name: 'radius', min: minRadius, max: maxRadius, divider: true, units: props.styles.units }
+      { title: 'All Corners', name: 'radius', min: minRadius, max: maxRadius, divider: true, units: props.units }
     ];
 
     this.cornerSliders = [
-      { name: 'topLeft', min: minRadius, max: maxRadius, className: 'half', units: props.styles.topLeftUnits },
-      { name: 'topRight', min: minRadius, max: maxRadius, className: 'half no-margin', units: props.styles.topRightUnits },
-      { name: 'bottomLeft', min: minRadius, max: maxRadius, className: 'half', units: props.styles.bottomLeftUnits },
-      { name: 'bottomRight', min: minRadius, max: maxRadius, className: 'half no-margin', units: props.styles.bottomRightUnits },
+      { name: 'topLeft', min: minRadius, max: maxRadius, className: 'half', units: props.topLeftUnits },
+      { name: 'topRight', min: minRadius, max: maxRadius, className: 'half no-margin', units: props.topRightUnits },
+      { name: 'bottomLeft', min: minRadius, max: maxRadius, className: 'half', units: props.bottomLeftUnits },
+      { name: 'bottomRight', min: minRadius, max: maxRadius, className: 'half no-margin', units: props.bottomRightUnits },
     ];
 
     // Add elements as slider titles for individual corners
@@ -41,11 +41,11 @@ class BorderRadiusInputs extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    this.radiusSlider[0].units = newProps.styles.units;
+    this.radiusSlider[0].units = newProps.units;
 
     this.cornerSliders.forEach(slider => {
       const key = slider.name + 'Units';
-      slider.units = newProps.styles[key];
+      slider.units = newProps[key];
     });
   }
 
@@ -78,7 +78,7 @@ class BorderRadiusInputs extends React.Component {
   }
 
   render() {
-    const styles = this.props.styles;
+    const styles = this.props;
     const noBorder = styles.borderStyle === 'none';
     const disabledClassName = noBorder ? ' disabled' : '';
 

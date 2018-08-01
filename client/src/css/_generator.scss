@@ -1,10 +1,7 @@
 #generator-wrapper {
   margin-right: 323px;
   position:relative;
-
-  .page-content {
-    padding-top:15px;
-  }
+  padding:10px;
 }
 
 /* Preview Window */
@@ -18,8 +15,6 @@
   justify-content: center;
   line-height: 1;
   border-radius:5px;
-  left:50%;
-  margin-left:-150px;
 
   &.cb {
     box-sizing:content-box !important;

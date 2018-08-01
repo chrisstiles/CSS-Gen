@@ -212,9 +212,8 @@ p:last-child {
 
 #generator-wrapper {
   margin-right: 323px;
-  position: relative; }
-  #generator-wrapper .page-content {
-    padding-top: 15px; }
+  position: relative;
+  padding: 10px; }
 
 /* Preview Window */
 .generator-preview {
@@ -225,9 +224,7 @@ p:last-child {
   align-items: center;
   justify-content: center;
   line-height: 1;
-  border-radius: 5px;
-  left: 50%;
-  margin-left: -150px; }
+  border-radius: 5px; }
   .generator-preview.cb {
     box-sizing: content-box !important; }
   .generator-preview .preview-text {

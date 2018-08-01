@@ -49,8 +49,8 @@ class BoxShadow extends React.Component {
   renderInputs() {
     return (
       <BoxShadowInputs
-        styles={this.state}
         owner={this}
+        {...this.state}
       />
     );
   }

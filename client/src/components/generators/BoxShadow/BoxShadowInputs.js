@@ -32,7 +32,7 @@ class BoxShadowInputs extends React.Component {
           <div className="field-wrapper left">
             <label className="title">Shadow Color</label>
             <ColorPicker
-              color={this.props.styles.shadowColor}
+              color={this.props.shadowColor}
               disableAlpha={true}
               onChange={this.handleChange}
               name="shadowColor"
@@ -43,7 +43,7 @@ class BoxShadowInputs extends React.Component {
           <div className="field-wrapper right">
             <Toggle
               onChange={this.handleChange}
-              checked={this.props.styles.inset}
+              checked={this.props.inset}
               label="Inset"
               className="left"
               name="inset"
@@ -53,7 +53,7 @@ class BoxShadowInputs extends React.Component {
         <Sliders
           sliders={sliders}
           onChange={this.handleChange}
-          {...this.props.styles}
+          {...this.props}
         />
       </div>
     );

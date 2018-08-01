@@ -74,6 +74,8 @@ class Gradient extends React.Component {
         styles={this.state}
         owner={this}
         browserPrefixes={true}
+        centerPreview={false}
+        fullWidthPreview={true}
       />
     );
   }

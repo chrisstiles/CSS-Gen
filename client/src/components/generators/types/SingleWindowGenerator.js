@@ -35,6 +35,7 @@ class SingleWindowGenerator extends React.Component {
     this.handleColorPickerChange = this.handleColorPickerChange.bind(this);
     this.handlePreviewWindowResize = this.handlePreviewWindowResize.bind(this);
     this.handlePreviewCSSChange = this.handlePreviewCSSChange.bind(this);
+    this.handleWrapperMount = this.handleWrapperMount.bind(this);
   }
 
   generatePreviewCSS(styles = {}) {
@@ -52,6 +53,13 @@ class SingleWindowGenerator extends React.Component {
   reset() {
     const previewCSS = this.generatePreviewCSS(this.initialState);
     const state = _.extend({}, this.initialState, { previewCSS });
+
+    // Reset to full width rather than initial value
+    if (this.props.fullWidthPreview && this.generatorWrapper) {
+      const width = this.generatorWrapper.offsetWidth;
+      state.width = width;
+      this.initialState.width = width;
+    } 
 
     this.setState(state);
     this.preview.reset();
@@ -104,6 +112,17 @@ class SingleWindowGenerator extends React.Component {
     this.props.owner.setState({ width, height })
   }
 
+  handleWrapperMount(wrapper) {
+    this.generatorWrapper = wrapper;
+
+    if (this.props.fullWidthPreview) {
+      const width = this.generatorWrapper.offsetWidth;
+      const height = this.props.styles.height;
+
+      this.handlePreviewWindowResize({ width, height });
+    }
+  }
+
   renderToolbar() {
     return (
       <SingleWindowToolbar
@@ -128,6 +147,13 @@ class SingleWindowGenerator extends React.Component {
     const style = this.props.generateCSS().styles || {};
     style.backgroundColor = this.state.backgroundColor;
 
+    if (this.props.centerPreview || this.props.centerPreview === undefined) {
+      style.left = '50%';
+      style.marginLeft = -(this.props.styles.width / 2);
+    } else {
+      style.left = 0;
+    }
+
     return (
       <SingleWindowPreview
         ref={previewWindow => { this.preview = previewWindow }}
@@ -149,20 +175,14 @@ class SingleWindowGenerator extends React.Component {
   render() {
     return (
       <Generator 
-        title={this.props.title}
-        className={this.props.className}
-        heading={this.props.heading}
-        intro={this.props.intro}
         renderToolbar={this.renderToolbar}
         renderPreview={this.renderPreview}
-        renderPresets={this.props.renderPresets}
         setPreset={this.setPreset}
         outputPreviewStyles={this.state.outputPreviewStyles}
         previewCSS={this.state.previewCSS}
-        renderInputs={this.props.renderInputs}
-        generateCSS={this.props.generateCSS}
         reset={this.reset}
-        browserPrefixes={this.props.browserPrefixes}
+        onWrapperMount={this.handleWrapperMount}
+        {...this.props}
       />
     );
   }

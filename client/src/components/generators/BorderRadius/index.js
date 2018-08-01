@@ -97,8 +97,8 @@ class BorderRadius extends React.Component {
   renderInputs() {
     return (
       <BorderRadiusInputs
-        styles={this.state}
         owner={this}
+        {...this.state}
       />
     );
   }

@@ -21,6 +21,10 @@ class Generator extends React.Component {
     document.addEventListener('keyup', this.handleKeyup, false);
     document.addEventListener('keydown', this.props.handleKeydown, false);
     document.addEventListener('keyup', this.props.handleKeyup, false);
+
+    if (this.props.onWrapperMount) {
+      this.props.onWrapperMount(this.generatorWrapper);
+    }
   }
 
   componentWillUnmount(){
@@ -80,7 +84,7 @@ class Generator extends React.Component {
           <div 
             id="generator" 
             className="page-content"
-
+            ref={generatorWrapper => { this.generatorWrapper = generatorWrapper }}
           >
             {this.props.renderPreview()}
             <Sidebar
