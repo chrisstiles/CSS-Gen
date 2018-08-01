@@ -4,9 +4,6 @@ import Palette from './Palette';
 import tinycolor from 'tinycolor2';
 import ColorPicker from '../ColorPicker';
 import Slider from '../Slider';
-import Select from '../Select';
-import Toggle from '../Toggle';
-import PositionSelect from '../PositionSelect';
 import { sidebarControlsWidth } from '../../../util/helpers';
 
 const HALF_STOP_WIDTH = 5;
@@ -181,60 +178,10 @@ class GradientPicker extends React.Component {
     this.handleChange(palette);
   }
 
-  renderTypeSettings() {
-    if (this.props.type === 'linear') {
-      return 'Linear Gradient';
-    } else {
-      return (
-        <div>
-          <div className="inputs-row">
-            <Select
-              name="shape"
-              value={this.props.shape}
-              label="Shape"
-              onChange={this.handleChange}
-              options={[
-                { value: 'circle', label: 'Circle' },
-                { value: 'ellipse', label: 'Ellipse' }
-              ]}
-              menuContainer="#sidebar"
-              scrollWrapper="#sidebar-controls"
-              searchable={false}
-            />
-            <Select
-              name="extendKeyword"
-              value={this.props.extendKeyword}
-              label="Extend To"
-              onChange={this.handleChange}
-              options={[
-                { value: 'none', label: 'None' },
-                { value: 'closest-side', label: 'Closest Side' },
-                { value: 'closest-corner', label: 'Closest Corner' },
-                { value: 'farthest-side', label: 'Farthest Side' },
-                { value: 'farthest-corner', label: 'Farthest Corner' }
-              ]}
-              menuContainer="#sidebar"
-              scrollWrapper="#sidebar-controls"
-              searchable={false}
-            />
-          </div>
-          <PositionSelect
-            label="Gradient Position"
-            name="position"
-            position={this.props.position}
-            positionX={this.props.positionX}
-            positionY={this.props.positionY}
-            onClick={this.handleChange}
-          />
-        </div>
-      );
-    }
-  }
-
   render() {
     const drop = 50;
     const width = this.state.width;
-    const height = this.props.height !== undefined ? this.props.height : 40;
+    const height = 40;
     const min = -HALF_STOP_WIDTH;
     const max = this.width1 - HALF_STOP_WIDTH;
 
@@ -266,31 +213,6 @@ class GradientPicker extends React.Component {
           />
           {this.renderColorPicker()}
         </div>
-        <div className="divider" />
-        <div className="inputs-row">
-          <Select
-            name="type"
-            value={this.props.type}
-            label="Type"
-            onChange={this.handleChange}
-            options={[
-              { value: 'linear', label: 'Linear' },
-              { value: 'radial', label: 'Radial' }
-            ]}
-            menuContainer="#sidebar"
-            scrollWrapper="#sidebar-controls"
-            searchable={false}
-          />
-          <div className="field-wrapper right">
-            <Toggle
-              onChange={this.handleChange}
-              checked={this.props.repeating}
-              label="Repeating"
-              name="repeating"
-            />
-          </div>
-        </div>
-        {this.renderTypeSettings()}
       </div>
     )
   }

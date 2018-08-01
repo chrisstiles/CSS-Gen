@@ -46,8 +46,8 @@ class Gradient extends React.Component {
   renderInputs() {
     return (
       <GradientInputs
-        styles={this.state}
         owner={this}
+        {...this.state}
       />
     );
   }
