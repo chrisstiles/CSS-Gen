@@ -33,7 +33,6 @@ class Gradient extends React.Component {
   }
 
   generateCSS(styles = {}) {
-    // const css = {}; // The object we will return
     const rules = _.extend({}, this.state, styles);
     const gradient = generateGradient(rules);
 

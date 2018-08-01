@@ -1,4 +1,6 @@
 import { hexOrRgba } from '../../../util/helpers';
+import tinycolor from 'tinycolor2';
+
 
 class Gradient {
 	constructor(settings) {
@@ -98,7 +100,6 @@ class Gradient {
 
 			// Add position
 			gradientCSS += ` at ${this.position}`;
-
 		}
 
 		// Add color stops
@@ -111,16 +112,25 @@ class Gradient {
 
 		styles.background = gradientCSS;
 
+		// Add fallback for old versions of IE
+		const startColor = tinycolor(this.palette[0].color).toHexString();
+		const endColor = tinycolor(this.palette[this.palette.length - 1].color).toHexString();
+		styles.filter = `progid:DXImageTransform.Microsoft.gradient( startColorstr='${startColor}', endColorstr='${endColor}',GradientType=1 )`;
+
+		// Save styles object
 		this.styles = styles;
 	}
 
 	generateCSS() {
-		const { background } = this.styles;
+		const { background, filter } = this.styles;
 		// Flat background as fallback
 		var css = `background: ${this.palette[0].color};`;
 
 		// Add gradient CSS
 		css += ` background: ${background};`
+
+		// Add fallback for old versions of IE
+		css += ` filter: ${filter}`;
 
 		this.css = css;
 	}

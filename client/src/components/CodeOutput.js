@@ -14,7 +14,7 @@ class CodeOutput extends React.Component {
 
     this.state = { 
       css: '',
-      showBrowserPrefixes: true
+      showBrowserPrefixes: false
     };
 
     this.canShowCopyNotification = true;
@@ -121,13 +121,15 @@ class CodeOutput extends React.Component {
     return (
       <div id="output-wrapper">
         <div className="sidebar-title">Code Output</div>
-        <textarea
-          id="output"
-          autoCorrect="off"
-          spellCheck="false"
-          value={this.state.css}
-          readOnly
-        />
+        <div id="output-code-wrapper">
+          <textarea
+            id="output-code"
+            autoCorrect="off"
+            spellCheck="false"
+            value={this.state.css}
+            readOnly
+          />
+        </div>
         {this.renderPrefixesToggle()}
         <button 
           onClick={this.copyCSS}

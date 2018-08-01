@@ -139,6 +139,7 @@
 
   .button {
     float:right;
+    margin-top:3px;
   }
 
   .field-wrapper {
@@ -146,26 +147,33 @@
   }
 }
 
-#output {
-  width:100%;
-  font-size:12px;
-  padding:13px 15px;
-  background-color:#fff;
+#output-code-wrapper {
+  width: calc(100% + 30px);
+  margin-left: -15px;
+  margin-top: -15px;
+  padding: 6px 6px 0 6px;
+  margin-bottom:19px;
+  background-color:#e4e4e4;
+  float:left;
+}
+
+#output-code {
+  font-size: 12px;
   line-height:1.4em;
   resize:none;
-  margin-bottom:15px;
   appearance:none;
   -webkit-appearance:none;
   outline:none;
-  border:none;
   height:100px;
   color:$dark-grey;
-  font-weight:600;
-  float:left;
+  font-weight:500;
+  border:1px solid #fff;
+  background-color:#fff;
+  width:100%;
+  padding: 6px;
 
   &:focus {
-    border:3px solid #dedede;
-    padding:10px 12px;
+    border:1px solid $accent-color;
   }
 }
 
