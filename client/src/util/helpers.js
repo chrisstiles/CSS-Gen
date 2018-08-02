@@ -170,6 +170,10 @@ export function removeDuplicates(array, key) {
 	return newArray;
 }
 
+export function radToDeg(rad) {
+	return rad * (180 / Math.PI);
+}
+
 
 
 

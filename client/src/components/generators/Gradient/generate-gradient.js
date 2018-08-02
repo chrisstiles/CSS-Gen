@@ -50,8 +50,6 @@ class Gradient {
 	  		this.angle = `${angle}deg`;
 	  }
 
-	  console.log(angle)
-
 	  // Save radial specific CSS
 	  this.shape = shape;
 	  this.extendKeyword = extendKeyword;

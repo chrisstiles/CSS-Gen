@@ -24,6 +24,8 @@ class GradientInputs extends React.Component {
         <AnglePicker 
           label="Gradient Angle"
           angle={this.props.angle}
+          onChange={this.handleChange}
+          name="angle"
         />
       );
     } else {
