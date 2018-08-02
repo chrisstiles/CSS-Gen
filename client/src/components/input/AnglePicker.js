@@ -94,7 +94,7 @@ class AnglePicker extends React.Component {
 
   render() {
     const style = {
-      transform: `rotate(-${this.props.angle}deg)`
+      transform: `rotate(-${this.props.angle - 90}deg)`
     };
 
     return (
