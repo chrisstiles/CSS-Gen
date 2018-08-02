@@ -25,44 +25,20 @@ class AnglePicker extends React.Component {
     const center = this.getCenter();
     const x = vector.x - center.x;
     const y = vector.y - center.y;
+    const deg = radToDeg(Math.atan2(x, y));
     
-    var deg = radToDeg(Math.atan2(x, y));
-    deg -= 90;
-
-    if (deg < 0) {
-      deg += 360;
-    }
-    
-    return deg;
-  }
-
-  normalize(degree) {
-    const max = this.props.max === undefined ? 360 : this.props.max;
-    const min = this.props.min === undefined ? 0 : this.props.min;
-    const step = this.props.step || 1;
-    const n = Math.max(min, Math.min(degree, max));
-    const s = n - (n % step);
-    const high = Math.ceil(n / step);
-    const low = Math.round(n / step);
-    return high >= (n / step)
-      ? (high * step === 360) ? 0 : (high * step)
-      : low * step;
+    return Math.round(Math.abs(deg - 180));
   }
 
   handleTrackingChange(event) {
     const vector = {
-      x: event.x,
-      y: event.y
+      x: event.clientX,
+      y: event.clientY
     };
 
     const deg = this.getAngle(vector);
-    const value = this.normalize(deg);
 
-    // console.log(deg, value)
-    if (isNaN(deg)) {
-      console.log(event, event.x)
-    }
-    this.props.onChange(value, this.props.name);
+    this.props.onChange(deg, this.props.name);
   }
 
   handleMouseDown(event) {
@@ -71,7 +47,6 @@ class AnglePicker extends React.Component {
   }
 
   handleMouseMove(event) {
-    // console.log('hello')
     this.handleTrackingChange(event);
   }
 
@@ -94,7 +69,7 @@ class AnglePicker extends React.Component {
 
   render() {
     const style = {
-      transform: `rotate(-${this.props.angle - 90}deg)`
+      transform: `rotate(${this.props.angle}deg)`
     };
 
     return (
