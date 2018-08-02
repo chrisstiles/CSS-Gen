@@ -3,6 +3,7 @@ import GradientPicker from '../../input/GradientPicker';
 import Select from '../../input/Select';
 import PositionSelect from '../../input/PositionSelect';
 import Toggle from '../../input/Toggle';
+import AnglePicker from '../../input/AnglePicker';
 
 class GradientInputs extends React.Component {
   constructor(props) {
@@ -19,7 +20,12 @@ class GradientInputs extends React.Component {
 
   renderTypeSettings() {
     if (this.props.type === 'linear') {
-      return 'Linear Gradient';
+      return (
+        <AnglePicker 
+          label="Gradient Angle"
+          angle={this.props.angle}
+        />
+      );
     } else {
       return (
         <div>

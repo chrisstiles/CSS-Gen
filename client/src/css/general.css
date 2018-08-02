@@ -392,24 +392,23 @@ p:last-child {
   margin-left: -15px;
   margin-top: -15px;
   padding: 6px 6px 0 6px;
-  margin-bottom: 19px;
-  background-color: #e4e4e4;
+  margin-bottom: 11px;
   float: left; }
 
 #output-code {
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.4em;
   resize: none;
   appearance: none;
   -webkit-appearance: none;
   outline: none;
-  height: 100px;
+  height: 110px;
   color: #505050;
-  font-weight: 500;
+  font-weight: 600;
   border: 1px solid #fff;
   background-color: #fff;
   width: 100%;
-  padding: 6px; }
+  padding: 6px 8px; }
   #output-code:focus {
     border: 1px solid #4834d4; }
 
@@ -1231,6 +1230,25 @@ input[type="number"],
   float: right;
   width: calc(100% - 105px);
   padding-left: 25px; }
+
+.angle-picker {
+  background-color: #4834d4;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  margin-top: 6px; }
+  .angle-picker .angle {
+    transform-origin: bottom center;
+    top: 0;
+    bottom: 50%;
+    left: 50%;
+    width: 2px;
+    margin-left: -1px;
+    position: absolute;
+    background-color: #fff;
+    pointer-events: none; }
 
 #generator-wrapper.border-radius .corners-wrapper {
   margin-bottom: -40px; }

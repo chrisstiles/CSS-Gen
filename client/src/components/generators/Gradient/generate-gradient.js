@@ -12,7 +12,8 @@ class Gradient {
 			extendKeyword = 'none',
 			position = 'center',
 			positionX = 0,
-			positionY = 0
+			positionY = 0,
+			angle = 0
 		} = settings;
 
 		// Palette must have at least 2 stops
@@ -23,7 +24,7 @@ class Gradient {
 
 		// Sort based on x position of stops
 		var sortedPalette = palette.sort(({ pos: pos1, color }, { pos: pos2 }) => {
-	    return ((pos1 <= pos2) ? -1 : ((pos1 > pos2) ? 1 : 0));
+	    return ((pos1 <= pos2) ? -1 : ((pos1 > pos2) ? 0 : 1));
 	  });
 
 	  // Set either hex or rgba based on alpha value
@@ -39,6 +40,17 @@ class Gradient {
 	  // Linear, repeating linear, radial or repeating radial
 	  this.type = type;
 	  this.property = `${type}-gradient`;
+
+	  // Save linear specific CSS
+	  switch (angle) {
+	  	case 90:
+	  		this.angle = 'to right';
+	  		break;
+	  	default:
+	  		this.angle = `${angle}deg`;
+	  }
+
+	  console.log(angle)
 
 	  // Save radial specific CSS
 	  this.shape = shape;
@@ -89,7 +101,7 @@ class Gradient {
 
 		if (this.type === 'linear') {
 			// Linear gradients
-			gradientCSS += 'to left';
+			gradientCSS += this.angle;
 		} else {
 			// Radial gradients
 			gradientCSS += `${this.shape}`;
