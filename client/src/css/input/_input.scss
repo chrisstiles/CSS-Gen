@@ -14,6 +14,12 @@
 .field-wrapper {
   margin-bottom:20px;
 
+  &:after {
+    clear:both;
+    content:"";
+    display:block;
+  }
+
   &.left {
     margin-right:12px;
 

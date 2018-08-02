@@ -1,4 +1,5 @@
 import React from 'react';
+import NumberInput from './NumberInput';
 import { radToDeg } from '../../util/helpers';
 
 class AnglePicker extends React.Component {
@@ -9,6 +10,15 @@ class AnglePicker extends React.Component {
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('blur', this.endTracking, false);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('blur', this.endTracking, false);
   }
 
   getCenter() {
@@ -68,6 +78,16 @@ class AnglePicker extends React.Component {
     this.tracking = false;
   }
 
+  handleTextChange(value) {
+    var deg = value % 360;
+
+    if (deg < 0) {
+      deg += 360;
+    }
+
+    this.props.onChange(deg, this.props.name);
+  }
+
   render() {
     const style = {
       transform: `rotate(${this.props.angle}deg)`
@@ -80,12 +100,22 @@ class AnglePicker extends React.Component {
           className="angle-picker"
           ref={element => {this.element = element}}
           onMouseDown={this.handleMouseDown}
+          onBlur={this.endTracking}
         >
           <div 
             className="angle" 
             style={style}
           />
         </div>
+        <NumberInput
+          className="angle-input"
+          value={this.props.angle}
+          onChange={this.handleTextChange}
+          min={-9999}
+          max={9999}
+          forceUpdate={this.tracking}
+          appendString="°"
+        />
       </div>
     );
   }

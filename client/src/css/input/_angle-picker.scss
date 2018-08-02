@@ -1,12 +1,26 @@
+$circle-offset-value: 12;
+$circle-offset: #{$circle-offset-value}px;
+
 .angle-picker {
-  background-color:$accent-color;
-  width:60px;
-  height:60px;
-  border-radius:50%;
+  width:75px;
+  height:75px;
   position:relative;
-  overflow:hidden;
-  margin-top:6px;
-  display:inline-block;
+  margin-top:8px;
+  float:left;
+  margin-left:-#{$circle-offset-value}px;
+  top:-#{$circle-offset-value}px;
+
+  &:before {
+    content:"";
+    position:absolute;
+    top:$circle-offset;
+    bottom:$circle-offset;
+    left:$circle-offset;
+    right:$circle-offset;
+    border-radius:50%;
+    background-color: #bbbbbb;
+    z-index: 1;
+  }
 
   .angle {
     position:absolute;
@@ -16,15 +30,36 @@
     width:2px;
     margin-left:-1px;
     pointer-events: none;
+    z-index: 2;
 
     &:before {
       content:"";
-      top:0;
+      top:$circle-offset;
       bottom:50%;
       left:0;
       right:0;
       position:absolute;
+      background-color: $accent-color;
+    }
+
+    &:after {
+      content:"";
+      position:absolute;
+      width:12px;
+      height:12px;
+      left:50%;
+      margin-left:-6px;
+      top:#{$circle-offset-value - 4}px;
       background-color:#fff;
+      border:2px solid $accent-color;
+      border-radius:50%;
+      box-sizing:border-box;
     }
   }
+}
+
+.angle-input {
+  float:left;
+  margin-left: 4px;
+  margin-top: 10px;
 }

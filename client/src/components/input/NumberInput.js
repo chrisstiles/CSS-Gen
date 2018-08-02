@@ -1,5 +1,5 @@
 import React from 'react';
-import { numberInConstraints } from '../../util/helpers';
+import { numberInConstraints, createSelection } from '../../util/helpers';
 
 class NumberInput extends React.Component {
   constructor(props) {
@@ -12,24 +12,45 @@ class NumberInput extends React.Component {
     this.handleTick = this.handleTick.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.formatValue = this.formatValue.bind(this);
     this.setRefs = this.setRefs.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
     if ((!this.hasFocus || this.didTick || newProps.forceUpdate) && newProps.value !== undefined) {
       this.didTick = false;
-      this.element.value = newProps.value;
+
+      var value = newProps.value;
+
+      if (this.props.appendString) {
+        value += this.props.appendString;
+      }
+
+      this.element.value = value;
     }
   }
 
   getValue() {
-    const value = this.element.value;
+    var value = this.element.value;
+
+    if (this.props.appendString) {
+      value = value.replace(this.props.appendString, '');
+    }
 
     if (!isNaN(value)) {
       return Number(numberInConstraints(value, this.props.min, this.props.max));
     } else {
       return Number(this.props.value);
     }
+  }
+
+  formatValue(value) {
+    if (this.props.appendString) {
+      String(value).replace(this.props.appendString, '');
+      value += this.props.appendString;
+    }
+
+    return value;
   }
 
   handleChange(event) {
@@ -41,7 +62,7 @@ class NumberInput extends React.Component {
   }
 
   handleBlur(value, event) {
-    this.element.value = this.getValue();
+    this.element.value = this.formatValue(this.getValue());
 
     if (this.props.onBlur) {
       this.props.onBlur(event);
@@ -95,7 +116,13 @@ class NumberInput extends React.Component {
 
   handleClick(event) {
     const el = event.target;
-    el.select();
+
+    if (this.props.appendString) {
+      const end = el.value.length - this.props.appendString.length;
+      createSelection(el, 0, end);
+    } else {
+      el.select();
+    }
   }
 
   setRefs(el) {
@@ -108,13 +135,14 @@ class NumberInput extends React.Component {
 
   render() {
     const className = this.props.className ? ` ${this.props.className}` : '';
+    const value = this.formatValue(this.props.value);
 
     return (
       <input
         type="text"
         name={this.props.name}
         className={`number-input${className}`}
-        defaultValue={this.props.value}
+        defaultValue={value}
         onChange={this.handleChange}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
