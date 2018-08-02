@@ -140,7 +140,7 @@ class Gradient {
 		css += ` background: ${background};`
 
 		// Add fallback for old versions of IE
-		css += ` filter: ${filter}`;
+		css += ` filter: ${filter};`;
 
 		this.css = css;
 	}

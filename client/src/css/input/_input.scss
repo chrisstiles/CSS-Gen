@@ -1,5 +1,10 @@
 @import '../_variables.scss';
 
+.no-select {
+  webkit-touch-callout: none;
+  user-select: none;
+}
+
 .row:after {
   clear:both;
   content:"";

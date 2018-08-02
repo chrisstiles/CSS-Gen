@@ -455,6 +455,10 @@ p:last-child {
       height: 30px;
       background: #4834d4; }
 
+.no-select {
+  webkit-touch-callout: none;
+  user-select: none; }
+
 .row:after {
   clear: both;
   content: "";

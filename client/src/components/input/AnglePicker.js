@@ -9,7 +9,6 @@ class AnglePicker extends React.Component {
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
-    this.normalize = this.normalize.bind(this);
   }
 
   getCenter() {
@@ -56,12 +55,14 @@ class AnglePicker extends React.Component {
   }
 
   beginTracking() {
+    document.body.classList.add('no-select');
     document.body.addEventListener('mousemove', this.handleMouseMove, false);
     document.body.addEventListener('mouseup', this.handleMouseUp, false);
     this.tracking = true;
   }
 
   endTracking() {
+    document.body.classList.remove('no-select');
     document.body.removeEventListener('mousemove', this.handleMouseMove, false);
     document.body.removeEventListener('mouseup', this.handleMouseUp, false);
     this.tracking = false;
