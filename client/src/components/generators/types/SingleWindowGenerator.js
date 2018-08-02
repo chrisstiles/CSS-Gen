@@ -8,18 +8,20 @@ class SingleWindowGenerator extends React.Component {
   constructor(props) {
     super(props);
 
-    const backgroundColor = props.styles.backgroundColor || 'rgba(255, 255, 255, 1)';
-
     this.state = {
-      backgroundColor: backgroundColor,
-      width: props.styles.width,
-      height: props.styles.height,
       outputPreviewStyles: false,
       previewCSS: ''
     };
 
     // Save original state for resetting generator
     this.initialState = _.extend({}, this.state, props.styles);
+
+    // Add default background color
+    if (!props.styles.backgroundColor) {
+      const backgroundColor = 'rgba(255, 255, 255, 1)';
+      this.initialState.backgroundColor = backgroundColor;
+      props.generator.setState({ backgroundColor });
+    }
 
     // Preview window size constrains
     this.previewConstraints = props.previewConstraints || {
@@ -39,7 +41,7 @@ class SingleWindowGenerator extends React.Component {
   }
 
   generatePreviewCSS(styles = {}) {
-    const rules = _.extend({}, this.state, styles);
+    const rules = _.extend({}, this.props.styles, styles);
 
     const css = `
       width: ${rules.width}px;
@@ -64,7 +66,7 @@ class SingleWindowGenerator extends React.Component {
     this.setState(state);
     this.preview.reset();
 
-    this.props.owner.setState(this.initialState);
+    this.props.generator.setState(this.initialState);
 
     if (this.props.reset) {
       this.props.reset();
@@ -73,7 +75,7 @@ class SingleWindowGenerator extends React.Component {
 
   setPreset(presetStyles) {
     const state = _.extend({}, this.initialState, presetStyles);
-    this.props.owner.setState(state);
+    this.props.generator.setState(state);
     this.preview.reset();
 
     const previewCSS = this.generatePreviewCSS(state);
@@ -87,7 +89,7 @@ class SingleWindowGenerator extends React.Component {
 
     state[type] = value;
     
-    this.props.owner.setState(state);
+    this.props.generator.setState(state);
 
     const previewCSS = this.generatePreviewCSS(state);
     this.setState({ previewCSS });
@@ -95,9 +97,10 @@ class SingleWindowGenerator extends React.Component {
 
   handleColorPickerChange(color, name) {
     this.setState({ 
-      backgroundColor: color,
       previewCSS: this.generatePreviewCSS({ backgroundColor: color })
     });
+
+    this.props.generator.setState({ backgroundColor: color });
   }
 
   handlePreviewCSSChange(value) {
@@ -109,7 +112,7 @@ class SingleWindowGenerator extends React.Component {
     const previewCSS = this.generatePreviewCSS({ width, height });
     
     this.setState({ previewCSS });
-    this.props.owner.setState({ width, height })
+    this.props.generator.setState({ width, height })
   }
 
   handleWrapperMount(wrapper) {
@@ -128,7 +131,7 @@ class SingleWindowGenerator extends React.Component {
       <SingleWindowToolbar
         previewWidth={this.props.styles.width}
         previewHeight={this.props.styles.height}
-        previewBackgroundColor={this.state.backgroundColor}
+        previewBackgroundColor={this.props.styles.backgroundColor}
         previewConstraints={this.previewConstraints}
         outputPreviewStyles={this.state.outputPreviewStyles}
         reset={this.reset}
@@ -145,27 +148,29 @@ class SingleWindowGenerator extends React.Component {
 
   renderPreview() {
     const style = this.props.generateCSS().styles || {};
-    style.backgroundColor = this.state.backgroundColor;
+    style.backgroundColor = this.props.styles.backgroundColor;
 
     if (this.props.centerPreview || this.props.centerPreview === undefined) {
       style.left = '50%';
-      style.marginLeft = -(this.props.styles.width / 2);
+      style.marginLeft = -(this.initialState.width / 2);
     } else {
       style.left = 0;
     }
+
+    const { width, height } = this.props.styles;
 
     return (
       <SingleWindowPreview
         ref={previewWindow => { this.preview = previewWindow }}
         style={style}
         id={this.props.previewID}
-        size={{ width: this.props.styles.width, height: this.props.styles.height }}
+        size={{ width, height }}
         constraints={this.previewConstraints}
         onResize={this.handlePreviewWindowResize}
       >
         <div className="preview-text">
           Preview
-          <span className="dimensions">{this.props.styles.width}px x {this.props.styles.height}px</span>
+          <span className="dimensions">{width}px x {height}px</span>
           <span className="instructions">You can drag and resize this window</span>
         </div>
       </SingleWindowPreview>
@@ -182,6 +187,7 @@ class SingleWindowGenerator extends React.Component {
         previewCSS={this.state.previewCSS}
         reset={this.reset}
         onWrapperMount={this.handleWrapperMount}
+        preview={this}
         {...this.props}
       />
     );

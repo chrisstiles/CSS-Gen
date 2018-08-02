@@ -65,7 +65,7 @@ class BoxShadow extends React.Component {
         generateCSS={this.generateCSS}
         renderInputs={this.renderInputs}
         styles={this.state}
-        owner={this}
+        generator={this}
       />
     );
   }

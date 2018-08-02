@@ -1,4 +1,5 @@
 import React from 'react'
+import tinycolor from 'tinycolor2';
 
 const Palette = ({ palette, width, height }) => {
   const compare = ({ pos: pos1 }, { pos: pos2 }) => pos1 - pos2
@@ -14,8 +15,8 @@ const Palette = ({ palette, width, height }) => {
             sortedPalette.map(c =>
               <stop
                 key={ c.id }
-                offset={ c.pos }
-                style={{ stopColor: c.color.toRgbString(), stopOpacity: 1 }}
+                offset={ Number(c.pos).toPrecision(3) }
+                style={{ stopColor: tinycolor(c.color).toRgbString(), stopOpacity: 1 }}
               />
             )}
           </linearGradient>

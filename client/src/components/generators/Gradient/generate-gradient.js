@@ -24,7 +24,7 @@ class Gradient {
 
 		// Sort based on x position of stops
 		var sortedPalette = palette.sort(({ pos: pos1, color }, { pos: pos2 }) => {
-	    return ((pos1 <= pos2) ? -1 : ((pos1 > pos2) ? 0 : 1));
+	    return ((pos1 < pos2) ? -1 : ((pos1 > pos2) ? 1 : 0));
 	  });
 
 	  // Set either hex or rgba based on alpha value

@@ -1,6 +1,8 @@
 import React from 'react';
 import Page from './Page';
 import Sidebar from './Sidebar';
+import _ from 'underscore';
+import tinycolor from 'tinycolor2';
 
 class Generator extends React.Component {
   constructor(props) {
@@ -22,6 +24,29 @@ class Generator extends React.Component {
     document.addEventListener('keydown', this.props.handleKeydown, false);
     document.addEventListener('keyup', this.props.handleKeyup, false);
 
+    // Add saved state from user's previous session if it exists
+    if (window.localStorage) {
+      const path = window.location.pathname;
+
+      if (window.localStorage.hasOwnProperty(path)) {
+        // console.log('componentDidMount')
+        var previousState = window.localStorage.getItem(path);
+
+        try {
+          previousState = JSON.parse(previousState);
+          // console.log(previousState)
+          const defaultState = this.props.generator.state;
+          const state = _.extend({}, defaultState, previousState);
+          console.log(state)
+          this.props.generator.setState(state);
+
+          window.color = previousState.palette;
+        } catch(e) {
+          console.log(e);
+        }
+      }
+    }
+
     if (this.props.onWrapperMount) {
       this.props.onWrapperMount(this.generatorWrapper);
     }
@@ -32,6 +57,43 @@ class Generator extends React.Component {
     document.removeEventListener('keyup', this.handleKeyup, false);
     document.removeEventListener('keydown', this.props.handleKeydown, false);
     document.removeEventListener('keyup', this.props.handleKeyup, false);
+  }
+
+  componentWillReceiveProps(newProps) {
+    console.log('componentWillReceiveProps')
+    // Save current state in user's browser
+    if (window.localStorage) {
+      const path = window.location.pathname;
+      const styles = newProps.styles;
+
+      // Save generator styles
+      console.log(styles)
+      window.localStorage.setItem(path, JSON.stringify(styles));
+
+      // Save preview styles
+      // const previewKey = `${path}_preview`;
+      // const previewStyles = _.extend({}, newProps.preview.state);
+
+      // console.log(newProps.preview.state)
+      // // const previewState = this.preview.
+      // // console.log(newProps)
+      // var test = {
+      //   a: 1,
+      //   b: 2
+      // }
+
+      // var test2 = _.extend({}, test);
+
+      // console.log(test2)
+      // var test3 = {
+      //   a: 4,
+      //   g: 6,
+      //   d: 8
+      // }
+      // _.extendOwn(test2, test3);
+
+      // console.log(test2)
+    }
   }
 
   handleKeydown(event) {
