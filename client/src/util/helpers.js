@@ -185,7 +185,7 @@ export function createSelection(field, start, end) {
   } else if( field.setSelectionRange ) {
     field.focus();
     field.setSelectionRange(start, end);
-  } else if( typeof field.selectionStart != 'undefined' ) {
+  } else if( typeof field.selectionStart !== 'undefined' ) {
     field.selectionStart = start;
     field.selectionEnd = end;
     field.focus();

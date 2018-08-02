@@ -23,7 +23,7 @@ class Gradient extends React.Component {
       position: 'center',
       positionX: 0,
       positionY: 0,
-      angle: 0,
+      angle: 90,
       width: 500,
       height:300
     };
@@ -56,7 +56,7 @@ class Gradient extends React.Component {
   }
 
   render() {
-    const intro = <p>Make some gradients :D. Once you are done, copy your CSS from the code output box in the bottom right.</p>;
+    const intro = <p>Create linear and radial gradients with CSS.</p>;
 
     return (
       <SingleWindowGenerator 

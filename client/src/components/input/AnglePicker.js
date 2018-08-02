@@ -11,14 +11,20 @@ class AnglePicker extends React.Component {
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
+    this.beginTracking = this.beginTracking.bind(this);
+    this.endTracking = this.endTracking.bind(this); 
   }
 
   componentDidMount() {
     window.addEventListener('blur', this.endTracking, false);
+    window.addEventListener('focus', this.endTracking, false);
+    document.addEventListener('visibilitychange', this.endTracking, false);
   }
 
   componentWillUnmount() {
     window.removeEventListener('blur', this.endTracking, false);
+    window.removeEventListener('focus', this.endTracking, false);
+    document.removeEventListener('visibilitychange', this.endTracking, false);
   }
 
   getCenter() {
@@ -56,7 +62,9 @@ class AnglePicker extends React.Component {
   }
 
   handleMouseMove(event) {
-    this.handleTrackingChange(event);
+    if (this.tracking) {
+      this.handleTrackingChange(event);
+    }
   }
 
   handleMouseUp(event) {
@@ -65,17 +73,17 @@ class AnglePicker extends React.Component {
   }
 
   beginTracking() {
+    this.tracking = true;
     document.body.classList.add('no-select');
     document.body.addEventListener('mousemove', this.handleMouseMove, false);
     document.body.addEventListener('mouseup', this.handleMouseUp, false);
-    this.tracking = true;
   }
 
   endTracking() {
+    this.tracking = false;
     document.body.classList.remove('no-select');
     document.body.removeEventListener('mousemove', this.handleMouseMove, false);
     document.body.removeEventListener('mouseup', this.handleMouseUp, false);
-    this.tracking = false;
   }
 
   handleTextChange(value) {

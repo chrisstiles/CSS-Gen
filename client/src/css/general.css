@@ -347,7 +347,8 @@ p:last-child {
     #sidebar .inputs-row .field-wrapper {
       display: table-cell;
       padding: 0 2px;
-      vertical-align: top; }
+      vertical-align: top;
+      margin-bottom: 0; }
       #sidebar .inputs-row .field-wrapper:first-child {
         padding-left: 0; }
       #sidebar .inputs-row .field-wrapper:last-child {
@@ -1243,7 +1244,7 @@ input[type="number"],
   width: 75px;
   height: 75px;
   position: relative;
-  margin-top: 8px;
+  margin-top: 9px;
   float: left;
   margin-left: -12px;
   top: -12px; }

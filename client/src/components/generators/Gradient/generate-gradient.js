@@ -46,6 +46,15 @@ class Gradient {
 	  	case 90:
 	  		this.angle = 'to right';
 	  		break;
+	  	case 180:
+	  		this.angle = 'to bottom';
+	  		break;
+	  	case 270:
+	  		this.angle = 'to left';
+	  		break;
+	  	case 360 || 0:
+	  		this.angle = 'to top';
+	  		break;
 	  	default:
 	  		this.angle = `${angle}deg`;
 	  }
