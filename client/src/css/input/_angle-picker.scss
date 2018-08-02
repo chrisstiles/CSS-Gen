@@ -6,31 +6,58 @@
   position:relative;
   overflow:hidden;
   margin-top:6px;
+  display:inline-block;
 
   .angle {
-    transform-origin:bottom center;
-    top:0;
-    bottom:30px;
-    left:50%;
-    width:2px;
-    margin-left:-1px;
-
-    // left:50%;
-    // width:50%;
-    // height:2px;
-    // top:50%;
-    // margin-top:-1px;
-    // transform-origin:left center;
-
-    // left:0;
-    // width:50%;
-    // height:2px;
-    // top:50%;
-    // margin-top:-1px;
-    // transform-origin:right center;
-
     position:absolute;
-    background-color:#fff;
-    pointer-events:none;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    transform-origin: center center;
+    pointer-events: none;
+
+    &:before {
+      content:"";
+      top:0;
+      bottom:50%;
+      left:50%;
+      width:2px;
+      position:absolute;
+      background-color:#fff;
+    }
   }
+
+  // .angle {
+  //   // transform-origin:bottom center;
+  //   top:0;
+  //   bottom:50%;
+  //   left:50%;
+  //   width:2px;
+  //   margin-left:-1px;
+
+  //   // left:50%;
+  //   // width:50%;
+  //   // height:2px;
+  //   // top:50%;
+  //   // margin-top:-1px;
+  //   // transform-origin:left center;
+
+  //   // left:0;
+  //   // width:50%;
+  //   // height:2px;
+  //   // top:50%;
+  //   // margin-top:-1px;
+  //   // transform-origin:right center;
+
+  //   position:absolute;
+  //   background-color:#fff;
+  //   pointer-events:none;
+
+  //   // left: 0;
+  //   // right: 0;
+  //   // top: 50%;
+  //   // margin-top: -1px;
+  //   // height: 2px;
+  // }
 }

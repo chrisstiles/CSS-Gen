@@ -58,11 +58,15 @@ class AnglePicker extends React.Component {
     const deg = this.getAngle(vector);
     const value = this.normalize(deg);
 
-    console.log(deg, value)
+    // console.log(deg, value)
+    if (isNaN(deg)) {
+      console.log(event, event.x)
+    }
     this.props.onChange(value, this.props.name);
   }
 
   handleMouseDown(event) {
+    this.handleTrackingChange(event);
     this.beginTracking();
   }
 
