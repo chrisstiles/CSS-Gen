@@ -60,7 +60,7 @@ class Gradient extends React.Component {
 
   render() {
     const intro = <p>Create linear and radial gradients with CSS.</p>;
-    
+
     return (
       <SingleWindowGenerator 
         title="CSS Gradient Generator | CSS-GEN"

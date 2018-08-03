@@ -15,12 +15,11 @@ class SingleWindowGenerator extends React.Component {
 
     // Save original state for resetting generator
     this.initialState = _.extend({}, this.state, props.defaultState);
+    this.initialState.hasResized = false;
 
     // Add default background color
-    if (!props.styles.backgroundColor) {
-      const backgroundColor = 'rgba(255, 255, 255, 1)';
-      this.initialState.backgroundColor = backgroundColor;
-      props.generator.setState({ backgroundColor });
+    if (!props.defaultState.backgroundColor) {
+      this.initialState.backgroundColor = 'rgba(255, 255, 255, 1)';
     }
 
     // Preview window size constrains
@@ -65,7 +64,6 @@ class SingleWindowGenerator extends React.Component {
 
     this.setState(state);
     this.preview.reset();
-
     this.props.generator.setState(this.initialState);
 
     if (this.props.reset) {
@@ -112,13 +110,13 @@ class SingleWindowGenerator extends React.Component {
     const previewCSS = this.generatePreviewCSS({ width, height });
     
     this.setState({ previewCSS });
-    this.props.generator.setState({ width, height })
+    this.props.generator.setState({ hasResized: true, width, height })
   }
 
   handleWrapperMount(wrapper) {
     this.generatorWrapper = wrapper;
 
-    if (this.props.fullWidthPreview) {
+    if (this.props.fullWidthPreview && !this.props.generator.state.hasResized) {
       const width = this.generatorWrapper.offsetWidth;
       const height = this.props.styles.height;
 
