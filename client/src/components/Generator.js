@@ -16,6 +16,17 @@ class Generator extends React.Component {
     this.handleKeydown = this.handleKeydown.bind(this);
     this.handleKeyup = this.handleKeyup.bind(this);
     this.renderPresets = this.renderPresets.bind(this);
+
+    // Persist generator state to local storage
+    this.saveState = _.debounce(newProps => {
+      if (window.localStorage) {
+        const path = window.location.pathname;
+        const styles = newProps.styles;
+
+        // Save generator styles
+        window.localStorage.setItem(path, JSON.stringify(styles));
+      }
+    }, 300);
   }
 
   componentDidMount() {
@@ -23,32 +34,6 @@ class Generator extends React.Component {
     document.addEventListener('keyup', this.handleKeyup, false);
     document.addEventListener('keydown', this.props.handleKeydown, false);
     document.addEventListener('keyup', this.props.handleKeyup, false);
-
-    // Add saved state from user's previous session if it exists
-    // if (window.localStorage) {
-    //   const path = window.location.pathname;
-
-    //   if (window.localStorage.hasOwnProperty(path)) {
-    //     // console.log('componentDidMount')
-    //     var previousState = window.localStorage.getItem(path);
-
-    //     try {
-    //       previousState = JSON.parse(previousState);
-
-    //       // console.log(previousState)
-    //       const defaultState = this.props.generator.state;
-    //       const state = _.extend({}, defaultState, previousState, { localStorage: true });
-
-    //       console.log(state)
-    //       // console.log(state)
-    //       this.props.generator.setState(state);
-
-    //       window.color = previousState.palette;
-    //     } catch(e) {
-    //       console.log(e);
-    //     }
-    //   }
-    // }
 
     if (this.props.onWrapperMount) {
       this.props.onWrapperMount(this.generatorWrapper);
@@ -63,40 +48,8 @@ class Generator extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    // console.log('componentWillReceiveProps')
-    // Save current state in user's browser
-    if (window.localStorage) {
-      const path = window.location.pathname;
-      const styles = newProps.styles;
-
-      // Save generator styles
-      console.log(styles)
-      window.localStorage.setItem(path, JSON.stringify(styles));
-
-      // Save preview styles
-      // const previewKey = `${path}_preview`;
-      // const previewStyles = _.extend({}, newProps.preview.state);
-
-      // console.log(newProps.preview.state)
-      // // const previewState = this.preview.
-      // // console.log(newProps)
-      // var test = {
-      //   a: 1,
-      //   b: 2
-      // }
-
-      // var test2 = _.extend({}, test);
-
-      // console.log(test2)
-      // var test3 = {
-      //   a: 4,
-      //   g: 6,
-      //   d: 8
-      // }
-      // _.extendOwn(test2, test3);
-
-      // console.log(test2)
-    }
+    // Save state to local storage
+    this.saveState(newProps);
   }
 
   handleKeydown(event) {

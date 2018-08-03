@@ -9,7 +9,7 @@ class BoxShadow extends React.Component {
   constructor(props) {
     super(props);
 
-    const defaultState = {
+    this.defaultState = {
       horizontalShift: 0,
       verticalShift: 12,
       blurRadius: 40,
@@ -22,9 +22,9 @@ class BoxShadow extends React.Component {
     };
 
     if (props.previousState) {
-      this.state = _.extend(defaultState, props.previousState);
+      this.state = _.extend({}, this.defaultState, props.previousState);
     } else {
-      this.state = defaultState;
+      this.state = this.defaultState;
     }
 
     this.generateCSS = this.generateCSS.bind(this);
@@ -72,6 +72,7 @@ class BoxShadow extends React.Component {
         renderInputs={this.renderInputs}
         styles={this.state}
         generator={this}
+        defaultState={this.defaultState}
       />
     );
   }
