@@ -9,7 +9,7 @@ class BoxShadow extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    const defaultState = {
       horizontalShift: 0,
       verticalShift: 12,
       blurRadius: 40,
@@ -20,6 +20,12 @@ class BoxShadow extends React.Component {
       width: 300,
       height: 300
     };
+
+    if (props.previousState) {
+      this.state = _.extend(defaultState, props.previousState);
+    } else {
+      this.state = defaultState;
+    }
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);

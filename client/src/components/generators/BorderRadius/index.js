@@ -12,7 +12,7 @@ class BorderRadius extends React.Component {
     const defaultRadius = 10;
     const defaultUnits = 'px';
 
-    this.state = {
+    const defaultState = {
       radius: defaultRadius,
       units: defaultUnits,
       topLeft: defaultRadius,
@@ -29,8 +29,14 @@ class BorderRadius extends React.Component {
       borderWidth: 10,
       inset: true,
       width:300,
-      height:300
+      height:250
     };
+
+    if (props.previousState) {
+      this.state = _.extend(defaultState, props.previousState);
+    } else {
+      this.state = defaultState;
+    }
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
