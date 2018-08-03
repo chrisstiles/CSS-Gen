@@ -17,6 +17,7 @@ class ColorStopsHolder extends React.Component {
   render () {
     const { width, stops, onAddColor, ...rest } = this.props;
     const style = { width };
+
     return (
       <div className="csh" style={ style } onMouseDown={ this.handleMouseDown }>
         { stops.map(stop =>

@@ -25,27 +25,30 @@ class Generator extends React.Component {
     document.addEventListener('keyup', this.props.handleKeyup, false);
 
     // Add saved state from user's previous session if it exists
-    if (window.localStorage) {
-      const path = window.location.pathname;
+    // if (window.localStorage) {
+    //   const path = window.location.pathname;
 
-      if (window.localStorage.hasOwnProperty(path)) {
-        // console.log('componentDidMount')
-        var previousState = window.localStorage.getItem(path);
+    //   if (window.localStorage.hasOwnProperty(path)) {
+    //     // console.log('componentDidMount')
+    //     var previousState = window.localStorage.getItem(path);
 
-        try {
-          previousState = JSON.parse(previousState);
-          // console.log(previousState)
-          const defaultState = this.props.generator.state;
-          const state = _.extend({}, defaultState, previousState);
-          console.log(state)
-          this.props.generator.setState(state);
+    //     try {
+    //       previousState = JSON.parse(previousState);
 
-          window.color = previousState.palette;
-        } catch(e) {
-          console.log(e);
-        }
-      }
-    }
+    //       // console.log(previousState)
+    //       const defaultState = this.props.generator.state;
+    //       const state = _.extend({}, defaultState, previousState, { localStorage: true });
+
+    //       console.log(state)
+    //       // console.log(state)
+    //       this.props.generator.setState(state);
+
+    //       window.color = previousState.palette;
+    //     } catch(e) {
+    //       console.log(e);
+    //     }
+    //   }
+    // }
 
     if (this.props.onWrapperMount) {
       this.props.onWrapperMount(this.generatorWrapper);
@@ -60,7 +63,7 @@ class Generator extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('componentWillReceiveProps')
+    // console.log('componentWillReceiveProps')
     // Save current state in user's browser
     if (window.localStorage) {
       const path = window.location.pathname;

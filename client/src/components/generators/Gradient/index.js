@@ -9,7 +9,7 @@ class Gradient extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    const defaultState = {
       palette: [
         { pos: 0.00, color: '#f1b50b' },
         { pos: 0.36, color: '#d78025' },
@@ -27,6 +27,12 @@ class Gradient extends React.Component {
       width: 500,
       height:300
     };
+
+    if (props.previousState) {
+      this.state = _.extend(defaultState, props.previousState);
+    } else {
+      this.state = defaultState;
+    }
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);

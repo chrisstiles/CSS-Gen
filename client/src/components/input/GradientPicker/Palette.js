@@ -6,7 +6,7 @@ const Palette = ({ palette, width, height }) => {
   const sortedPalette = [...palette].sort(compare)
   const gradientId = '_' + Math.random().toString(36).substr(2, 9)
   const gradientUrl = `url(#${gradientId})`
-
+  
   return (
     <div className="palette" style={{ width, height }}>
       <svg width="100%" height="100%">
