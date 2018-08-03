@@ -1,7 +1,7 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import BoxShadowInputs from './BoxShadowInputs';
-import { generateCSSString, hexOrRgba } from '../../../util/helpers';
+import { generateCSSString, hexOrRgba, getStateFromLocalStorage } from '../../../util/helpers';
 import _ from 'underscore';
 import tinycolor from 'tinycolor2';
 
@@ -21,11 +21,7 @@ class BoxShadow extends React.Component {
       height: 300
     };
 
-    if (props.previousState) {
-      this.state = _.extend({}, this.defaultState, props.previousState);
-    } else {
-      this.state = this.defaultState;
-    }
+    this.state = getStateFromLocalStorage(this.defaultState);
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);

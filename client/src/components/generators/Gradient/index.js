@@ -3,6 +3,7 @@ import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import GradientInputs from './GradientInputs';
 import GradientPresets from './GradientPresets';
 import generateGradient from './generate-gradient';
+import { getStateFromLocalStorage } from '../../../util/helpers';
 import _ from 'underscore';
 
 class Gradient extends React.Component {
@@ -28,11 +29,7 @@ class Gradient extends React.Component {
       height:300
     };
 
-    if (props.previousState) {
-      this.state = _.extend({}, this.defaultState, props.previousState);
-    } else {
-      this.state = this.defaultState;
-    }
+    this.state = getStateFromLocalStorage(this.defaultState);
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);

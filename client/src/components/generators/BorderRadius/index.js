@@ -2,7 +2,7 @@ import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import BorderRadiusInputs from './BorderRadiusInputs';
 import BorderRadiusPresets from './BorderRadiusPresets';
-import { generateCSSString } from '../../../util/helpers';
+import { generateCSSString, getStateFromLocalStorage } from '../../../util/helpers';
 import _ from 'underscore';
 
 class BorderRadius extends React.Component {
@@ -32,11 +32,7 @@ class BorderRadius extends React.Component {
       height:250
     };
 
-    if (props.previousState) {
-      this.state = _.extend({}, this.defaultState, props.previousState);
-    } else {
-      this.state = this.defaultState;
-    }
+    this.state = getStateFromLocalStorage(this.defaultState);
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);

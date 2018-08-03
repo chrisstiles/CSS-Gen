@@ -1,6 +1,32 @@
 import _ from 'underscore';
 import tinycolor from 'tinycolor2';
 
+export function getStateFromLocalStorage(defaultState) {
+  var state = _.extend({}, defaultState);
+
+  if (!window.localStorage) {
+    return state;
+  }
+
+  const path = window.location.pathname;
+
+  if (window.localStorage.hasOwnProperty(path)) {
+    var previousState = window.localStorage.getItem(path);
+
+    try {
+      previousState = JSON.parse(previousState);
+
+      if (previousState) {
+        state = _.extend(state, previousState);
+      }
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  return state;
+}
+
 export function cssToJs(name) {
   var split = name.split('-');
   var output = "";
@@ -85,7 +111,6 @@ export function sidebarControlsWidth() {
       return 284;
     }
   }
-
 }
 
 export function hexToRgb(hex) {

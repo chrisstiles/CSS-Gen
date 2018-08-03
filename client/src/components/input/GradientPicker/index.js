@@ -44,31 +44,15 @@ class GradientPicker extends React.Component {
     window.removeEventListener('resize', this.setWidth, false);
   }
 
-  // componentWillReceiveProps({ palette: next }) {
-  componentWillReceiveProps({ palette: next, localStorage }) {
-    // console.log(palette)
-    // const { next } = palette;
-    
+  componentWillReceiveProps({ palette: next }) {
+    const { palette: current } = this.props;
+    const length = Math.min(next.length, current.length);
+    const activeId = this.state.activeId <= next.length ? this.state.activeId : 1;
 
-    if (localStorage && !this.loadedFromLocalStorage) {
-      // Replace whole gradient if loading from local storage
-      this.loadedFromLocalStorage = true;
-
-      // const state = ;
-      console.log('Here: ', { ...toState(next) })
-      this.setState({ ...toState(next) });
-    } else {
-      console.log('here')
-      // Update palette normally
-      const { palette: current } = this.props;
-      const length = Math.min(next.length, current.length);
-      const activeId = this.state.activeId <= next.length ? this.state.activeId : 1;
-
-      for (let i = 0; i < length; i++) {
-        if (next[i].pos !== current[i].pos || next[i].color !== current[i].color) {
-          this.setState({ ...toState(next, activeId) });
-          return;
-        }
+    for (let i = 0; i < length; i++) {
+      if (next[i].pos !== current[i].pos || next[i].color !== current[i].color) {
+        this.setState({ ...toState(next, activeId) });
+        return;
       }
     }
   }
