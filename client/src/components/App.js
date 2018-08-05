@@ -14,14 +14,6 @@ import BoxShadow from './generators/BoxShadow/';
 import BorderRadius from './generators/BorderRadius/';
 import Gradient from './generators/Gradient';
 
-// Store generator routes
-// const generators = [
-//   { path: '/box-shadow-generator', component: BoxShadow },
-//   { path: '/border-radius-generator', component: BorderRadius },
-//   { path: '/gradient-generator', component: Gradient }
-// ];
-
-
 var addNotification;
 const notificationTypes = {
   info: 'info',
@@ -35,23 +27,6 @@ class PrimaryLayout extends React.Component {
     super();
 
     addNotification = this.createNotification.bind(this);
-
-    // Use saved state from the last time the user used a generated
-    // this.previousState = null;
-
-    // if (window.localStorage) {
-    //   const path = window.location.pathname;
-
-    //   if (window.localStorage.hasOwnProperty(path)) {
-    //     const previousState = window.localStorage.getItem(path);
-
-    //     try {
-    //       this.previousState = JSON.parse(previousState);
-    //     } catch(e) {
-    //       console.log(e);
-    //     }
-    //   }
-    // }
   }
 
   createNotification(type, message) {
@@ -73,10 +48,6 @@ class PrimaryLayout extends React.Component {
 }
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <BrowserRouter>

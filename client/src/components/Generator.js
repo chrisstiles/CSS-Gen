@@ -2,7 +2,6 @@ import React from 'react';
 import Page from './Page';
 import Sidebar from './Sidebar';
 import _ from 'underscore';
-import tinycolor from 'tinycolor2';
 
 class Generator extends React.Component {
   constructor(props) {

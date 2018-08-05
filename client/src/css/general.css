@@ -125,9 +125,18 @@ p:last-child {
   box-shadow: 0px 9px 29px 0px rgba(184, 185, 218, 0.36);
   border: 1px solid rgba(72, 52, 212, 0.23);
   padding: 30px; }
-
-#nav-window a.current {
-  color: orange; }
+  #nav-window .logo {
+    padding: 10px;
+    display: block;
+    margin-top: -5px;
+    margin-bottom: 10px; }
+    #nav-window .logo svg {
+      width: 100%;
+      height: auto; }
+    #nav-window .logo .title {
+      fill: #444545; }
+    #nav-window .logo .bracket {
+      fill: #c6c6c5; }
 
 /* Media Queries */
 @media screen and (max-width: 1250px) {
@@ -393,8 +402,9 @@ p:last-child {
   margin-left: -15px;
   margin-top: -15px;
   padding: 6px 6px 0 6px;
-  margin-bottom: 11px;
-  float: left; }
+  margin-bottom: 16px;
+  float: left;
+  background-color: #fff; }
 
 #output-code {
   font-size: 11px;

@@ -12,10 +12,26 @@
 	box-shadow: 0px 9px 29px 0px rgba(184, 185, 218, 0.36);
 	border:1px solid rgba($accent-color, .23);
 	padding:30px;
-}
 
-#nav-window a.current {
-	color:orange;
+	.logo {
+		padding:10px;
+		display: block;
+		margin-top:-5px;
+		margin-bottom:10px;
+
+		svg {
+			width:100%;
+			height:auto;
+		}
+
+		.title {
+			fill: #444545;
+		}
+
+		.bracket {
+			fill: #c6c6c5;
+		}
+	}
 }
 
 
