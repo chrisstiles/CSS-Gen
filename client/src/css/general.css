@@ -123,17 +123,15 @@ p:last-child {
   min-height: 510px;
   width: 280px;
   box-shadow: 0px 9px 29px 0px rgba(184, 185, 218, 0.36);
-  border: 1px solid rgba(72, 52, 212, 0.23);
-  padding: 30px; }
+  border: 1px solid rgba(72, 52, 212, 0.23); }
   #nav-window .logo {
+    margin: 25px 30px 20px 30px;
     padding: 10px;
     display: block;
-    margin-top: -5px;
-    margin-bottom: 10px;
     overflow: visible; }
     #nav-window .logo svg {
       width: 100%;
-      height: auto;
+      height: 26px;
       overflow: visible; }
     #nav-window .logo .title {
       fill: #444545; }
@@ -146,6 +144,56 @@ p:last-child {
         transform: translateX(-6px); }
       #nav-window .logo:hover .bracket.right {
         transform: translateX(6px); }
+
+#page-links {
+  background-color: #fcfcfc;
+  padding: 30px 0; }
+  #page-links h2 {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    color: #a4a4a4; }
+  #page-links a {
+    text-decoration: none;
+    color: #505050;
+    display: block;
+    line-height: 1.2em;
+    padding: 7px 30px 8px 58px;
+    position: relative;
+    font-size: 17px;
+    font-weight: 400; }
+    #page-links a:before {
+      content: "";
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      left: 31px;
+      top: 9px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      filter: grayscale(1); }
+    #page-links a:hover {
+      opacity: .6; }
+    #page-links a.current {
+      color: #4834d4;
+      opacity: 1 !important; }
+      #page-links a.current:before {
+        filter: none; }
+    #page-links a.box-shadow:before {
+      width: 17px;
+      height: 17px;
+      top: 8px;
+      left: 30px;
+      background-image: url("../images/nav-icons/box-shadow.svg"); }
+    #page-links a.border-radius:before {
+      width: 14px;
+      height: 14px;
+      top: 10px;
+      background-image: url("../images/nav-icons/border-radius.svg"); }
+    #page-links a.gradient:before {
+      background-image: url("../images/nav-icons/gradient.svg"); }
 
 /* Media Queries */
 @media screen and (max-width: 1250px) {
