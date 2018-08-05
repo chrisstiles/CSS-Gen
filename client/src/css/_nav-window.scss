@@ -18,10 +18,12 @@
 		display: block;
 		margin-top:-5px;
 		margin-bottom:10px;
+		overflow: visible;
 
 		svg {
 			width:100%;
 			height:auto;
+			overflow: visible;
 		}
 
 		.title {
@@ -30,6 +32,19 @@
 
 		.bracket {
 			fill: #c6c6c5;
+			transition: all .4s;
+		}
+
+		&:hover .bracket {
+			fill:$accent-color;
+
+			&.left {
+				transform:translateX(-6px);
+			}
+
+			&.right {
+				transform:translateX(6px);
+			}
 		}
 	}
 }

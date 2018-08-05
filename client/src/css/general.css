@@ -129,14 +129,23 @@ p:last-child {
     padding: 10px;
     display: block;
     margin-top: -5px;
-    margin-bottom: 10px; }
+    margin-bottom: 10px;
+    overflow: visible; }
     #nav-window .logo svg {
       width: 100%;
-      height: auto; }
+      height: auto;
+      overflow: visible; }
     #nav-window .logo .title {
       fill: #444545; }
     #nav-window .logo .bracket {
-      fill: #c6c6c5; }
+      fill: #c6c6c5;
+      transition: all .4s; }
+    #nav-window .logo:hover .bracket {
+      fill: #4834d4; }
+      #nav-window .logo:hover .bracket.left {
+        transform: translateX(-6px); }
+      #nav-window .logo:hover .bracket.right {
+        transform: translateX(6px); }
 
 /* Media Queries */
 @media screen and (max-width: 1250px) {

@@ -1,13 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import SVGInline from 'react-svg-inline';
-import logo from '../images/logo.svg';
+import Logo from '-!react-svg-loader?name=Logo!../images/logo.svg';
 
 const NavWindow = () => {
 	return (
 		<div id="nav-window">
 			<NavLink activeClassName="current" exact to="/" className="logo">
-				<SVGInline svg={logo} />
+				<Logo />
 			</NavLink>
 
 			<NavLink activeClassName="current" exact to="/">Home</NavLink><br />
