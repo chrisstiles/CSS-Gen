@@ -12,9 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^3.5.1",
+    "concurrently": "^3.6.1",
     "express": "^4.16.2",
-    "nodemon": "^1.14.11",
+    "mixin-deep": "^2.0.0",
+    "nodemon": "^1.18.3",
     "react-select": "^1.2.1"
-  }
+  },
+  "devDependencies": {}
 }
