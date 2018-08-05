@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import Logo from '-!react-svg-loader?name=Logo!../images/logo.svg';
+import Logo from '../images/logo.svg';
 
 const NavWindow = () => {
 	return (
