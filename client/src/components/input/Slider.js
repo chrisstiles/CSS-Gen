@@ -1,31 +1,36 @@
 import React from 'react';
 import RCSlider, { Handle as RCHandle } from 'rc-slider';
 import NumberInput from './NumberInput';
+import Toggle from './Toggle';
 import Select from './Select';
-
-const Handle = props => {
-  const { value, dragging, index, ...restProps } = props;
-
-  return (
-    <RCHandle 
-      {...restProps}
-      className={'rc-slider-handle' + (props.dragging ? ' dragging' : '')}
-      value={value} 
-    />
-  );
-};
 
 class Slider extends RCSlider {
   constructor(props) {
     super(props);
 
+    this.state = {
+      active: true
+    };
+
     this.min = props.min || 0;
     this.max = props.max || 200;
+
+    if (props.value === false) {
+      this.state.value = this.min;
+    } else {
+      this.state.value = props.value;;
+    }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleBeforeChange = this.handleBeforeChange.bind(this);
     this.handleUnitChange = this.handleUnitChange.bind(this);
+    this.handleActiveToggle = this.handleActiveToggle.bind(this);
   }
+
+  // componentWillReceiveProps(newProps) {
+  //   const value = newProps.value === false ? this.min : newProps.value;
+  //   this.setState({ value });
+  // }
 
   handleChange(value) {
     if (!this.props.disabled) {
@@ -45,12 +50,20 @@ class Slider extends RCSlider {
     var value;
 
     if (units === '%') {
-      value = this.props.value / this.max * 100;
+      value = this.state.value / this.max * 100;
     } else {
-      value = this.props.value / 100 * this.max;
+      value = this.state.value / 100 * this.max;
     }
 
     this.props.onChange(parseInt(value, 10), this.props.name, units);
+  }
+
+  handleActiveToggle(active) {
+    this.setState({ active });
+
+    if (this.props.onActiveToggle) {
+      this.props.onActiveToggle(active, this.props.name);
+    }
   }
 
   renderUnitSelect() {
@@ -75,7 +88,7 @@ class Slider extends RCSlider {
   }
 
   render() {
-    const value = this.props.value || 0;
+    const value = this.state.value;
     const min = this.props.units === '%' ? 0 : this.min;
     const max = this.props.units === '%' ? 100 : this.max;
 
@@ -92,35 +105,66 @@ class Slider extends RCSlider {
       className += ' disabled';
     }
 
+    var inputClassName = "input";
+
+    if (this.props.optional) {
+      if (!this.state.active) {
+        inputClassName += ' disabled';
+      }
+    }
+
     return (
       <div className={className}>
-        {this.renderUnitSelect()}
-        <label className="title">
-          <NumberInput
-            className="slider-input"
-            value={value}
-            onChange={this.handleChange}
-            step={this.props.step || 1}
-            min={min}
-            max={max}
-            forceUpdate={this.props.dragging}
-          />
-          {this.props.title}
-        </label>
-        <RCSlider
-          min={min}
-          max={max}
-          value={value}
-          handle={Handle}
-          step={this.props.step || 1}
-          onBeforeChange={this.handleBeforeChange}
-          onChange={this.handleChange}
-          tabIndex={-1}
-        />
+        <label className="title">{this.props.title}</label>
+        <div className="slider-wrapper">
+          { this.props.optional ? 
+            <div className="active-toggle">
+              <Toggle
+                onChange={this.handleActiveToggle}
+                checked={this.state.active}
+                name="active"
+              />
+            </div>
+          : null }
+          <div className={inputClassName}>
+            {this.renderUnitSelect()}          
+            <NumberInput
+              className="slider-input"
+              value={value}
+              onChange={this.handleChange}
+              step={this.props.step || 1}
+              min={min}
+              max={max}
+              forceUpdate={this.props.dragging}
+            />
+            <RCSlider
+              min={min}
+              max={max}
+              value={value}
+              handle={Handle}
+              step={this.props.step || 1}
+              onBeforeChange={this.handleBeforeChange}
+              onChange={this.handleChange}
+              tabIndex={-1}
+            />
+          </div>
+        </div>
       </div>
     );
   }
 }
+
+const Handle = props => {
+  const { value, dragging, index, ...restProps } = props;
+
+  return (
+    <RCHandle 
+      {...restProps}
+      className={'rc-slider-handle' + (props.dragging ? ' dragging' : '')}
+      value={value} 
+    />
+  );
+};
 
 export default Slider;
 

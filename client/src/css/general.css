@@ -464,8 +464,8 @@ p:last-child {
   width: calc(100% + 30px);
   margin-left: -15px;
   margin-top: -15px;
-  padding: 6px 6px 0 6px;
-  margin-bottom: 16px;
+  padding: 6px 6px 1px 6px;
+  margin-bottom: 15px;
   float: left;
   background-color: #fff; }
 
@@ -599,13 +599,13 @@ input[type="number"],
 .slider-input {
   float: right;
   position: relative;
-  top: -8px;
+  margin-top: -27px;
   width: 50px; }
 
 .has-units .slider-input,
 .has-units .units-select {
   float: right;
-  top: -8px; }
+  margin-top: -20px; }
 
 .has-units .slider-input {
   width: 42px; }
@@ -648,6 +648,16 @@ input[type="number"],
   .button:hover {
     background-color: #5b49d8; }
 
+.slider-wrapper {
+  display: table;
+  width: 100%; }
+  .slider-wrapper .active-toggle,
+  .slider-wrapper .input {
+    display: table-cell;
+    vertical-align: top; }
+  .slider-wrapper .active-toggle {
+    width: 75px; }
+
 .rc-slider {
   position: relative;
   height: 14px;
@@ -658,7 +668,6 @@ input[type="number"],
   touch-action: none;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-  margin-bottom: 20px;
   margin-top: 10px; }
 
 .rc-slider-rail {
@@ -1367,7 +1376,7 @@ input[type="number"],
   margin-top: 10px; }
 
 #generator-wrapper.border-radius .corners-wrapper {
-  margin-bottom: -40px; }
+  margin-bottom: -27px; }
   #generator-wrapper.border-radius .corners-wrapper .section-title {
     margin-bottom: 25px; }
   #generator-wrapper.border-radius .corners-wrapper .slider-input,

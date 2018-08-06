@@ -1,7 +1,8 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
+import FilterInputs from './FilterInputs';
 import { getDefaultState, getPersistedState, generateCSSString } from '../../../util/helpers';
-import _ from 'underscore';
+// import _ from 'underscore';
 
 // Load default background images
 import waterfall from './images/waterfall.jpg';
@@ -23,7 +24,7 @@ class Filter extends React.Component {
 			sepia: false,
 			backgroundImage: waterfall,
 			width: 500,
-			height:600
+			height:400
 		});
 
 		this.state = getPersistedState(this.defaultState);
@@ -34,7 +35,7 @@ class Filter extends React.Component {
 	}
 
 	generateCSS(styles = {}) {
-		const rules = _.extend({}, this.state, styles);
+		// const rules = _.extend({}, this.state, styles);
 
 		const css = { filter: 'blur(0)' };
 
@@ -45,15 +46,12 @@ class Filter extends React.Component {
 	}
 
 	handleFileDrop(event) {
-		// console.log(event.dataTransfer)
-		// console.log(event.nativeEvent.dataTransfer.files)
 		const files = event.nativeEvent.dataTransfer.files;
 
 		if (files && files.length) {
 			const file = files[0];
 			const reader = new FileReader();
 			reader.onload = e => {
-				console.log(e.target.result);
 				this.setState({ backgroundImage: e.target.result });
 			}
 
@@ -62,7 +60,12 @@ class Filter extends React.Component {
 	}
 
 	renderInputs() {
-
+		return (
+			<FilterInputs
+				owner={this}
+				{...this.state}
+			/>
+		);
 	}
 
 	render() {

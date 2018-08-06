@@ -2,20 +2,19 @@ import React from 'react';
 import Slider from './Slider';
 import _ from 'underscore';
 
-const Sliders = ({sliders, onChange, ...initialState}) => {
-  const fields = _.map(sliders, ({ title, name, min, max, step = 1, divider = false, className, units }) => { 
+const Sliders = ({sliders, onChange, onActiveToggle, optional, ...initialState}) => {
+  const fields = _.map(sliders, ({ step = 1, divider = false, name, ...restProps }) => { 
     return (
       <div key={name}>
         <Slider
-          title={title}
           name={name}
           onChange={onChange}
-          className={className}
+          onActiveToggle={onActiveToggle}
           value={initialState[name]}
           step={step}
-          min={min}
-          max={max}
-          units={units}
+          divider={divider}
+          optional={optional}
+          {...restProps}
         />
 
         {divider ? <div className="divider" /> : null}

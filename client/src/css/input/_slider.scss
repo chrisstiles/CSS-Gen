@@ -1,3 +1,18 @@
+.slider-wrapper {
+  display:table;
+  width:100%;
+
+  .active-toggle,
+  .input {
+    display:table-cell;
+    vertical-align: top;
+  }
+
+  .active-toggle {
+    width: 75px;
+  }
+}
+
 .rc-slider {
   position: relative;
   height: 14px;
@@ -8,7 +23,6 @@
       touch-action: none;
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  margin-bottom:20px;
   margin-top:10px;
 }
 
