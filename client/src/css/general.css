@@ -290,7 +290,10 @@ p:last-child {
   align-items: center;
   justify-content: center;
   line-height: 1;
-  border-radius: 5px; }
+  border-radius: 5px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center; }
   .generator-preview.cb {
     box-sizing: content-box !important; }
   .generator-preview .preview-text {
@@ -342,6 +345,9 @@ p:last-child {
   bottom: 10px;
   left: 10px;
   cursor: move; }
+
+.dropping {
+  opacity: .6; }
 
 /* Media Queries */
 @media screen and (max-width: 1250px) {

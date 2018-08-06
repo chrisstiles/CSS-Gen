@@ -8,12 +8,16 @@ class SingleWindowPreview extends React.Component {
 
     this.state = {
       lockAspectRatio: false,
-      resizing: false
+      resizing: false,
+      droppingFile: false
     };
 
     this.handleResizeStart = this.handleResizeStart.bind(this);
     this.handleResizeStop = this.handleResizeStop.bind(this);
     this.handleResize = this.handleResize.bind(this);
+    this.handleDragOver = this.handleDragOver.bind(this);
+    this.handleDragLeave = this.handleDragLeave.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
   }
 
   handleResizeStart() {
@@ -78,6 +82,25 @@ class SingleWindowPreview extends React.Component {
     this.props.onResize({ width, height });
   }
 
+  handleDragOver(event) {
+    this.setState({ droppingFile: true });
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  handleDragLeave(event) {
+    this.setState({ droppingFile: false });
+  }
+
+  handleDrop(event) {
+    // console.log(event.nativeEvent.dataTransfer.files)
+    this.props.onFileDrop(event);
+    // event.nativeEvent.stopPropagation();
+    event.nativeEvent.preventDefault();
+    // console.log(event.nativeEvent.dataTransfer.files)
+    this.setState({ droppingFile: false });
+  }
+
   reset() {
     this.resizeWrapper.style.top = 0;
     this.resizeWrapper.style.left = 0;
@@ -96,12 +119,29 @@ class SingleWindowPreview extends React.Component {
       className += ' resizing';
     }
 
+    // Add file drop if callback is passed
+    var fileDropProps = {};
+
+    if (this.props.onFileDrop) {
+      fileDropProps.onDragOver = this.handleDragOver;
+      fileDropProps.onDragLeave = this.handleDragLeave;
+      fileDropProps.onDrop = this.handleDrop;
+
+      if (this.state.droppingFile) {
+        className += ' dropping';
+      }
+    }
+
     return (
       <Draggable 
         handle=".drag-handle"
         ref={draggable => { this.draggable = draggable; }}
       >
-        <div className="resize-wrapper" ref={el => { this.resizeWrapper = el; }}>
+        <div 
+          className="resize-wrapper" 
+          ref={el => { this.resizeWrapper = el; }}
+          {...fileDropProps}
+        >
           <Resizable
             style={this.props.style}
             id={this.props.id}

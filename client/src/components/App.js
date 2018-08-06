@@ -14,6 +14,7 @@ import Home from './Home';
 import BoxShadow from './generators/BoxShadow/';
 import BorderRadius from './generators/BorderRadius/';
 import Gradient from './generators/Gradient';
+import Filter from './generators/Filter';
 
 // Routes
 const routes = [
@@ -21,6 +22,7 @@ const routes = [
   { path: '/box-shadow-generator', component: BoxShadow },
   { path: '/border-radius-generator', component: BorderRadius },
   { path: '/gradient-generator', component: Gradient },
+  { path: '/filter-generator', component: Filter },
 ];
 
 // Notifications

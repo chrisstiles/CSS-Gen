@@ -15,6 +15,9 @@
   justify-content: center;
   line-height: 1;
   border-radius:5px;
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:center center;
 
   &.cb {
     box-sizing:content-box !important;
@@ -87,6 +90,10 @@
   bottom: 10px;
   left: 10px;
   cursor:move;
+}
+
+.dropping {
+  opacity:.6;
 }
 
 

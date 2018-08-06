@@ -16,6 +16,7 @@ class SingleWindowGenerator extends React.Component {
     // Save original state for resetting generator
     this.initialState = _.extend({}, this.state, props.defaultState);
     this.initialState.hasResized = false;
+    this.initialState.width = props.styles.width;
 
     // Add default background color
     if (!props.defaultState.backgroundColor) {
@@ -56,7 +57,7 @@ class SingleWindowGenerator extends React.Component {
     // Revert global defaults
     const { showPreviewText, outputPreviewStyles } = getGlobalDefaults();
     updateGlobalState({ showPreviewText, outputPreviewStyles });
-    
+
     const previewCSS = this.generatePreviewCSS(this.initialState);
     const state = _.extend({}, this.initialState, { previewCSS });
 
@@ -161,7 +162,13 @@ class SingleWindowGenerator extends React.Component {
 
   renderPreview() {
     const style = this.props.generateCSS().styles || {};
-    style.backgroundColor = this.props.styles.backgroundColor;
+    const { backgroundImage } = this.props.styles;
+
+    if (backgroundImage) {
+      style.backgroundImage = `url('${backgroundImage}')`
+    } else {
+      style.backgroundColor = this.props.styles.backgroundColor;
+    }
 
     if (this.props.centerPreview || this.props.centerPreview === undefined) {
       style.left = '50%';
@@ -170,6 +177,7 @@ class SingleWindowGenerator extends React.Component {
       style.left = 0;
     }
 
+    const { previewID, onFileDrop } = this.props;
     const { width, height } = this.props.styles;
     const { showPreviewText } = this.props.globalState;
 
@@ -177,10 +185,11 @@ class SingleWindowGenerator extends React.Component {
       <SingleWindowPreview
         ref={previewWindow => { this.preview = previewWindow }}
         style={style}
-        id={this.props.previewID}
+        id={previewID}
         size={{ width, height }}
         constraints={this.previewConstraints}
         onResize={this.handlePreviewWindowResize}
+        onFileDrop={onFileDrop}
       >
         { showPreviewText ?
 

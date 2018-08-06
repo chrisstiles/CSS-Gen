@@ -16,9 +16,7 @@ class BoxShadow extends React.Component {
       spreadRadius: 0,
       shadowOpacity: 0.15,
       shadowColor: '#000',
-      inset: false,
-      width: 300,
-      height: 300
+      inset: false
     });
 
     this.state = getPersistedState(this.defaultState);
