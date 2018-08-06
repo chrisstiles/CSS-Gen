@@ -1,13 +1,50 @@
 import _ from 'underscore';
 import tinycolor from 'tinycolor2';
+import { 
+	addNotification as _addNotification, 
+	notificationTypes,
+	getGlobalState as _getGlobalState,
+	getGlobalDefaults as _getGlobalDefaults,
+	updateGlobalState as _updateGlobalState
+} from '../components/App';
 
-export function getStateFromLocalStorage(defaultState) {
+export function addNotification(type, message) {
+	_addNotification(type, message);
+}
+
+export function getNotificationTypes() {
+	return notificationTypes;
+}
+
+export function getGlobalState() {
+	return _getGlobalState();
+}
+
+export function getGlobalDefaults() {
+	return _getGlobalDefaults();
+}
+
+export function updateGlobalState(state) {
+	_updateGlobalState(state);
+}
+
+export function getDefaultState(defaultState) {
+	const defaults = {
+		width: 300,
+		height: 300
+	};
+
+	return _.extend({}, defaults, defaultState);
+}
+
+export function getPersistedState(defaultState) {
   var state = _.extend({}, defaultState);
 
   if (!window.localStorage) {
     return state;
   }
 
+  // Generator specific state
   const path = window.location.pathname;
 
   if (window.localStorage.hasOwnProperty(path)) {

@@ -62,6 +62,15 @@ class SingleWindowToolbar extends React.Component {
           />
         </div>
 
+        <div className="item input border">
+          <Toggle
+            onChange={this.props.onShowPreviewTextChange}
+            label="Preview Text:"
+            className="left"
+            checked={this.props.showPreviewText}
+          />
+        </div>
+
         <div className="right">
           <button
             className="button"

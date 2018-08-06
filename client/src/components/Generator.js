@@ -17,7 +17,7 @@ class Generator extends React.Component {
     this.renderPresets = this.renderPresets.bind(this);
 
     // Persist generator state to local storage
-    this.saveState = _.debounce(newProps => {
+    this.persistState = _.debounce(newProps => {
       if (window.localStorage) {
         const path = window.location.pathname;
         const styles = newProps.styles;
@@ -48,7 +48,7 @@ class Generator extends React.Component {
 
   componentWillReceiveProps(newProps) {
     // Save state to local storage
-    this.saveState(newProps);
+    this.persistState(newProps);
   }
 
   handleKeydown(event) {

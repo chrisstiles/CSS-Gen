@@ -3,14 +3,14 @@ import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import GradientInputs from './GradientInputs';
 import GradientPresets from './GradientPresets';
 import generateGradient from './generate-gradient';
-import { getStateFromLocalStorage } from '../../../util/helpers';
+import { getDefaultState, getPersistedState } from '../../../util/helpers';
 import _ from 'underscore';
 
 class Gradient extends React.Component {
   constructor(props) {
     super(props);
 
-    this.defaultState = {
+    this.defaultState = getDefaultState({
       palette: [
         { pos: 0.00, color: '#f1b50b' },
         { pos: 0.36, color: '#d78025' },
@@ -27,9 +27,9 @@ class Gradient extends React.Component {
       angle: 90,
       width: 500,
       height:300
-    };
+    });
 
-    this.state = getStateFromLocalStorage(this.defaultState);
+    this.state = getPersistedState(this.defaultState);
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
@@ -79,6 +79,7 @@ class Gradient extends React.Component {
         centerPreview={false}
         fullWidthPreview={true}
         defaultState={this.defaultState}
+        globalState={this.props.globalState}
       />
     );
   }

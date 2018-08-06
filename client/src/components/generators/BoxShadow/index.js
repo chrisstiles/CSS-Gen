@@ -1,7 +1,7 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import BoxShadowInputs from './BoxShadowInputs';
-import { generateCSSString, hexOrRgba, getStateFromLocalStorage } from '../../../util/helpers';
+import { generateCSSString, hexOrRgba, getDefaultState, getPersistedState } from '../../../util/helpers';
 import _ from 'underscore';
 import tinycolor from 'tinycolor2';
 
@@ -9,7 +9,7 @@ class BoxShadow extends React.Component {
   constructor(props) {
     super(props);
 
-    this.defaultState = {
+    this.defaultState = getDefaultState({
       horizontalShift: 0,
       verticalShift: 12,
       blurRadius: 40,
@@ -19,9 +19,9 @@ class BoxShadow extends React.Component {
       inset: false,
       width: 300,
       height: 300
-    };
+    });
 
-    this.state = getStateFromLocalStorage(this.defaultState);
+    this.state = getPersistedState(this.defaultState);
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
@@ -69,6 +69,7 @@ class BoxShadow extends React.Component {
         styles={this.state}
         generator={this}
         defaultState={this.defaultState}
+        globalState={this.props.globalState}
       />
     );
   }

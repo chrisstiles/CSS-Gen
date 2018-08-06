@@ -3,7 +3,7 @@ import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import prettify from 'postcss-prettify';
 import Toggle from './input/Toggle';
-import { addNotification, notificationTypes } from './App';
+import { addNotification, getNotificationTypes } from '../util/helpers';
 
 class CodeOutput extends React.Component {
   constructor(props) {
@@ -24,9 +24,8 @@ class CodeOutput extends React.Component {
   componentWillMount() {
     const css = { outputCSS: this.props.outputCSS }
 
-    if (this.props.previewCSS) {
-      css.previewCSS = this.props.previewCSS;
-    }
+    css.previewCSS = this.props.previewCSS;
+    css.outputPreviewStyles = this.props.outputPreviewStyles;
 
     this.getCSS(css);
   }
@@ -82,7 +81,7 @@ class CodeOutput extends React.Component {
       if (this.canShowCopyNotification) {
         this.canShowCopyNotification = false;
 
-        addNotification(notificationTypes.success, 'Copied!');  
+        addNotification(getNotificationTypes().success, 'Copied!');  
 
         var _this = this;
 
@@ -92,7 +91,7 @@ class CodeOutput extends React.Component {
       }
       
     } catch (err) {
-      console.log('Unable to copy');
+      console.log('Unable to copy', err);
     }
 
     document.body.removeChild(hiddenField);
