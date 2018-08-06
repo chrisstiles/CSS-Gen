@@ -1,12 +1,13 @@
 import React from 'react';
 import Sliders from '../../input/Sliders';
 
-const sliders = [
+const test = [
   { title: 'Gaussian Blur', name: 'blur', min: 0, max: 100 }
 ];
 
 class FilterInputs extends React.Component {
 	constructor(props) {
+		// debugger;
 		super(props);
 
 		this.handleChange = this.handleChange.bind(this);
@@ -30,9 +31,10 @@ class FilterInputs extends React.Component {
 	}
 
 	render() {
+		console.log(...this.props)
 		return (
 			<Sliders
-        sliders={sliders}
+        sliders={test}
         onChange={this.handleChange}
         onActiveToggle={this.handleActiveToggle}
         optional={true}

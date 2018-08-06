@@ -2,7 +2,7 @@ import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import FilterInputs from './FilterInputs';
 import { getDefaultState, getPersistedState, generateCSSString } from '../../../util/helpers';
-// import _ from 'underscore';
+import _ from 'underscore';
 
 // Load default background images
 import waterfall from './images/waterfall.jpg';
@@ -35,8 +35,8 @@ class Filter extends React.Component {
 	}
 
 	generateCSS(styles = {}) {
-		// const rules = _.extend({}, this.state, styles);
-
+		const rules = _.extend({}, this.state, styles);
+		console.log(rules);
 		const css = { filter: 'blur(0)' };
 
 		return {

@@ -4,7 +4,7 @@ import NumberInput from './NumberInput';
 import Toggle from './Toggle';
 import Select from './Select';
 
-class Slider extends RCSlider {
+class Slider extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,7 +18,7 @@ class Slider extends RCSlider {
     if (props.value === false) {
       this.state.value = this.min;
     } else {
-      this.state.value = props.value;;
+      this.state.value = props.value;
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -27,10 +27,13 @@ class Slider extends RCSlider {
     this.handleActiveToggle = this.handleActiveToggle.bind(this);
   }
 
-  // componentWillReceiveProps(newProps) {
-  //   const value = newProps.value === false ? this.min : newProps.value;
-  //   this.setState({ value });
-  // }
+  componentWillReceiveProps(newProps) {
+    const { value } = newProps;
+
+    if (value !== false) {
+      this.setState({ value });
+    }
+  }
 
   handleChange(value) {
     if (!this.props.disabled) {
@@ -88,7 +91,7 @@ class Slider extends RCSlider {
   }
 
   render() {
-    const value = this.state.value;
+    const { value } = this.state;
     const min = this.props.units === '%' ? 0 : this.min;
     const max = this.props.units === '%' ? 100 : this.max;
 
