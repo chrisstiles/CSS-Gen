@@ -15,8 +15,9 @@ class Slider extends React.Component {
     this.min = props.min || 0;
     this.max = props.max || 200;
 
-    if (props.value === false) {
+    if (props.value === null) {
       this.state.value = this.min;
+      this.state.active = false;
     } else {
       this.state.value = props.value;
     }
@@ -30,7 +31,7 @@ class Slider extends React.Component {
   componentWillReceiveProps(newProps) {
     const { value } = newProps;
 
-    if (value !== false) {
+    if (value !== null) {
       this.setState({ value });
     }
   }

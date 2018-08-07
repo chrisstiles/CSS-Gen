@@ -1,32 +1,49 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import FilterInputs from './FilterInputs';
-import { getDefaultState, getPersistedState, generateCSSString } from '../../../util/helpers';
+import { getDefaultState, getPersistedState, generateCSSString, cssToJs } from '../../../util/helpers';
 import _ from 'underscore';
 
 // Load default background images
 import waterfall from './images/waterfall.jpg';
 
+// List out all potential filters
+const units = {
+	px: 'px',
+	deg: 'deg',
+	percent: '%',
+	none: ''
+};
+
+const filters = {
+	blur: { unit: units.px, default: 6 },
+	brightness: { unit: units.none, default: null },
+	contrast: { unit: units.percent, default: null },
+	grayscale: { unit: units.percent, default: null },
+	hueRotate: { unit: units.deg, default: null },
+	invert: { unit: units.percent, default: null },
+	opacity: { unit: units.percent, default: null },
+	saturate: { unit: units.percent, default: null },
+	sepia: { unit: units.percent, default: null }
+};
+
 class Filter extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.defaultState = getDefaultState({
-			blur: false,
-			brightness: false,
-			contrast: false,
-			dropShadow: false,
-			grayscale: false,
-			hueRotate: false,
-			invert: false,
-			opacity: false,
-			saturate: false,
-			sepia: false,
+		// Create initial state from filters object
+		var state = _.mapObject(filters, (val, key) => {
+			return val.default;
+		});
+
+		// Add additional defaults
+		state = _.extend({}, state, {
 			backgroundImage: waterfall,
 			width: 500,
 			height:400
 		});
 
+		this.defaultState = getDefaultState(state);
 		this.state = getPersistedState(this.defaultState);
 
 		this.handleFileDrop = this.handleFileDrop.bind(this);
@@ -36,8 +53,25 @@ class Filter extends React.Component {
 
 	generateCSS(styles = {}) {
 		const rules = _.extend({}, this.state, styles);
-		console.log(rules);
-		const css = { filter: 'blur(0)' };
+		const css = {
+			filter: ''
+		};
+
+		// Loop through all filters and add any that are active
+		_.each(filters, (filter, name) => {
+			const value = rules[name];
+
+			if (value !== null) {
+				const property = cssToJs(name);
+				const unit = filter.unit;
+				const cssString = `${property}(${value}${unit}) `;
+				
+				// Add filter type to css rules
+				css.filter += cssString;
+			}
+		});
+
+		css.filter = css.filter.trim();
 
 		return {
 			styles: css,
@@ -84,6 +118,7 @@ class Filter extends React.Component {
 	      onFileDrop={this.handleFileDrop}
 	      defaultState={this.defaultState}
 	      globalState={this.props.globalState}
+	      browserPrefixes={true}
 	    />
 	  );
 	}

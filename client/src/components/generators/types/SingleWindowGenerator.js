@@ -121,7 +121,7 @@ class SingleWindowGenerator extends React.Component {
     const previewCSS = this.generatePreviewCSS({ width, height });
     
     this.setState({ previewCSS });
-    this.props.generator.setState({ hasResized: true, width, height })
+    this.props.generator.setState({ hasResized: true, width, height });
   }
 
   handleWrapperMount(wrapper) {
@@ -161,20 +161,22 @@ class SingleWindowGenerator extends React.Component {
   }
 
   renderPreview() {
-    const style = this.props.generateCSS().styles || {};
+    const generatorStyles = this.props.generateCSS().styles || {};
     const { backgroundImage } = this.props.styles;
 
     if (backgroundImage) {
-      style.backgroundImage = `url('${backgroundImage}')`
+      generatorStyles.backgroundImage = `url('${backgroundImage}')`
     } else {
-      style.backgroundColor = this.props.styles.backgroundColor;
+      generatorStyles.backgroundColor = this.props.styles.backgroundColor;
     }
 
+    const resizeStyles = {};
+
     if (this.props.centerPreview || this.props.centerPreview === undefined) {
-      style.left = '50%';
-      style.marginLeft = -(this.initialState.width / 2);
+      resizeStyles.left = '50%';
+      resizeStyles.marginLeft = -(this.initialState.width / 2);
     } else {
-      style.left = 0;
+      resizeStyles.left = 0;
     }
 
     const { previewID, onFileDrop } = this.props;
@@ -184,7 +186,8 @@ class SingleWindowGenerator extends React.Component {
     return (
       <SingleWindowPreview
         ref={previewWindow => { this.preview = previewWindow }}
-        style={style}
+        generatorStyles={generatorStyles}
+        resizeStyles={resizeStyles}
         id={previewID}
         size={{ width, height }}
         constraints={this.previewConstraints}

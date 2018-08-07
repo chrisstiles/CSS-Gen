@@ -27,9 +27,7 @@ class BorderRadius extends React.Component {
       borderStyle: 'none',
       borderColor: '#323232',
       borderWidth: 10,
-      inset: true,
-      width:300,
-      height:250
+      inset: true
     });
 
     this.state = getPersistedState(this.defaultState);

@@ -65,20 +65,7 @@ class SingleWindowPreview extends React.Component {
       }
     }
 
-    var { width, height } = this.resizable.state;
-
-    if (this.props.style.boxSizing === 'content-box' && this.props.style.borderWidth) {
-      const borderAdjustment = parseInt(this.props.style.borderWidth, 10) * 2;
-
-      width -= borderAdjustment;
-      height -= borderAdjustment;
-
-      this.resizable.setState({ 
-        width: width, 
-        height: height
-      });
-    }
-
+    const { width, height } = this.resizable.state;
     this.props.onResize({ width, height });
   }
 
@@ -93,11 +80,8 @@ class SingleWindowPreview extends React.Component {
   }
 
   handleDrop(event) {
-    // console.log(event.nativeEvent.dataTransfer.files)
     this.props.onFileDrop(event);
-    // event.nativeEvent.stopPropagation();
     event.nativeEvent.preventDefault();
-    // console.log(event.nativeEvent.dataTransfer.files)
     this.setState({ droppingFile: false });
   }
 
@@ -109,10 +93,18 @@ class SingleWindowPreview extends React.Component {
   }
 
   render() {
-    var className = 'generator-preview';
+    const { generatorStyles, resizeStyles } = this.props;
 
-    if (this.props.style.boxSizing === 'content-box') {
+    var className = 'generator-preview';
+    var { width, height } = this.props.size;
+
+    if (generatorStyles.boxSizing === 'content-box') {
       className += ' cb';
+
+      // Add border size to preview
+      const borderAdjustment = parseInt(generatorStyles.borderWidth, 10) * 2;
+      width += borderAdjustment;
+      height += borderAdjustment;
     }
 
     if (this.state.resizing) {
@@ -141,16 +133,13 @@ class SingleWindowPreview extends React.Component {
           className="resize-wrapper" 
           ref={el => { this.resizeWrapper = el; }}
           {...fileDropProps}
-        >
+        > 
           <Resizable
-            style={this.props.style}
             id={this.props.id}
             ref={resizable => { this.resizable = resizable; }}
             className={className}
-            size={{
-              width: this.props.size.width,
-              height: this.props.size.height
-            }}
+            style={resizeStyles}
+            size={{ width, height }}
             minWidth={this.props.constraints.width.min}
             maxWidth={this.props.constraints.width.max}
             minHeight={this.props.constraints.height.min}
@@ -160,9 +149,15 @@ class SingleWindowPreview extends React.Component {
             onResize={this.handleResize}
             lockAspectRatio={this.state.lockAspectRatio}
           >
-            {this.props.children}
-            <div className="drag-handle" />
-            <div className="resize-handle" />
+            <div className="preview-content">
+              {this.props.children}
+              <div className="drag-handle" />
+              <div className="resize-handle" />
+            </div>
+            <div 
+              className="preview-style"
+              style={generatorStyles}
+            />
           </Resizable>
         </div>
       </Draggable>

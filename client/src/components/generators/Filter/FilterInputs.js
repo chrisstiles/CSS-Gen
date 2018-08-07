@@ -7,7 +7,6 @@ const test = [
 
 class FilterInputs extends React.Component {
 	constructor(props) {
-		// debugger;
 		super(props);
 
 		this.handleChange = this.handleChange.bind(this);
@@ -24,14 +23,13 @@ class FilterInputs extends React.Component {
 	handleActiveToggle(active, name) {
 		if (!active) {
 			const state = {};
-			state[name] = false;
+			state[name] = null;
 
 			this.props.owner.setState(state);
 		}
 	}
 
 	render() {
-		console.log(...this.props)
 		return (
 			<Sliders
         sliders={test}
