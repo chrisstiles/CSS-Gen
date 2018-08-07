@@ -115,6 +115,7 @@ class Filter extends React.Component {
 	      generator={this}
 	      centerPreview={false}
 	      fullWidthPreview={true}
+	      hideToolbarBackground={true}
 	      onFileDrop={this.handleFileDrop}
 	      defaultState={this.defaultState}
 	      globalState={this.props.globalState}

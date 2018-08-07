@@ -120,8 +120,8 @@ class SingleWindowGenerator extends React.Component {
     const { width, height } = size;
     const previewCSS = this.generatePreviewCSS({ width, height });
     
-    this.setState({ previewCSS });
     this.props.generator.setState({ hasResized: true, width, height });
+    this.setState({ previewCSS });
   }
 
   handleWrapperMount(wrapper) {
@@ -149,7 +149,6 @@ class SingleWindowGenerator extends React.Component {
         showPreviewText={showPreviewText}
         reset={this.reset}
         onTextInputChange={this.handleToolbarTextChange}
-        onTextInputTick={this.handleToolbarTick}
         onColorPickerChange={this.handleColorPickerChange}
         onPreviewCSSChange={this.handlePreviewCSSChange}
         onShowPreviewTextChange={this.handleShowPreviewTextChange}
