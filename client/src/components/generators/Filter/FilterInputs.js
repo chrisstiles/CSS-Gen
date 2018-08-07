@@ -2,7 +2,9 @@ import React from 'react';
 import Sliders from '../../input/Sliders';
 
 const test = [
-  { title: 'Gaussian Blur', name: 'blur', min: 0, max: 100 }
+  { title: 'Gaussian Blur', name: 'blur', min: 0, max: 100 },
+  { title: 'Invert', name: 'invert', min: 0, max: 100 },
+  { title: 'Saturation', name: 'saturate', min: 0, max: 100 }
 ];
 
 class FilterInputs extends React.Component {
