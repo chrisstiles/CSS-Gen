@@ -3,8 +3,13 @@ import Sliders from '../../input/Sliders';
 
 const sliders = [
   { title: 'Gaussian Blur', name: 'blur', min: 0, max: 300, defaultValue: 0, appendString: 'px' },
+  { title: 'Brightness', name: 'brightness', min: 0, max: 500, defaultValue: 100, appendString: '%' },
+  { title: 'Contrast', name: 'contrast', min: 0, max: 500, defaultValue: 100, appendString: '%' },
+  { title: 'Grayscale', name: 'grayscale', min: 0, max: 100, defaultValue: 0, appendString: '%' },
   { title: 'Invert', name: 'invert', min: 0, max: 100, defaultValue: 0, appendString: '%' },
-  { title: 'Saturation', name: 'saturate', min: 0, max: 1000, defaultValue: 100, appendString: '%' }
+  { title: 'Opacity', name: 'opacity', min: 0, max: 100, defaultValue: 100, appendString: '%' },
+  { title: 'Saturation', name: 'saturate', min: 0, max: 500, defaultValue: 100, appendString: '%' },
+  { title: 'Sepia', name: 'sepia', min: 0, max: 100, defaultValue: 0, appendString: '%' },
 ];
 
 class FilterInputs extends React.Component {

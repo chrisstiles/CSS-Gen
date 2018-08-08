@@ -16,8 +16,8 @@ const units = {
 };
 
 const filters = {
-	blur: { unit: units.px, default: 6 },
-	brightness: { unit: units.none, default: null },
+	blur: { unit: units.px, default: null },
+	brightness: { unit: units.percent, default: null },
 	contrast: { unit: units.percent, default: null },
 	grayscale: { unit: units.percent, default: null },
 	hueRotate: { unit: units.deg, default: null },
