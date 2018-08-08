@@ -39,7 +39,7 @@ class FilterInputs extends React.Component {
 	render() {
 		return (
 			<Sliders
-        sliders={sliders}
+        sliders={this.props.filterSliders}
         onChange={this.handleChange}
         onActiveToggle={this.handleActiveToggle}
         optional={true}

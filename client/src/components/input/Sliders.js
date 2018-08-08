@@ -3,7 +3,8 @@ import Slider from './Slider';
 import _ from 'underscore';
 
 const Sliders = ({sliders, onChange, onActiveToggle, optional, ...initialState}) => {
-  const fields = _.map(sliders, ({ step = 1, divider = false, name, ...restProps }) => { 
+  const fields = _.map(sliders, ({ step = 1, divider = false, name, ...restProps }) => {
+
     return (
       <div key={name}>
         <Slider
