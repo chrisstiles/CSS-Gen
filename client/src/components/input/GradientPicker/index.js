@@ -171,7 +171,7 @@ class GradientPicker extends React.Component {
     palette = palette.map(c => {
 
       if (activeId === c.id) {
-        c.color = hexOrRgba(tinycolor(c.color).setAlpha(value));
+        c.color = hexOrRgba(tinycolor(c.color).setAlpha(value / 100));
       }
 
       return c;
@@ -208,7 +208,7 @@ class GradientPicker extends React.Component {
             title="Opacity"
             name="opacity"
             onChange={this.handleOpacityChange}
-            value={tinycolor(this.activeStop.color).getAlpha()}
+            value={tinycolor(this.activeStop.color).getAlpha() * 100}
             min={0}
             max={100}
             step={1}
