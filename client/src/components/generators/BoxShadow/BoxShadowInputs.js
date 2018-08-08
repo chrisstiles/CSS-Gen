@@ -36,7 +36,6 @@ class BoxShadowInputs extends React.Component {
               disableAlpha={true}
               onChange={this.handleChange}
               name="shadowColor"
-              returnColorObject={true}
             />
           </div>
 

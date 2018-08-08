@@ -1,10 +1,10 @@
 import React from 'react';
 import Sliders from '../../input/Sliders';
 
-const test = [
-  { title: 'Gaussian Blur', name: 'blur', min: 0, max: 200, defaultValue: 0 },
-  { title: 'Invert', name: 'invert', min: 0, max: 200, defaultValue: 0 },
-  { title: 'Saturation', name: 'saturate', min: 0, max: 1000, defaultValue: 100 }
+const sliders = [
+  { title: 'Gaussian Blur', name: 'blur', min: 0, max: 300, defaultValue: 0, appendString: 'px' },
+  { title: 'Invert', name: 'invert', min: 0, max: 100, defaultValue: 0, appendString: '%' },
+  { title: 'Saturation', name: 'saturate', min: 0, max: 1000, defaultValue: 100, appendString: '%' }
 ];
 
 class FilterInputs extends React.Component {
@@ -34,7 +34,7 @@ class FilterInputs extends React.Component {
 	render() {
 		return (
 			<Sliders
-        sliders={test}
+        sliders={sliders}
         onChange={this.handleChange}
         onActiveToggle={this.handleActiveToggle}
         optional={true}

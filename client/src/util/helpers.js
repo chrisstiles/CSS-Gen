@@ -32,6 +32,8 @@ export function getDefaultState(defaultState) {
 	const defaults = {
 		width: 300,
 		height: 300,
+		dragX: 0,
+		dragY: 0,
 		backgroundColor: '#ffffff'
 	};
 

@@ -38,9 +38,7 @@ class Filter extends React.Component {
 
 		// Add additional defaults
 		state = _.extend({}, state, {
-			backgroundImage: waterfall,
-			width: 500,
-			height:400
+			image: waterfall
 		});
 
 		this.defaultState = getDefaultState(state);
@@ -86,7 +84,9 @@ class Filter extends React.Component {
 			const file = files[0];
 			const reader = new FileReader();
 			reader.onload = e => {
-				this.setState({ backgroundImage: e.target.result });
+				const image = e.target.result;
+
+				this.setState({ image: image });
 			}
 
 			reader.readAsDataURL(file);
@@ -113,7 +113,6 @@ class Filter extends React.Component {
 	      renderInputs={this.renderInputs}
 	      styles={this.state}
 	      generator={this}
-	      centerPreview={false}
 	      fullWidthPreview={true}
 	      hideToolbarBackground={true}
 	      onFileDrop={this.handleFileDrop}

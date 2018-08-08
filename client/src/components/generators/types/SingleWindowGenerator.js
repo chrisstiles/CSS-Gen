@@ -16,7 +16,6 @@ class SingleWindowGenerator extends React.Component {
     // Save original state for resetting generator
     this.initialState = _.extend({}, this.state, props.defaultState);
     this.initialState.hasResized = false;
-    this.initialState.width = props.styles.width;
 
     // Add default background color
     if (!props.defaultState.backgroundColor) {
@@ -29,6 +28,9 @@ class SingleWindowGenerator extends React.Component {
       height: { min: 100, max: 3000 }
     };
 
+    // Save wrapper dimensions
+    this.state.wrapperWidth = 800;
+
     this.reset = this.reset.bind(this);
     this.renderToolbar = this.renderToolbar.bind(this);
     this.renderPreview = this.renderPreview.bind(this);
@@ -39,6 +41,8 @@ class SingleWindowGenerator extends React.Component {
     this.handlePreviewWindowResize = this.handlePreviewWindowResize.bind(this);
     this.handlePreviewCSSChange = this.handlePreviewCSSChange.bind(this);
     this.handleWrapperMount = this.handleWrapperMount.bind(this);
+    this.handleWrapperResize = this.handleWrapperResize.bind(this);
+    this.handlePreviewDrag = this.handlePreviewDrag.bind(this);
   }
 
   generatePreviewCSS(styles = {}) {
@@ -72,7 +76,7 @@ class SingleWindowGenerator extends React.Component {
     }
 
     this.setState(state);
-    this.preview.reset();
+    this.preview.reset(this.initialState.width);
     this.props.generator.setState(this.initialState);
 
     if (this.props.reset) {
@@ -127,15 +131,30 @@ class SingleWindowGenerator extends React.Component {
     this.setState({ previewCSS });
   }
 
+  handleWrapperResize() {
+    if (this.generatorWrapper) {
+      const width = this.generatorWrapper.offsetWidth;
+      this.setState({ wrapperWidth: width });
+    }
+  }
+
   handleWrapperMount(wrapper) {
     this.generatorWrapper = wrapper;
 
+    // Save wrapper dimensions whenever it resizes
+    window.addEventListener('resize', this.handleWrapperResize, false);
+    
     if (this.props.fullWidthPreview && !this.props.generator.state.hasResized) {
       const width = this.generatorWrapper.offsetWidth;
       const height = this.props.styles.height;
 
       this.handlePreviewWindowResize({ width, height });
     }
+  }
+
+  handlePreviewDrag(event, data) {
+    const { x, y } = data;
+    this.props.generator.setState({ dragX: x, dragY: y });
   }
 
   renderToolbar() {
@@ -164,37 +183,38 @@ class SingleWindowGenerator extends React.Component {
 
   renderPreview() {
     const generatorStyles = this.props.generateCSS().styles || {};
-    const { backgroundImage } = this.props.styles;
+    const { image, backgroundImage, backgroundColor, dragX, dragY } = this.props.styles;
 
-    if (backgroundImage) {
-      generatorStyles.backgroundImage = `url('${backgroundImage}')`
+    if (image) {
+      generatorStyles.image = image;
     } else {
-      generatorStyles.backgroundColor = this.props.styles.backgroundColor;
-    }
-
-    const resizeStyles = {};
-
-    if (this.props.centerPreview || this.props.centerPreview === undefined) {
-      resizeStyles.left = '50%';
-      resizeStyles.marginLeft = -(this.initialState.width / 2);
-    } else {
-      resizeStyles.left = 0;
+      if (backgroundImage) {
+        generatorStyles.backgroundImage = `url('${backgroundImage}')`
+      } else {
+        generatorStyles.backgroundColor = backgroundColor;
+      }
     }
 
     const { previewID, onFileDrop } = this.props;
     const { width, height } = this.props.styles;
     const { showPreviewText } = this.props.globalState;
+    const defaultPosition = {
+      x: dragX,
+      y: dragY
+    }
 
     return (
       <SingleWindowPreview
         ref={previewWindow => { this.preview = previewWindow }}
         generatorStyles={generatorStyles}
-        resizeStyles={resizeStyles}
         id={previewID}
         size={{ width, height }}
         constraints={this.previewConstraints}
         onResize={this.handlePreviewWindowResize}
         onFileDrop={onFileDrop}
+        onDrag={this.handlePreviewDrag}
+        defaultPosition={defaultPosition}
+        reset={this.reset}
       >
         { showPreviewText ?
 

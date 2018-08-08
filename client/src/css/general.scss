@@ -29,6 +29,15 @@ body {
   font-family: $main-font;
 }
 
+#app {
+  position:absolute;
+  top:0;
+  right:0;
+  left:0;
+  bottom:0;
+  overflow:hidden;
+}
+
 #main {
   padding:30px 50px 60px 335px;
 }

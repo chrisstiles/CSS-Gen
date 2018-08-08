@@ -81,7 +81,7 @@ class CodeOutput extends React.Component {
       if (this.canShowCopyNotification) {
         this.canShowCopyNotification = false;
 
-        addNotification(getNotificationTypes().success, 'Copied!');  
+        addNotification(getNotificationTypes().success, 'Copied!');
 
         var _this = this;
 
