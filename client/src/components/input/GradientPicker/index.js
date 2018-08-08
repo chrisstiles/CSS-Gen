@@ -186,6 +186,7 @@ class GradientPicker extends React.Component {
     const height = 40;
     const min = -HALF_STOP_WIDTH;
     const max = this.width1 - HALF_STOP_WIDTH;
+    const opacity = Math.round(Number(tinycolor(this.activeStop.color).getAlpha().toFixed(2)) * 100);
 
     return (
       <div>
@@ -208,7 +209,7 @@ class GradientPicker extends React.Component {
             title="Opacity"
             name="opacity"
             onChange={this.handleOpacityChange}
-            value={tinycolor(this.activeStop.color).getAlpha() * 100}
+            value={opacity}
             min={0}
             max={100}
             step={1}
