@@ -1,16 +1,6 @@
 import React from 'react';
 import Sliders from '../../input/Sliders';
-
-const sliders = [
-  { title: 'Gaussian Blur', name: 'blur', min: 0, max: 300, defaultValue: 0, appendString: 'px' },
-  { title: 'Brightness', name: 'brightness', min: 0, max: 500, defaultValue: 100, appendString: '%' },
-  { title: 'Contrast', name: 'contrast', min: 0, max: 500, defaultValue: 100, appendString: '%' },
-  { title: 'Grayscale', name: 'grayscale', min: 0, max: 100, defaultValue: 0, appendString: '%' },
-  { title: 'Invert', name: 'invert', min: 0, max: 100, defaultValue: 0, appendString: '%' },
-  { title: 'Opacity', name: 'opacity', min: 0, max: 100, defaultValue: 100, appendString: '%' },
-  { title: 'Saturation', name: 'saturate', min: 0, max: 500, defaultValue: 100, appendString: '%' },
-  { title: 'Sepia', name: 'sepia', min: 0, max: 100, defaultValue: 0, appendString: '%' },
-];
+import _ from 'underscore'; 
 
 class FilterInputs extends React.Component {
 	constructor(props) {
@@ -20,20 +10,25 @@ class FilterInputs extends React.Component {
 		this.handleActiveToggle = this.handleActiveToggle.bind(this);
 	}
 
-	handleChange(value, name) {
+	handleChange(value, name, key = 'value') {
+    const { owner } = this.props;
 		const state = {};
-		state[name] = value;
+    
+    if (typeof owner.state[name] === 'object') {
+      const previousState = owner.state[name];
+      const properties = {};
+      properties[key] = value;
+      state[name] = _.extend({}, previousState, properties);
+    } else {
+      state[name] = value;
+      owner.setState(state);
+    }
 
-		this.props.owner.setState(state);
+    owner.setState(state);
 	}
 
-	handleActiveToggle(active, name) {
-		if (!active) {
-			const state = {};
-			state[name] = null;
-
-			this.props.owner.setState(state);
-		}
+	handleActiveToggle(value, name) {
+    this.handleChange(value, name, 'isActive')
 	}
 
 	render() {

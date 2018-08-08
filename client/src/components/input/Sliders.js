@@ -5,13 +5,24 @@ import _ from 'underscore';
 const Sliders = ({sliders, onChange, onActiveToggle, optional, ...initialState}) => {
   const fields = _.map(sliders, ({ step = 1, divider = false, name, ...restProps }) => {
 
+    const sliderOwner = initialState[name];
+
+    var value, isActive;
+    if (typeof sliderOwner === 'object') {
+      value = sliderOwner.value;
+      isActive = sliderOwner.isActive;
+    } else {
+      value = sliderOwner;
+    }
+
     return (
       <div key={name}>
         <Slider
           name={name}
           onChange={onChange}
           onActiveToggle={onActiveToggle}
-          value={initialState[name]}
+          value={value}
+          isActive={isActive}
           step={step}
           divider={divider}
           optional={optional}

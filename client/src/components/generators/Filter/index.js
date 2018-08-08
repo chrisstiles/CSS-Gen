@@ -7,37 +7,6 @@ import _ from 'underscore';
 // Load default background images
 import waterfall from './images/waterfall.jpg';
 
-// List out all potential filters
-// const units = {
-// 	px: 'px',
-// 	deg: 'deg',
-// 	percent: '%',
-// 	none: ''
-// };
-
-// const filters = {
-// 	blur: { unit: units.px, default: null },
-// 	brightness: { unit: units.percent, default: null },
-// 	contrast: { unit: units.percent, default: null },
-// 	grayscale: { unit: units.percent, default: null },
-// 	hueRotate: { unit: units.deg, default: null },
-// 	invert: { unit: units.percent, default: null },
-// 	opacity: { unit: units.percent, default: null },
-// 	saturate: { unit: units.percent, default: null },
-// 	sepia: { unit: units.percent, default: null }
-// };
-
-// const filters = [
-//   { title: 'Gaussian Blur', name: 'blur', min: 0, max: 300, defaultValue: 0, appendString: 'px' },
-//   { title: 'Brightness', name: 'brightness', min: 0, max: 500, defaultValue: 100, appendString: '%' },
-//   { title: 'Contrast', name: 'contrast', min: 0, max: 500, defaultValue: 100, appendString: '%' },
-//   { title: 'Grayscale', name: 'grayscale', min: 0, max: 100, defaultValue: 0, appendString: '%' },
-//   { title: 'Invert', name: 'invert', min: 0, max: 100, defaultValue: 0, appendString: '%' },
-//   { title: 'Opacity', name: 'opacity', min: 0, max: 100, defaultValue: 100, appendString: '%' },
-//   { title: 'Saturation', name: 'saturate', min: 0, max: 500, defaultValue: 100, appendString: '%' },
-//   { title: 'Sepia', name: 'sepia', min: 0, max: 100, defaultValue: 0, appendString: '%' },
-// ];
-
 const filters = {
 	blur: { title: 'Gaussian Blur', name: 'blur', min: 0, max: 300, value: 0, unit: 'px' },
 	brightness: { title: 'Brightness', name: 'brightness', min: 0, max: 500, value: 100, unit: '%' },
@@ -53,11 +22,6 @@ const filters = {
 class Filter extends React.Component {
 	constructor(props) {
 		super(props);
-
-		// Create initial state from filters object
-		// var state = _.mapObject(filters, (val, key) => {
-		// 	return val.default;
-		// });
 
 		this.filterSliders = [];
 		var state = _.mapObject(filters, ({ title, name, min, max, value, unit }, key) => {
@@ -87,9 +51,9 @@ class Filter extends React.Component {
 
 		// Loop through all filters and add any that are active
 		_.each(filters, (filter, name) => {
-			const value = rules[name];
-
-			if (value !== null) {
+			const { value, isActive } = rules[name];
+			// console.log(name, value, isActive)
+			if (isActive) {
 				const property = cssToJs(name);
 				const unit = filter.unit;
 				const cssString = `${property}(${value}${unit}) `;

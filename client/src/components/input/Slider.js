@@ -8,24 +8,9 @@ class Slider extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      active: true
-    };
-
+    this.checkSliderActive(props);
     this.min = props.min || 0;
     this.max = props.max || 200;
-
-    if (props.value === null) {
-      if (props.defaultValue !== undefined) {
-        this.state.value = props.defaultValue;
-      } else {
-        this.state.value = this.min;
-      }
-      
-      this.state.active = false;
-    } else {
-      this.state.value = props.value;
-    }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleBeforeChange = this.handleBeforeChange.bind(this);
@@ -34,11 +19,12 @@ class Slider extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const { value } = newProps;
+    this.checkSliderActive(newProps);
+  }
 
-    if (value !== null) {
-      this.setState({ value });
-    }
+  checkSliderActive(props = this.props) {
+    const { isActive = true } = props;
+    this.isActive = isActive;
   }
 
   handleChange(value) {
@@ -56,20 +42,18 @@ class Slider extends React.Component {
       return;
     }
 
-    var value;
+    var { value } = this.props;
 
     if (units === '%') {
-      value = this.state.value / this.max * 100;
+      value = value / this.max * 100;
     } else {
-      value = this.state.value / 100 * this.max;
+      value = value / 100 * this.max;
     }
 
     this.props.onChange(parseInt(value, 10), this.props.name, units);
   }
 
   handleActiveToggle(active) {
-    this.setState({ active });
-
     if (this.props.onActiveToggle) {
       this.props.onActiveToggle(active, this.props.name);
     }
@@ -97,7 +81,8 @@ class Slider extends React.Component {
   }
 
   render() {
-    const { value } = this.state;
+    // const { value } = this.state;
+    const { value, optional } = this.props;
     const min = this.props.units === '%' ? 0 : this.min;
     const max = this.props.units === '%' ? 100 : this.max;
 
@@ -114,23 +99,22 @@ class Slider extends React.Component {
       className += ' disabled';
     }
 
-    var inputClassName = "input";
+    var inputClassName = 'input';
 
-    if (this.props.optional) {
-      if (!this.state.active) {
-        inputClassName += ' disabled';
-      }
+    // Disable slider if not active
+    if (!this.isActive) {
+      inputClassName += ' disabled';
     }
 
     return (
       <div className={className}>
         <label className="title">{this.props.title}</label>
         <div className="slider-wrapper">
-          { this.props.optional ? 
+          { optional ? 
             <div className="active-toggle">
               <Toggle
                 onChange={this.handleActiveToggle}
-                checked={this.state.active}
+                checked={this.isActive}
                 name="active"
               />
             </div>
