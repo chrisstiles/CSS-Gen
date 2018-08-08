@@ -188,6 +188,10 @@ $position-select-size: 105;
     float:right;
     width:calc(100% - #{$position-select-size}px);
     padding-left:25px;
+
+    .title {
+      margin-bottom:0;
+    }
   }
 }
 

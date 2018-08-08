@@ -31,7 +31,8 @@ export function updateGlobalState(state) {
 export function getDefaultState(defaultState) {
 	const defaults = {
 		width: 300,
-		height: 300
+		height: 300,
+		backgroundColor: '#ffffff'
 	};
 
 	return _.extend({}, defaults, defaultState);

@@ -4,11 +4,11 @@ import Toggle from '../../input/Toggle';
 import ColorPicker from '../../input/ColorPicker';
 
 const sliders = [
-  { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200 },
-  { title: 'Vertical Shift', name: 'verticalShift', min: -200, max: 200 },
-  { title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100 },
-  { title: 'Spread Radius', name: 'spreadRadius', min: 0, max: 100 },
-  { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 1, step: .01 }
+  { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200, appendString: 'px' },
+  { title: 'Vertical Shift', name: 'verticalShift', min: -200, max: 200, appendString: 'px' },
+  { title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px' },
+  { title: 'Spread Radius', name: 'spreadRadius', min: 0, max: 100, appendString: 'px' },
+  { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%' }
 ];
 
 class BoxShadowInputs extends React.Component {

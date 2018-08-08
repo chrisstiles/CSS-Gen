@@ -14,7 +14,7 @@ class BoxShadow extends React.Component {
       verticalShift: 12,
       blurRadius: 40,
       spreadRadius: 0,
-      shadowOpacity: 0.15,
+      shadowOpacity: 15,
       shadowColor: '#000',
       inset: false
     });
@@ -30,7 +30,7 @@ class BoxShadow extends React.Component {
 
     // Create tiny color with correct alpha
     var color = rules.color === undefined ? this.state.shadowColor : rules.color;
-    color = tinycolor(color).setAlpha(rules.shadowOpacity);
+    color = tinycolor(color).setAlpha(rules.shadowOpacity / 100);
 
     var boxShadow = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${rules.spreadRadius}px ${hexOrRgba(color)}`;
 

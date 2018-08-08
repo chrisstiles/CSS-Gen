@@ -134,14 +134,21 @@ class NumberInput extends React.Component {
   }
 
   render() {
-    const className = this.props.className ? ` ${this.props.className}` : '';
     const value = this.formatValue(this.props.value);
+
+    var className = this.props.className ? ` ${this.props.className}` : '';
+
+    className += ' number-input';
+
+    if (this.props.appendString) {
+      className += ' has-string';
+    }
 
     return (
       <input
         type="text"
         name={this.props.name}
-        className={`number-input${className}`}
+        className={className.trim()}
         defaultValue={value}
         onChange={this.handleChange}
         onBlur={this.handleBlur}

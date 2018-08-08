@@ -118,10 +118,10 @@ class BorderRadiusInputs extends React.Component {
             menuContainer="#sidebar"
             scrollWrapper="#sidebar-controls"
             searchable={false}
-            className="p60"
+            className="p70"
           />
           <div className={`field-wrapper align-right${disabledClassName}`}>
-            <label className="title">Border Color</label>
+            <label className="title">Color</label>
             <ColorPicker
               color={styles.borderColor}
               onChange={this.handleChange}
@@ -134,17 +134,18 @@ class BorderRadiusInputs extends React.Component {
           <Slider
             title="Border Width"
             name="borderWidth"
-            className="p60"
+            className="p70"
             onChange={this.handleChange}
             value={styles.borderWidth}
             min={0}
-            max={50}
+            max={100}
+            appendString="px"
           />
           <div className="field-wrapper align-right">
             <Toggle
               onChange={this.handleChange}
               checked={styles.inset}
-              label="Inset Border"
+              label="Inset"
               name="inset"
             />
           </div>

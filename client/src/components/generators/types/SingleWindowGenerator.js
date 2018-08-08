@@ -44,11 +44,14 @@ class SingleWindowGenerator extends React.Component {
   generatePreviewCSS(styles = {}) {
     const rules = _.extend({}, this.props.styles, styles);
 
-    const css = `
+    var css = `
       width: ${rules.width}px;
       height: ${rules.height}px;
-      background-color: ${rules.backgroundColor};
     `;
+
+    if (!this.props.hideToolbarBackground) {
+      css += `background-color: ${rules.backgroundColor};`;
+    }
 
     return css.trim();
   }

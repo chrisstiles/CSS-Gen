@@ -140,6 +140,7 @@ class Slider extends React.Component {
               min={min}
               max={max}
               forceUpdate={this.props.dragging}
+              appendString={this.props.appendString}
             />
             <RCSlider
               min={min}

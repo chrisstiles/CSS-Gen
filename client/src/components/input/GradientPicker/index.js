@@ -210,8 +210,9 @@ class GradientPicker extends React.Component {
             onChange={this.handleOpacityChange}
             value={tinycolor(this.activeStop.color).getAlpha()}
             min={0}
-            max={1}
-            step={.01}
+            max={100}
+            step={1}
+            appendString="%"
           />
           {this.renderColorPicker()}
         </div>
