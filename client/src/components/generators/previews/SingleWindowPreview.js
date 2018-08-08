@@ -117,8 +117,15 @@ class SingleWindowPreview extends React.Component {
         this.resizeWrapper.style.left = `${left}px`;
       }
     }
+  
+    var { width, height } = this.resizable.state;
 
-    const { width, height } = this.resizable.state;
+    if (this.props.generatorStyles.boxSizing === 'content-box') {
+      const borderAdjustment = parseInt(this.props.generatorStyles.borderWidth, 10) * 2;
+      width -= borderAdjustment;
+      height -= borderAdjustment;
+    }
+
     this.props.onResize({ width, height });
   }
 
@@ -187,15 +194,18 @@ class SingleWindowPreview extends React.Component {
 
   render() {
     const { generatorStyles, defaultPosition } = this.props;
+    const previewStyles = _.extend({}, generatorStyles);
 
     var className = 'generator-preview';
     var { width, height } = this.props.size;
 
+    var borderAdjustment = 0;
     if (generatorStyles.boxSizing === 'content-box') {
-      className += ' cb';
+      // className += ' cb';
+      // previewStyles.boxSizing = 'content-box';
 
       // Add border size to preview
-      const borderAdjustment = parseInt(generatorStyles.borderWidth, 10) * 2;
+      borderAdjustment = parseInt(generatorStyles.borderWidth, 10) * 2;
       width += borderAdjustment;
       height += borderAdjustment;
     }
@@ -217,11 +227,9 @@ class SingleWindowPreview extends React.Component {
       }
     }
 
-    // Styles for preview windows
-    const previewStyles = _.extend({}, generatorStyles);
     if (this.imageLoaded || !previewStyles.image) {
-      previewStyles.width = width;
-      previewStyles.height = height;
+      previewStyles.width = width - borderAdjustment;
+      previewStyles.height = height - borderAdjustment;
     } else {
       // If image is still loading hide until we know the dimensions
       // previewStyles.visibility = 'hidden';

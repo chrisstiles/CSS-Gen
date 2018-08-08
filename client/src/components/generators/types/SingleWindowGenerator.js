@@ -125,6 +125,7 @@ class SingleWindowGenerator extends React.Component {
 
   handlePreviewWindowResize(size) {
     const { width, height } = size;
+    // console.log(size)
     const previewCSS = this.generatePreviewCSS({ width, height });
     
     this.props.generator.setState({ hasResized: true, width, height });
