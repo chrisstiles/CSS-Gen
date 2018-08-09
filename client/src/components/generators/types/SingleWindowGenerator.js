@@ -2,7 +2,7 @@ import React from 'react';
 import Generator from '../../Generator';
 import SingleWindowToolbar from '../toolbars/SingleWindowToolbar';
 import SingleWindowPreview from '../previews/SingleWindowPreview';
-import { getGlobalDefaults, updateGlobalState } from '../../../util/helpers';
+import { getGlobalDefaults, updateGlobalState, getImageSize, getNativeImageSize } from '../../../util/helpers';
 import _ from 'underscore';
 
 class SingleWindowGenerator extends React.Component {
@@ -13,10 +13,23 @@ class SingleWindowGenerator extends React.Component {
       previewCSS: this.generatePreviewCSS(props)
     };
 
+    console.log(props.defaultState)
+
+    setTimeout(() => {
+      console.log(this.props.defaultState)
+    }, 300);
+
     // Save original state for resetting generator
     // this.initialState = _.extend({}, this.state, props.defaultState);
-    const { width, height } = props;
-    this.initialState = _.extend({}, this.state, { width, height });
+    const { width, height, backgroundColor, image } = props.defaultState;
+    this.initialState = _.extend({}, this.state, { width, height, backgroundColor });
+
+    if (image) {
+      // Get original image dimensions
+      getNativeImageSize(image).then(({ width, height }) => {
+        _.extend(this.initialState, { width, height });
+      });
+    }
     // this.initialState.hasResized = false;
 
     // Add default background color
@@ -66,28 +79,28 @@ class SingleWindowGenerator extends React.Component {
     // Revert global defaults
     const { showPreviewText, outputPreviewStyles } = getGlobalDefaults();
     updateGlobalState({ showPreviewText, outputPreviewStyles });
+    
+    const generatorState = _.extend({}, this.props.defaultState);
+
+    // Reset to full width rather than initial value
+    if (this.props.fullWidthPreview && this.generatorWrapper) {
+      const { width, height } = this.initialState;
+      if (this.props.styles.image) {
+        // Largest proportional dimensions that fit inside wrapper
+        _.extend(generatorState, getImageSize(width, height, this.generatorWrapper));
+      } else {
+        generatorState.width = this.state.wrapperWidth;
+      }
+
+      _.extend(this.initialState, { width, height });
+    }
 
     const previewCSS = this.generatePreviewCSS(this.initialState);
     const previewState = _.extend({}, this.initialState, { previewCSS });
 
-    // Reset to full width rather than initial value
-    if (this.props.fullWidthPreview && this.generatorWrapper) {
-      if (this.props.styles.image) {
-        // Largest proportional dimensions that fit inside wrapper
-        var { width, height } = this.props.generator.defaultState;
-        
-        if (width <= this.state.wrapperWidth) {
-
-        }
-      }
-
-
-      this.initialState.width = this.state.wrapperWidth;
-    }
-
     this.setState(previewState);
-    this.preview.reset(this.initialState.width);
-    this.props.generator.setState(this.initialState);
+    this.preview.reset(generatorState.width);
+    this.props.generator.setState(generatorState);
 
     if (this.props.reset) {
       this.props.reset();
@@ -150,6 +163,7 @@ class SingleWindowGenerator extends React.Component {
 
   handleWrapperMount(wrapper) {
     this.generatorWrapper = wrapper;
+    getImageSize()
 
     // Save wrapper dimensions whenever it resizes
     this.saveWrapperWidth();

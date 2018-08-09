@@ -33,7 +33,8 @@ body {
   overflow: hidden; }
 
 #main {
-  padding: 30px 50px 60px 335px; }
+  margin: 30px 50px 60px 335px;
+  position: relative; }
 
 .page-content {
   color: #4e4e4e;
@@ -316,8 +317,7 @@ p:last-child {
 
 #generator-wrapper {
   margin-right: 323px;
-  position: relative;
-  padding: 10px; }
+  position: relative; }
 
 /* Preview Window */
 .generator-preview {

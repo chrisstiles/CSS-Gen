@@ -270,6 +270,32 @@ export function getNativeImageSize(src) {
   });
 }
 
+export function getImageSize(width, height, wrapper) {
+	wrapper = wrapper || document.querySelector('#generator-wrapper');
+
+	if (!wrapper) {
+		return { width, height };
+	}
+
+	const rect = wrapper.getBoundingClientRect();
+	const maxWidth = rect.width;
+	const maxHeight = window.innerHeight - rect.top - 30;
+
+	if (width <= maxWidth && height <= maxHeight) {
+		return { width, height };
+	}
+
+	if (maxWidth >= maxHeight) {
+		height = height * maxWidth / width;
+		width = maxWidth;
+	} else {
+		width = width * maxHeight / height;
+		height = maxHeight;
+	}
+
+	return { width, height };
+}
+
 
 
 
