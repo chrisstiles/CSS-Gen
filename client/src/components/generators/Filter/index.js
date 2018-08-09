@@ -1,7 +1,7 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import FilterInputs from './FilterInputs';
-import { getDefaultState, getPersistedState, generateCSSString, cssToJs } from '../../../util/helpers';
+import { getDefaultState, getPersistedState, getNativeImageSize, generateCSSString, cssToJs } from '../../../util/helpers';
 import _ from 'underscore';
 
 // Load default background images
@@ -12,7 +12,6 @@ const filters = {
 	brightness: { title: 'Brightness', name: 'brightness', min: 0, max: 500, value: 100, unit: '%' },
 	contrast: { title: 'Contrast', name: 'contrast', min: 0, max: 500, value: 100, unit: '%' },
 	grayscale: { title: 'Grayscale', name: 'grayscale', min: 0, max: 100, value: 0, unit: '%' },
-	// hueRotate: { unit: units.deg, default: null },
 	invert: { title: 'Invert', name: 'invert', min: 0, max: 100, value: 0, unit: '%' },
 	opacity: { title: 'Opacity', name: 'opacity', min: 0, max: 100, value: 100, unit: '%' },
 	saturate: { title: 'Saturation', name: 'saturate', min: 0, max: 500, value: 100, unit: '%' },
@@ -38,6 +37,11 @@ class Filter extends React.Component {
 		this.defaultState = getDefaultState(state);
 		this.state = getPersistedState(this.defaultState);
 
+		// Get original image dimensions
+		getNativeImageSize(state.image).then(({ width, height }) => {
+			_.extend(this.defaultState, { width, height });
+		});
+
 		this.handleFileDrop = this.handleFileDrop.bind(this);
 		this.generateCSS = this.generateCSS.bind(this);
 		this.renderInputs = this.renderInputs.bind(this);
@@ -52,7 +56,7 @@ class Filter extends React.Component {
 		// Loop through all filters and add any that are active
 		_.each(filters, (filter, name) => {
 			const { value, isActive } = rules[name];
-			// console.log(name, value, isActive)
+
 			if (isActive) {
 				const property = cssToJs(name);
 				const unit = filter.unit;

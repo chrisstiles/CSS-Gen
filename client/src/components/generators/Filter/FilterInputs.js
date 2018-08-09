@@ -28,7 +28,7 @@ class FilterInputs extends React.Component {
 	}
 
 	handleActiveToggle(value, name) {
-    this.handleChange(value, name, 'isActive')
+    this.handleChange(value, name, 'isActive');
 	}
 
 	render() {

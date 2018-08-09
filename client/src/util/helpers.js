@@ -34,7 +34,8 @@ export function getDefaultState(defaultState) {
 		height: 300,
 		dragX: 0,
 		dragY: 0,
-		backgroundColor: '#ffffff'
+		backgroundColor: '#ffffff',
+    hasResized: false
 	};
 
 	return _.extend({}, defaults, defaultState);
@@ -256,6 +257,23 @@ export function createSelection(field, start, end) {
     field.focus();
   }
 }
+
+// Returns a Promise that resolves with the image dimensions
+export function getNativeImageSize(src) {
+  return new Promise(resolve => {
+    const image = new Image();
+    image.src = src;
+    image.onload = () => {
+      const { width, height } = image;
+      resolve({ width, height });
+    }
+  });
+}
+
+
+
+
+
 
 
 

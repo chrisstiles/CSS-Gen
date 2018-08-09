@@ -14,13 +14,15 @@ class SingleWindowGenerator extends React.Component {
     };
 
     // Save original state for resetting generator
-    this.initialState = _.extend({}, this.state, props.defaultState);
-    this.initialState.hasResized = false;
+    // this.initialState = _.extend({}, this.state, props.defaultState);
+    const { width, height } = props;
+    this.initialState = _.extend({}, this.state, { width, height });
+    // this.initialState.hasResized = false;
 
     // Add default background color
-    if (!props.defaultState.backgroundColor) {
-      this.initialState.backgroundColor = 'rgba(255, 255, 255, 1)';
-    }
+    // if (!props.defaultState.backgroundColor) {
+      // this.initialState.backgroundColor = 'rgba(255, 255, 255, 1)';
+    // }
 
     // Preview window size constrains
     this.previewConstraints = props.previewConstraints || {
@@ -41,7 +43,7 @@ class SingleWindowGenerator extends React.Component {
     this.handlePreviewWindowResize = this.handlePreviewWindowResize.bind(this);
     this.handlePreviewCSSChange = this.handlePreviewCSSChange.bind(this);
     this.handleWrapperMount = this.handleWrapperMount.bind(this);
-    this.handleWrapperResize = this.handleWrapperResize.bind(this);
+    this.saveWrapperWidth = this.saveWrapperWidth.bind(this);
     this.handlePreviewDrag = this.handlePreviewDrag.bind(this);
   }
 
@@ -66,16 +68,24 @@ class SingleWindowGenerator extends React.Component {
     updateGlobalState({ showPreviewText, outputPreviewStyles });
 
     const previewCSS = this.generatePreviewCSS(this.initialState);
-    const state = _.extend({}, this.initialState, { previewCSS });
+    const previewState = _.extend({}, this.initialState, { previewCSS });
 
     // Reset to full width rather than initial value
     if (this.props.fullWidthPreview && this.generatorWrapper) {
-      const width = this.generatorWrapper.offsetWidth;
-      state.width = width;
-      this.initialState.width = width;
+      if (this.props.styles.image) {
+        // Largest proportional dimensions that fit inside wrapper
+        var { width, height } = this.props.generator.defaultState;
+        
+        if (width <= this.state.wrapperWidth) {
+
+        }
+      }
+
+
+      this.initialState.width = this.state.wrapperWidth;
     }
 
-    this.setState(state);
+    this.setState(previewState);
     this.preview.reset(this.initialState.width);
     this.props.generator.setState(this.initialState);
 
@@ -131,7 +141,7 @@ class SingleWindowGenerator extends React.Component {
     this.setState({ previewCSS });
   }
 
-  handleWrapperResize() {
+  saveWrapperWidth() {
     if (this.generatorWrapper) {
       const width = this.generatorWrapper.offsetWidth;
       this.setState({ wrapperWidth: width });
@@ -142,7 +152,8 @@ class SingleWindowGenerator extends React.Component {
     this.generatorWrapper = wrapper;
 
     // Save wrapper dimensions whenever it resizes
-    window.addEventListener('resize', this.handleWrapperResize, false);
+    this.saveWrapperWidth();
+    window.addEventListener('resize', this.saveWrapperWidth, false);
     
     if (this.props.fullWidthPreview && !this.props.generator.state.hasResized) {
       const width = this.generatorWrapper.offsetWidth;
