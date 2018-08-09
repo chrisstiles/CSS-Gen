@@ -50,21 +50,23 @@ class SingleWindowPreview extends React.Component {
   }
 
   checkPreviewPosition() {
-    const rect = this.previewContent.getBoundingClientRect();
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    
-    const { x, y } = rect;
-    const { width, height } = this.props.size;
+    if (this.previewContent) {
+      const rect = this.previewContent.getBoundingClientRect();
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+      
+      const { x, y } = rect;
+      const { width, height } = this.props.size;
 
-    if (x > windowWidth - 340 || 
-        x < -(width - 80) ||
-        y > windowHeight ||
-        y < (-height + 240)) {
+      if (x > windowWidth - 340 || 
+          x < -(width - 80) ||
+          y > windowHeight ||
+          y < (-height + 240)) {
 
 
-      this.reset(width);
-    } 
+        this.reset(width);
+      } 
+    }
   }
 
   handleDragStop() {
@@ -140,7 +142,8 @@ class SingleWindowPreview extends React.Component {
   }
 
   handleDrop(event) {
-    this.imageLoaded = false;
+    // this.imageLoaded = false;
+    this.props.onPreviewContentLoad(false);
     this.props.onFileDrop(event);
     event.nativeEvent.preventDefault();
     this.setState({ droppingFile: false });
@@ -155,17 +158,18 @@ class SingleWindowPreview extends React.Component {
   }
 
   setImageDimensions(e) {
-    this.imageLoaded = true;
     const { width, height } = e.target;
     
     // Set image dimensions proportionally based on width of content area
     this.generateResizeStyles(width);
     this.props.onResize({ width, height });
     e.target.style.opacity = 1;
+
+    this.props.onPreviewContentLoad(true);
   }
 
   handleImageError() {
-    this.imageLoaded = true;
+    // this.imageLoaded = true;
     addNotification(getNotificationTypes().error, 'Error adding image');
   }
 
@@ -194,7 +198,7 @@ class SingleWindowPreview extends React.Component {
   }
 
   render() {
-    const { generatorStyles, defaultPosition } = this.props;
+    const { generatorStyles, defaultPosition, previewContentLoaded } = this.props;
     const previewStyles = _.extend({}, generatorStyles);
 
     var className = 'generator-preview';
@@ -225,7 +229,7 @@ class SingleWindowPreview extends React.Component {
       }
     }
 
-    if (this.imageLoaded || !previewStyles.image) {
+    if (previewContentLoaded || !previewStyles.image) {
       previewStyles.width = width - borderAdjustment;
       previewStyles.height = height - borderAdjustment;
     } else {
@@ -263,14 +267,18 @@ class SingleWindowPreview extends React.Component {
             onResize={this.handleResize}
             lockAspectRatio={this.state.lockAspectRatio}
           >
-            <div 
-              className="preview-content"
-              ref={previewContent => { this.previewContent = previewContent; }}
-            >
-              {this.props.children}
-            </div>
-            <div className="drag-handle" />
-            <div className="resize-handle" />
+            {previewContentLoaded ? 
+              <div>
+                <div 
+                  className="preview-content"
+                  ref={previewContent => { this.previewContent = previewContent; }}
+                >
+                  {this.props.children}
+                </div>
+                <div className="drag-handle" />
+                <div className="resize-handle" />
+              </div>
+            : null}
             {this.renderPreview(previewStyles)}
           </Resizable>
         </div>

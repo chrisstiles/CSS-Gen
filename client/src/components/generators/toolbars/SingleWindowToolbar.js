@@ -6,11 +6,12 @@ import Toggle from '../../input/Toggle';
 
 class SingleWindowToolbar extends React.Component {
   render() {
-    const constraints = this.props.previewConstraints;
-    const minWidth = constraints.width.min;
-    const maxWidth = constraints.width.max;
-    const minHeight = constraints.height.min;
-    const maxHeight = constraints.height.max;
+    const { previewConstraints: constraints, previewContentLoaded, previewWidth, previewHeight } = this.props;
+    const { min: minWidth, max: maxWidth } = constraints.width;
+    const { min: minHeight, max: maxHeight } = constraints.height;
+
+    const width = previewContentLoaded ? previewWidth : '';
+    const height = previewContentLoaded ? previewHeight : '';
 
     return (
       <Toolbar
@@ -21,7 +22,7 @@ class SingleWindowToolbar extends React.Component {
           <label>Width:</label>
           <NumberInput 
             type="text"
-            value={this.props.previewWidth}
+            value={width}
             name="width"
             onChange={this.props.onTextInputChange}
             min={minWidth}
@@ -33,7 +34,7 @@ class SingleWindowToolbar extends React.Component {
           <label>Height:</label>
           <NumberInput 
             type="text"
-            value={this.props.previewHeight}
+            value={height}
             name="height"
             onChange={this.props.onTextInputChange}
             min={minHeight}

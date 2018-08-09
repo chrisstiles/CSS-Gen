@@ -22,6 +22,10 @@ class SingleWindowGenerator extends React.Component {
       getNativeImageSize(image).then(({ width, height }) => {
         _.extend(this.initialState, { width, height });
       });
+
+      this.state.previewContentLoaded = false;
+    } else {
+      this.state.previewContentLoaded = true;
     }
 
     // Preview window size constrains
@@ -37,6 +41,7 @@ class SingleWindowGenerator extends React.Component {
     this.renderToolbar = this.renderToolbar.bind(this);
     this.renderPreview = this.renderPreview.bind(this);
     this.setPreset = this.setPreset.bind(this);
+    this.handlePreviewContentLoad = this.handlePreviewContentLoad.bind(this);
     this.handleToolbarTextChange = this.handleToolbarTextChange.bind(this);
     this.handleShowPreviewTextChange = this.handleShowPreviewTextChange.bind(this);
     this.handleColorPickerChange = this.handleColorPickerChange.bind(this);
@@ -101,6 +106,10 @@ class SingleWindowGenerator extends React.Component {
 
     const previewCSS = this.generatePreviewCSS(state);
     this.setState({ previewCSS });
+  }
+
+  handlePreviewContentLoad(value) {
+    this.setState({ previewContentLoaded: value });
   }
 
   handleToolbarTextChange(value, event) {
@@ -182,6 +191,7 @@ class SingleWindowGenerator extends React.Component {
         outputPreviewStyles={outputPreviewStyles}
         showPreviewText={showPreviewText}
         reset={this.reset}
+        previewContentLoaded={this.state.previewContentLoaded}
         onTextInputChange={this.handleToolbarTextChange}
         onColorPickerChange={this.handleColorPickerChange}
         onPreviewCSSChange={this.handlePreviewCSSChange}
@@ -222,6 +232,8 @@ class SingleWindowGenerator extends React.Component {
         id={previewID}
         size={{ width, height }}
         constraints={this.previewConstraints}
+        previewContentLoaded={this.state.previewContentLoaded}
+        onPreviewContentLoad={this.handlePreviewContentLoad}
         onResize={this.handlePreviewWindowResize}
         onFileDrop={onFileDrop}
         onDrag={this.handlePreviewDrag}
