@@ -13,12 +13,6 @@ class SingleWindowGenerator extends React.Component {
       previewCSS: this.generatePreviewCSS(props)
     };
 
-    console.log(props.defaultState)
-
-    setTimeout(() => {
-      console.log(this.props.defaultState)
-    }, 300);
-
     // Save original state for resetting generator
     // this.initialState = _.extend({}, this.state, props.defaultState);
     const { width, height, backgroundColor, image } = props.defaultState;
@@ -30,12 +24,6 @@ class SingleWindowGenerator extends React.Component {
         _.extend(this.initialState, { width, height });
       });
     }
-    // this.initialState.hasResized = false;
-
-    // Add default background color
-    // if (!props.defaultState.backgroundColor) {
-      // this.initialState.backgroundColor = 'rgba(255, 255, 255, 1)';
-    // }
 
     // Preview window size constrains
     this.previewConstraints = props.previewConstraints || {

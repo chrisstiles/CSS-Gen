@@ -127,8 +127,10 @@ export function generateCSSString(css) {
 	var cssString = '';
 
 	_.each(css, (value, key) => {
-		key = jsToCss(key);
-		cssString += ` ${key}: ${value};`;
+		if (value) {
+			key = jsToCss(key);
+			cssString += ` ${key}: ${value};`;
+		}
 	});
 
 	return cssString.trim();

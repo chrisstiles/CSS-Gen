@@ -1,7 +1,7 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import FilterInputs from './FilterInputs';
-import { getDefaultState, getPersistedState, getNativeImageSize, generateCSSString, cssToJs } from '../../../util/helpers';
+import { getDefaultState, getPersistedState, generateCSSString, cssToJs } from '../../../util/helpers';
 import _ from 'underscore';
 
 // Load default background images
@@ -37,11 +37,6 @@ class Filter extends React.Component {
 		this.defaultState = getDefaultState(state);
 		this.state = getPersistedState(this.defaultState);
 
-		// Get original image dimensions
-		getNativeImageSize(state.image).then(({ width, height }) => {
-			_.extend(this.defaultState, { width, height });
-		});
-
 		this.handleFileDrop = this.handleFileDrop.bind(this);
 		this.generateCSS = this.generateCSS.bind(this);
 		this.renderInputs = this.renderInputs.bind(this);
@@ -49,9 +44,9 @@ class Filter extends React.Component {
 
 	generateCSS(styles = {}) {
 		const rules = _.extend({}, this.state, styles);
-		const css = {
-			filter: ''
-		};
+		const css = {};
+
+		var filtersString = '';
 
 		// Loop through all filters and add any that are active
 		_.each(filters, (filter, name) => {
@@ -63,11 +58,11 @@ class Filter extends React.Component {
 				const cssString = `${property}(${value}${unit}) `;
 				
 				// Add filter type to css rules
-				css.filter += cssString;
+				filtersString += cssString;
 			}
 		});
 
-		css.filter = css.filter.trim();
+		css.filter = filtersString.trim();
 
 		return {
 			styles: css,

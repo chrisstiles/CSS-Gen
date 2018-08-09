@@ -64,6 +64,10 @@ class CodeOutput extends React.Component {
   }
 
   copyCSS() {
+    if (!this.state.css) {
+      return;
+    }
+
     const hiddenField = document.createElement('textarea');
 
     hiddenField.style.position = 'fixed';
@@ -117,6 +121,14 @@ class CodeOutput extends React.Component {
   }
 
   render() {
+    var buttonClassName = 'button';
+    var textAreaClassName = 'output-text';
+
+    if (!this.state.css) {
+      buttonClassName += ' disabled';
+      textAreaClassName += ' disabled';
+    }
+
     return (
       <div id="output-wrapper">
         <div className="sidebar-title">Code Output</div>
@@ -126,13 +138,14 @@ class CodeOutput extends React.Component {
             autoCorrect="off"
             spellCheck="false"
             value={this.state.css}
+            className={textAreaClassName}
             readOnly
           />
         </div>
         {this.renderPrefixesToggle()}
         <button 
           onClick={this.copyCSS}
-          className="button"
+          className={buttonClassName}
         >
           Copy
         </button>
