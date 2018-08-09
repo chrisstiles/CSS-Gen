@@ -14,7 +14,6 @@ class SingleWindowGenerator extends React.Component {
     };
 
     // Save original state for resetting generator
-    // this.initialState = _.extend({}, this.state, props.defaultState);
     const { width, height, backgroundColor, image } = props.defaultState;
     this.initialState = _.extend({}, this.state, { width, height, backgroundColor });
 

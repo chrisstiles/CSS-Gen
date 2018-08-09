@@ -34,6 +34,8 @@ class Filter extends React.Component {
 			image: waterfall
 		});
 
+
+
 		this.defaultState = getDefaultState(state);
 		this.state = getPersistedState(this.defaultState);
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import Sliders from '../../input/Sliders';
+import AnglePicker from '../../input/AnglePicker';
 import _ from 'underscore'; 
 
 class FilterInputs extends React.Component {

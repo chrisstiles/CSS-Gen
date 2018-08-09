@@ -108,7 +108,6 @@ class Slider extends React.Component {
 
     return (
       <div className={className}>
-        <label className="title">{this.props.title}</label>
         <div className="slider-wrapper">
           { optional ? 
             <div className="active-toggle">
@@ -120,6 +119,7 @@ class Slider extends React.Component {
             </div>
           : null }
           <div className={inputClassName}>
+            <label className="title">{this.props.title}</label>
             {this.renderUnitSelect()}          
             <NumberInput
               className="slider-input"

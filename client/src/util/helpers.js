@@ -288,10 +288,10 @@ export function getImageSize(width, height, wrapper) {
 	}
 
 	if (maxWidth >= maxHeight) {
-		height = height * maxWidth / width;
+		height = Math.round(height * maxWidth / width);
 		width = maxWidth;
 	} else {
-		width = width * maxHeight / height;
+		width = Math.round(width * maxHeight / height);
 		height = maxHeight;
 	}
 

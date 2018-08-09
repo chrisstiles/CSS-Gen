@@ -9,7 +9,12 @@
   }
 
   .active-toggle {
-    width: 75px;
+    width: 67px;
+    padding-top: 6px;
+
+    .toggle-wrapper {
+      margin-left:-7px;
+    }
   }
 }
 

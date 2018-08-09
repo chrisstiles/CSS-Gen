@@ -161,6 +161,7 @@ class SingleWindowPreview extends React.Component {
     // Set image dimensions proportionally based on width of content area
     this.generateResizeStyles(width);
     this.props.onResize({ width, height });
+    e.target.style.opacity = 1;
   }
 
   handleImageError() {
@@ -201,9 +202,6 @@ class SingleWindowPreview extends React.Component {
 
     var borderAdjustment = 0;
     if (generatorStyles.boxSizing === 'content-box') {
-      // className += ' cb';
-      // previewStyles.boxSizing = 'content-box';
-
       // Add border size to preview
       borderAdjustment = parseInt(generatorStyles.borderWidth, 10) * 2;
       width += borderAdjustment;
@@ -232,7 +230,7 @@ class SingleWindowPreview extends React.Component {
       previewStyles.height = height - borderAdjustment;
     } else {
       // If image is still loading hide until we know the dimensions
-      // previewStyles.visibility = 'hidden';
+      previewStyles.opacity = 0;
       previewStyles.maxWidth = '100%';
       previewStyles.height = 'auto';
     }

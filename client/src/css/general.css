@@ -712,7 +712,10 @@ input[type="number"],
     display: table-cell;
     vertical-align: top; }
   .slider-wrapper .active-toggle {
-    width: 75px; }
+    width: 67px;
+    padding-top: 6px; }
+    .slider-wrapper .active-toggle .toggle-wrapper {
+      margin-left: -7px; }
 
 .rc-slider {
   position: relative;
