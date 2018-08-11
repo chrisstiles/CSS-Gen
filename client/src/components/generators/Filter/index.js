@@ -34,8 +34,6 @@ class Filter extends React.Component {
 			image: waterfall
 		});
 
-
-
 		this.defaultState = getDefaultState(state);
 		this.state = getPersistedState(this.defaultState);
 
@@ -81,7 +79,7 @@ class Filter extends React.Component {
 			reader.onload = e => {
 				const image = e.target.result;
 
-				this.setState({ image: image });
+				this.setState({ image });
 			}
 
 			reader.readAsDataURL(file);

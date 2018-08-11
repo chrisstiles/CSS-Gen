@@ -2,7 +2,7 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import Resizable from 're-resizable';
 import _ from 'underscore';
-import { addNotification, getNotificationTypes } from '../../../util/helpers';
+import { addNotification, getNotificationTypes, getImageSize } from '../../../util/helpers';
 
 class SingleWindowPreview extends React.Component {
   constructor(props) {
@@ -28,6 +28,8 @@ class SingleWindowPreview extends React.Component {
 
     // Save initial width for centering
     this.initialWidth = props.size.width;
+    // const width = this.initialWidth + props.defaultPosition.x;
+    // console.log(this.initialWidth, props.defaultPosition.x, width)
     this.generateResizeStyles();
   }
 
@@ -38,11 +40,13 @@ class SingleWindowPreview extends React.Component {
   generateResizeStyles(width = this.initialWidth) {
     const { fullWidthPreview, centerPreivew } = this.props;
     const resizeStyles = {};
-
+    // console.log(fullWidthPreview, centerPreivew)
     if (!fullWidthPreview && (centerPreivew || centerPreivew === undefined)) {
       resizeStyles.left = '50%';
       resizeStyles.marginLeft = -(width / 2);
+      // resizeStyles.marginLeft = -150;
     } else {
+      // console.log('here')
       resizeStyles.left = 0;
     }
 
@@ -106,17 +110,25 @@ class SingleWindowPreview extends React.Component {
     // If resizing from one of these directions, 
     // we should change the position of the element manually
     const directions = ['top', 'left', 'topLeft', 'bottomLeft', 'topRight'];
-    const top = this.resizeWrapperPosition.top - delta.height;
-    const left = this.resizeWrapperPosition.left - delta.width;
-
+    // const top = this.resizeWrapperPosition.top - delta.height;
+    // const left = this.resizeWrapperPosition.left - delta.width;
+    var { dragX, dragY } = this.props.position;
+    // console.log(delta)
     if (directions.includes(direction)) {
       if (direction === 'bottomLeft') {
-        this.resizeWrapper.style.left = `${left}px`;
+        // this.resizeWrapper.style.left = `${left}px`;
+        dragX += delta.width;
       } else if (direction === 'topRight') {
-        this.resizeWrapper.style.top = `${top}px`;
+        // this.resizeWrapper.style.top = `${top}px`;
+        // dragDelta.y = -delta.y;
+        dragY += delta.height;
       } else {
-        this.resizeWrapper.style.top = `${top}px`;
-        this.resizeWrapper.style.left = `${left}px`;
+        // this.resizeWrapper.style.top = `${top}px`;
+        // this.resizeWrapper.style.left = `${left}px`;
+        // dragDelta.x = -delta.x;
+        // dragDelta.y = -delta.y;
+        dragX += delta.width;
+        dragY += delta.height;
       }
     }
   
@@ -128,7 +140,8 @@ class SingleWindowPreview extends React.Component {
       height -= borderAdjustment;
     }
 
-    this.props.onResize({ width, height });
+    // this.props.onDrag(null, dragDelta);
+    this.props.onResize({ width, height, dragX, dragY });
   }
 
   handleDragOver(event) {
@@ -142,7 +155,7 @@ class SingleWindowPreview extends React.Component {
   }
 
   handleDrop(event) {
-    // this.imageLoaded = false;
+    this.reset(this.props.wrapperWidth);
     this.props.onPreviewContentLoad(false);
     this.props.onFileDrop(event);
     event.nativeEvent.preventDefault();
@@ -158,13 +171,17 @@ class SingleWindowPreview extends React.Component {
   }
 
   setImageDimensions(e) {
-    const { width, height } = e.target;
+    // if (isDefault)
+    const { width: naturalWidth, height: naturalHeight } = e.target;
+    const { width, height } = getImageSize(naturalWidth, naturalHeight);
+    // console.log(getNativeImageSize(naturalWidth, naturalHeight))
+    // console.log(e.target.naturalWidth, e.target.naturalHeight)
     
     // Set image dimensions proportionally based on width of content area
     this.generateResizeStyles(width);
     this.props.onResize({ width, height });
     e.target.style.opacity = 1;
-
+    // console.log('here')
     this.props.onPreviewContentLoad(true);
   }
 
@@ -198,8 +215,10 @@ class SingleWindowPreview extends React.Component {
   }
 
   render() {
-    const { generatorStyles, defaultPosition, previewContentLoaded } = this.props;
+    const { generatorStyles, position, previewContentLoaded } = this.props;
     const previewStyles = _.extend({}, generatorStyles);
+
+    // console.log(this.props)
 
     var className = 'generator-preview';
     var { width, height } = this.props.size;
@@ -230,14 +249,20 @@ class SingleWindowPreview extends React.Component {
     }
 
     if (previewContentLoaded || !previewStyles.image) {
+      // console.log('here')
       previewStyles.width = width - borderAdjustment;
       previewStyles.height = height - borderAdjustment;
+      // console.log('loaded')
     } else {
+      // console.log('there')
       // If image is still loading hide until we know the dimensions
       previewStyles.opacity = 0;
-      previewStyles.maxWidth = '100%';
-      previewStyles.height = 'auto';
+      // console.log('not loaded')
+      // previewStyles.maxWidth = '100%';
+      // previewStyles.height = 'auto';
     }
+
+    console.log(position.x)
 
     return (
       <Draggable 
@@ -245,7 +270,7 @@ class SingleWindowPreview extends React.Component {
         ref={draggable => { this.draggable = draggable; }}
         onDrag={this.props.onDrag}
         onStop={this.handleDragStop}
-        defaultPosition={defaultPosition}
+        position={position}
       >
         <div 
           className="resize-wrapper" 

@@ -75,7 +75,6 @@ class Gradient extends React.Component {
         resetStyles={this.reset}
         styles={this.state}
         generator={this}
-        centerPreview={false}
         fullWidthPreview={true}
         defaultState={this.defaultState}
         globalState={this.props.globalState}

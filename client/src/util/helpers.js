@@ -35,7 +35,8 @@ export function getDefaultState(defaultState) {
 		dragX: 0,
 		dragY: 0,
 		backgroundColor: '#ffffff',
-    hasResized: false
+    hasResized: false,
+    isDefault: true
 	};
 
 	return _.extend({}, defaults, defaultState);
@@ -58,7 +59,7 @@ export function getPersistedState(defaultState) {
       previousState = JSON.parse(previousState);
 
       if (previousState) {
-        state = _.extend(state, previousState);
+        state = _.extend(state, previousState, { isDefault: false });
       }
     } catch(e) {
       console.log(e);

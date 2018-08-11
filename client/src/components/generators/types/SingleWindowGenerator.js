@@ -46,6 +46,7 @@ class SingleWindowGenerator extends React.Component {
     this.handleShowPreviewTextChange = this.handleShowPreviewTextChange.bind(this);
     this.handleColorPickerChange = this.handleColorPickerChange.bind(this);
     this.handlePreviewWindowResize = this.handlePreviewWindowResize.bind(this);
+    this.handleFileDrop = this.handleFileDrop.bind(this);
     this.handlePreviewCSSChange = this.handlePreviewCSSChange.bind(this);
     this.handleWrapperMount = this.handleWrapperMount.bind(this);
     this.saveWrapperWidth = this.saveWrapperWidth.bind(this);
@@ -142,12 +143,21 @@ class SingleWindowGenerator extends React.Component {
     updateGlobalState({ showPreviewText });
   }
 
-  handlePreviewWindowResize(size) {
-    const { width, height } = size;
+  handlePreviewWindowResize(data) {
+    const { width, height, dragX, dragY } = data;
     const previewCSS = this.generatePreviewCSS({ width, height });
     
-    this.props.generator.setState({ hasResized: true, width, height });
+    this.props.generator.setState({ hasResized: true, width, height, dragX, dragY });
     this.setState({ previewCSS });
+  }
+
+  handleFileDrop(event) {
+    const { onFileDrop } = this.props;
+    // generator.setState({ hasResized: false });
+
+    if (onFileDrop) {
+      onFileDrop(event);
+    }
   }
 
   saveWrapperWidth() {
@@ -159,7 +169,6 @@ class SingleWindowGenerator extends React.Component {
 
   handleWrapperMount(wrapper) {
     this.generatorWrapper = wrapper;
-    getImageSize()
 
     // Save wrapper dimensions whenever it resizes
     this.saveWrapperWidth();
@@ -205,7 +214,7 @@ class SingleWindowGenerator extends React.Component {
 
   renderPreview() {
     const generatorStyles = this.props.generateCSS().styles || {};
-    const { image, backgroundImage, backgroundColor, dragX, dragY } = this.props.styles;
+    const { image, backgroundImage, backgroundColor, dragX, dragY, isDefault } = this.props.styles;
 
     if (image) {
       generatorStyles.image = image;
@@ -217,13 +226,15 @@ class SingleWindowGenerator extends React.Component {
       }
     }
 
-    const { previewID, onFileDrop } = this.props;
+    const { previewID, centerPreivew, fullWidthPreview } = this.props;
     const { width, height } = this.props.styles;
     const { showPreviewText } = this.props.globalState;
-    const defaultPosition = {
+    const position = {
       x: dragX,
       y: dragY
     }
+
+    // this.props.defaultState
 
     return (
       <SingleWindowPreview
@@ -231,13 +242,17 @@ class SingleWindowGenerator extends React.Component {
         generatorStyles={generatorStyles}
         id={previewID}
         size={{ width, height }}
+        isDefault={isDefault}
+        fullWidthPreview={fullWidthPreview}
+        centerPreivew={centerPreivew}
         constraints={this.previewConstraints}
         previewContentLoaded={this.state.previewContentLoaded}
+        wrapperWidth={this.state.wrapperWidth}
         onPreviewContentLoad={this.handlePreviewContentLoad}
         onResize={this.handlePreviewWindowResize}
-        onFileDrop={onFileDrop}
+        onFileDrop={this.handleFileDrop}
         onDrag={this.handlePreviewDrag}
-        defaultPosition={defaultPosition}
+        position={position}
         reset={this.reset}
       >
         { showPreviewText ?
