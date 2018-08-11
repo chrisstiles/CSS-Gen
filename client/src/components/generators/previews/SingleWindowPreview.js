@@ -27,7 +27,7 @@ class SingleWindowPreview extends React.Component {
     this.handleImageError = this.handleImageError.bind(this);
 
     // Save initial width for centering
-    this.initialWidth = props.size.width;
+    this.initialWidth = props.defaultWidth;
     // const width = this.initialWidth + props.defaultPosition.x;
     // console.log(this.initialWidth, props.defaultPosition.x, width)
     this.generateResizeStyles();
@@ -38,6 +38,7 @@ class SingleWindowPreview extends React.Component {
   }
 
   generateResizeStyles(width = this.initialWidth) {
+    console.log(width)
     const { fullWidthPreview, centerPreivew } = this.props;
     const resizeStyles = {};
     // console.log(fullWidthPreview, centerPreivew)
@@ -67,7 +68,6 @@ class SingleWindowPreview extends React.Component {
           y > windowHeight ||
           y < (-height + 240)) {
 
-
         this.reset(width);
       } 
     }
@@ -75,16 +75,19 @@ class SingleWindowPreview extends React.Component {
 
   handleDragStop() {
     this.checkPreviewPosition();
+    this.props.onDragStop();
   }
 
   handleResizeStart() {
-    const top = parseInt(this.resizeWrapper.style.top, 10) || 0;
-    const left = parseInt(this.resizeWrapper.style.left, 10) || 0;
+    // const top = parseInt(this.resizeWrapper.style.top, 10) || 0;
+    // const left = parseInt(this.resizeWrapper.style.left, 10) || 0;
 
-    this.resizeWrapperPosition = {
-      top: top,
-      left: left
-    };
+    // this.resizeWrapperPosition = {
+    //   top: top,
+    //   left: left
+    // };
+
+    this.resizeWrapperPosition = _.extend(this.props.resizePosition);
 
     if (this.props.onResizeStart) {
       this.props.onResizeStart();
@@ -105,43 +108,53 @@ class SingleWindowPreview extends React.Component {
 
   handleResize(event, direction, el, delta) {
     // Lock aspect ratio when shift pressed
-    this.setState({ lockAspectRatio: event.shiftKey });
+    // this.setState({ lockAspectRatio: event.shiftKey });
 
     // If resizing from one of these directions, 
     // we should change the position of the element manually
     const directions = ['top', 'left', 'topLeft', 'bottomLeft', 'topRight'];
-    // const top = this.resizeWrapperPosition.top - delta.height;
-    // const left = this.resizeWrapperPosition.left - delta.width;
-    var { dragX, dragY } = this.props.position;
+    var { x, y } = this.resizeWrapperPosition;
+
+    const left = x - delta.width;
+    const top = y - delta.height;
+    // var { x: dragX, y: dragY } = this.props.position;
+    
     // console.log(delta)
     if (directions.includes(direction)) {
       if (direction === 'bottomLeft') {
+        x = left;
         // this.resizeWrapper.style.left = `${left}px`;
-        dragX += delta.width;
+        // dragX -= parseInt(delta.width / 2);
       } else if (direction === 'topRight') {
+        y = top;
         // this.resizeWrapper.style.top = `${top}px`;
         // dragDelta.y = -delta.y;
-        dragY += delta.height;
+        // dragY -= parseInt(delta.height / 2);
       } else {
+        x = left;
+        y = top;
         // this.resizeWrapper.style.top = `${top}px`;
         // this.resizeWrapper.style.left = `${left}px`;
         // dragDelta.x = -delta.x;
         // dragDelta.y = -delta.y;
-        dragX += delta.width;
-        dragY += delta.height;
+        // dragX -= parseInt(delta.width / 2);
+        // dragY -= parseInt(delta.height / 2);
       }
     }
+
+    const resizePosition = { x, y };
   
     var { width, height } = this.resizable.state;
 
-    if (this.props.generatorStyles.boxSizing === 'content-box') {
+    if (this.props.styles.boxSizing === 'content-box') {
       const borderAdjustment = parseInt(this.props.generatorStyles.borderWidth, 10) * 2;
       width -= borderAdjustment;
       height -= borderAdjustment;
     }
 
+    // console.log(dragX, dragY)
     // this.props.onDrag(null, dragDelta);
-    this.props.onResize({ width, height, dragX, dragY });
+    this.props.onResize({ width, height, resizePosition });
   }
 
   handleDragOver(event) {
@@ -164,9 +177,9 @@ class SingleWindowPreview extends React.Component {
 
   reset(width = this.initialWidth) {
     this.generateResizeStyles(width);
-    this.props.onDrag(null, { x: 0, y: 0 });
-    this.resizeWrapper.style.top = 0;
-    this.resizeWrapper.style.left = 0;
+    this.props.onDragStop(null, { x: 0, y: 0 });
+    // this.resizeWrapper.style.top = 0;
+    // this.resizeWrapper.style.left = 0;
     this.draggable.setState({ x: 0, y: 0 });
   }
 
@@ -215,8 +228,8 @@ class SingleWindowPreview extends React.Component {
   }
 
   render() {
-    const { generatorStyles, position, previewContentLoaded } = this.props;
-    const previewStyles = _.extend({}, generatorStyles);
+    const { styles, defaultPosition, previewContentLoaded } = this.props;
+    const previewStyles = _.extend({}, styles);
 
     // console.log(this.props)
 
@@ -224,9 +237,9 @@ class SingleWindowPreview extends React.Component {
     var { width, height } = this.props.size;
 
     var borderAdjustment = 0;
-    if (generatorStyles.boxSizing === 'content-box') {
+    if (styles.boxSizing === 'content-box') {
       // Add border size to preview
-      borderAdjustment = parseInt(generatorStyles.borderWidth, 10) * 2;
+      borderAdjustment = parseInt(styles.borderWidth, 10) * 2;
       width += borderAdjustment;
       height += borderAdjustment;
     }
@@ -258,23 +271,24 @@ class SingleWindowPreview extends React.Component {
       // If image is still loading hide until we know the dimensions
       previewStyles.opacity = 0;
       // console.log('not loaded')
-      // previewStyles.maxWidth = '100%';
-      // previewStyles.height = 'auto';
+      previewStyles.maxWidth = '100%';
+      previewStyles.height = 'auto';
     }
 
-    console.log(position.x)
+    const { x: left, y: top } = this.props.resizePosition;
+    console.log({ left, top })
 
     return (
       <Draggable 
         handle=".drag-handle"
         ref={draggable => { this.draggable = draggable; }}
-        onDrag={this.props.onDrag}
-        onStop={this.handleDragStop}
-        position={position}
+        onStop={this.props.onDragStop}
+        defaultPosition={defaultPosition}
       >
         <div 
           className="resize-wrapper" 
-          ref={el => { this.resizeWrapper = el; }}
+          // ref={el => { this.resizeWrapper = el; }}
+          style={{ left, top }}
           {...fileDropProps}
         > 
           <Resizable

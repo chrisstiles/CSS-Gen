@@ -20,10 +20,13 @@ class Generator extends React.Component {
     this.persistState = _.debounce(newProps => {
       if (window.localStorage) {
         const path = window.location.pathname;
-        const styles = newProps.styles;
+        const { generatorStyles, previewStyles } = newProps;
+        const state = {
+          generatorState: generatorStyles,
+          previewState: previewStyles
+        }
 
-        // Save generator styles
-        window.localStorage.setItem(path, JSON.stringify(styles));
+        window.localStorage.setItem(path, JSON.stringify(state));
       }
     }, 300);
   }
@@ -47,6 +50,7 @@ class Generator extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
+    // console.log('hello')
     // Save state to local storage
     this.persistState(newProps);
   }
@@ -105,9 +109,9 @@ class Generator extends React.Component {
           >
             {this.props.renderPreview()}
             <Sidebar
-              outputCSS={this.props.generateCSS().outputCSS}
+              outputCSS={this.props.generatorStyles.output}
               outputPreviewStyles={this.props.outputPreviewStyles}
-              previewCSS={this.props.previewCSS}
+              previewCSS={this.props.previewStyles.previewCSS}
               browserPrefixes={this.props.browserPrefixes}
             >
               {this.props.renderInputs()}

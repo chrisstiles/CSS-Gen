@@ -2,7 +2,7 @@ import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import BorderRadiusInputs from './BorderRadiusInputs';
 import BorderRadiusPresets from './BorderRadiusPresets';
-import { getDefaultState, getPersistedState, generateCSSString } from '../../../util/helpers';
+import { getPersistedState, generateCSSString } from '../../../util/helpers';
 import _ from 'underscore';
 
 class BorderRadius extends React.Component {
@@ -12,7 +12,7 @@ class BorderRadius extends React.Component {
     const defaultRadius = 10;
     const defaultUnits = 'px';
 
-    this.defaultState = getDefaultState({
+    this.defaultState = {
       radius: defaultRadius,
       units: defaultUnits,
       topLeft: defaultRadius,
@@ -23,18 +23,35 @@ class BorderRadius extends React.Component {
       bottomRightUnits: defaultUnits,
       bottomLeft: defaultRadius,
       bottomLeftUnits: defaultUnits,
-      backgroundColor: 'rgba(72, 52, 212, 1)',
       borderStyle: 'none',
       borderColor: '#323232',
       borderWidth: 10,
       inset: true
-    });
+    };
 
     this.state = getPersistedState(this.defaultState);
+
+    // console.log(this.state)
+
+    this.previewStyles = {
+      backgroundColor: 'rgba(72, 52, 212, 1)'
+    }
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
     this.renderPresets = this.renderPresets.bind(this);
+    this.reset = this.reset.bind(this);
+    // this.state.css = this.generateCSS();
+  }
+
+  // componentWillReceiveProps(newProps) {
+  //   const css = this.generateCSS(newProps);
+  //   console.log(css)
+  //   this.setState({ css });
+  // }
+
+  reset() {
+    this.setState(this.defaultState);
   }
 
   generateCSS(styles = {}) {
@@ -83,14 +100,14 @@ class BorderRadius extends React.Component {
     }
 
     // Add output string
-    const outputCSS = generateCSSString(css);
+    const output = generateCSSString(css);
 
     // Add extra keys
     css.borderWidth = `${rules.borderWidth}px`;
 
     return {
       styles: css,
-      outputCSS: outputCSS
+      output: output
     };
   }
 
@@ -109,7 +126,7 @@ class BorderRadius extends React.Component {
 
   render() {
     const intro = <p>Use the controls on to the right to create any kind of border. Once you are done, copy your CSS from the code output box in the bottom right.</p>;
-
+    const generatorStyles = this.generateCSS();
     return (
       <SingleWindowGenerator 
         title="CSS Border Radius Generator | CSS-GEN"
@@ -118,10 +135,13 @@ class BorderRadius extends React.Component {
         property="border-radius"
         heading="CSS Border Radius Generator"
         intro={intro}
-        generateCSS={this.generateCSS}
+        reset={this.reset}
+        // generateCSS={this.generateCSS}
         renderInputs={this.renderInputs}
         renderPresets={this.renderPresets}
-        styles={this.state}
+        // styles={this.state}
+        generatorStyles={generatorStyles}
+        previewStyles={this.previewStyles}
         generator={this}
         defaultState={this.defaultState}
         globalState={this.props.globalState}

@@ -2,20 +2,31 @@ import React from 'react';
 import Generator from '../../Generator';
 import SingleWindowToolbar from '../toolbars/SingleWindowToolbar';
 import SingleWindowPreview from '../previews/SingleWindowPreview';
-import { getGlobalDefaults, updateGlobalState, getImageSize, getNativeImageSize } from '../../../util/helpers';
+import { getGlobalDefaults, updateGlobalState, getImageSize, getNativeImageSize, getDefaultState, getPersistedState } from '../../../util/helpers';
 import _ from 'underscore';
 
 class SingleWindowGenerator extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      previewCSS: this.generatePreviewCSS(props)
-    };
+    this.defaultState = getDefaultState({
+      width: 300,
+      height: 300,
+      dragX: 0,
+      dragY: 0,
+      backgroundColor: '#ffffff'
+    });
+
+    _.extend(this.defaultState, props.previewStyles);
+
+    // this.state = getPersistedState(this.defaultState);
+    this.state = getPersistedState(this.defaultState, true);
+    // this.state = _.extend({}, this.defaultState);
+    this.state.previewCSS = this.generatePreviewCSS()
 
     // Save original state for resetting generator
-    const { width, height, backgroundColor, image } = props.defaultState;
-    this.initialState = _.extend({}, this.state, { width, height, backgroundColor });
+    const { width, height, backgroundColor, image } = this.defaultState;
+    // this.initialState = _.extend({}, this.state, { width, height, backgroundColor });
 
     if (image) {
       // Get original image dimensions
@@ -50,11 +61,11 @@ class SingleWindowGenerator extends React.Component {
     this.handlePreviewCSSChange = this.handlePreviewCSSChange.bind(this);
     this.handleWrapperMount = this.handleWrapperMount.bind(this);
     this.saveWrapperWidth = this.saveWrapperWidth.bind(this);
-    this.handlePreviewDrag = this.handlePreviewDrag.bind(this);
+    this.handlePreviewDragStop = this.handlePreviewDragStop.bind(this);
   }
 
   generatePreviewCSS(styles = {}) {
-    const rules = _.extend({}, this.props.styles, styles);
+    const rules = _.extend({}, this.state, styles);
 
     var css = `
       width: ${rules.width}px;
@@ -77,7 +88,7 @@ class SingleWindowGenerator extends React.Component {
 
     // Reset to full width rather than initial value
     if (this.props.fullWidthPreview && this.generatorWrapper) {
-      const { width, height } = this.initialState;
+      const { width, height } = this.defaultState;
       if (this.props.styles.image) {
         // Largest proportional dimensions that fit inside wrapper
         _.extend(generatorState, getImageSize(width, height, this.generatorWrapper));
@@ -88,13 +99,14 @@ class SingleWindowGenerator extends React.Component {
       _.extend(this.initialState, { width, height });
     }
 
-    const previewCSS = this.generatePreviewCSS(this.initialState);
-    const previewState = _.extend({}, this.initialState, { previewCSS });
+    const previewCSS = this.generatePreviewCSS(this.defaultState);
+    const previewState = _.extend({}, this.defaultState, { previewCSS });
 
     this.setState(previewState);
     this.preview.reset(generatorState.width);
-    this.props.generator.setState(generatorState);
+    // this.props.generator.setState(generatorState);
 
+    // Reset the generator styles
     if (this.props.reset) {
       this.props.reset();
     }
@@ -119,19 +131,20 @@ class SingleWindowGenerator extends React.Component {
     const state = {};
 
     state[type] = value;
+    state.previewCSS = this.generatePreviewCSS(state);
     
-    this.props.generator.setState(state);
+    this.setState(state);
 
-    const previewCSS = this.generatePreviewCSS(state);
-    this.setState({ previewCSS });
+    // this.setState({ previewCSS });
   }
 
   handleColorPickerChange(color, name) {
     this.setState({ 
+      backgroundColor: color,
       previewCSS: this.generatePreviewCSS({ backgroundColor: color })
     });
 
-    this.props.generator.setState({ backgroundColor: color });
+    // this.props.generator.setState({ backgroundColor: color });
   }
 
   handlePreviewCSSChange(outputPreviewStyles) {
@@ -144,11 +157,11 @@ class SingleWindowGenerator extends React.Component {
   }
 
   handlePreviewWindowResize(data) {
-    const { width, height, dragX, dragY } = data;
+    const { width, height, resizePosition } = data;
     const previewCSS = this.generatePreviewCSS({ width, height });
     
-    this.props.generator.setState({ hasResized: true, width, height, dragX, dragY });
-    this.setState({ previewCSS });
+    // this.props.generator.setState({ hasResized: true, width, height });
+    this.setState({ hasResized: true, width, height, previewCSS, resizePosition });
   }
 
   handleFileDrop(event) {
@@ -182,13 +195,14 @@ class SingleWindowGenerator extends React.Component {
     }
   }
 
-  handlePreviewDrag(event, data) {
+  handlePreviewDragStop(event, data) {
     const { x, y } = data;
-    this.props.generator.setState({ dragX: x, dragY: y });
+    // console.log(x, y)
+    this.setState({ dragX: x, dragY: y });
   }
 
   renderToolbar() {
-    const { width, height, backgroundColor } = this.props.styles;
+    const { width, height, backgroundColor } = this.state;
     const { outputPreviewStyles, showPreviewText } = this.props.globalState;
 
     return (
@@ -213,36 +227,39 @@ class SingleWindowGenerator extends React.Component {
   }
 
   renderPreview() {
-    const generatorStyles = this.props.generateCSS().styles || {};
-    const { image, backgroundImage, backgroundColor, dragX, dragY, isDefault } = this.props.styles;
+    const styles = _.extend({}, this.props.generatorStyles.styles);
+    const { image, backgroundImage, backgroundColor, width, height } = this.state;
+    const { dragX: x, dragY: y } = this.state;
+    const { previewID, centerPreivew, fullWidthPreview } = this.props;
+    const { showPreviewText } = this.props.globalState;
 
     if (image) {
-      generatorStyles.image = image;
+      styles.image = image;
     } else {
       if (backgroundImage) {
-        generatorStyles.backgroundImage = `url('${backgroundImage}')`
+        styles.backgroundImage = `url('${backgroundImage}')`
       } else {
-        generatorStyles.backgroundColor = backgroundColor;
+        styles.backgroundColor = backgroundColor;
       }
     }
 
-    const { previewID, centerPreivew, fullWidthPreview } = this.props;
-    const { width, height } = this.props.styles;
-    const { showPreviewText } = this.props.globalState;
-    const position = {
-      x: dragX,
-      y: dragY
-    }
+    
+    // const position = {
+    //   x: dragX,
+    //   y: dragY
+    // }
+    // console.log(this.props.styles)
+    
+    // console.log(x, y)
 
     // this.props.defaultState
 
     return (
       <SingleWindowPreview
         ref={previewWindow => { this.preview = previewWindow }}
-        generatorStyles={generatorStyles}
+        styles={styles}
         id={previewID}
         size={{ width, height }}
-        isDefault={isDefault}
         fullWidthPreview={fullWidthPreview}
         centerPreivew={centerPreivew}
         constraints={this.previewConstraints}
@@ -251,8 +268,10 @@ class SingleWindowGenerator extends React.Component {
         onPreviewContentLoad={this.handlePreviewContentLoad}
         onResize={this.handlePreviewWindowResize}
         onFileDrop={this.handleFileDrop}
-        onDrag={this.handlePreviewDrag}
-        position={position}
+        onDragStop={this.handlePreviewDragStop}
+        defaultPosition={{ x, y }}
+        resizePosition={this.state.resizePosition}
+        defaultWidth={this.defaultState.width}
         reset={this.reset}
       >
         { showPreviewText ?
@@ -271,15 +290,17 @@ class SingleWindowGenerator extends React.Component {
   render() {
     return (
       <Generator 
+        renderInputs = {this.props.renderInputs}
         renderToolbar={this.renderToolbar}
         renderPreview={this.renderPreview}
         setPreset={this.setPreset}
-        previewCSS={this.state.previewCSS}
         reset={this.reset}
         onWrapperMount={this.handleWrapperMount}
         outputPreviewStyles={this.props.globalState.outputPreviewStyles}
         preview={this}
-        {...this.props}
+        // generatorStyles={this.props.styles}
+        previewStyles={this.state}
+        generatorStyles={this.props.generatorStyles}
       />
     );
   }

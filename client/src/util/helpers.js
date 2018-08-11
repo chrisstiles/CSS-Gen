@@ -30,19 +30,32 @@ export function updateGlobalState(state) {
 
 export function getDefaultState(defaultState) {
 	const defaults = {
-		width: 300,
-		height: 300,
-		dragX: 0,
-		dragY: 0,
-		backgroundColor: '#ffffff',
+		// width: 300,
+		// height: 300,
+		// dragX: 0,
+		// dragY: 0,
+		// backgroundColor: '#ffffff',
     hasResized: false,
-    isDefault: true
+    isDefault: true,
+    resizePosition: { x: 0, y: 0 }
 	};
 
 	return _.extend({}, defaults, defaultState);
 }
 
-export function getPersistedState(defaultState) {
+// export function getDefaultPreviewState(defaultState) {
+// 	const defaults = {
+// 		width: 300,
+// 		height: 300,
+// 		dragX: 0,
+// 		dragY: 0,
+// 		backgroundColor: '#ffffff'
+// 	};
+
+// 	return _.extend({}, defaults, defaultState);
+// }
+
+export function getPersistedState(defaultState, isPreview) {
   var state = _.extend({}, defaultState);
 
   if (!window.localStorage) {
@@ -50,16 +63,20 @@ export function getPersistedState(defaultState) {
   }
 
   // Generator specific state
-  const path = window.location.pathname;
+  var path = window.location.pathname;
 
   if (window.localStorage.hasOwnProperty(path)) {
     var previousState = window.localStorage.getItem(path);
 
     try {
-      previousState = JSON.parse(previousState);
+    	if (isPreview) {
+    		previousState = JSON.parse(previousState).previewState;
+    	} else {
+    		previousState = JSON.parse(previousState).generatorState;
+    	}
 
       if (previousState) {
-        state = _.extend(state, previousState, { isDefault: false });
+        state = _.extend(state, previousState);
       }
     } catch(e) {
       console.log(e);

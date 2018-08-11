@@ -74,6 +74,8 @@ class BorderRadiusInputs extends React.Component {
       state[key] = units;
     }
 
+    console.log(state)
+
     this.props.owner.setState(state);
   }
 
