@@ -26,12 +26,13 @@ class SingleWindowGenerator extends React.Component {
 
     this.state = getPersistedState(this.defaultState, true);
 
-    this.state.previewContentLoaded = this.state.image ? this.state.previewContentLoaded : true;
+    // this.state.previewContentLoaded = this.state.image ? this.state.previewContentLoaded : true;
+    this.state.previewContentLoaded = this.state.image ? false : true;
 
     // Preview window size constrains
     this.previewConstraints = props.previewConstraints || {
-      width: { min: 200, max: 3000 },
-      height: { min: 100, max: 3000 }
+      width: { min: 80, max: 3000 },
+      height: { min: 80, max: 3000 }
     };
 
     this.reset = this.reset.bind(this);
@@ -81,22 +82,6 @@ class SingleWindowGenerator extends React.Component {
     this.preview.reset(previewState.width);
   }
 
-  // handleFileDrop(event) {
-  //   const files = event.nativeEvent.dataTransfer.files;
-
-  //   if (files && files.length) {
-  //     const file = files[0];
-  //     const reader = new FileReader();
-  //     reader.onload = e => {
-  //       const image = e.target.result;
-
-  //       this.setState({ image });
-  //     }
-
-  //     reader.readAsDataURL(file);
-  //   }
-  // }
-
   handleFileDrop(data) {
     // console.log(data)
     this.setState(data);
@@ -143,40 +128,10 @@ class SingleWindowGenerator extends React.Component {
           })
           .catch(error => console.log(error));
       }
-
-      // Save dimensions if not showing the default image
-      // if (defaultImage !== currentImage && !this.state.hasResized) {
-      //   getNativeImageSize(currentImage)
-      //     .then(({ width, height }) => {
-      //       const size = getImageSize(width, height, wrapper);
-      //       this.setState({ previewContentLoaded: true, ...size });
-      //     })
-      //     .catch(error => {
-      //       console.log(error);
-      //       this.setState(this.defaultState);
-      //     });
-      // }
-
-      // Save current image dimensions and resize
-      // getNativeImageSize(currentImage).then(({ width, height }) => {
-      //   const size = getImageSize(width, height, wrapper);
-      //   _.extend(this.defaultState, size);
-      //   this.handleWrapperResize();
-      // });
     } else if (fullWidthPreview && !hasResized) {
       const { width, height } = this.defaultState;
       this.setState({ width, height });
     }
-
-   
-
-    // console.log(this.defaultState.image === this.state.image)
-    
-    // if ((this.props.fullWidthPreview || this.defaultState.image) && !this.state.hasResized) {
-    //   const { width, height } = this.defaultState;
-    //   console.log(width, height)
-    //   this.setState({ width, height });
-    // }
   }
 
   handlePreviewUpdate(data) {
@@ -223,25 +178,18 @@ class SingleWindowGenerator extends React.Component {
       }
     }
 
-    // const previewText = this.props.previewText || 
-    //   "CSS Preview Window: "
-
     return (
       <SingleWindowPreview
         ref={previewWindow => { this.preview = previewWindow }}
         styles={styles}
-        // id={previewID}
         size={{ width, height }}
-        // fullWidthPreview={fullWidthPreview}
-        // centerPreview={centerPreview}
         resizeMarginAdjustment={resizeMarginAdjustment}
         constraints={this.previewConstraints}
         previewContentLoaded={previewContentLoaded}
         hasResized={hasResized}
         wrapperWidth={this.state.wrapperWidth}
         onUpdate={this.handlePreviewUpdate}
-        // onFileDrop={this.handleFileDrop}
-        defaultPosition={{ x, y }}
+        position={{ x, y }}
         resizePosition={this.state.resizePosition}
         defaultWidth={this.defaultState.width}
         reset={this.reset}

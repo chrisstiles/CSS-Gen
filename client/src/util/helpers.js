@@ -286,6 +286,8 @@ export function getImageSize(width, height, wrapper) {
 	const rect = wrapper.getBoundingClientRect();
 	const maxWidth = rect.width;
 	var maxHeight = window.innerHeight - rect.top - 30;
+  const minWidth = 80;
+  const minHeight = 80;
 	const presetBar = document.querySelector('#preset-bar');
 
 	// Prevent image from going behind preset bar
@@ -293,29 +295,56 @@ export function getImageSize(width, height, wrapper) {
 	  maxHeight -= presetBar.offsetHeight;
 	}
 
-	if (width <= maxWidth && height <= maxHeight) {
+  // Image already fits within space without resizing
+	if (width <= maxWidth && width >= minWidth && height <= maxHeight && height >= maxHeight) {
 		return { width, height };
 	}
 
-	if (maxWidth >= maxHeight) {
-		height = Math.round(height * maxWidth / width);
-		width = maxWidth;
+  // Image is too small, enlarge
+  if (width < minWidth || height < minHeight) {
+    if (width >= height) {
+      height = Math.round(height * minWidth / width);
+      width = minWidth;
 
-		// If resized image is too large resize again
-		if (height > maxHeight) {
-			width = Math.round(width * maxHeight / height);
-			height = maxHeight;
-		}
-	} else {
-		width = Math.round(width * maxHeight / height);
-		height = maxHeight;
+      // If resized image is not tall enough resize again 
+      if (height < minHeight) {
+        width = Math.round(width * minHeight / height);
+        height = minHeight;
+      }
+    } else {
+      width = Math.round(width * minHeight / height);
+      height = minHeight;
 
-		// If resized image is too large resize again
-		if (width > maxWidth) {
-			height = height = Math.round(height * maxWidth / width);
-			width = maxWidth;
-		}
-	}
+      // Image resized image is not wide enough resize again
+      if (width < minWidth) {
+        height = Math.round(height * minWidth / width);
+        width = minWidth;
+      }
+    }
+  }
+
+  // Image is too large, shrink down
+  if (width > maxWidth || height > maxHeight) {
+    if (maxWidth >= maxHeight) {
+      height = Math.round(height * maxWidth / width);
+      width = maxWidth;
+
+      // If resized image is tall resize again
+      if (height > maxHeight) {
+        width = Math.round(width * maxHeight / height);
+        height = maxHeight;
+      }
+    } else {
+      width = Math.round(width * maxHeight / height);
+      height = maxHeight;
+
+      // If resized image is too wide resize again
+      if (width > maxWidth) {
+        height = Math.round(height * maxWidth / width);
+        width = maxWidth;
+      }
+    }
+  }
 
 	return { width, height };
 }

@@ -11,11 +11,18 @@ class SingleWindowPreview extends React.Component {
     this.state = {
       lockAspectRatio: false,
       resizing: false,
-      droppingFile: false
+      droppingFile: false,
+      axis: 'both',
+      axisSelected: false
     };
+
+    // The axis for dragging the preview window
+    // this.axis = 'both';
 
     this.generateResizeStyles = this.generateResizeStyles.bind(this);
     this.checkPreviewPosition = this.checkPreviewPosition.bind(this);
+    this.handleDragStart = this.handleDragStart.bind(this);
+    this.handleDrag = this.handleDrag.bind(this);
     this.handleDragStop = this.handleDragStop.bind(this);
     this.handleResizeStart = this.handleResizeStart.bind(this);
     this.handleResizeStop = this.handleResizeStop.bind(this);
@@ -82,10 +89,74 @@ class SingleWindowPreview extends React.Component {
     }
   }
 
+  handleDragStart() {
+    // this.setState({ axis: 'both', axisSelected: false });
+  }
+
+  handleDrag(event, data) {
+    // Restrict dragging to x or y axis if shift key is held
+    const { deltaX, deltaY } = data;
+    var axis, dragX, dragY;
+
+    if (event.shiftKey) {
+      if (!this.state.axisSelected) {
+        const _deltaX = Math.abs(deltaX);
+        const _deltaY = Math.abs(deltaY);
+
+        if (_deltaX !== _deltaY) {
+          // Choose either x or y axis
+          if (_deltaX > _deltaY) {
+            axis = 'x';
+          } else if (_deltaY > _deltaX) {
+            axis = 'y';
+          }
+
+          this.setState({ axisSelected: true, axis });
+        } 
+
+      }
+    } else {
+      if (this.state.axisSelected) {
+        this.setState({ axisSelected: false, axis: 'both' });
+      }
+    }
+
+    // if (axis === 'x') {
+    //   dragX = x;
+    //   dragY = lastY;
+    // } else if (axis === 'y') {
+    //   dragX = lastX;
+    //   dragY = y;
+    // } else {
+    //   dragX = x;
+    //   dragY = y;
+    // }
+
+    // this.props.onUpdate({ dragX, dragY });
+  }
+
   handleDragStop(event, data) {
+    const { x: newX, y: newY } = data;
+    const { x: lastX, y: lastY } = this.props.position;
+    var dragX, dragY;
+
+    if (this.state.axis === 'x') {
+      dragX = newX;
+      dragY = lastY;
+    } else if (this.state.axis === 'y') {
+      dragX = lastX;
+      dragY = newY;
+    } else {
+      dragX = newX;
+      dragY = newY;
+    }
+
+    this.setState({ axisSelected: false, axis: 'both' });
+    this.draggable.setState({ x: dragX, y: dragY });
     this.checkPreviewPosition();
-    const { x: dragX, y: dragY } = data;
     this.props.onUpdate({ dragX, dragY });
+
+    console.log(dragX, dragY);
   }
 
   handleResizeStart() {
@@ -122,7 +193,7 @@ class SingleWindowPreview extends React.Component {
     
     if (directions.includes(direction)) {
       if (direction === 'bottomLeft') {
-        x = left;
+        // x = left;
       } else if (direction === 'topRight') {
         y = top;
       } else {
@@ -160,6 +231,8 @@ class SingleWindowPreview extends React.Component {
     if (!this.props.hasResized) {
       this.props.onUpdate({ previewContentLoaded: true, width, height });
       this.generateResizeStyles(width);  
+    } else {
+      this.props.onUpdate({ previewContentLoaded: true });
     }
     
     e.target.style.opacity = 1;
@@ -177,7 +250,6 @@ class SingleWindowPreview extends React.Component {
       const { width, height } = previewStyles;
 
       if (this.props.userImageAsBackground) {
-        // previewStyles.backgroundImage = `url('${image}')`;
         return (
           <div 
             className="preview-style"
@@ -217,10 +289,8 @@ class SingleWindowPreview extends React.Component {
   }
 
   render() {
-    const { styles, defaultPosition, previewContentLoaded } = this.props;
+    const { styles, position, previewContentLoaded } = this.props;
     const previewStyles = _.extend({}, styles);
-
-    // console.log(this.props)
 
     var className = 'generator-preview';
     var { width, height } = this.props.size;
@@ -237,19 +307,6 @@ class SingleWindowPreview extends React.Component {
       className += ' resizing';
     }
 
-    // Add file drop if callback is passed
-    var fileDropProps = {};
-
-    if (this.props.onFileDrop) {
-      fileDropProps.onDragOver = this.handleDragOver;
-      fileDropProps.onDragLeave = this.handleDragLeave;
-      fileDropProps.onDrop = this.handleDrop;
-
-      if (this.state.droppingFile) {
-        className += ' dropping';
-      }
-    }
-
     if (previewContentLoaded || !previewStyles.image) {
       previewStyles.width = width - borderAdjustment;
       previewStyles.height = height - borderAdjustment;
@@ -259,13 +316,16 @@ class SingleWindowPreview extends React.Component {
     }
 
     const { x: left, y: top } = this.props.resizePosition;
+    const previewContentClass = previewContentLoaded ? 'preview-content' : 'preview-content hidden';
 
     return (
       <Draggable 
         handle=".drag-handle"
+        axis={this.state.axis}
         ref={draggable => { this.draggable = draggable; }}
+        onDrag={this.handleDrag}
         onStop={this.handleDragStop}
-        defaultPosition={defaultPosition}
+        defaultPosition={position}
       >
         <div 
           className="resize-wrapper" 
@@ -286,18 +346,16 @@ class SingleWindowPreview extends React.Component {
             onResize={this.handleResize}
             lockAspectRatio={this.lockAspectRatio}
           >
-            {previewContentLoaded ? 
-              <div>
-                <div 
-                  className="preview-content"
-                  ref={previewContent => { this.previewContent = previewContent; }}
-                >
-                  {this.props.children}
-                </div>
-                <div className="drag-handle" />
-                <div className="resize-handle" />
+            <div>
+              <div 
+                className={previewContentClass}
+                ref={previewContent => { this.previewContent = previewContent; }}
+              >
+                {this.props.children}
               </div>
-            : null}
+              <div className="drag-handle" />
+              <div className="resize-handle" />
+            </div>
             {this.renderPreview(previewStyles)}
           </Resizable>
         </div>

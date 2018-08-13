@@ -67,20 +67,29 @@ class Gradient extends React.Component {
 
     return (
       <SingleWindowGenerator
+        // Text content
         title="CSS Gradient Generator | CSS-GEN"
         previewID="gradient-preview"
         className="gradient"
         heading="CSS Gradient Generator"
         intro={intro}
-        updateGenerator={this.updateGenerator}
-        renderInputs={this.renderInputs}
-        renderPresets={this.renderPresets}
+
+        // Generator settings
         hideToolbarBackground={true}
         fullWidthPreview={true}
         userImageAsBackground={true}
+
+        // Render generator components
+        renderInputs={this.renderInputs}
+        renderPresets={this.renderPresets}
+
+        // Generator state
         generatorState={generatorState}
         generatorDefaultState={this.defaultState}
         globalState={this.props.globalState}
+
+        // Generator methods
+        updateGenerator={this.updateGenerator}
       />
     );
   }

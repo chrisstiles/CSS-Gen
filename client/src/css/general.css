@@ -393,6 +393,8 @@ p:last-child {
   display: flex;
   align-items: center;
   justify-content: center; }
+  .preview-content.hidden {
+    visibility: hidden; }
 
 .preview-style {
   z-index: -1;

@@ -87,7 +87,7 @@ class Filter extends React.Component {
 
 	  return (
 	    <SingleWindowGenerator 
-	    	// Text Content
+	    	// Text content
 	      title="CSS Filter Generator | CSS-GEN"
 	      previewID="filter-preview"
 	      className="filter"

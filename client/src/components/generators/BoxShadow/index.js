@@ -64,16 +64,23 @@ class BoxShadow extends React.Component {
     const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
 
     return (
-      <SingleWindowGenerator 
+      <SingleWindowGenerator
+        // Text content
         title="CSS Box Shadow Generator | CSS-GEN"
         previewID="box-shadow-preview"
         className="box-shadow"
         heading="CSS Box Shadow Generator"
-        updateGenerator={this.updateGenerator}
+
+        // Render generator components
         renderInputs={this.renderInputs}
+
+        // Generator state
         generatorState={generatorState}
         generatorDefaultState={this.defaultState}
         globalState={this.props.globalState}
+
+        // Generator methods
+        updateGenerator={this.updateGenerator}
       />
     );
   }
