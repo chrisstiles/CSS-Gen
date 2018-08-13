@@ -31,27 +31,18 @@ class BorderRadius extends React.Component {
 
     this.state = getPersistedState(this.defaultState);
 
-    // console.log(this.state)
-
     this.previewStyles = {
-      backgroundColor: 'rgba(72, 52, 212, 1)'
+      backgroundColor: '#4834D4'
     }
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
     this.renderPresets = this.renderPresets.bind(this);
-    this.reset = this.reset.bind(this);
-    // this.state.css = this.generateCSS();
+    this.updateGenerator = this.updateGenerator.bind(this);
   }
 
-  // componentWillReceiveProps(newProps) {
-  //   const css = this.generateCSS(newProps);
-  //   console.log(css)
-  //   this.setState({ css });
-  // }
-
-  reset() {
-    this.setState(this.defaultState);
+  updateGenerator(state) {
+    this.setState(state);
   }
 
   generateCSS(styles = {}) {
@@ -114,7 +105,7 @@ class BorderRadius extends React.Component {
   renderInputs() {
     return (
       <BorderRadiusInputs
-        owner={this}
+        updateGenerator={this.updateGenerator}
         {...this.state}
       />
     );
@@ -126,25 +117,30 @@ class BorderRadius extends React.Component {
 
   render() {
     const intro = <p>Use the controls on to the right to create any kind of border. Once you are done, copy your CSS from the code output box in the bottom right.</p>;
-    const generatorStyles = this.generateCSS();
+    const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
+
     return (
       <SingleWindowGenerator 
+        // Text Content
         title="CSS Border Radius Generator | CSS-GEN"
         previewID="border-radius-preview"
         className="border-radius"
         property="border-radius"
         heading="CSS Border Radius Generator"
         intro={intro}
-        reset={this.reset}
-        // generateCSS={this.generateCSS}
+
+        // Generator state
+        generatorState={generatorState}
+        previewStyles={this.previewStyles}
+        generatorDefaultState={this.defaultState}
+        globalState={this.props.globalState}
+
+        // Render generator components
         renderInputs={this.renderInputs}
         renderPresets={this.renderPresets}
-        // styles={this.state}
-        generatorStyles={generatorStyles}
-        previewStyles={this.previewStyles}
-        generator={this}
-        defaultState={this.defaultState}
-        globalState={this.props.globalState}
+
+        // Generator methods
+        updateGenerator={this.updateGenerator}        
       />
     );
   }

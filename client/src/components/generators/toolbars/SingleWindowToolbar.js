@@ -3,8 +3,22 @@ import Toolbar from './Toolbar';
 import NumberInput from '../../input/NumberInput';
 import ColorPicker from '../../input/ColorPicker';
 import Toggle from '../../input/Toggle';
+import { updateGlobalState } from '../../../util/helpers';
 
 class SingleWindowToolbar extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(value, name) {
+    const state = {};
+    state[name] = value;
+
+    this.props.onUpdate(state);
+  }
+
   render() {
     const { previewConstraints: constraints, previewContentLoaded, previewWidth, previewHeight } = this.props;
     const { min: minWidth, max: maxWidth } = constraints.width;
@@ -24,7 +38,7 @@ class SingleWindowToolbar extends React.Component {
             type="text"
             value={width}
             name="width"
-            onChange={this.props.onTextInputChange}
+            onChange={this.handleChange}
             min={minWidth}
             max={maxWidth}
           />
@@ -36,7 +50,7 @@ class SingleWindowToolbar extends React.Component {
             type="text"
             value={height}
             name="height"
-            onChange={this.props.onTextInputChange}
+            onChange={this.handleChange}
             min={minHeight}
             max={maxHeight}
           />
@@ -47,8 +61,9 @@ class SingleWindowToolbar extends React.Component {
         <div className="item input border">
           <label>Background:</label>
           <ColorPicker
+            name="backgroundColor"
             color={this.props.previewBackgroundColor}
-            onChange={this.props.onColorPickerChange}
+            onChange={this.handleChange}
           />
         </div>
 
@@ -56,7 +71,8 @@ class SingleWindowToolbar extends React.Component {
 
         <div className="item input border">
           <Toggle
-            onChange={this.props.onPreviewCSSChange}
+            name="outputPreviewStyles"
+            onChange={updateGlobalState}
             label="Output CSS:"
             className="left"
             checked={this.props.outputPreviewStyles}
@@ -65,7 +81,8 @@ class SingleWindowToolbar extends React.Component {
 
         <div className="item input border">
           <Toggle
-            onChange={this.props.onShowPreviewTextChange}
+            name="showPreviewText"
+            onChange={updateGlobalState}
             label="Preview Text:"
             className="left"
             checked={this.props.showPreviewText}

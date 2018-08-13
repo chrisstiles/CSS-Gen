@@ -1,7 +1,7 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import BoxShadowInputs from './BoxShadowInputs';
-import { generateCSSString, hexOrRgba, getDefaultState, getPersistedState } from '../../../util/helpers';
+import { generateCSSString, hexOrRgba, getPersistedState } from '../../../util/helpers';
 import _ from 'underscore';
 import tinycolor from 'tinycolor2';
 
@@ -9,7 +9,7 @@ class BoxShadow extends React.Component {
   constructor(props) {
     super(props);
 
-    this.defaultState = getDefaultState({
+    this.defaultState = {
       horizontalShift: 0,
       verticalShift: 12,
       blurRadius: 40,
@@ -17,12 +17,17 @@ class BoxShadow extends React.Component {
       shadowOpacity: 15,
       shadowColor: '#000',
       inset: false
-    });
+    };
 
     this.state = getPersistedState(this.defaultState);
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
+    this.updateGenerator = this.updateGenerator.bind(this);
+  }
+
+  updateGenerator(state) {
+    this.setState(state);
   }
 
   generateCSS(styles = {}) {
@@ -42,31 +47,32 @@ class BoxShadow extends React.Component {
 
     return {
       styles: css,
-      outputCSS: generateCSSString(css)
+      output: generateCSSString(css)
     };
   }
 
   renderInputs() {
     return (
       <BoxShadowInputs
-        owner={this}
+        updateGenerator={this.updateGenerator}
         {...this.state}
       />
     );
   }
 
   render() {
+    const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
+
     return (
       <SingleWindowGenerator 
         title="CSS Box Shadow Generator | CSS-GEN"
         previewID="box-shadow-preview"
         className="box-shadow"
         heading="CSS Box Shadow Generator"
-        generateCSS={this.generateCSS}
+        updateGenerator={this.updateGenerator}
         renderInputs={this.renderInputs}
-        styles={this.state}
-        generator={this}
-        defaultState={this.defaultState}
+        generatorState={generatorState}
+        generatorDefaultState={this.defaultState}
         globalState={this.props.globalState}
       />
     );

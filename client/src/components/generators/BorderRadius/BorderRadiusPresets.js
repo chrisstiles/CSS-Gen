@@ -3,7 +3,7 @@ import PresetBar from '../presets/PresetBar';
 
 const presets = [
   {
-    styles: {
+    generatorStyles: {
       topLeft: 0,
       topRight: 50,
       bottomLeft: 50,
@@ -12,7 +12,7 @@ const presets = [
     thumbnailStyles: { borderRadius: '0px 10px' }
   },
   {
-    styles: {
+    generatorStyles: {
       topLeft: 50,
       topRight: 0,
       bottomLeft: 50,
@@ -21,7 +21,7 @@ const presets = [
     thumbnailStyles: { borderRadius: '10px 0px 0px 10px' }
   },
   {
-    styles: {
+    generatorStyles: {
       radius: 50,
       units: '%',
       topLeft: 50,

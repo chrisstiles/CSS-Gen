@@ -5,6 +5,7 @@
 
 /* Preview Window */
 .generator-preview {
+  will-change: transform;
   width: 300px;
   height:300px;
   display: flex;
@@ -44,6 +45,7 @@
 }
 
 .resize-wrapper {
+  will-change: left, top;
   position:relative;
 
   .generator-preview:hover,
@@ -88,10 +90,6 @@
   z-index: 250;
 }
 
-.dropping {
-  opacity:.6;
-}
-
 .preview-content {
   position:absolute;
   top:0;
@@ -110,7 +108,28 @@
   background-size:cover;
   background-repeat:no-repeat;
   background-position:center center;
+
+  .style,
+  .background {
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+  }
+
+  .style {
+    z-index: 1;
+  }
+
+  .background {
+    z-index: -1;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center center;
+  }
 }
+
 
 
 /* Media Queries */

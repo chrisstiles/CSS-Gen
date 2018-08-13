@@ -54,7 +54,7 @@ class NumberInput extends React.Component {
   }
 
   handleChange(event) {
-    this.props.onChange(this.getValue(), event);
+    this.props.onChange(this.getValue(), this.props.name, event);
   }
 
   handleFocus() {
@@ -92,7 +92,7 @@ class NumberInput extends React.Component {
     
     newValue = numberInConstraints(newValue, this.props.min, this.props.max);
 
-    this.props.onChange(newValue, event);
+    this.props.onChange(newValue, this.props.name, event);
 
     if (this.props.onTick) {
       this.props.onTick(up, event, shiftHeld);

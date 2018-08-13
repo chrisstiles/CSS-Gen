@@ -15,7 +15,8 @@ class GradientInputs extends React.Component {
   handleChange(value, name) {
     var state = {};
     state[name] = value;
-    this.props.owner.setState(state);
+    
+    this.props.updateGenerator(state);
   }
 
   renderTypeSettings() {

@@ -24,36 +24,16 @@ export function getGlobalDefaults() {
 	return _getGlobalDefaults();
 }
 
-export function updateGlobalState(state) {
+export function updateGlobalState(stateOrValue, name) {
+	// Can pass either state object or single key value pair
+	const state = _.extend({}, stateOrValue);
+
+	if (name) {
+		state[name] = stateOrValue;
+	}
+
 	_updateGlobalState(state);
 }
-
-export function getDefaultState(defaultState) {
-	const defaults = {
-		// width: 300,
-		// height: 300,
-		// dragX: 0,
-		// dragY: 0,
-		// backgroundColor: '#ffffff',
-    hasResized: false,
-    isDefault: true,
-    resizePosition: { x: 0, y: 0 }
-	};
-
-	return _.extend({}, defaults, defaultState);
-}
-
-// export function getDefaultPreviewState(defaultState) {
-// 	const defaults = {
-// 		width: 300,
-// 		height: 300,
-// 		dragX: 0,
-// 		dragY: 0,
-// 		backgroundColor: '#ffffff'
-// 	};
-
-// 	return _.extend({}, defaults, defaultState);
-// }
 
 export function getPersistedState(defaultState, isPreview) {
   var state = _.extend({}, defaultState);
@@ -280,13 +260,19 @@ export function createSelection(field, start, end) {
 
 // Returns a Promise that resolves with the image dimensions
 export function getNativeImageSize(src) {
-  return new Promise(resolve => {
-    const image = new Image();
+  return new Promise((resolve, reject = () => {}) => {
+    var image = new Image();
     image.src = src;
+
     image.onload = () => {
       const { width, height } = image;
+      image = null;
       resolve({ width, height });
     }
+
+  	image.onerror = () => {
+  		reject('Error loading image');
+  	}
   });
 }
 
@@ -299,7 +285,13 @@ export function getImageSize(width, height, wrapper) {
 
 	const rect = wrapper.getBoundingClientRect();
 	const maxWidth = rect.width;
-	const maxHeight = window.innerHeight - rect.top - 30;
+	var maxHeight = window.innerHeight - rect.top - 30;
+	const presetBar = document.querySelector('#preset-bar');
+
+	// Prevent image from going behind preset bar
+	if (presetBar) {
+	  maxHeight -= presetBar.offsetHeight;
+	}
 
 	if (width <= maxWidth && height <= maxHeight) {
 		return { width, height };
@@ -308,9 +300,21 @@ export function getImageSize(width, height, wrapper) {
 	if (maxWidth >= maxHeight) {
 		height = Math.round(height * maxWidth / width);
 		width = maxWidth;
+
+		// If resized image is too large resize again
+		if (height > maxHeight) {
+			width = Math.round(width * maxHeight / height);
+			height = maxHeight;
+		}
 	} else {
 		width = Math.round(width * maxHeight / height);
 		height = maxHeight;
+
+		// If resized image is too large resize again
+		if (width > maxWidth) {
+			height = height = Math.round(height * maxWidth / width);
+			width = maxWidth;
+		}
 	}
 
 	return { width, height };

@@ -22,7 +22,7 @@ class BoxShadowInputs extends React.Component {
     const state = {};
     state[name] = value;
 
-    this.props.owner.setState(state);
+    this.props.updateGenerator(state);
   }
 
   render() {

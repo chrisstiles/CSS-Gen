@@ -1,6 +1,6 @@
 import React from 'react';
 import Sliders from '../../input/Sliders';
-import AnglePicker from '../../input/AnglePicker';
+// import AnglePicker from '../../input/AnglePicker';
 import _ from 'underscore'; 
 
 class FilterInputs extends React.Component {
@@ -12,20 +12,20 @@ class FilterInputs extends React.Component {
 	}
 
 	handleChange(value, name, key = 'value') {
-    const { owner } = this.props;
 		const state = {};
-    
-    if (typeof owner.state[name] === 'object') {
-      const previousState = owner.state[name];
+    // console.log(this.props[name])
+    if (typeof this.props[name] === 'object') {
+      const previousState = this.props[name];
       const properties = {};
       properties[key] = value;
       state[name] = _.extend({}, previousState, properties);
     } else {
       state[name] = value;
-      owner.setState(state);
     }
 
-    owner.setState(state);
+    // state[name] = value;
+
+    this.props.updateGenerator(state);
 	}
 
 	handleActiveToggle(value, name) {

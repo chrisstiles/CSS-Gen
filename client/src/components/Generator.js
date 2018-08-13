@@ -1,6 +1,7 @@
 import React from 'react';
 import Page from './Page';
 import Sidebar from './Sidebar';
+import LoadingSpinner from './LoadingSpinner';
 import _ from 'underscore';
 
 class Generator extends React.Component {
@@ -20,11 +21,8 @@ class Generator extends React.Component {
     this.persistState = _.debounce(newProps => {
       if (window.localStorage) {
         const path = window.location.pathname;
-        const { generatorStyles, previewStyles } = newProps;
-        const state = {
-          generatorState: generatorStyles,
-          previewState: previewStyles
-        }
+        const { generatorState, previewState } = newProps;
+        const state = { generatorState, previewState }
 
         window.localStorage.setItem(path, JSON.stringify(state));
       }
@@ -50,7 +48,6 @@ class Generator extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    // console.log('hello')
     // Save state to local storage
     this.persistState(newProps);
   }
@@ -90,6 +87,7 @@ class Generator extends React.Component {
 
   render() {
     const cssClasses = `${this.props.className}${this.state.keys}`;
+    const { previewContentLoaded, previewCSS } = this.props.previewState;
 
     return (
       <Page
@@ -107,11 +105,16 @@ class Generator extends React.Component {
             className="page-content"
             ref={generatorWrapper => { this.generatorWrapper = generatorWrapper }}
           >
+            {!previewContentLoaded ?
+              <div id="generator-loading">
+                <LoadingSpinner />
+              </div>
+            : null}
             {this.props.renderPreview()}
             <Sidebar
-              outputCSS={this.props.generatorStyles.output}
+              outputCSS={this.props.generatorState.css.output}
               outputPreviewStyles={this.props.outputPreviewStyles}
-              previewCSS={this.props.previewStyles.previewCSS}
+              previewCSS={previewCSS}
               browserPrefixes={this.props.browserPrefixes}
             >
               {this.props.renderInputs()}

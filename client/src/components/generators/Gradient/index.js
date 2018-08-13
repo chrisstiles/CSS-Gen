@@ -3,14 +3,14 @@ import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import GradientInputs from './GradientInputs';
 import GradientPresets from './GradientPresets';
 import generateGradient from './generate-gradient';
-import { getDefaultState, getPersistedState } from '../../../util/helpers';
+import { getPersistedState } from '../../../util/helpers';
 import _ from 'underscore';
 
 class Gradient extends React.Component {
   constructor(props) {
     super(props);
 
-    this.defaultState = getDefaultState({
+    this.defaultState = {
       palette: [
         { pos: 0.00, color: '#f1b50b' },
         { pos: 0.36, color: '#d78025' },
@@ -24,15 +24,18 @@ class Gradient extends React.Component {
       position: 'center',
       positionX: 0,
       positionY: 0,
-      angle: 90,
-      width: 500,
-      height:300
-    });
+      angle: 90
+    };
 
     this.state = getPersistedState(this.defaultState);
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
+    this.updateGenerator = this.updateGenerator.bind(this);
+  }
+
+  updateGenerator(state) {
+    this.setState(state);
   }
 
   generateCSS(styles = {}) {
@@ -41,14 +44,14 @@ class Gradient extends React.Component {
 
     return {
       styles: gradient.styles,
-      outputCSS: gradient.css
+      output: gradient.css
     };
   }
 
   renderInputs() {
     return (
       <GradientInputs
-        owner={this}
+        updateGenerator={this.updateGenerator}
         {...this.state}
       />
     );
@@ -60,23 +63,23 @@ class Gradient extends React.Component {
 
   render() {
     const intro = <p>Create linear and radial gradients with CSS.</p>;
+    const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
 
     return (
-      <SingleWindowGenerator 
+      <SingleWindowGenerator
         title="CSS Gradient Generator | CSS-GEN"
         previewID="gradient-preview"
         className="gradient"
         heading="CSS Gradient Generator"
         intro={intro}
-        generateCSS={this.generateCSS}
+        updateGenerator={this.updateGenerator}
         renderInputs={this.renderInputs}
         renderPresets={this.renderPresets}
         hideToolbarBackground={true}
-        resetStyles={this.reset}
-        styles={this.state}
-        generator={this}
         fullWidthPreview={true}
-        defaultState={this.defaultState}
+        userImageAsBackground={true}
+        generatorState={generatorState}
+        generatorDefaultState={this.defaultState}
         globalState={this.props.globalState}
       />
     );

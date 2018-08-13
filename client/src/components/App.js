@@ -73,7 +73,7 @@ class PrimaryLayout extends React.Component {
   }
 
   createNotification(type, message) {
-    NotificationManager[type](message, null, 3700);
+    NotificationManager[type](message, null, 4500);
   }
 
   getGlobalState() {

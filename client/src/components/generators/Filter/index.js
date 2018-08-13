@@ -1,7 +1,7 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import FilterInputs from './FilterInputs';
-import { getDefaultState, getPersistedState, generateCSSString, cssToJs } from '../../../util/helpers';
+import { getPersistedState, generateCSSString, cssToJs } from '../../../util/helpers';
 import _ from 'underscore';
 
 // Load default background images
@@ -23,23 +23,25 @@ class Filter extends React.Component {
 		super(props);
 
 		this.filterSliders = [];
-		var state = _.mapObject(filters, ({ title, name, min, max, value, unit }, key) => {
+		this.defaultState = _.mapObject(filters, ({ title, name, min, max, value, unit }, key) => {
 			this.filterSliders.push({ title, name, min, max, appendString: unit });
 
 			return { value, isActive: false };
 		});
 
-		// Add additional defaults
-		state = _.extend({}, state, {
+		this.previewStyles = {
 			image: waterfall
-		});
+		};
 
-		this.defaultState = getDefaultState(state);
 		this.state = getPersistedState(this.defaultState);
 
-		this.handleFileDrop = this.handleFileDrop.bind(this);
 		this.generateCSS = this.generateCSS.bind(this);
 		this.renderInputs = this.renderInputs.bind(this);
+		this.updateGenerator = this.updateGenerator.bind(this);
+	}
+
+	updateGenerator(state) {
+	  this.setState(state);
 	}
 
 	generateCSS(styles = {}) {
@@ -66,30 +68,14 @@ class Filter extends React.Component {
 
 		return {
 			styles: css,
-			outputCSS: generateCSSString(css)
-		}
-	}
-
-	handleFileDrop(event) {
-		const files = event.nativeEvent.dataTransfer.files;
-
-		if (files && files.length) {
-			const file = files[0];
-			const reader = new FileReader();
-			reader.onload = e => {
-				const image = e.target.result;
-
-				this.setState({ image });
-			}
-
-			reader.readAsDataURL(file);
+			output: generateCSSString(css)
 		}
 	}
 
 	renderInputs() {
 		return (
 			<FilterInputs
-				owner={this}
+				updateGenerator={this.updateGenerator}
 				sliders={this.filterSliders}
 				{...this.state}
 			/>
@@ -97,22 +83,31 @@ class Filter extends React.Component {
 	}
 
 	render() {
+		const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
+
 	  return (
 	    <SingleWindowGenerator 
+	    	// Text Content
 	      title="CSS Filter Generator | CSS-GEN"
 	      previewID="filter-preview"
 	      className="filter"
 	      heading="CSS Filter Generator"
-	      generateCSS={this.generateCSS}
-	      renderInputs={this.renderInputs}
-	      styles={this.state}
-	      generator={this}
-	      fullWidthPreview={true}
+
+	      // Generator settings
 	      hideToolbarBackground={true}
-	      onFileDrop={this.handleFileDrop}
-	      defaultState={this.defaultState}
-	      globalState={this.props.globalState}
 	      browserPrefixes={true}
+
+	      // Render generator components
+	      renderInputs={this.renderInputs}
+
+	      // Generator state
+	      generatorState={generatorState}
+	      previewStyles={this.previewStyles}
+	      generatorDefaultState={this.defaultState}
+	      globalState={this.props.globalState}
+	      
+	      // Generator methods
+	      updateGenerator={this.updateGenerator}
 	    />
 	  );
 	}

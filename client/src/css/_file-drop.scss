@@ -1,0 +1,60 @@
+#file-drop {
+	position:fixed;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	z-index: 99999;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	background-color:rgba($accent-color, .95);
+	color:#fff;
+	text-align: center;
+	opacity:0;
+	pointer-events: none;
+	transition: opacity .2s;
+
+	&:before {
+		position:absolute;
+		content:"";
+		border:3px dashed #fff;
+		opacity:.2;
+
+		$offset: 14px;
+		
+		top: $offset;
+		bottom: $offset;
+		left: $offset;
+		right: $offset;
+	}
+
+	&.visible {
+		opacity:1;
+		pointer-events: auto;
+	}
+
+	.content {
+		max-width:800px;
+	}
+
+	.icon {
+		width:150px;
+		height:120px;
+		background-image:url('../images/drop-file.svg');
+		background-size:150px 120px;
+		margin:0 auto 30px auto;
+	}
+
+	.title {
+		font-size:40px;
+		font-weight:700;
+		margin-bottom:10px;
+	}
+
+	.subtitle {
+		font-size:20px;
+		font-weight:600;
+		opacity:.7;
+	}
+}

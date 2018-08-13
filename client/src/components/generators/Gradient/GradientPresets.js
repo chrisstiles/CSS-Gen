@@ -3,7 +3,7 @@ import PresetBar from '../presets/PresetBar';
 
 const presets = [
 	{
-	  styles: {
+	  generatorStyles: {
 	    type: 'linear',
 	    palette: [
 	    	{ pos: 0.00, color: 'rgba(238, 241, 11, 0)' },
@@ -17,7 +17,7 @@ const presets = [
 	  }
 	},
 	{
-		styles: {
+		generatorStyles: {
 		  type: 'radial',
 		  palette: [
 		  	{ pos: 0.00, color: '#f1b50b' },
@@ -32,7 +32,7 @@ const presets = [
 		}
 	},
 	{
-		styles: {
+		generatorStyles: {
 			type: 'radial',
 			palette: [
 				{ pos: 0.00, color: 'rgba(255, 239, 24, 0.56)' },
