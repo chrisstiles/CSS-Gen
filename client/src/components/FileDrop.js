@@ -1,6 +1,6 @@
 import React from 'react';
 import LoadingSpinner from './LoadingSpinner';
-import { addNotification, getNotificationTypes, getNativeImageSize, getImageSize } from '../util/helpers';
+import { addNotification, getNotificationTypes, getNativeImageSize, getImageSize, bytesToSize } from '../util/helpers';
 
 class FileDrop extends React.Component {
 	constructor(props) {
@@ -13,6 +13,11 @@ class FileDrop extends React.Component {
 		};
 
 		this.fileTypes = ['png', 'jpg', 'jpeg', 'gif', 'svg'];
+
+		// Max file size for droped images. Although we don't 
+		// save these to a server, we prevent large images as they 
+		//impact performance and browsers have local starge limitations
+		this.maxFileSize = 1500000;
 
 		this.hideOverlay= this.hideOverlay.bind(this);
 		this.handleDragEnter= this.handleDragEnter.bind(this);
@@ -82,6 +87,8 @@ class FileDrop extends React.Component {
 		} else if (files.length > 1) {
 			// Tried to add multiple files
 			error = 'You can only preview one image at a time';
+		} else if (files[0].size > this.maxFileSize) {
+			error = `Max file size of ${this.maxFileSize / 1000000}mb`;
 		} else {
 			const extension = files[0].name.split('.').pop().toLowerCase();
 
