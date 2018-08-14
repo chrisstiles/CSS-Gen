@@ -722,6 +722,19 @@ p:last-child {
   .field-wrapper.small .title {
     font-size: 13px; }
 
+.table-wrapper {
+  display: table;
+  width: 100%; }
+  .table-wrapper .active-toggle,
+  .table-wrapper .input {
+    display: table-cell;
+    vertical-align: top; }
+  .table-wrapper .active-toggle {
+    width: 67px;
+    padding-top: 6px; }
+    .table-wrapper .active-toggle .toggle-wrapper {
+      margin-left: -7px; }
+
 input[type="text"],
 input[type="number"],
 .chrome-picker input,
@@ -802,19 +815,6 @@ input[type="number"],
   display: inline-block; }
   .button:hover {
     background-color: #5b49d8; }
-
-.slider-wrapper {
-  display: table;
-  width: 100%; }
-  .slider-wrapper .active-toggle,
-  .slider-wrapper .input {
-    display: table-cell;
-    vertical-align: top; }
-  .slider-wrapper .active-toggle {
-    width: 67px;
-    padding-top: 6px; }
-    .slider-wrapper .active-toggle .toggle-wrapper {
-      margin-left: -7px; }
 
 .rc-slider {
   position: relative;

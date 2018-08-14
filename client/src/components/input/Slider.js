@@ -8,7 +8,7 @@ class Slider extends React.Component {
   constructor(props) {
     super(props);
 
-    this.checkSliderActive(props);
+    this.checkActive(props);
     this.min = props.min || 0;
     this.max = props.max || 200;
 
@@ -19,10 +19,10 @@ class Slider extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    this.checkSliderActive(newProps);
+    this.checkActive(newProps);
   }
 
-  checkSliderActive(props = this.props) {
+  checkActive(props = this.props) {
     const { isActive = true } = props;
     this.isActive = isActive;
   }
@@ -108,7 +108,7 @@ class Slider extends React.Component {
 
     return (
       <div className={className}>
-        <div className="slider-wrapper">
+        <div className="table-wrapper">
           { optional ? 
             <div className="active-toggle">
               <Toggle

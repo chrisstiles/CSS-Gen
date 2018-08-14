@@ -1,6 +1,6 @@
 import React from 'react';
 import Sliders from '../../input/Sliders';
-// import AnglePicker from '../../input/AnglePicker';
+import AnglePicker from '../../input/AnglePicker';
 import _ from 'underscore'; 
 
 class FilterInputs extends React.Component {
@@ -34,13 +34,22 @@ class FilterInputs extends React.Component {
 
 	render() {
 		return (
-			<Sliders
-        sliders={this.props.filterSliders}
-        onChange={this.handleChange}
-        onActiveToggle={this.handleActiveToggle}
-        optional={true}
-        {...this.props}
-      />
+      <div>
+        <AnglePicker
+          label="Hue Rotate"
+          angle={0}
+          onChange={this.handleChange}
+          name="hueRotate"
+          optional={true}
+        />
+  			<Sliders
+          sliders={this.props.filterSliders}
+          onChange={this.handleChange}
+          onActiveToggle={this.handleActiveToggle}
+          optional={true}
+          {...this.props}
+        />
+      </div>
 		);
 	}
 }

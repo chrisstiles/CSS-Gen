@@ -1,33 +1,51 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import FilterInputs from './FilterInputs';
-import { getPersistedState, generateCSSString, cssToJs } from '../../../util/helpers';
+import { getPersistedState, generateCSSString, jsToCss } from '../../../util/helpers';
 import _ from 'underscore';
 
 // Load default background images
 import waterfall from './images/waterfall.jpg';
 
 const filters = {
-	blur: { title: 'Gaussian Blur', name: 'blur', min: 0, max: 300, value: 0, unit: 'px' },
+	blur: { title: 'Gaussian Blur', name: 'blur', min: 0, max: 50, value: 0, unit: 'px' },
 	brightness: { title: 'Brightness', name: 'brightness', min: 0, max: 500, value: 100, unit: '%' },
 	contrast: { title: 'Contrast', name: 'contrast', min: 0, max: 500, value: 100, unit: '%' },
 	grayscale: { title: 'Grayscale', name: 'grayscale', min: 0, max: 100, value: 0, unit: '%' },
 	invert: { title: 'Invert', name: 'invert', min: 0, max: 100, value: 0, unit: '%' },
 	opacity: { title: 'Opacity', name: 'opacity', min: 0, max: 100, value: 100, unit: '%' },
 	saturate: { title: 'Saturation', name: 'saturate', min: 0, max: 500, value: 100, unit: '%' },
-	sepia: { title: 'Sepia', name: 'sepia', min: 0, max: 100, value: 0, unit: '%' }
+	sepia: { title: 'Sepia', name: 'sepia', min: 0, max: 100, value: 0, unit: '%' },
+	hueRotate: { value: 0, slider: false, unit: 'deg' }
 };
 
 class Filter extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.filterSliders = [];
-		this.defaultState = _.mapObject(filters, ({ title, name, min, max, value, unit }, key) => {
-			this.filterSliders.push({ title, name, min, max, appendString: unit });
+		this.defaultState = {
+			
+		};
 
+		// Add basic filters that only require one slider
+		this.filterSliders = [];
+
+		this.defaultState = _.mapObject(filters, ({ title, name, min, max, value, unit, slider }, key) => {
+
+			if (slider || slider === undefined) {
+				this.filterSliders.push({ title, name, min, max, appendString: unit });
+			}
+		
 			return { value, isActive: false };
-		});
+		})
+
+		// this.defaultState = _.mapObject(filters, ({ title, name, min, max, value, unit }, key) => {
+		// 	this.filterSliders.push({ title, name, min, max, appendString: unit });
+
+		// 	return { value, isActive: false };
+		// });
+
+
 
 		this.previewStyles = {
 			image: waterfall
@@ -55,7 +73,7 @@ class Filter extends React.Component {
 			const { value, isActive } = rules[name];
 
 			if (isActive) {
-				const property = cssToJs(name);
+				const property = jsToCss(name);
 				const unit = filter.unit;
 				const cssString = `${property}(${value}${unit}) `;
 				
