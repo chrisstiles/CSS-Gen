@@ -26,8 +26,6 @@ class SingleWindowGenerator extends React.Component {
 
     this.state = getPersistedState(this.defaultState, true);
 
-    console.log(this.state.resizePosition)
-
     // this.state.previewContentLoaded = this.state.image ? this.state.previewContentLoaded : true;
     this.state.previewContentLoaded = this.state.image ? false : true;
 
@@ -45,6 +43,10 @@ class SingleWindowGenerator extends React.Component {
     this.handleWrapperMount = this.handleWrapperMount.bind(this);
     this.handleWrapperResize = this.handleWrapperResize.bind(this);
     this.handlePreviewUpdate = this.handlePreviewUpdate.bind(this);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWrapperResize);
   }
 
   generatePreviewCSS(styles = {}) {
