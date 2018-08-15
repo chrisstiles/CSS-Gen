@@ -16,9 +16,6 @@ class SingleWindowPreview extends React.Component {
       axisSelected: false
     };
 
-    // The axis for dragging the preview window
-    // this.axis = 'both';
-
     this.generateResizeStyles = this.generateResizeStyles.bind(this);
     this.checkPreviewPosition = this.checkPreviewPosition.bind(this);
     this.handleDragStart = this.handleDragStart.bind(this);
@@ -120,19 +117,6 @@ class SingleWindowPreview extends React.Component {
         this.setState({ axisSelected: false, axis: 'both' });
       }
     }
-
-    // if (axis === 'x') {
-    //   dragX = x;
-    //   dragY = lastY;
-    // } else if (axis === 'y') {
-    //   dragX = lastX;
-    //   dragY = y;
-    // } else {
-    //   dragX = x;
-    //   dragY = y;
-    // }
-
-    // this.props.onUpdate({ dragX, dragY });
   }
 
   handleDragStop(event, data) {
@@ -155,8 +139,6 @@ class SingleWindowPreview extends React.Component {
     this.draggable.setState({ x: dragX, y: dragY });
     this.checkPreviewPosition();
     this.props.onUpdate({ dragX, dragY });
-
-    console.log(dragX, dragY);
   }
 
   handleResizeStart() {
@@ -193,7 +175,7 @@ class SingleWindowPreview extends React.Component {
     
     if (directions.includes(direction)) {
       if (direction === 'bottomLeft') {
-        // x = left;
+        x = left;
       } else if (direction === 'topRight') {
         y = top;
       } else {

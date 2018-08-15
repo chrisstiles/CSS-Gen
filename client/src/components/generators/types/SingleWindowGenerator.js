@@ -26,6 +26,8 @@ class SingleWindowGenerator extends React.Component {
 
     this.state = getPersistedState(this.defaultState, true);
 
+    console.log(this.state.resizePosition)
+
     // this.state.previewContentLoaded = this.state.image ? this.state.previewContentLoaded : true;
     this.state.previewContentLoaded = this.state.image ? false : true;
 

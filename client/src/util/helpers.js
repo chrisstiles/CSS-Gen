@@ -36,27 +36,16 @@ export function updateGlobalState(stateOrValue, name) {
 }
 
 export function extendSameTypes(object1, object2) {
-  const newObject = _.extend({}, object1);
+  const newObject = _.extend({}, object1, object2);
 
-  _.mapObject(object1, (value, key) => {
-    // Property doesn't exist in second object
-    if (!object2.hasOwnProperty(key)) {
-      return value;
+  _.each(newObject, (value, key) => {
+    const defaultValue = object1[key];
+
+    if (typeof value !== typeof defaultValue) {
+      newObject[key] = defaultValue;
+      return;
     }
-
-    const newValue = object2[key];
-
-    // Types of values are different
-    if (typeof value !== typeof newValue) {
-      return value;
-    }
-
-    // Make sure all values in object are of same type
-    if (typeof value === 'object') {
-      return extendSameTypes(value, newValue);
-    } else {
-      return newValue;
-    }
+    
   });
 
   return newObject;
