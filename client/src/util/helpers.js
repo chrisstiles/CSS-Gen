@@ -35,6 +35,33 @@ export function updateGlobalState(stateOrValue, name) {
 	_updateGlobalState(state);
 }
 
+export function extendSameTypes(object1, object2) {
+  const newObject = _.extend({}, object1);
+
+  _.mapObject(object1, (value, key) => {
+    // Property doesn't exist in second object
+    if (!object2.hasOwnProperty(key)) {
+      return value;
+    }
+
+    const newValue = object2[key];
+
+    // Types of values are different
+    if (typeof value !== typeof newValue) {
+      return value;
+    }
+
+    // Make sure all values in object are of same type
+    if (typeof value === 'object') {
+      return extendSameTypes(value, newValue);
+    } else {
+      return newValue;
+    }
+  });
+
+  return newObject;
+}
+
 export function getPersistedState(defaultState, isPreview) {
   var state = _.extend({}, defaultState);
 
@@ -56,7 +83,10 @@ export function getPersistedState(defaultState, isPreview) {
     	}
 
       if (previousState) {
-        state = _.extend(state, previousState);
+        // Loop through previous state and only add ones 
+        // of the values of same type as default state
+        state = extendSameTypes(state, previousState);
+
       }
     } catch(e) {
       console.log(e);
@@ -351,9 +381,9 @@ export function getImageSize(width, height, wrapper) {
 
 export function bytesToSize(bytes) {
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-  if (bytes == 0) return 'n/a';
-  var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-  if (i == 0) return bytes + ' ' + sizes[i];
+  if (bytes === 0) return 'n/a';
+  var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+  if (i === 0) return bytes + ' ' + sizes[i];
   return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
 };
 
