@@ -137,7 +137,6 @@ class AnglePicker extends React.Component {
       inputClassName += ' disabled';
     }
 
-
     return (
       <div className={className}>
         <div className="table-wrapper">

@@ -37,8 +37,10 @@ class FilterInputs extends React.Component {
       <div>
         <AnglePicker
           label="Hue Rotate"
-          angle={0}
+          angle={this.props.hueRotate.value}
           onChange={this.handleChange}
+          onActiveToggle={this.handleActiveToggle}
+          isActive={this.props.hueRotate.isActive}
           name="hueRotate"
           optional={true}
         />
