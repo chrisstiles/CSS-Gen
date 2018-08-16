@@ -7,7 +7,7 @@ const sliders = [
   { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200, appendString: 'px' },
   { title: 'Vertical Shift', name: 'verticalShift', min: -200, max: 200, appendString: 'px' },
   { title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px' },
-  { title: 'Spread Radius', name: 'spreadRadius', min: 0, max: 100, appendString: 'px' },
+  { title: 'Spread Radius', name: 'spreadRadius', min: -100, max: 100, appendString: 'px' },
   { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%' }
 ];
 
