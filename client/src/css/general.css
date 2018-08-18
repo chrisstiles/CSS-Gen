@@ -1482,9 +1482,12 @@ input[type="number"],
   .position-select-wrapper .offset-sliders .title {
     margin-bottom: 0; }
 
+.angle-picker-wrapper {
+  margin-bottom: 0; }
+
 .angle-picker {
-  width: 75px;
-  height: 75px;
+  width: 85px;
+  height: 85px;
   position: relative;
   margin-top: 9px;
   float: left;

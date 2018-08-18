@@ -1,9 +1,13 @@
 $circle-offset-value: 12;
 $circle-offset: #{$circle-offset-value}px;
 
+.angle-picker-wrapper {
+  margin-bottom:0;
+}
+
 .angle-picker {
-  width:75px;
-  height:75px;
+  width:85px;
+  height:85px;
   position:relative;
   margin-top:9px;
   float:left;

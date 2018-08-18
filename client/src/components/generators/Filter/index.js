@@ -19,13 +19,17 @@ const filters = {
 	hueRotate: { value: 0, slider: false, unit: 'deg' }
 };
 
+const dropShadowSliders = [
+  { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200, appendString: 'px', value: 0 },
+  { title: 'Vertical Shift', name: 'verticalShift', min: -200, max: 200, appendString: 'px', value: 12 },
+  { title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px', value: 40 },
+  { title: 'Spread Radius', name: 'spreadRadius', min: -100, max: 100, appendString: 'px', value: 0 },
+  { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%', value: '#000' }
+];
+
 class Filter extends React.Component {
 	constructor(props) {
 		super(props);
-
-		this.defaultState = {
-			
-		};
 
 		// Add basic filters that only require one slider
 		this.filterSliders = [];
@@ -39,13 +43,14 @@ class Filter extends React.Component {
 			return { value, isActive: false };
 		})
 
-		// this.defaultState = _.mapObject(filters, ({ title, name, min, max, value, unit }, key) => {
-		// 	this.filterSliders.push({ title, name, min, max, appendString: unit });
+		// Add drop shadow separately
+		this.defaultState.dropShadow = {
+			isActive: false
+		};
 
-		// 	return { value, isActive: false };
-		// });
-
-
+		_.each(dropShadowSliders, ({ name, value }) => {
+			this.defaultState.dropShadow[name] = value;
+		});
 
 		this.previewStyles = {
 			image: waterfall
@@ -95,6 +100,7 @@ class Filter extends React.Component {
 			<FilterInputs
 				updateGenerator={this.updateGenerator}
 				sliders={this.filterSliders}
+				dropShadowSliders={dropShadowSliders}
 				{...this.state}
 			/>
 		);

@@ -120,7 +120,7 @@ class AnglePicker extends React.Component {
       transform: `rotate(${this.props.angle}deg)`
     };
 
-    var className = 'field-wrapper';
+    var className = 'field-wrapper angle-picker-wrapper';
 
     if (this.props.className) {
       className += ` ${this.props.className}`;
