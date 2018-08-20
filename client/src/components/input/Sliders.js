@@ -2,9 +2,8 @@ import React from 'react';
 import Slider from './Slider';
 import _ from 'underscore';
 
-const Sliders = ({sliders, onChange, onActiveToggle, optional, ...initialState}) => {
+const Sliders = ({title, sliders, onChange, onActiveToggle, optional, ...initialState}) => {
   const fields = _.map(sliders, ({ step = 1, divider = false, name, ...restProps }) => {
-
     const sliderOwner = initialState[name];
 
     var value, isActive;
@@ -14,6 +13,8 @@ const Sliders = ({sliders, onChange, onActiveToggle, optional, ...initialState})
     } else {
       value = sliderOwner;
     }
+
+    // console.log(value)
 
     return (
       <div key={name}>
@@ -36,8 +37,11 @@ const Sliders = ({sliders, onChange, onActiveToggle, optional, ...initialState})
 
   return (
     <div 
-      className="sliders-wrapper"
+      className="field-wrapper sliders-wrapper"
     >
+      {title ? 
+        <label className="title">{title}</label>
+      : null}
       {fields}
     </div>
   );

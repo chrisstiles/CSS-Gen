@@ -51,6 +51,14 @@ class FilterInputs extends React.Component {
           optional={true}
           {...this.props}
         />
+        <Sliders
+          title="Drop Shadow"
+          sliders={this.props.dropShadowSliders}
+          sliderClassName="half"
+          onChange={this.handleChange}
+          onActiveToggle={this.handleActiveToggle}
+          {...this.props.dropShadow}
+        />
       </div>
 		);
 	}

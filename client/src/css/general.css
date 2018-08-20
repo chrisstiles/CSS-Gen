@@ -711,6 +711,8 @@ p:last-child {
     float: left; }
     .field-wrapper.half .title {
       font-size: 12px; }
+    .field-wrapper.half:nth-child(even) {
+      margin-right: 0 !important; }
   .field-wrapper.no-margin {
     margin-right: 0 !important; }
   .field-wrapper .title {

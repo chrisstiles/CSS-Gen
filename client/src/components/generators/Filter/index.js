@@ -20,11 +20,11 @@ const filters = {
 };
 
 const dropShadowSliders = [
-  { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200, appendString: 'px', value: 0 },
-  { title: 'Vertical Shift', name: 'verticalShift', min: -200, max: 200, appendString: 'px', value: 12 },
-  { title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px', value: 40 },
-  { title: 'Spread Radius', name: 'spreadRadius', min: -100, max: 100, appendString: 'px', value: 0 },
-  { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%', value: '#000' }
+  { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200, appendString: 'px', value: 0, className: 'half' },
+  { title: 'Vertical Shift', name: 'verticalShift', min: -200, max: 200, appendString: 'px', value: 12, className: 'half no-margin' },
+  { title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px', value: 40, className: 'half' },
+  { title: 'Spread Radius', name: 'spreadRadius', min: -100, max: 100, appendString: 'px', value: 0, className: 'half no-margin' },
+  { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%', value: 15, className: 'half no-margin' }
 ];
 
 class Filter extends React.Component {
@@ -99,7 +99,7 @@ class Filter extends React.Component {
 		return (
 			<FilterInputs
 				updateGenerator={this.updateGenerator}
-				sliders={this.filterSliders}
+				filterSliders={this.filterSliders}
 				dropShadowSliders={dropShadowSliders}
 				{...this.state}
 			/>

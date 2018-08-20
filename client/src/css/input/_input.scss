@@ -44,6 +44,10 @@
     .title {
       font-size:12px;
     }
+
+    &:nth-child(even) {
+      margin-right:0 !important;
+    }
   }
 
   &.no-margin {
