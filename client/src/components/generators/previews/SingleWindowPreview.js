@@ -276,6 +276,8 @@ class SingleWindowPreview extends React.Component {
 
     var className = 'generator-preview';
     var { width, height } = this.props.size;
+    var { min: minWidth, max: maxWidth } = this.props.constraints.width;
+    var { min: minHeight, max: maxHeight } = this.props.constraints.height;
 
     var borderAdjustment = 0;
     if (styles.boxSizing === 'content-box') {
@@ -283,6 +285,8 @@ class SingleWindowPreview extends React.Component {
       borderAdjustment = parseInt(styles.borderWidth, 10) * 2;
       width += borderAdjustment;
       height += borderAdjustment;
+      minWidth += borderAdjustment;
+      minHeight += borderAdjustment;
     }
 
     if (this.state.resizing) {
@@ -319,10 +323,10 @@ class SingleWindowPreview extends React.Component {
             className={className}
             style={this.resizeStyles}
             size={{ width, height }}
-            minWidth={this.props.constraints.width.min}
-            maxWidth={this.props.constraints.width.max}
-            minHeight={this.props.constraints.height.min}
-            maxHeight={this.props.constraints.height.max}
+            minWidth={minWidth}
+            maxWidth={maxWidth}
+            minHeight={minHeight}
+            maxHeight={maxHeight}
             onResizeStart={this.handleResizeStart}
             onResizeStop={this.handleResizeStop}
             onResize={this.handleResize}
