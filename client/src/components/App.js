@@ -44,7 +44,8 @@ class PrimaryLayout extends React.Component {
     // Global state
     this.state = {
       showPreviewText: true,
-      outputPreviewStyles: false
+      outputPreviewStyles: false,
+      showBrowserPrefixes: false
     }
 
     this.globalDefaults = _.extend({}, this.state);

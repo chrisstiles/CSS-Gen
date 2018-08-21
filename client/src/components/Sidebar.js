@@ -1,7 +1,7 @@
 import React from 'react';
 import CodeOutput from './CodeOutput';
 
-const Sidebar = ({ property, children, outputCSS, outputPreviewStyles, previewCSS, browserPrefixes }) => {
+const Sidebar = ({ property, children, outputCSS, outputPreviewStyles, previewCSS, hasBrowserPrefixes, showBrowserPrefixes }) => {
   return (
     <div id="sidebar">
     <div className="sidebar-title">Controls</div>
@@ -13,7 +13,8 @@ const Sidebar = ({ property, children, outputCSS, outputPreviewStyles, previewCS
         outputCSS={outputCSS}
         outputPreviewStyles={outputPreviewStyles}
         previewCSS={previewCSS}
-        browserPrefixes={browserPrefixes}
+        hasBrowserPrefixes={hasBrowserPrefixes}
+        showBrowserPrefixes={showBrowserPrefixes}
       />
     </div>
   );

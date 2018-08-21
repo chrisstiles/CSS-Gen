@@ -3,7 +3,7 @@ import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import prettify from 'postcss-prettify';
 import Toggle from './input/Toggle';
-import { addNotification, getNotificationTypes } from '../util/helpers';
+import { addNotification, getNotificationTypes, updateGlobalState, getGlobalState } from '../util/helpers';
 
 class CodeOutput extends React.Component {
   constructor(props) {
@@ -13,8 +13,7 @@ class CodeOutput extends React.Component {
     this.copyCSS = this.copyCSS.bind(this);
 
     this.state = { 
-      css: '',
-      showBrowserPrefixes: false
+      css: ''
     };
 
     this.canShowCopyNotification = true;
@@ -34,7 +33,7 @@ class CodeOutput extends React.Component {
     this.getCSS(newProps);
   }
 
-  getCSS(newProps, showBrowserPrefixes) {
+  getCSS(newProps) {
     var css = newProps.outputCSS;
 
     if (newProps.outputPreviewStyles && newProps.previewCSS) {
@@ -43,9 +42,9 @@ class CodeOutput extends React.Component {
 
     // Add plugins to format code and add prefixes if necessary
     const plugins = [prettify];
-    const showPrefixes = showBrowserPrefixes === undefined ? this.state.showBrowserPrefixes : showBrowserPrefixes;
+    const showPrefixes = getGlobalState().showBrowserPrefixes;
 
-    if (showPrefixes && this.props.browserPrefixes) {
+    if (showPrefixes && this.props.hasBrowserPrefixes) {
       plugins.unshift(autoprefixer({ browsers: ['ie >= 8', '> 4%'] }));
     }
 
@@ -102,18 +101,17 @@ class CodeOutput extends React.Component {
   }
 
   handleToggleChange(value) {
-    this.setState({ showBrowserPrefixes: value });
-    this.getCSS(this.props, value);
+    updateGlobalState({ showBrowserPrefixes: value });
   }
 
   renderPrefixesToggle() {
-    if (this.props.browserPrefixes) {
+    if (this.props.hasBrowserPrefixes) {
       return (
         <div className="field-wrapper left small">
           <Toggle
             onChange={this.handleToggleChange}
             label="Browser Prefixes"
-            defaultChecked={this.state.showBrowserPrefixes}
+            checked={this.props.showBrowserPrefixes}
           />
         </div>
       );

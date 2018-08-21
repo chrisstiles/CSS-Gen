@@ -130,7 +130,7 @@ class Filter extends React.Component {
 
 	      // Generator settings
 	      hideToolbarBackground={true}
-	      browserPrefixes={true}
+	      hasBrowserPrefixes={true}
 
 	      // Render generator components
 	      renderInputs={this.renderInputs}

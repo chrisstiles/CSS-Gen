@@ -114,8 +114,9 @@ class Generator extends React.Component {
             <Sidebar
               outputCSS={this.props.generatorState.css.output}
               outputPreviewStyles={this.props.outputPreviewStyles}
+              showBrowserPrefixes={this.props.showBrowserPrefixes}
               previewCSS={previewCSS}
-              browserPrefixes={this.props.browserPrefixes}
+              hasBrowserPrefixes={this.props.hasBrowserPrefixes}
             >
               {this.props.renderInputs()}
             </Sidebar>
