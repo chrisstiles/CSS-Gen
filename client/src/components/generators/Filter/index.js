@@ -1,7 +1,7 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import FilterInputs from './FilterInputs';
-import { getPersistedState, generateCSSString, jsToCss, hexOrRgba } from '../../../util/helpers';
+import { getState, generateCSSString, jsToCss, hexOrRgba } from '../../../util/helpers';
 import tinycolor from 'tinycolor2';
 import _ from 'underscore';
 
@@ -53,11 +53,31 @@ class Filter extends React.Component {
 			this.defaultState.dropShadow[name] = defaultValue;
 		});
 
+		this.stateTypes = {
+			blur: { value: Number, isActive: Boolean },
+			brightness: { value: Number, isActive: Boolean },
+			contrast: { value: Number, isActive: Boolean },
+			grayscale: { value: Number, isActive: Boolean },
+			invert: { value: Number, isActive: Boolean },
+			opacity: { value: Number, isActive: Boolean },
+			saturate: { value: Number, isActive: Boolean },
+			sepia: { value: Number, isActive: Boolean },
+			hueRotate: { value: Number, isActive: Boolean },
+			dropShadow: {
+				isActive: Boolean,
+				blurRadius: Number,
+				horizontalShift: Number,
+				verticalShift: Number,
+				shadowColor: null,
+				shadowOpacity: Number
+			}
+		};
+
+		this.state = getState(this.defaultState, this.stateTypes);
+
 		this.previewStyles = {
 			image: waterfall
 		};
-
-		this.state = getPersistedState(this.defaultState);
 
 		// Make sure shadow alpha is correct
 		const { shadowColor, shadowOpacity } = this.state.dropShadow;
@@ -94,7 +114,7 @@ class Filter extends React.Component {
 
 		// Add drop shadow
 		if (rules.dropShadow.isActive) {
-			const { horizontalShift, verticalShift, blurRadius, shadowOpacity, shadowColor } = rules.dropShadow;
+			const { horizontalShift, verticalShift, blurRadius, shadowColor } = rules.dropShadow;
 			filtersString += `drop-shadow(${horizontalShift}px ${verticalShift}px ${blurRadius}px ${hexOrRgba(shadowColor)})`;
 		}
 

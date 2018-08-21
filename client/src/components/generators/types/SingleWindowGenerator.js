@@ -3,7 +3,7 @@ import Generator from '../../Generator';
 import SingleWindowToolbar from '../toolbars/SingleWindowToolbar';
 import SingleWindowPreview from '../previews/SingleWindowPreview';
 import FileDrop from '../../FileDrop';
-import { getGlobalDefaults, updateGlobalState, getImageSize, getNativeImageSize, getPersistedState } from '../../../util/helpers';
+import { getGlobalDefaults, updateGlobalState, getImageSize, getNativeImageSize, getState } from '../../../util/helpers';
 import _ from 'underscore';
 
 class SingleWindowGenerator extends React.Component {
@@ -24,7 +24,19 @@ class SingleWindowGenerator extends React.Component {
 
     _.extend(this.defaultState, props.previewStyles);
 
-    this.state = getPersistedState(this.defaultState, true);
+    this.stateTypes = {
+      width: Number,
+      height: Number,
+      dragX: Number,
+      dragY: Number,
+      backgroundColor: String,
+      hasResized: Boolean,
+      resizePosition: { x: Number, y: Number },
+      image: null,
+      resizeMarginAdjustment: Number
+    };
+
+    this.state = getState(this.defaultState, this.stateTypes, true);
 
     // this.state.previewContentLoaded = this.state.image ? this.state.previewContentLoaded : true;
     this.state.previewContentLoaded = this.state.image ? false : true;

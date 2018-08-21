@@ -2,7 +2,7 @@ import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import BorderRadiusInputs from './BorderRadiusInputs';
 import BorderRadiusPresets from './BorderRadiusPresets';
-import { getPersistedState, generateCSSString } from '../../../util/helpers';
+import { getState, generateCSSString } from '../../../util/helpers';
 import _ from 'underscore';
 
 class BorderRadius extends React.Component {
@@ -29,7 +29,24 @@ class BorderRadius extends React.Component {
       inset: true
     };
 
-    this.state = getPersistedState(this.defaultState);
+    this.stateTypes = {
+      radius: Number,
+      units: String,
+      topLeft: Number,
+      topLeftUnits: String,
+      topRight: Number,
+      topRightUnits: String,
+      bottomRight: Number,
+      bottomRightUnits: String,
+      bottomLeft: Number,
+      bottomLeftUnits: String,
+      borderStyle: String,
+      borderColor: String,
+      borderWidth: Number,
+      inset: Boolean
+    };
+
+    this.state = getState(this.defaultState, this.stateTypes);
 
     this.previewStyles = {
       backgroundColor: '#4834D4'

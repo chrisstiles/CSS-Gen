@@ -2,6 +2,7 @@ import React from 'react';
 import Sliders from '../../input/Sliders';
 import AnglePicker from '../../input/AnglePicker';
 import ColorPicker from '../../input/ColorPicker';
+import { hexOrRgba } from '../../../util/helpers';
 import tinycolor from 'tinycolor2';
 import _ from 'underscore';
 
@@ -40,7 +41,7 @@ class FilterInputs extends React.Component {
       state.dropShadow.shadowOpacity = parseInt(alpha, 10);
     } else if (name === 'shadowOpacity') {
       const color = this.props.dropShadow.shadowColor;
-      state.dropShadow.shadowColor = tinycolor(color).setAlpha(value / 100);
+      state.dropShadow.shadowColor = hexOrRgba(tinycolor(color).setAlpha(value / 100));
     }
 
     state.dropShadow[name] = value;

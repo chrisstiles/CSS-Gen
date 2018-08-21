@@ -51,6 +51,134 @@ export function extendSameTypes(object1, object2) {
   return newObject;
 }
 
+export function areSameType(a, b) {
+	return getType(a) === getType(b);
+}
+
+export function getType(a) {
+	if (a === null) {
+		return 'null';
+	}
+
+	if (a === undefined) {
+		return 'undefined';
+	}
+
+	const type = typeof a;
+
+	if (type === 'function') {
+		const types = ['String', 'Number', 'Boolean', 'Array', 'Object'];
+		const name = a.name;
+
+		if (types.indexOf(name) !== -1) {
+			// Passed in variable type function
+			return a.name.toLowerCase(); 
+		} else {
+			return name;
+		} 
+	}
+
+	if (a === 'object') {
+		const constructorName = type.constructor.name;
+
+		if (constructorName) {
+			if (constructorName === 'Object') {
+				return 'object';
+			} else {
+				return constructorName;
+			}
+		}
+	}
+
+	return type;
+}
+
+export function isArrayOfType(array, correct) {
+	// If array is empty it is not of valid type
+	if (!array) {
+		return false;
+	}
+
+	const value = array[0];
+	const type = getType(correct);
+
+	if (type === 'object') {
+		return isObjectOfShape(value, correct);
+	} else if (type === 'array') {
+		var isValid = true;
+
+		_.each(correct, (element, index) => {
+			if (!areSameType(element, value[index])) {
+				isValid = false;
+				return;
+			}
+		});
+
+		return isValid;
+	} else {
+		return areSameType(value, correct);
+	}
+
+}
+
+export function isObjectOfShape(object, shape) {
+	if (getType(object) !== 'object') {
+		return false;
+	}
+
+	var correctShape = true;
+
+	_.each(shape, (value, key) => {
+		// Object does not have this key
+		if (!object.hasOwnProperty(key)) {
+			correctShape = false;
+			console.log('here')
+			return;
+		}
+
+		// Do nothing if type is allowed to be null
+		if (value === null) {
+			return;
+		}
+
+		const type = getType(value);
+
+		// Variable is child object
+		if (type === 'object') {
+			if (!isObjectOfShape(object[key], value)) {
+				correctShape = false;
+				console.log(value, object[key])
+				return;
+			}
+		}
+
+		// Variable is array
+		if (type === 'array') {
+			if (!isArrayOfType(object[key], value)) {
+				correctShape = false;
+				console.log('here')
+				return;
+			}
+		}
+
+		if (!areSameType(value, object[key])) {
+			correctShape = false;
+			console.log(value, object[key])
+			return;
+		}
+	});
+
+	return correctShape;
+}
+
+export function isValidState(state, types) {
+	if (!_.isObject(state)) {
+		return false;
+	}
+
+	return isObjectOfShape(state, types);
+}
+
 export function getPersistedState(defaultState, isPreview) {
   var state = _.extend({}, defaultState);
 
@@ -82,7 +210,63 @@ export function getPersistedState(defaultState, isPreview) {
     }
   }
 
+  // Make sure we don't return any tinycolor objects
+  // state = replaceTinyColors(state);
+
+  replaceTinyColors(state)
+
   return state;
+}
+
+export function replaceTinyColors(obj) {
+	var returnObject = obj;
+
+	const objectType = getType(obj);
+
+	if (objectType === 'array') {
+		returnObject = _.map(obj, element => {
+			return replaceTinyColors(element);
+		});
+	}
+
+	// Object is already tinycolor
+	if (objectType === 'object') {
+		if (obj.toHex) {
+			return hexOrRgba(obj);
+		}
+
+	  returnObject = _.mapObject(obj, (value, key) => {
+	  	const type = getType(value);
+
+	  	if (type === 'object') {
+	  		if (value.toHex) {
+	  			// This is a tinycolor object
+	  			return hexOrRgba(value);
+	  		} else {
+					return replaceTinyColors(value);
+	  		}
+	  	} else if (type === 'array') {
+	  		return _.each(value, (element, index) => {
+	  			return replaceTinyColors(element);
+	  		})
+	  	} else {
+	  		// Not a tinycolor
+	  		return value;
+	  	}
+	  });
+	}
+
+	return returnObject;
+}
+
+export function getState(defaultState, stateTypes, isPreview) {
+	const state = getPersistedState(defaultState, isPreview);
+
+	if (isValidState(state, stateTypes)) {
+		return state;
+	} else {
+		return defaultState;
+	}
 }
 
 export function cssToJs(name) {

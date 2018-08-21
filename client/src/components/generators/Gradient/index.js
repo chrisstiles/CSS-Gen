@@ -3,7 +3,7 @@ import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import GradientInputs from './GradientInputs';
 import GradientPresets from './GradientPresets';
 import generateGradient from './generate-gradient';
-import { getPersistedState } from '../../../util/helpers';
+import { getState } from '../../../util/helpers';
 import _ from 'underscore';
 
 class Gradient extends React.Component {
@@ -27,7 +27,21 @@ class Gradient extends React.Component {
       angle: 90
     };
 
-    this.state = getPersistedState(this.defaultState);
+    this.stateTypes = {
+      palette: [
+        { pos: Number, color: String }
+      ],
+      type: String,
+      repeating: Boolean,
+      shape: String,
+      extendKeyword: String,
+      position: String,
+      positionX: Number,
+      positionY: Number,
+      angle: Number
+    };
+
+    this.state = getState(this.defaultState, this.stateTypes);
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
