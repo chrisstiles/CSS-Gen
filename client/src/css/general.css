@@ -464,12 +464,18 @@ p:last-child {
     color: #828282;
     margin-bottom: 9px;
     margin-bottom: 24px; }
-  #sidebar .sliders-wrapper:first-child {
-    padding-top: 4px; }
-  #sidebar .sliders-wrapper:after {
-    clear: both;
-    content: "";
-    display: block; }
+  #sidebar .sliders-wrapper {
+    position: relative; }
+    #sidebar .sliders-wrapper:first-child {
+      padding-top: 4px; }
+    #sidebar .sliders-wrapper:after {
+      clear: both;
+      content: "";
+      display: block; }
+    #sidebar .sliders-wrapper .top {
+      margin-bottom: 15px; }
+      #sidebar .sliders-wrapper .top .title {
+        vertical-align: middle; }
   #sidebar .divider {
     height: 2px;
     background-color: #d2d2d2;
@@ -692,7 +698,7 @@ p:last-child {
   display: block; }
 
 .field-wrapper {
-  margin-bottom: 20px; }
+  margin-bottom: 21px; }
   .field-wrapper:after {
     clear: both;
     content: "";
@@ -705,14 +711,39 @@ p:last-child {
     text-align: right; }
     .field-wrapper.right .toggle-wrapper {
       margin-right: -3px; }
+  .field-wrapper.half .title, .field-wrapper.small .title {
+    font-size: 12px; }
   .field-wrapper.half {
     width: calc(50% - 8px);
     margin-right: 16px;
     float: left; }
-    .field-wrapper.half .title {
-      font-size: 12px; }
     .field-wrapper.half:nth-child(even) {
       margin-right: 0 !important; }
+  .field-wrapper.w10 {
+    width: 10%; }
+  .field-wrapper.w20 {
+    width: 20%; }
+  .field-wrapper.w30 {
+    width: 30%; }
+  .field-wrapper.w40 {
+    width: 40%; }
+  .field-wrapper.w50 {
+    width: 50%; }
+  .field-wrapper.w60 {
+    width: 60%; }
+  .field-wrapper.w70 {
+    width: 70%; }
+  .field-wrapper.w80 {
+    width: 80%; }
+  .field-wrapper.w90 {
+    width: 90%; }
+  .field-wrapper.w100 {
+    width: 100%; }
+  .field-wrapper.align-right {
+    float: right;
+    text-align: right; }
+    .field-wrapper.align-right .color-preview {
+      float: right; }
   .field-wrapper.no-margin {
     margin-right: 0 !important; }
   .field-wrapper .title {
@@ -728,7 +759,8 @@ p:last-child {
   display: table;
   width: 100%; }
   .table-wrapper .active-toggle,
-  .table-wrapper .input {
+  .table-wrapper .input,
+  .table-wrapper .title {
     display: table-cell;
     vertical-align: top; }
   .table-wrapper .active-toggle {
@@ -1085,10 +1117,11 @@ input[type="number"],
   border-top-color: #6c6c6c; }
 
 .color-wrapper {
-  position: relative; }
+  position: relative;
+  margin-bottom: 0; }
   .color-wrapper.no-title {
     margin-top: -10px; }
-  .color-wrapper.small .color-preview {
+  .color-wrapper.small-preview .color-preview {
     width: 40px;
     height: 40px; }
 

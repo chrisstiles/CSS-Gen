@@ -81,7 +81,6 @@ class Slider extends React.Component {
   }
 
   render() {
-    // const { value } = this.state;
     const { value, optional } = this.props;
     const min = this.props.units === '%' ? 0 : this.min;
     const max = this.props.units === '%' ? 100 : this.max;

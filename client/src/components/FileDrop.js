@@ -1,6 +1,6 @@
 import React from 'react';
 import LoadingSpinner from './LoadingSpinner';
-import { addNotification, getNotificationTypes, getNativeImageSize, getImageSize, bytesToSize } from '../util/helpers';
+import { addNotification, getNotificationTypes, getNativeImageSize, getImageSize } from '../util/helpers';
 
 class FileDrop extends React.Component {
 	constructor(props) {

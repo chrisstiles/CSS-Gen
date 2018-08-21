@@ -1,11 +1,12 @@
 .color-wrapper {
   position:relative;
+  margin-bottom:0;
 
   &.no-title {
     margin-top:-10px;
   }
 
-  &.small .color-preview {
+  &.small-preview .color-preview {
     width:40px;
     height:40px;
   }

@@ -49,6 +49,8 @@
   }
 
   .sliders-wrapper {
+    position:relative;
+    
     &:first-child {
       padding-top:4px;
     }
@@ -57,6 +59,14 @@
       clear:both;
       content:"";
       display:block;
+    }
+
+    .top {
+      margin-bottom:15px;
+
+      .title {
+        vertical-align: middle;
+      }
     }
   }
 

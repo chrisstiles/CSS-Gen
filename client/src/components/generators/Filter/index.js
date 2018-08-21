@@ -1,30 +1,30 @@
 import React from 'react';
 import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import FilterInputs from './FilterInputs';
-import { getPersistedState, generateCSSString, jsToCss } from '../../../util/helpers';
+import { getPersistedState, generateCSSString, jsToCss, hexOrRgba } from '../../../util/helpers';
+import tinycolor from 'tinycolor2';
 import _ from 'underscore';
 
 // Load default background images
 import waterfall from './images/waterfall.jpg';
 
 const filters = {
-	blur: { title: 'Gaussian Blur', name: 'blur', min: 0, max: 50, value: 0, unit: 'px' },
-	brightness: { title: 'Brightness', name: 'brightness', min: 0, max: 500, value: 100, unit: '%' },
-	contrast: { title: 'Contrast', name: 'contrast', min: 0, max: 500, value: 100, unit: '%' },
-	grayscale: { title: 'Grayscale', name: 'grayscale', min: 0, max: 100, value: 0, unit: '%' },
-	invert: { title: 'Invert', name: 'invert', min: 0, max: 100, value: 0, unit: '%' },
-	opacity: { title: 'Opacity', name: 'opacity', min: 0, max: 100, value: 100, unit: '%' },
-	saturate: { title: 'Saturation', name: 'saturate', min: 0, max: 500, value: 100, unit: '%' },
-	sepia: { title: 'Sepia', name: 'sepia', min: 0, max: 100, value: 0, unit: '%' },
-	hueRotate: { value: 0, slider: false, unit: 'deg' }
+	blur: { title: 'Gaussian Blur', name: 'blur', min: 0, max: 50, defaultValue: 0, unit: 'px' },
+	brightness: { title: 'Brightness', name: 'brightness', min: 0, max: 500, defaultValue: 100, unit: '%' },
+	contrast: { title: 'Contrast', name: 'contrast', min: 0, max: 500, defaultValue: 100, unit: '%' },
+	grayscale: { title: 'Grayscale', name: 'grayscale', min: 0, max: 100, defaultValue: 0, unit: '%' },
+	invert: { title: 'Invert', name: 'invert', min: 0, max: 100, defaultValue: 0, unit: '%' },
+	opacity: { title: 'Opacity', name: 'opacity', min: 0, max: 100, defaultValue: 100, unit: '%' },
+	saturate: { title: 'Saturation', name: 'saturate', min: 0, max: 500, defaultValue: 100, unit: '%' },
+	sepia: { title: 'Sepia', name: 'sepia', min: 0, max: 100, defaultValue: 0, unit: '%' },
+	hueRotate: { defaultValue: 0, slider: false, unit: 'deg' }
 };
 
 const dropShadowSliders = [
-  { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200, appendString: 'px', value: 0, className: 'half' },
-  { title: 'Vertical Shift', name: 'verticalShift', min: -200, max: 200, appendString: 'px', value: 12, className: 'half no-margin' },
-  { title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px', value: 40, className: 'half' },
-  { title: 'Spread Radius', name: 'spreadRadius', min: -100, max: 100, appendString: 'px', value: 0, className: 'half no-margin' },
-  { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%', value: 15, className: 'half no-margin' }
+	{ title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px', defaultValue: 10, className: 'small' },
+  { title: 'Shift X', name: 'horizontalShift', min: -200, max: 200, appendString: 'px', defaultValue: 0, className: 'half' },
+  { title: 'Shift Y', name: 'verticalShift', min: -200, max: 200, appendString: 'px', defaultValue: 20, className: 'half no-margin' },
+  { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%', defaultValue: 50, className: 'w70 small no-margin left' }
 ];
 
 class Filter extends React.Component {
@@ -34,22 +34,23 @@ class Filter extends React.Component {
 		// Add basic filters that only require one slider
 		this.filterSliders = [];
 
-		this.defaultState = _.mapObject(filters, ({ title, name, min, max, value, unit, slider }, key) => {
+		this.defaultState = _.mapObject(filters, ({ title, name, min, max, defaultValue, unit, slider }, key) => {
 
 			if (slider || slider === undefined) {
 				this.filterSliders.push({ title, name, min, max, appendString: unit });
 			}
 		
-			return { value, isActive: false };
+			return { value: defaultValue, isActive: false };
 		})
 
 		// Add drop shadow separately
 		this.defaultState.dropShadow = {
-			isActive: false
+			isActive: false,
+			shadowColor: '#000'
 		};
 
-		_.each(dropShadowSliders, ({ name, value }) => {
-			this.defaultState.dropShadow[name] = value;
+		_.each(dropShadowSliders, ({ name, defaultValue }) => {
+			this.defaultState.dropShadow[name] = defaultValue;
 		});
 
 		this.previewStyles = {
@@ -57,6 +58,10 @@ class Filter extends React.Component {
 		};
 
 		this.state = getPersistedState(this.defaultState);
+
+		// Make sure shadow alpha is correct
+		const { shadowColor, shadowOpacity } = this.state.dropShadow;
+		this.state.dropShadow.shadowColor = tinycolor(shadowColor).setAlpha(shadowOpacity / 100);
 
 		this.generateCSS = this.generateCSS.bind(this);
 		this.renderInputs = this.renderInputs.bind(this);
@@ -86,6 +91,12 @@ class Filter extends React.Component {
 				filtersString += cssString;
 			}
 		});
+
+		// Add drop shadow
+		if (rules.dropShadow.isActive) {
+			const { horizontalShift, verticalShift, blurRadius, shadowOpacity, shadowColor } = rules.dropShadow;
+			filtersString += `drop-shadow(${horizontalShift}px ${verticalShift}px ${blurRadius}px ${hexOrRgba(shadowColor)})`;
+		}
 
 		css.filter = filtersString.trim();
 

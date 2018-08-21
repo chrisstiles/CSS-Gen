@@ -179,13 +179,16 @@ class ColorPicker extends React.Component {
       }
     }
 
-    var className = "color-wrapper";
+    var className = "field-wrapper color-wrapper";
     if (this.props.className) {
       className += ` ${this.props.className}`;
     }
 
     return (
       <div className={className}>
+        {this.props.title ? 
+          <label className="title">{this.props.title}</label>
+        : null}
         {this.renderPreview(previewStyle)}
         { this.state.displayColorPicker ? <div>
           <div style={cover} onClick={this.handleClose} />

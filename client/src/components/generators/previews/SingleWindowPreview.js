@@ -93,7 +93,7 @@ class SingleWindowPreview extends React.Component {
   handleDrag(event, data) {
     // Restrict dragging to x or y axis if shift key is held
     const { deltaX, deltaY } = data;
-    var axis, dragX, dragY;
+    var axis;
 
     if (event.shiftKey) {
       if (!this.state.axisSelected) {
