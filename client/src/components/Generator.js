@@ -16,6 +16,7 @@ class Generator extends React.Component {
     this.handleKeydown = this.handleKeydown.bind(this);
     this.handleKeyup = this.handleKeyup.bind(this);
     this.renderPresets = this.renderPresets.bind(this);
+    this.renderToolbar = this.renderToolbar.bind(this);
 
     // Persist generator state to local storage
     this.persistState = _.debounce(newProps => {
@@ -85,16 +86,26 @@ class Generator extends React.Component {
     }
   }
 
+  renderToolbar() {
+    if (this.props.renderToolbar) {
+      return this.props.renderToolbar();
+    }
+  }
+
   render() {
     const cssClasses = `${this.props.className}${this.state.keys}`;
-    const { previewContentLoaded, previewCSS } = this.props.previewState;
+    var { previewContentLoaded, previewCSS } = this.props.previewState;
+
+    if (previewContentLoaded === undefined) {
+      previewContentLoaded = true;
+    }
 
     return (
       <Page
         title={this.props.title}
         heading={this.props.heading}
         intro={this.props.intro}
-        toolbar={this.props.renderToolbar()}
+        toolbar={this.renderToolbar()}
       >
         <div 
           id="generator-wrapper"

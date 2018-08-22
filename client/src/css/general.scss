@@ -101,7 +101,13 @@ p:last-child {
   width:100%;
 }
 
+#generator-wrapper {
+  margin-right: 323px;
+  position:relative;
+}
 
+
+/* ------------------------- */
 /* Media Queries */
 
 @media screen and (max-width: 1250px) {
@@ -114,10 +120,11 @@ p:last-child {
 /* ------------------------- */
 /* Imports */
 
-@import './notifications.scss';
+@import './_notifications.scss';
 @import './_nav-window.scss';
 @import './_header.scss';
-@import './_generator.scss';
+@import './_single-window-preview.scss';
+@import './_static-window-preview.scss';
 @import './_sidebar.scss';
 @import './_presets.scss';
 @import './_file-drop.scss';

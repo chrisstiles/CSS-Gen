@@ -1,0 +1,17 @@
+/* ------------------------- */
+/* Static Window Preview */
+
+#static-preview {
+	width:100%;
+	min-height:400px;
+	background-image:url('../images/checker-bg.svg');
+	background-size: 18px 18px;
+	background-repeat:repeat;
+	border-radius: 2px;
+	border: 1px solid #dddddd;
+	box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.03);
+	padding:40px;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}

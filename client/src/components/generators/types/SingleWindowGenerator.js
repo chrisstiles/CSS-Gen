@@ -99,7 +99,6 @@ class SingleWindowGenerator extends React.Component {
   }
 
   handleFileDrop(data) {
-    // console.log(data)
     this.setState(data);
     this.preview.reset(data.width);
   }
