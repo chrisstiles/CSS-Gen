@@ -1,5 +1,6 @@
 import React from 'react';
 import PositionSelect from '../../input/PositionSelect';
+import Slider from '../../input/Slider';
 import _ from 'underscore';
 
 class TriangleInputs extends React.Component {
@@ -27,14 +28,36 @@ class TriangleInputs extends React.Component {
 	}
 
 	render() {
+		const { direction, width, height } = this.props;
+
 	  return (
-	  	<PositionSelect
-	  	  label="Triangle Direction"
-	  	  name="direction"
-	  	  position={this.props.direction}
-	  	  onClick={this.handleChange}
-	  	  includeCenter={false}
-	  	/>
+	  	<div>
+		  	<PositionSelect
+		  	  label="Triangle Direction"
+		  	  name="direction"
+		  	  position={direction}
+		  	  onClick={this.handleChange}
+		  	  includeCenter={false}
+		  	/>
+		  	<Slider
+		  	  title="Width"
+		  	  name="width"
+		  	  onChange={this.handleChange}
+		  	  value={width}
+		  	  min={1}
+		  	  max={800}
+		  	  appendString="px"
+		  	/>
+		  	<Slider
+		  	  title="Height"
+		  	  name="height"
+		  	  onChange={this.handleChange}
+		  	  value={height}
+		  	  min={1}
+		  	  max={800}
+		  	  appendString="px"
+		  	/>
+	  	</div>
 	  );
 	}
 }
