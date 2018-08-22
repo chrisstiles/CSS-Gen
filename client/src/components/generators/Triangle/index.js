@@ -1,7 +1,7 @@
 import React from 'react';
 import StaticWindowGenerator from '../types/StaticWindowGenerator';
 import TriangleInputs from './TriangleInputs';
-import { getState } from '../../../util/helpers';
+import { getState, hexOrRgba, generateCSSString } from '../../../util/helpers';
 import _ from 'underscore';
 
 ////////////////////////////////////
@@ -22,7 +22,8 @@ class Triangle extends React.Component {
 			right: 75,
 			height: 120,
 			top: 60,
-			bottom: 60
+			bottom: 60,
+			color: '#4834d4'
 		};
 
 		this.stateTypes = {
@@ -33,7 +34,8 @@ class Triangle extends React.Component {
 			right: Number,
 			height: Number,
 			top: Number,
-			bottom: Number
+			bottom: Number,
+			color: String
 		};
 
 		this.state = getState(this.defaultState, this.stateTypes);
@@ -48,7 +50,8 @@ class Triangle extends React.Component {
 
 	generateCSS(styles = {}) {
 	  const rules = _.extend({}, this.state, styles);
-	  const { direction } = rules;
+	  const { direction, type, width, left, right, height, top, bottom } = rules;
+	  const color = hexOrRgba(rules.color);
 
 	  // Add styles that don't change
 	  const css = {
@@ -57,23 +60,47 @@ class Triangle extends React.Component {
 	  	borderStyle: 'solid'
 	  };
 
-
+	  // Isosceles
+	  if (type === 'isosceles') {
+	  	switch (direction) {
+	  		case 'top':
+	  			css.borderWidth = `0 ${width / 2}px ${height}px ${width / 2}px`;
+	  			css.borderColor = `transparent transparent ${color} transparent`;
+	  			break;
+	  		case 'top right':
+	  			css.borderWidth = `0 ${width}px ${width}px 0`;
+	  			css.borderColor = `transparent ${color} transparent transparent`;
+	  			break;
+	  		case 'right':
+	  			css.borderWidth = `${height / 2}px 0 ${height / 2}px ${width}px`;
+	  			css.borderColor = `transparent transparent transparent ${color}`;
+	  			break;
+	  		case 'bottom right':
+	  			css.borderWidth = `0 0 ${width}px ${width}px`;
+	  			css.borderColor = `transparent transparent ${color} transparent`;
+	  			break;
+	  		case 'bottom':
+	  			css.borderWidth = `${height}px ${width / 2}px 0 ${width / 2}px`;
+	  			css.borderColor = `${color} transparent transparent transparent`;
+	  			break;
+	  		case 'bottom left':
+	  			css.borderWidth = `${width}px 0 0 ${width}px`;
+	  			css.borderColor = `transparent transparent transparent ${color}`;
+	  			break;
+	  		case 'left':
+	  			css.borderWidth = `${height / 2}px ${width}px ${height / 2}px 0`;
+	  			css.borderColor = `transparent ${color} transparent transparent`;
+	  			break;
+	  		case 'top left':
+	  			css.borderWidth = `${width}px ${width}px 0 0`;
+	  			css.borderColor = `${color} transparent transparent transparent`;
+	  			break;
+	  	}
+	  }
 	  
 	  return {
-	    styles: {
-	    	width: 0,
-	    	height: 0,
-	    	borderStyle: 'solid',
-	    	borderWidth: '0 75px 120px 75px',
-	    	borderColor: 'transparent transparent #4834d4 transparent'
-	    },
-	    output: `
-	    	width: 0;
-	    	height: 0;
-	    	border-style: solid;
-	    	border-width: 0 75px 120px 75px;
-	    	border-color: transparent transparent #4834d4 transparent;
-	    `
+	    styles: css,
+	    output: generateCSSString(css)
 	  };
 	}
 

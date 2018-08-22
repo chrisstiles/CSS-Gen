@@ -440,6 +440,8 @@ p:last-child {
   display: flex;
   justify-content: center;
   align-items: center; }
+  #static-preview .preview {
+    transition: all .3s; }
 
 #sidebar {
   position: fixed;

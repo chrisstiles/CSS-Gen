@@ -213,7 +213,7 @@ export function getPersistedState(defaultState, isPreview) {
   // Make sure we don't return any tinycolor objects
   // state = replaceTinyColors(state);
 
-  replaceTinyColors(state)
+  // state = replaceTinyColors(state)
 
   return state;
 }

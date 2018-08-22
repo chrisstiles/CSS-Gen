@@ -1,5 +1,6 @@
 import React from 'react';
 import PositionSelect from '../../input/PositionSelect';
+import _ from 'underscore';
 
 class TriangleInputs extends React.Component {
 	constructor(props) {
@@ -9,8 +10,18 @@ class TriangleInputs extends React.Component {
 	}
 
 	handleChange(value, name) {
-	  var state = {};
-	  state[name] = value;
+		var state = {};
+		state[name] = value;
+
+		// Update width and height based on chosen direction
+		if (name === 'direction') {
+			const { type, width } = this.props;
+			const directions = ['top right', 'bottom right', 'bottom left', 'top left'];
+
+			if (type === 'isosceles' && _.contains(directions, value)) {
+				state.height = width;
+			}
+		}
 	  
 	  this.props.updateGenerator(state);
 	}
