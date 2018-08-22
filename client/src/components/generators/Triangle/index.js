@@ -1,7 +1,14 @@
 import React from 'react';
 import StaticWindowGenerator from '../types/StaticWindowGenerator';
+import TriangleInputs from './TriangleInputs';
 import { getState } from '../../../util/helpers';
 import _ from 'underscore';
+
+////////////////////////////////////
+// Scalene: 0 sides equal
+// Isosceles: 2 sides equal
+// Equilateral: 3 sides equal
+////////////////////////////////////
 
 class Triangle extends React.Component {
 	constructor(props) {
@@ -41,6 +48,16 @@ class Triangle extends React.Component {
 
 	generateCSS(styles = {}) {
 	  const rules = _.extend({}, this.state, styles);
+	  const { direction } = rules;
+
+	  // Add styles that don't change
+	  const css = {
+	  	width: 0,
+	  	height: 0,
+	  	borderStyle: 'solid'
+	  };
+
+
 	  
 	  return {
 	    styles: {
@@ -61,7 +78,12 @@ class Triangle extends React.Component {
 	}
 
 	renderInputs() {
-		return 'Hello';
+	  return (
+	    <TriangleInputs
+	      updateGenerator={this.updateGenerator}
+	      {...this.state}
+	    />
+	  );
 	}
 
 	render() {

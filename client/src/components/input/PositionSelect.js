@@ -10,7 +10,7 @@ class Position extends React.Component {
 
   handleClick() {
     if (!this.props.active) {
-      this.props.onClick(this.props.position, 'position');
+      this.props.onClick(this.props.position, this.props.name);
     }
   }
 
@@ -44,18 +44,23 @@ class PositionSelect extends React.Component {
   }
 
   render() {
-    const { position } = this.props;
+    const { position, positionX, positionY, label, includeCenter, name } = this.props;
     const positions = locations.map(location => {
-      const active = position === location;
+    const active = position === location;
 
-      return (
-        <Position 
-          key={location}
-          position={location} 
-          active={active}
-          onClick={this.handleChange}
-        />
-      );
+    if (includeCenter !== undefined && !includeCenter && location === 'center') {
+      return;
+    }
+
+    return (
+      <Position 
+        key={location}
+        position={location} 
+        active={active}
+        onClick={this.handleChange}
+        name={name || 'position'}
+      />
+    );
     });
 
     const xDisabled = ['center', 'top', 'bottom'].indexOf(position) !== -1;
@@ -63,31 +68,35 @@ class PositionSelect extends React.Component {
 
     return (
       <div className="field-wrapper position-select-wrapper">
-        <label className="title">{this.props.label}</label>
+        {label ? 
+          <label className="title">{label}</label>
+        : null}
         <div className="row">
           <div className="position-select">
             {positions}
           </div>
-          <div className="offset-sliders">
-            <Slider
-              title="X Offset"
-              name="positionX"
-              onChange={this.handleChange}
-              value={this.props.positionX}
-              disabled={xDisabled}
-              min={-500}
-              max={500}
-            />
-            <Slider
-              title="Y Offset"
-              name="positionY"
-              onChange={this.handleChange}
-              value={this.props.positionY}
-              disabled={yDisabled}
-              min={-500}
-              max={500}
-            />
-          </div>
+          {positionX && positionY ?
+            <div className="offset-sliders">
+              <Slider
+                title="X Offset"
+                name="positionX"
+                onChange={this.handleChange}
+                value={positionX}
+                disabled={xDisabled}
+                min={-500}
+                max={500}
+              />
+              <Slider
+                title="Y Offset"
+                name="positionY"
+                onChange={this.handleChange}
+                value={positionY}
+                disabled={yDisabled}
+                min={-500}
+                max={500}
+              />
+            </div>
+          : null}
         </div>
       </div>
     );
