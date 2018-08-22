@@ -439,7 +439,8 @@ p:last-child {
   padding: 40px;
   display: flex;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  overflow: hidden; }
 
 #sidebar {
   position: fixed;
