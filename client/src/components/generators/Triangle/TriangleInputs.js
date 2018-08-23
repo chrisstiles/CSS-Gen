@@ -14,15 +14,26 @@ class TriangleInputs extends React.Component {
 		var state = {};
 		state[name] = value;
 
+		const changeDirections = ['top right', 'bottom right', 'bottom left', 'top left'];
+
 		// Update width and height based on chosen direction
 		if (name === 'direction') {
 			const { type, width } = this.props;
-			const directions = ['top right', 'bottom right', 'bottom left', 'top left'];
 
-			if (type === 'isosceles' && _.contains(directions, value)) {
+			if (type === 'isosceles' && _.contains(changeDirections, value)) {
 				state.height = width;
 			}
 		}
+
+		const { direction } = this.props;
+
+		if (name === 'width' && _.contains(changeDirections, direction)) {
+			state.height = value;
+		}
+
+		if (name === 'height' && _.contains(changeDirections, direction)) {
+			state.width = value;
+		}		
 	  
 	  this.props.updateGenerator(state);
 	}
