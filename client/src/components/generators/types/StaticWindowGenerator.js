@@ -1,6 +1,7 @@
 import React from 'react';
 import Generator from '../../Generator';
 import StaticWindowPreview from '../previews/StaticWindowPreview';
+import Toolbar from '../toolbars/Toolbar';
 import { getState } from '../../../util/helpers';
 import _ from 'underscore';
 
@@ -20,7 +21,14 @@ class StaticWindowGenerator extends React.Component {
 
 		this.state = getState(this.defaultState, this.stateTypes, true);
 
+		this.reset = this.reset.bind(this);
 		this.renderPreview = this.renderPreview.bind(this);
+		this.renderToolbar = this.renderToolbar.bind(this);
+	}
+
+	reset() {
+		this.setState(this.defaultState);
+		this.props.updateGenerator(this.props.generatorDefaultState);
 	}
 
 	renderPreview() {
@@ -40,6 +48,21 @@ class StaticWindowGenerator extends React.Component {
 		);
 	}
 
+	renderToolbar() {
+		return (
+			<Toolbar>
+				<div className="right">
+				  <button
+				    className="button"
+				    onClick={this.reset}
+				  >
+				    Reset
+				  </button>
+				</div>
+			</Toolbar>
+		);
+	}
+
 	render() {
 		const { generatorState, renderInputs, renderPresets, title, heading, intro, className, hasBrowserPrefixes } = this.props;
 		const props = { generatorState, renderInputs, renderPresets, title, heading, intro, className, hasBrowserPrefixes };
@@ -47,6 +70,7 @@ class StaticWindowGenerator extends React.Component {
 		return (
 			<Generator
 				renderPreview={this.renderPreview}
+				renderToolbar={this.renderToolbar}
 				outputPreviewStyles={this.props.globalState.outputPreviewStyles}
 				showBrowserPrefixes={this.props.globalState.showBrowserPrefixes}
 				previewState={this.state}
