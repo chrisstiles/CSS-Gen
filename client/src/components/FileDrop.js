@@ -17,7 +17,7 @@ class FileDrop extends React.Component {
 		// Max file size for droped images. Although we don't 
 		// save these to a server, we prevent large images as they 
 		//impact performance and browsers have local starge limitations
-		this.maxFileSize = 1500000;
+		this.maxFileSize = 2000000;
 
 		this.hideOverlay= this.hideOverlay.bind(this);
 		this.handleDragEnter= this.handleDragEnter.bind(this);
@@ -48,7 +48,7 @@ class FileDrop extends React.Component {
 		event.preventDefault();
 
 		const { types } = event.dataTransfer;
-		// console.log(event.dataTransfer.types)
+
 		if (types && types[0] === 'Files') {
 			this.setState({ showOverlay: true, lastTarget: event.target });
 		}

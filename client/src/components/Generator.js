@@ -18,6 +18,8 @@ class Generator extends React.Component {
     this.renderPresets = this.renderPresets.bind(this);
     this.renderToolbar = this.renderToolbar.bind(this);
 
+    var loggedLocalStorageError = false;
+
     // Persist generator state to local storage
     this.persistState = _.debounce(newProps => {
       if (window.localStorage) {
@@ -25,7 +27,16 @@ class Generator extends React.Component {
         const { generatorState, previewState } = newProps;
         const state = { generatorState, previewState }
 
-        window.localStorage.setItem(path, JSON.stringify(state));
+        // Store in localStorage if there is enough space
+        try {
+          window.localStorage.setItem(path, JSON.stringify(state));
+          loggedLocalStorageError = false;
+        } catch(e) {
+          if (e.code === 22 && !loggedLocalStorageError) {
+            loggedLocalStorageError = true;
+            console.log('Data not persisted, exceeds localStorage quota');
+          }
+        }
       }
     }, 300);
   }
