@@ -1,6 +1,7 @@
 import React from 'react';
 import PositionSelect from '../../input/PositionSelect';
 import Slider from '../../input/Slider';
+import Select from '../../input/Select';
 import _ from 'underscore';
 
 class TriangleInputs extends React.Component {
@@ -39,10 +40,24 @@ class TriangleInputs extends React.Component {
 	}
 
 	render() {
-		const { direction, width, height } = this.props;
+		const { type, direction, width, height } = this.props;
 
 	  return (
 	  	<div>
+	  		<Select
+	  			name="type"
+	  			value={type}
+	  			label="Triangle Type"
+	  			onChange={this.handleChange}
+	  			options={[
+	  				{ value: 'equilateral', label: 'Equilateral' },
+	  				{ value: 'isosceles', label: 'Isosceles' },
+	  				{ value: 'scalene', label: 'Scalene' }
+	  			]}
+	  			menuContainer="#sidebar"
+	  			scrollWrapper="#sidebar-controls"
+	  			searchable={false}
+	  		/>
 		  	<PositionSelect
 		  	  label="Triangle Direction"
 		  	  name="direction"

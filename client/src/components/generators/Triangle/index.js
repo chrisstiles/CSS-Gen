@@ -50,8 +50,11 @@ class Triangle extends React.Component {
 
 	generateCSS(styles = {}) {
 	  const rules = _.extend({}, this.state, styles);
-	  const { direction, type, width, left, right, height, top, bottom } = rules;
+	  const { direction, width, left, right, height, top, bottom } = rules;
 	  const color = hexOrRgba(rules.color);
+	  const halfWidth = width / 2;
+	  const halfHeight = height / 2;
+	  var { type } = rules;
 
 	  // Add styles that don't change
 	  const css = {
@@ -60,11 +63,41 @@ class Triangle extends React.Component {
 	  	borderStyle: 'solid'
 	  };
 
+	  // Equilateral triangles cannot be diagonal
+	  const equilateralDirections = ['top', 'right', 'bottom', 'left'];
+	  if (!_.contains(equilateralDirections, direction)) {
+	  	type = 'isosceles';
+	  }
+
+	  // Equilateral
+	  if (type === 'equilateral') {
+	  	const sideLength = (Math.sqrt(Math.pow(halfWidth, 2) - Math.pow(halfWidth / 2, 2)) * 2).toFixed(2);
+
+	  	switch (direction) {
+	  		case 'top':
+	  			css.borderWidth = `0 ${halfWidth}px ${sideLength}px ${halfWidth}px`;
+	  			css.borderColor = `transparent transparent ${color} transparent`;
+	  			break;
+	  		case 'right':
+	  			css.borderWidth = `${halfWidth}px 0 ${halfWidth}px ${sideLength}px`;
+	  			css.borderColor = `transparent transparent transparent ${color}`;
+	  			break;
+	  		case 'bottom':
+	  			css.borderWidth = `${sideLength}px ${halfWidth}px 0 ${halfWidth}px`;
+	  			css.borderColor = `${color} transparent transparent transparent`;
+	  			break;
+	  		case 'left':
+	  			css.borderWidth = `${halfWidth}px ${sideLength}px ${halfWidth}px 0`;
+	  			css.borderColor = `transparent ${color} transparent transparent`;
+	  			break;
+	  	}
+	  }
+
 	  // Isosceles
 	  if (type === 'isosceles') {
 	  	switch (direction) {
 	  		case 'top':
-	  			css.borderWidth = `0 ${width / 2}px ${height}px ${width / 2}px`;
+	  			css.borderWidth = `0 ${halfWidth}px ${height}px ${halfWidth}px`;
 	  			css.borderColor = `transparent transparent ${color} transparent`;
 	  			break;
 	  		case 'top right':
@@ -72,7 +105,7 @@ class Triangle extends React.Component {
 	  			css.borderColor = `transparent ${color} transparent transparent`;
 	  			break;
 	  		case 'right':
-	  			css.borderWidth = `${height / 2}px 0 ${height / 2}px ${width}px`;
+	  			css.borderWidth = `${halfHeight}px 0 ${halfHeight}px ${width}px`;
 	  			css.borderColor = `transparent transparent transparent ${color}`;
 	  			break;
 	  		case 'bottom right':
@@ -80,7 +113,7 @@ class Triangle extends React.Component {
 	  			css.borderColor = `transparent transparent ${color} transparent`;
 	  			break;
 	  		case 'bottom':
-	  			css.borderWidth = `${height}px ${width / 2}px 0 ${width / 2}px`;
+	  			css.borderWidth = `${height}px ${halfWidth}px 0 ${halfWidth}px`;
 	  			css.borderColor = `${color} transparent transparent transparent`;
 	  			break;
 	  		case 'bottom left':
@@ -88,7 +121,7 @@ class Triangle extends React.Component {
 	  			css.borderColor = `transparent transparent transparent ${color}`;
 	  			break;
 	  		case 'left':
-	  			css.borderWidth = `${height / 2}px ${width}px ${height / 2}px 0`;
+	  			css.borderWidth = `${halfHeight}px ${width}px ${halfHeight}px 0`;
 	  			css.borderColor = `transparent ${color} transparent transparent`;
 	  			break;
 	  		case 'top left':
