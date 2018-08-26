@@ -1,0 +1,37 @@
+.button-select {
+	display: flex;
+	width:100%;
+	margin-top:8px;
+
+	&:first-child {
+		margin-top:0;
+	}
+
+	.option {
+		background-color:#fff;
+		border:1px solid #d2d2d2;
+		flex-grow: 1;
+		margin-right:8px;
+		font-size:12px;
+		text-align:center;
+		line-height:30px;
+		cursor:pointer;
+		font-weight:700;
+		border-radius:2px;
+		color:$dark-grey;
+
+		&:last-child {
+			margin-right:0;
+		}
+
+		&:hover {
+			background-color:#f6f6f6;
+		}
+
+		&.active {
+			color:#fff;
+			background-color:$accent-color;
+			border:1px solid $accent-color;
+		}
+	}
+}

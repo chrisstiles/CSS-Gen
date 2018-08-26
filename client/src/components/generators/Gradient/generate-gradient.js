@@ -64,8 +64,6 @@ class Gradient {
 	  this.extendKeyword = extendKeyword;
 
 	  // Radial gradient position
-	  const singlePosition = ['top', 'right', 'bottom', 'left'].indexOf(position) !== -1;
-	  
 	  // Add x and y adjustments to position
 	  if (position !== 'center') {
 	  	var positionX, positionY;
@@ -167,7 +165,7 @@ class Gradient {
 	}
 
 	generateCSS() {
-		const { background, filter, backgroundPosition } = this.styles;
+		const { background, filter } = this.styles;
 		// Flat background as fallback
 		var css = `background: ${this.palette[0].color};`;
 

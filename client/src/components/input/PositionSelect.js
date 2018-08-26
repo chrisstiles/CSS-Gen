@@ -49,7 +49,7 @@ class PositionSelect extends React.Component {
     const active = position === location;
 
     if (includeCenter !== undefined && !includeCenter && location === 'center') {
-      return;
+      return null;
     }
 
     return (
