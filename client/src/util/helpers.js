@@ -132,7 +132,6 @@ export function isObjectOfShape(object, shape) {
 		// Object does not have this key
 		if (!object.hasOwnProperty(key)) {
 			correctShape = false;
-			console.log('here')
 			return;
 		}
 
@@ -147,7 +146,6 @@ export function isObjectOfShape(object, shape) {
 		if (type === 'object') {
 			if (!isObjectOfShape(object[key], value)) {
 				correctShape = false;
-				console.log(value, object[key])
 				return;
 			}
 		}
@@ -156,14 +154,12 @@ export function isObjectOfShape(object, shape) {
 		if (type === 'array') {
 			if (!isArrayOfType(object[key], value)) {
 				correctShape = false;
-				console.log('here')
 				return;
 			}
 		}
 
 		if (!areSameType(value, object[key])) {
 			correctShape = false;
-			console.log(value, object[key])
 			return;
 		}
 	});

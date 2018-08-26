@@ -22,8 +22,8 @@ class Gradient extends React.Component {
       shape: 'circle',
       extendKeyword: 'none',
       position: 'center',
-      positionX: 0,
-      positionY: 0,
+      offsetX: 0,
+      offsetY: 0,
       angle: 90
     };
 
@@ -36,8 +36,8 @@ class Gradient extends React.Component {
       shape: String,
       extendKeyword: String,
       position: String,
-      positionX: Number,
-      positionY: Number,
+      offsetX: Number,
+      offsetY: Number,
       angle: Number
     };
 
@@ -46,6 +46,10 @@ class Gradient extends React.Component {
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
     this.updateGenerator = this.updateGenerator.bind(this);
+
+    window.test = () => {
+      console.log(this.state.position);
+    }
   }
 
   updateGenerator(state) {

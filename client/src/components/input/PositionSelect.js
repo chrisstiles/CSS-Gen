@@ -44,7 +44,7 @@ class PositionSelect extends React.Component {
   }
 
   render() {
-    const { position, positionX, positionY, label, includeCenter, name } = this.props;
+    const { position, offsetX, offsetY, label, includeCenter, name } = this.props;
     const positions = locations.map(location => {
     const active = position === location;
 
@@ -75,25 +75,27 @@ class PositionSelect extends React.Component {
           <div className="position-select">
             {positions}
           </div>
-          {positionX && positionY ?
+          {offsetX !== undefined && offsetY !== undefined ?
             <div className="offset-sliders">
               <Slider
                 title="X Offset"
-                name="positionX"
+                name="offsetX"
                 onChange={this.handleChange}
-                value={positionX}
+                value={offsetX}
                 disabled={xDisabled}
-                min={-500}
-                max={500}
+                min={-200}
+                max={200}
+                appendString="%"
               />
               <Slider
                 title="Y Offset"
-                name="positionY"
+                name="offsetY"
                 onChange={this.handleChange}
-                value={positionY}
+                value={offsetY}
                 disabled={yDisabled}
-                min={-500}
-                max={500}
+                min={-200}
+                max={200}
+                appendString="%"
               />
             </div>
           : null}

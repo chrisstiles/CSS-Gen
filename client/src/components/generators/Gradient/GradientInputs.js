@@ -67,8 +67,8 @@ class GradientInputs extends React.Component {
             label="Gradient Position"
             name="position"
             position={this.props.position}
-            positionX={this.props.positionX}
-            positionY={this.props.positionY}
+            offsetX={this.props.offsetX}
+            offsetY={this.props.offsetY}
             onClick={this.handleChange}
           />
         </div>

@@ -11,8 +11,8 @@ class Gradient {
 			shape = 'ellipse',
 			extendKeyword = 'none',
 			position = 'center',
-			positionX = 0,
-			positionY = 0,
+			offsetX = 0,
+			offsetY = 0,
 			angle = 0
 		} = settings;
 
@@ -67,26 +67,52 @@ class Gradient {
 	  const singlePosition = ['top', 'right', 'bottom', 'left'].indexOf(position) !== -1;
 	  
 	  // Add x and y adjustments to position
-	  var positionAdjusted = false;
-	  if (['center', 'top', 'bottom'].indexOf(position) === -1 && positionX) {
-	  	position = position.replace('left', `left ${positionX}px`);
-	  	position = position.replace('right', `right ${positionX}px`);
-	  	positionAdjusted = true;
-	  }
+	  if (position !== 'center') {
+	  	var positionX, positionY;
 
-	  if (['center', 'left', 'right'].indexOf(position) === -1 && positionY) {
-	  	position = position.replace('top', `top ${positionY}px`);
-	  	position = position.replace('bottom', `bottom ${positionY}px`);
-	  	positionAdjusted = true;
-	  }
+	  	switch (position) {
+	  		case 'top':
+	  			positionX = 50;
+	  			positionY = offsetY;
+	  			break;
+	  		case 'top right':
+	  			positionX = 100 + offsetX;
+	  			positionY = offsetY;
+	  			break;
+	  		case 'right':
+	  			positionX = 100 + offsetX;
+	  			positionY = 50;
+	  			break;
+	  		case 'bottom right':
+	  			positionX = 100 + offsetX;
+	  			positionY = 100 + offsetY;
+	  			break;
+	  		case 'bottom':
+	  			positionX = 50;
+	  			positionY = 100 + offsetY;
+	  			break;
+	  		case 'bottom left':
+	  			positionX = offsetX;
+	  			positionY = offsetY;
+	  			break;
+	  		case 'left':
+	  			positionX = offsetX;
+	  			positionY = 50;
+	  			break;
+	  		case 'top left':
+	  			positionX = offsetX;
+	  			positionY = offsetY;
+	  			break;
+	  		default:
+	  			break;
+	  	}
 
-	  if (positionAdjusted && singlePosition) {
-	  	position = `center ${position}`;
+	  	position = `${positionX}% ${positionY}%`
 	  }
 
 	  this.position = position;
-	  this.positionX = positionX;
-	  this.positionY = positionY;
+	  this.offsetX = offsetX;
+	  this.offsetY = offsetY;
 
 	  // Add repeating if necessary
 	  if (repeating) {
@@ -141,7 +167,7 @@ class Gradient {
 	}
 
 	generateCSS() {
-		const { background, filter } = this.styles;
+		const { background, filter, backgroundPosition } = this.styles;
 		// Flat background as fallback
 		var css = `background: ${this.palette[0].color};`;
 
