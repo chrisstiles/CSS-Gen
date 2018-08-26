@@ -46,10 +46,6 @@ class Gradient extends React.Component {
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
     this.updateGenerator = this.updateGenerator.bind(this);
-
-    window.test = () => {
-      console.log(this.state.position);
-    }
   }
 
   updateGenerator(state) {

@@ -1,7 +1,7 @@
 import React from 'react';
-import PositionSelect from '../../input/PositionSelect';
 import Slider from '../../input/Slider';
 import ButtonSelect from '../../input/ButtonSelect';
+import Arrow from './arrow.svg';
 import _ from 'underscore';
 
 class TriangleInputs extends React.Component {
@@ -45,7 +45,6 @@ class TriangleInputs extends React.Component {
 	  return (
 	  	<div>
 		  	<ButtonSelect
-		  		onChange={this.handleChange}
 		  		label="Triangle Type"
 		  		name="type"
 		  		options={[
@@ -54,14 +53,24 @@ class TriangleInputs extends React.Component {
 	  				{ value: 'scalene', label: 'Scalene' }
 	  			]}
 	  			value={type}
-	  			equalWidths={true}
+	  			onChange={this.handleChange}
 		  	/>
-		  	<PositionSelect
-		  	  label="Triangle Direction"
-		  	  name="direction"
-		  	  position={direction}
-		  	  onClick={this.handleChange}
-		  	  includeCenter={false}
+		  	<ButtonSelect
+		  		label="Triangle Direction"
+		  		name="direction"
+		  		className="triangle-direction"
+		  		options={[
+		  			{ value: 'top', label: <Arrow />, className: 'top' },
+		  			{ value: 'top right', label: <Arrow />, className: 'top-right' },
+		  			{ value: 'right', label: <Arrow />, className: 'right' },
+		  			{ value: 'bottom right', label: <Arrow />, className: 'bottom-right' },
+		  			{ value: 'bottom', label: <Arrow />, className: 'bottom' },
+		  			{ value: 'bottom left', label: <Arrow />, className: 'bottom-left' },
+		  			{ value: 'left', label: <Arrow />, className: 'left' },
+		  			{ value: 'top left', label: <Arrow />, className: 'top-left' }
+		  		]}
+		  		value={direction}
+		  		onChange={this.handleChange}
 		  	/>
 		  	<Slider
 		  	  title="Width"

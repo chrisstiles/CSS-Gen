@@ -1591,21 +1591,28 @@ input[type="number"],
 .button-select {
   display: flex;
   width: 100%;
-  margin-top: 8px; }
+  margin-top: 8px;
+  margin-bottom: -6px;
+  flex-wrap: wrap; }
   .button-select:first-child {
     margin-top: 0; }
   .button-select .option {
     background-color: #fff;
     border: 1px solid #d2d2d2;
     flex-grow: 1;
-    margin-right: 8px;
-    font-size: 11px;
+    margin-right: 6px;
+    font-size: 12px;
     text-align: center;
-    line-height: 30px;
+    padding: 10px 1px;
     cursor: pointer;
     font-weight: 700;
     border-radius: 2px;
-    color: #505050; }
+    color: #505050;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 6px; }
     .button-select .option:last-child {
       margin-right: 0; }
     .button-select .option:hover {
@@ -1614,6 +1621,11 @@ input[type="number"],
       color: #fff;
       background-color: #4834d4;
       border: 1px solid #4834d4; }
+      .button-select .option.active svg {
+        fill: #fff; }
+    .button-select .option svg {
+      fill: #505150;
+      display: block; }
   .button-select.equal-widths .option {
     flex-basis: 0; }
 
@@ -1661,3 +1673,30 @@ input[type="number"],
   #generator-wrapper.border-radius .slider-image.bottom-left span:last-child:before,
   #generator-wrapper.border-radius .slider-image.bottom-right span:last-child:after {
     background-color: #4834d4; }
+
+.triangle-direction {
+  width: calc(100% + 6px); }
+  .triangle-direction .option {
+    flex: 0 0 calc(25% - 6px);
+    height: 58px;
+    padding: 0; }
+    .triangle-direction .option:nth-child(4) {
+      margin-right: 0; }
+    .triangle-direction .option.top-right svg {
+      transform: rotate(45deg); }
+    .triangle-direction .option.right svg {
+      transform: rotate(90deg); }
+    .triangle-direction .option.bottom-right svg {
+      transform: rotate(135deg); }
+    .triangle-direction .option.bottom svg {
+      transform: rotate(180deg); }
+    .triangle-direction .option.bottom-left svg {
+      transform: rotate(225deg); }
+    .triangle-direction .option.left svg {
+      transform: rotate(270deg); }
+    .triangle-direction .option.top-left svg {
+      transform: rotate(315deg); }
+  .triangle-direction svg {
+    height: 20px;
+    width: 23px;
+    transform-origin: center center; }

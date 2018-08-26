@@ -15,21 +15,25 @@ class ButtonOption extends React.Component {
 	}
 
 	render() {
-		const { active, name } = this.props;
+		const { active, name, className } = this.props;
 		var { label } = this.props;
-		var className = 'option';
+		var optionClass = 'option';
 
 		if (active) {
-		  className += ' active';
+		  optionClass += ' active';
 		}
 
 		if (!label) {
 			label = name.charAt(0).toUpperCase() + name.slice(1);
 		}
 
+		if (className) {
+			optionClass += ` ${className}`;
+		}
+
 		return (
 		  <div 
-		    className={className}
+		    className={optionClass}
 		    onClick={this.handleClick}
 		  >
 		  	{label}
@@ -50,10 +54,11 @@ class ButtonSelect extends React.Component {
 	}
 
 	render() {
-		const { label, options, value, equalWidths } = this.props;
+		const { label, options, value, equalWidths, className: wrapperClass } = this.props;
 
-		const buttons = _.map(options, ({ value: name, label }) => {
+		const buttons = _.map(options, ({ value: name, label, className: optionClass }) => {
 			const active = name === value;
+			const className = optionClass ? optionClass : '';
 
 			return (
 				<ButtonOption
@@ -61,15 +66,20 @@ class ButtonSelect extends React.Component {
 					name={name}
 					active={active}
 					label={label}
+					className={className}
 					onClick={this.handleChange}
 				/>
 			);
 		});
 
-		var className="button-select";
+		var buttonClass = 'button-select';
+
+		if (wrapperClass) {
+			buttonClass += ` ${wrapperClass}`;
+		}
 
 		if (equalWidths) {
-			className += ' equal-widths';
+			buttonClass += ' equal-widths';
 		}
 
 		return (
@@ -77,7 +87,7 @@ class ButtonSelect extends React.Component {
 				{label ? 
 					<label className="title">{label}</label>
 				: null}
-				<div className="button-select">
+				<div className={buttonClass}>
 					{buttons}
 				</div>
 			</div>
