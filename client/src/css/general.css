@@ -1599,7 +1599,7 @@ input[type="number"],
     border: 1px solid #d2d2d2;
     flex-grow: 1;
     margin-right: 8px;
-    font-size: 12px;
+    font-size: 11px;
     text-align: center;
     line-height: 30px;
     cursor: pointer;
@@ -1614,6 +1614,8 @@ input[type="number"],
       color: #fff;
       background-color: #4834d4;
       border: 1px solid #4834d4; }
+  .button-select.equal-widths .option {
+    flex-basis: 0; }
 
 #generator-wrapper.border-radius .corners-wrapper {
   margin-bottom: -27px; }

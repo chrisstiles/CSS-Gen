@@ -50,7 +50,7 @@ class ButtonSelect extends React.Component {
 	}
 
 	render() {
-		const { label, options, value } = this.props;
+		const { label, options, value, equalWidths } = this.props;
 
 		const buttons = _.map(options, ({ value: name, label }) => {
 			const active = name === value;
@@ -65,6 +65,12 @@ class ButtonSelect extends React.Component {
 				/>
 			);
 		});
+
+		var className="button-select";
+
+		if (equalWidths) {
+			className += ' equal-widths';
+		}
 
 		return (
 			<div className="field-wrapper">

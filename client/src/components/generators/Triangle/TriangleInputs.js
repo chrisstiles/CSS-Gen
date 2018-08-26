@@ -54,6 +54,7 @@ class TriangleInputs extends React.Component {
 	  				{ value: 'scalene', label: 'Scalene' }
 	  			]}
 	  			value={type}
+	  			equalWidths={true}
 		  	/>
 		  	<PositionSelect
 		  	  label="Triangle Direction"
