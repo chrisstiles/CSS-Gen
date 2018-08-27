@@ -27,9 +27,9 @@ class TextShadowInputs extends React.Component {
 		// apiUrl.push(`&key=${GOOGLE_FONTS_API_KEY}`);
 		const url = apiUrl.join('');
 		
-		axios.get(url).then(response => {
-			console.log(response)
-		});
+		// axios.get(url).then(response => {
+		// 	console.log(response)
+		// });
 
 		// console.log(results)
 		// return results;
