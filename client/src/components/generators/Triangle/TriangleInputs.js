@@ -155,7 +155,7 @@ class TriangleInputs extends React.Component {
 	}
 
 	render() {
-		const { type, direction, width, height, color } = this.props;
+		const { type, direction, color } = this.props;
 
 		const typeOptions = [
 			{ 

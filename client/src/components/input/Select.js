@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactSelect from 'react-select';
+import AsyncSelect from 'react-select/lib/Async';
 import 'react-select/dist/react-select.css';
 import defaultMenuRenderer from 'react-select/lib/utils/defaultMenuRenderer';
 import _ from 'underscore';
@@ -134,14 +135,26 @@ class Select extends React.Component {
 		return(
 			<div className={className}>
 				{this.props.label ? <label className="title">{this.props.label}</label> : null}
-				<ReactSelect
-					ref={select => { this.select = select }}
-					onOpen={this.handleOpen}
-					menuRenderer={this.renderMenu}
-					clearable={false}
-					onBlurResetsInput={false}
-					{...props}
-				/>
+				
+				{this.props.async ? 
+					<AsyncSelect
+						ref={select => { this.select = select }}
+						onOpen={this.handleOpen}
+						menuRenderer={this.renderMenu}
+						clearable={false}
+						onBlurResetsInput={false}
+						{...props}
+					/>
+				: 
+					<ReactSelect
+						ref={select => { this.select = select }}
+						onOpen={this.handleOpen}
+						menuRenderer={this.renderMenu}
+						clearable={false}
+						onBlurResetsInput={false}
+						{...props}
+					/>
+				}
 			</div>
 		);
 	}

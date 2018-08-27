@@ -7,7 +7,8 @@ const navLinks = [
 	{ to: '/border-radius-generator', className: 'border-radius', title: 'Border Radius' },
 	{ to: '/gradient-generator', className: 'gradient', title: 'Gradient' },
 	{ to: '/filter-generator', className: 'gradient', title: 'CSS Filters' },
-	{ to: '/triangle-generator', className: 'gradient', title: 'Triangle' }
+	{ to: '/triangle-generator', className: 'gradient', title: 'Triangle' },
+	{ to: '/text-shadow', className: 'gradient', title: 'Text Shadow' }
 ];
 
 const NavWindow = () => {
