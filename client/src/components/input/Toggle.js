@@ -23,7 +23,7 @@ class Toggle extends React.Component {
 	render() {
 		return (
 			<div>
-				{ this.renderLabel() }
+				{this.renderLabel()}
 				<label className="toggle-wrapper">
 					<input
 						name={this.props.name}
@@ -33,6 +33,9 @@ class Toggle extends React.Component {
 					/>
 					<span className="toggle"></span>
 				</label>
+				{this.props.children ?
+					<div className="toggle-content">{this.props.children}</div>
+				: null}
 			</div>
 		);
 	}

@@ -16,7 +16,17 @@
 	align-items: center;
 	overflow:hidden;
 
-	// .preview {
-	// 	transition:all .3s;
-	// }
+	.overlay {
+		position:absolute;
+		z-index: 1;
+		top:0;
+		bottom:0;
+		left:0;
+		right:0;
+	}
+
+	.content {
+		position:relative;
+		z-index: 200;
+	}
 }

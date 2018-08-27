@@ -105,10 +105,19 @@ class Generator extends React.Component {
 
   render() {
     const cssClasses = `${this.props.className}${this.state.keys}`;
-    var { previewContentLoaded, previewCSS } = this.props.previewState;
 
-    if (previewContentLoaded === undefined) {
-      previewContentLoaded = true;
+    var hasLoaded = true;
+    var previewCSS = '';
+
+    if (this.props.previewState) {
+      const { previewContentLoaded, previewCSS: styles } = this.props.previewState;
+      previewCSS = styles;
+
+      if (previewContentLoaded === undefined) {
+        hasLoaded = true;
+      } else {
+        hasLoaded = previewContentLoaded
+      }
     }
 
     return (
@@ -127,7 +136,7 @@ class Generator extends React.Component {
             className="page-content"
             ref={generatorWrapper => { this.generatorWrapper = generatorWrapper }}
           >
-            {!previewContentLoaded ?
+            {!hasLoaded ?
               <div id="generator-loading">
                 <LoadingSpinner />
               </div>

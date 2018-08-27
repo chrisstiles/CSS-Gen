@@ -47,7 +47,9 @@ class PrimaryLayout extends React.Component {
     this.state = {
       showPreviewText: true,
       outputPreviewStyles: false,
-      showBrowserPrefixes: false
+      showBrowserPrefixes: false,
+      showEditorBackgroundColor: false,
+      editorBackgroundColor: '#fff'
     }
 
     this.globalDefaults = _.extend({}, this.state);
