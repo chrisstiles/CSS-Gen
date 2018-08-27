@@ -184,13 +184,21 @@ class ColorPicker extends React.Component {
       className += ` ${this.props.className}`;
     }
 
+    const style = {};
+
+    if (this.state.displayColorPicker) {
+      style.display = 'block';
+    } else {
+      style.display = 'none';
+    }
+
     return (
       <div className={className}>
         {this.props.label ? 
           <label className="title">{this.props.label}</label>
         : null}
         {this.renderPreview(previewStyle)}
-        { this.state.displayColorPicker ? <div>
+        <div style={style}>
           <div style={cover} onClick={this.handleClose} />
           <div 
             className="color-picker-wrapper"
@@ -203,7 +211,7 @@ class ColorPicker extends React.Component {
               style={{ opacity: .4 }}
             />
           </div>
-        </div> : null }
+        </div>
 
       </div>
     )
