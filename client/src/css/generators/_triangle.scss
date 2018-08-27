@@ -1,9 +1,10 @@
 .triangle-direction {
 	width:calc(100% + 6px);
+	margin-bottom:-4px;
 
 	.option {
 		flex: 0 0 calc(25% - 6px);
-		height:58px;
+		height:45px;
 		padding:0;
 
 		&:nth-child(4) {
@@ -40,8 +41,8 @@
 	}
 
 	svg {
-		height:20px;
-		width:23px;
+		width:16px;
+		height:14px;
 		transform-origin:center center;
 	}
 }

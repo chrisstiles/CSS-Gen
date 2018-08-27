@@ -186,8 +186,8 @@ class ColorPicker extends React.Component {
 
     return (
       <div className={className}>
-        {this.props.title ? 
-          <label className="title">{this.props.title}</label>
+        {this.props.label ? 
+          <label className="title">{this.props.label}</label>
         : null}
         {this.renderPreview(previewStyle)}
         { this.state.displayColorPicker ? <div>

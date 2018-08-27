@@ -71,24 +71,27 @@ class Triangle extends React.Component {
 
 	  // Equilateral
 	  if (type === 'equilateral') {
-	  	const sideLength = (Math.sqrt(Math.pow(halfWidth, 2) - Math.pow(halfWidth / 2, 2)) * 2).toFixed(2);
+	  	const size = direction === 'top' || direction === 'bottom' ? halfWidth : halfHeight;
+	  	const sideLength = (Math.sqrt(Math.pow(size, 2) - Math.pow(size / 2, 2)) * 2).toFixed(2);
 
 	  	switch (direction) {
 	  		case 'top':
-	  			css.borderWidth = `0 ${halfWidth}px ${sideLength}px ${halfWidth}px`;
+	  			css.borderWidth = `0 ${size}px ${sideLength}px ${size}px`;
 	  			css.borderColor = `transparent transparent ${color} transparent`;
 	  			break;
 	  		case 'right':
-	  			css.borderWidth = `${halfWidth}px 0 ${halfWidth}px ${sideLength}px`;
+	  			css.borderWidth = `${size}px 0 ${size}px ${sideLength}px`;
 	  			css.borderColor = `transparent transparent transparent ${color}`;
 	  			break;
 	  		case 'bottom':
-	  			css.borderWidth = `${sideLength}px ${halfWidth}px 0 ${halfWidth}px`;
+	  			css.borderWidth = `${sideLength}px ${size}px 0 ${size}px`;
 	  			css.borderColor = `${color} transparent transparent transparent`;
 	  			break;
 	  		case 'left':
-	  			css.borderWidth = `${halfWidth}px ${sideLength}px ${halfWidth}px 0`;
+	  			css.borderWidth = `${size}px ${sideLength}px ${size}px 0`;
 	  			css.borderColor = `transparent ${color} transparent transparent`;
+	  			break;
+	  		default:
 	  			break;
 	  	}
 	  }
@@ -127,6 +130,48 @@ class Triangle extends React.Component {
 	  		case 'top left':
 	  			css.borderWidth = `${width}px ${width}px 0 0`;
 	  			css.borderColor = `${color} transparent transparent transparent`;
+	  			break;
+	  		default:
+	  			break;
+	  	}
+	  }
+
+	  // Scalene
+	  if (type === 'scalene') {
+	  	switch (direction) {
+	  		case 'top':
+	  			css.borderWidth = `0 ${right}px ${height}px ${left}px`;
+	  			css.borderColor = `transparent transparent ${color} transparent`;
+	  			break;
+	  		case 'top right':
+	  			css.borderWidth = `0 ${width}px ${height}px 0`;
+	  			css.borderColor = `transparent ${color} transparent transparent`;
+	  			break;
+	  		case 'right':
+	  			css.borderWidth = `${top}px 0 ${bottom}px ${width}px`;
+	  			css.borderColor = `transparent transparent transparent ${color}`;
+	  			break;
+	  		case 'bottom right':
+	  			css.borderWidth = `0 0 ${height}px ${width}px`;
+	  			css.borderColor = `transparent transparent ${color} transparent`;
+	  			break;
+	  		case 'bottom':
+	  			css.borderWidth = `${height}px ${right}px 0 ${left}px`;
+	  			css.borderColor = `${color} transparent transparent transparent`;
+	  			break;
+	  		case 'bottom left':
+	  			css.borderWidth = `${height}px 0 0 ${width}px`;
+	  			css.borderColor = `transparent transparent transparent ${color}`;
+	  			break;
+	  		case 'left':
+	  			css.borderWidth = `${top}px ${width}px ${bottom}px 0`;
+	  			css.borderColor = `transparent ${color} transparent transparent`;
+	  			break;
+	  		case 'top left':
+	  			css.borderWidth = `${height}px ${width}px 0 0`;
+	  			css.borderColor = `${color} transparent transparent transparent`;
+	  			break;
+	  		default:
 	  			break;
 	  	}
 	  }

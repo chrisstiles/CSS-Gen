@@ -9,13 +9,13 @@ class ButtonOption extends React.Component {
 	}
 
 	handleClick() {
-		if (!this.props.active) {
+		if (!this.props.active && !this.props.disabled) {
 		  this.props.onClick(this.props.name);
 		}
 	}
 
 	render() {
-		const { active, name, className } = this.props;
+		const { active, name, className, disabled } = this.props;
 		var { label } = this.props;
 		var optionClass = 'option';
 
@@ -29,6 +29,10 @@ class ButtonOption extends React.Component {
 
 		if (className) {
 			optionClass += ` ${className}`;
+		}
+
+		if (disabled) {
+			optionClass += ' disabled';
 		}
 
 		return (
@@ -56,7 +60,7 @@ class ButtonSelect extends React.Component {
 	render() {
 		const { label, options, value, equalWidths, className: wrapperClass } = this.props;
 
-		const buttons = _.map(options, ({ value: name, label, className: optionClass }) => {
+		const buttons = _.map(options, ({ value: name, label, disabled, className: optionClass, }) => {
 			const active = name === value;
 			const className = optionClass ? optionClass : '';
 
@@ -67,6 +71,7 @@ class ButtonSelect extends React.Component {
 					active={active}
 					label={label}
 					className={className}
+					disabled={disabled}
 					onClick={this.handleChange}
 				/>
 			);

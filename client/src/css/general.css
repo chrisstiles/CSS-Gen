@@ -761,6 +761,8 @@ p:last-child {
       float: right; }
   .field-wrapper.no-margin {
     margin-right: 0 !important; }
+  .field-wrapper.wide-input input {
+    width: 70px; }
   .field-wrapper .title {
     font-size: 15px;
     font-weight: 600;
@@ -1675,10 +1677,11 @@ input[type="number"],
     background-color: #4834d4; }
 
 .triangle-direction {
-  width: calc(100% + 6px); }
+  width: calc(100% + 6px);
+  margin-bottom: -4px; }
   .triangle-direction .option {
     flex: 0 0 calc(25% - 6px);
-    height: 58px;
+    height: 45px;
     padding: 0; }
     .triangle-direction .option:nth-child(4) {
       margin-right: 0; }
@@ -1697,6 +1700,6 @@ input[type="number"],
     .triangle-direction .option.top-left svg {
       transform: rotate(315deg); }
   .triangle-direction svg {
-    height: 20px;
-    width: 23px;
+    width: 16px;
+    height: 14px;
     transform-origin: center center; }
