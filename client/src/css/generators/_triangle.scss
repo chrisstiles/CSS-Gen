@@ -18,6 +18,7 @@
 
 		&.right svg {
 			transform: rotate(90deg);
+			right:-1px;
 		}
 
 		&.bottom-right svg {
@@ -30,14 +31,18 @@
 
 		&.bottom-left svg {
 			transform: rotate(225deg);
+			left:-1px;
 		}
 
 		&.left svg {
 			transform: rotate(270deg);
+			left:-1px;
 		}
 
 		&.top-left svg {
 			transform: rotate(315deg);
+			left:-1px;
+			top:-1px;
 		}
 	}
 
@@ -45,5 +50,6 @@
 		width:16px;
 		height:14px;
 		transform-origin:center center;
+		position:relative;
 	}
 }
