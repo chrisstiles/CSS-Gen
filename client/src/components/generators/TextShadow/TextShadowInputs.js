@@ -12,7 +12,7 @@ class TextShadowInputs extends React.Component {
 	  this.fontOptions = [];
 	  
 	  this.handleChange = this.handleChange.bind(this);
-	  this.getGoogleFonts = this.getGoogleFonts.bind(this);
+	  this.getGoogleFonts = _.debounce(this._getGoogleFonts.bind(this), 200);
 
 	  // axios.get('/api/google-fonts').then(response => {
 	  // 	// this.fontsList = response;
@@ -27,7 +27,7 @@ class TextShadowInputs extends React.Component {
 	  this.props.updateGenerator(state);
 	}
 
-	getGoogleFonts(inputValue) {
+	_getGoogleFonts(inputValue) {
 		// Generate URL string
 		const apiUrl = [];
 		apiUrl.push('/api/google-fonts?query=');
@@ -60,7 +60,7 @@ class TextShadowInputs extends React.Component {
 	render() {
 		return (
 			<AjaxSelect
-			  value={this.props.type}
+			  inputValue={this.props.type}
 			  label="Google Font"
 			  placeholder="Search Google Fonts"
 			  getOptions={this.getGoogleFonts}

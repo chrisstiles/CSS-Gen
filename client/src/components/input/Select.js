@@ -19,6 +19,10 @@ class Select extends React.Component {
 
 	componentDidMount() {
 		this.menuContainer = document.querySelector(this.props.menuContainer);
+
+		// if (!this.select.control) {
+		// 	this.select = this.select.select;
+		// }
 		
 		if (this.menuContainer) {
 			this.scrollWrapper = this.props.scrollWrapper ? document.querySelector(this.props.scrollWrapper) : this.menuContainer;
@@ -60,30 +64,37 @@ class Select extends React.Component {
 	}
 
 	getWrapperStyles() {
-		const selectRect = this.select.control.getBoundingClientRect();
-		const containerRect = this.scrollWrapper.getBoundingClientRect();
-		const borderLeftWidth = getComputedStyle(this.scrollWrapper, null).getPropertyValue('border-left-width');
-		const scrollWrapperHeight = containerRect.height;
 
-		var top = selectRect.top + selectRect.height;
-		if (top >= (containerRect.top + scrollWrapperHeight)) {
-			top = containerRect.top + scrollWrapperHeight;
+		// console.log(this.select)
+
+		if (this.select) {
+			const control = this.select.control ? this.select.control : this.select.select.control;
+			const selectRect = control.getBoundingClientRect();
+			const containerRect = this.scrollWrapper.getBoundingClientRect();
+			const borderLeftWidth = getComputedStyle(this.scrollWrapper, null).getPropertyValue('border-left-width');
+			const scrollWrapperHeight = containerRect.height;
+
+			var top = selectRect.top + selectRect.height;
+			if (top >= (containerRect.top + scrollWrapperHeight)) {
+				top = containerRect.top + scrollWrapperHeight;
+			}
+
+			var maxHeight = window.innerHeight - top - 35;
+
+			if (maxHeight > 350) {
+				maxHeight = 350;
+			}
+
+			const style = {
+				width: selectRect.width,
+				top: top,
+				left: selectRect.left - containerRect.left + parseInt(borderLeftWidth, 10),
+				maxHeight: maxHeight
+			}
+
+			return style;
 		}
 
-		var maxHeight = window.innerHeight - top - 35;
-
-		if (maxHeight > 350) {
-			maxHeight = 350;
-		}
-
-		const style = {
-			width: selectRect.width,
-			top: top,
-			left: selectRect.left - containerRect.left + parseInt(borderLeftWidth, 10),
-			maxHeight: maxHeight
-		}
-
-		return style;
 	}
 
 	renderMenu(params) {

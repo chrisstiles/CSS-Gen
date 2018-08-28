@@ -244,7 +244,7 @@ p:last-child {
 #toolbar {
   border-bottom: 1px solid #dedede;
   position: relative;
-  z-index: 100; }
+  z-index: 400; }
 
 #header {
   padding: 45px 350px 18px 335px;
@@ -462,7 +462,7 @@ p:last-child {
   bottom: 0;
   width: 340px;
   background-color: #ececec;
-  z-index: 100;
+  z-index: 500;
   border-left: 2px solid #dadada; }
   #sidebar .sidebar-title {
     width: calc(100% + 54px);
