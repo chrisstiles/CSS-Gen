@@ -1,20 +1,23 @@
 import React from 'react';
 import AjaxSelect from '../../input/AjaxSelect';
 import axios from 'axios';
+import _ from 'underscore';
 
 // const GOOGLE_FONTS_API_KEY = 'AIzaSyBAeBGJ5r_JdheXlg46qkgsiFemJ7zfuek';
 
 class TextShadowInputs extends React.Component {
 	constructor(props) {
 	  super(props);
+
+	  this.fontOptions = [];
 	  
 	  this.handleChange = this.handleChange.bind(this);
 	  this.getGoogleFonts = this.getGoogleFonts.bind(this);
 
-	  axios.get('/api/google-fonts').then(response => {
-	  	// this.fontsList = response;
-	  	console.log(response)
-	  });	
+	  // axios.get('/api/google-fonts').then(response => {
+	  // 	// this.fontsList = response;
+	  // 	console.log(response)
+	  // });	
 	}
 
 	handleChange(value, name) {
@@ -32,33 +35,26 @@ class TextShadowInputs extends React.Component {
 		// apiUrl.push(`&key=${GOOGLE_FONTS_API_KEY}`);
 		const url = apiUrl.join('');
 
-		if (!this.fontsList) {
+		if (!this.fontList) {
 			const apiUrl = [];
 			apiUrl.push('https://www.googleapis.com/webfonts/v1/webfonts');
 			apiUrl.push('?key=AIzaSyBAeBGJ5r_JdheXlg46qkgsiFemJ7zfuek');
 			const url = apiUrl.join('');
 
 			axios.get(url).then(response => {
-				this.fontsList = response;
+				// Format font 
+				this.fontList = response.data.items;
+				_.each(this.fontList, ({ family: font }) => {
+					this.fontOptions.push({
+						value: font,
+						label: font
+					});
+				});
+
 			});
-		} else {
-			console.log(this.fontsList)
-			return this.fontsList;
 		}
 
-		// axios.get('/api/google-fonts', {
-		// 	method: 'HEAD',
-		// 	mode: 'no-cors'
-		// }).then(response => {
-		// 	// this.fontsList = response;
-		// 	console.log(response)
-		// });	
-
-		// console.log(this.fontsList)
-
-		// console.log(this.fontsList)
-		// console.log(results)
-		// return results;
+		return { options: this.fontOptions };
 	}
 
 	render() {
