@@ -10,6 +10,11 @@ class TextShadowInputs extends React.Component {
 	  
 	  this.handleChange = this.handleChange.bind(this);
 	  this.getGoogleFonts = this.getGoogleFonts.bind(this);
+
+	  axios.get('/api/google-fonts').then(response => {
+	  	// this.fontsList = response;
+	  	console.log(response)
+	  });	
 	}
 
 	handleChange(value, name) {
@@ -26,11 +31,32 @@ class TextShadowInputs extends React.Component {
 		apiUrl.push(inputValue.replace(/ /g, '+'));
 		// apiUrl.push(`&key=${GOOGLE_FONTS_API_KEY}`);
 		const url = apiUrl.join('');
-		
-		// axios.get(url).then(response => {
-		// 	console.log(response)
-		// });
 
+		if (!this.fontsList) {
+			const apiUrl = [];
+			apiUrl.push('https://www.googleapis.com/webfonts/v1/webfonts');
+			apiUrl.push('?key=AIzaSyBAeBGJ5r_JdheXlg46qkgsiFemJ7zfuek');
+			const url = apiUrl.join('');
+
+			axios.get(url).then(response => {
+				this.fontsList = response;
+			});
+		} else {
+			console.log(this.fontsList)
+			return this.fontsList;
+		}
+
+		// axios.get('/api/google-fonts', {
+		// 	method: 'HEAD',
+		// 	mode: 'no-cors'
+		// }).then(response => {
+		// 	// this.fontsList = response;
+		// 	console.log(response)
+		// });	
+
+		// console.log(this.fontsList)
+
+		// console.log(this.fontsList)
 		// console.log(results)
 		// return results;
 	}

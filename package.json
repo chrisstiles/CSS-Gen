@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "concurrently": "^3.6.1",
     "express": "^4.16.2",
     "mixin-deep": "^2.0.0",
