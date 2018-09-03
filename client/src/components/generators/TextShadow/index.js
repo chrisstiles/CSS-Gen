@@ -10,11 +10,14 @@ class TextShadow extends React.Component {
 
 		this.defaultState = {
 			text: 'My text here',
-			fontSize: 20
+			fontSize: 20,
+			googleFont: 'Montserrat'
 		};
 
 		this.stateTypes = {
-			fontSize: Number
+			text: String,
+			fontSize: Number,
+			googleFont: String
 		};
 
 		this.state = getState(this.defaultState, this.stateTypes);
