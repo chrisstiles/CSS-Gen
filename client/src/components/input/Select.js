@@ -15,6 +15,7 @@ class Select extends React.Component {
 		this.getWrapperStyles = this.getWrapperStyles.bind(this);
 		this.scrollMenu = this.scrollMenu.bind(this);
 		this.renderMenu = this.renderMenu.bind(this);
+		this.focus = this.focus.bind(this);
 	}
 
 	componentDidMount() {
@@ -134,6 +135,10 @@ class Select extends React.Component {
 		}
 	}
 
+	focus() {
+		this.select.focus();
+	}
+
 	render() {
 		var className = 'field-wrapper select-wrapper';
 
@@ -153,7 +158,7 @@ class Select extends React.Component {
 						onOpen={this.handleOpen}
 						menuRenderer={this.renderMenu}
 						clearable={false}
-						onBlurResetsInput={false}
+						onBlurResetsInput={this.props.onBlurResetsInput}
 						{...props}
 					/>
 				: 
@@ -162,7 +167,6 @@ class Select extends React.Component {
 						onOpen={this.handleOpen}
 						menuRenderer={this.renderMenu}
 						clearable={false}
-						onBlurResetsInput={false}
 						{...props}
 					/>
 				}

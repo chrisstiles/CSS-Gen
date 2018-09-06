@@ -84,14 +84,20 @@ class TextShadowInputs extends React.Component {
 		// 	});
 		// }
 
+		if (!inputValue) {
+			return this.allFontOptions;
+		}
+
 		const fuse = new Fuse(this.allFontOptions, {
+			shouldSort: false,
 			keys: ['label']
 		});
 
 		const fontOptions = fuse.search(inputValue);
-		console.log(fontOptions, inputValue);
+		
+		return fontOptions;
 
-		this.setState({ fontOptions });
+		// this.setState({ fontOptions });
 		// this.fontOptions = fuse.search(inputValue);
 	}
 
@@ -104,7 +110,6 @@ class TextShadowInputs extends React.Component {
 			  name="googleFont"
 			  value={this.props.googleFont}
 			  getOptions={this.getGoogleFonts}
-			  options={this.state.fontOptions}
 			  onChange={this.handleChange}
 			  menuContainer="#sidebar"
 			  scrollWrapper="#sidebar-controls"
