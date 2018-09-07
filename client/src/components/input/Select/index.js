@@ -79,7 +79,7 @@ class Select extends React.Component {
 		const select = this.select._selectRef;
 		console.log(select)
 		if (select) {
-			const control = select ? select : select.select.control;
+			const control = select ? select.control : select.select.control;
 			console.log(control)
 			const selectRect = control.getBoundingClientRect();
 			const containerRect = this.scrollWrapper.getBoundingClientRect();
@@ -120,8 +120,8 @@ class Select extends React.Component {
 		}
 		console.log(this.select)
 		if (this.menuContainer) {
-			const style = this.getWrapperStyles();
-			// const style = {};
+			// const style = this.getWrapperStyles();
+			const style = {};
 			className += ' has-container';
 
 			const menuWrapper = (
