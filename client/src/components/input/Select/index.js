@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactSelect from 'react-select';
+import ReactSelect from './VirtualizedSelect';
+// import ReactSelect from 'react-virtualized-select';
+// import ReactSelect from 'react-select';
 import AsyncSelect from 'react-select/lib/Async';
 import 'react-select/dist/react-select.css';
+// import 'react-virtualized-select/styles.css';
+// import defaultMenuRenderer from 'react-select/lib/utils/defaultMenuRenderer';
 import defaultMenuRenderer from 'react-select/lib/utils/defaultMenuRenderer';
 import _ from 'underscore';
 
@@ -12,10 +16,10 @@ class Select extends React.Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleOpen = this.handleOpen.bind(this);
+		this.handleFocus = this.handleFocus.bind(this);
 		this.getWrapperStyles = this.getWrapperStyles.bind(this);
 		this.scrollMenu = this.scrollMenu.bind(this);
 		this.renderMenu = this.renderMenu.bind(this);
-		this.focus = this.focus.bind(this);
 	}
 
 	componentDidMount() {
@@ -64,12 +68,19 @@ class Select extends React.Component {
 		}
 	}
 
+	handleFocus(event) {
+		this.control = event.target;
+	}
+
 	getWrapperStyles() {
 
 		// console.log(this.select)
 
-		if (this.select) {
-			const control = this.select.control ? this.select.control : this.select.select.control;
+		const select = this.select._selectRef;
+		console.log(select)
+		if (select) {
+			const control = select ? select : select.select.control;
+			console.log(control)
 			const selectRect = control.getBoundingClientRect();
 			const containerRect = this.scrollWrapper.getBoundingClientRect();
 			const borderLeftWidth = getComputedStyle(this.scrollWrapper, null).getPropertyValue('border-left-width');
@@ -98,25 +109,28 @@ class Select extends React.Component {
 
 	}
 
-	renderMenu(params) {
-		const options = defaultMenuRenderer(params);
+	renderMenu(menu) {
+		console.log('renderMenu()')
+		console.log(menu)
+		// const options = defaultMenuRenderer(params);
 		
 		var className = 'menu-wrapper';
 		if (this.props.className && this.props.className.indexOf('small') !== -1) {
 			className += ' small';
 		}
-
+		console.log(this.select)
 		if (this.menuContainer) {
 			const style = this.getWrapperStyles();
+			// const style = {};
 			className += ' has-container';
 
-			const menu = (
+			const menuWrapper = (
 				<div 
 					className={className}
 					style={style}
 					ref={wrapper => { this.wrapper = wrapper }}
 				>
-					{options}
+					{menu}
 				</div>
 			);
 
@@ -125,18 +139,14 @@ class Select extends React.Component {
 		    this.menuContainer
 		  );
 		} else {
-			const menu = (
+			const menuWrapper = (
 				<div className={className}>
-					{options}
+					{menu}
 				</div>
 			);
 
-			return menu;
+			return menuWrapper;
 		}
-	}
-
-	focus() {
-		this.select.focus();
 	}
 
 	render() {
@@ -152,24 +162,14 @@ class Select extends React.Component {
 			<div className={className}>
 				{this.props.label ? <label className="title">{this.props.label}</label> : null}
 				
-				{this.props.async ? 
-					<AsyncSelect
-						ref={select => { this.select = select }}
-						onOpen={this.handleOpen}
-						menuRenderer={this.renderMenu}
-						clearable={false}
-						onBlurResetsInput={this.props.onBlurResetsInput}
-						{...props}
-					/>
-				: 
-					<ReactSelect
-						ref={select => { this.select = select }}
-						onOpen={this.handleOpen}
-						menuRenderer={this.renderMenu}
-						clearable={false}
-						{...props}
-					/>
-				}
+				<ReactSelect
+					ref={select => { this.select = select }}
+					onFocus={this.handleFocus}
+					onOpen={this.handleOpen}
+					renderMenu={this.renderMenu}
+					clearable={false}
+					{...props}
+				/>
 			</div>
 		);
 	}

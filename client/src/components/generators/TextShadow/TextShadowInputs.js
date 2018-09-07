@@ -42,7 +42,7 @@ class TextShadowInputs extends React.Component {
 						label: font
 					});
 				});
-				console.log(this.allFontOptions)
+				// console.log(this.allFontOptions)
 			});
 		// }
 	}
@@ -52,7 +52,7 @@ class TextShadowInputs extends React.Component {
 		state[name] = value;
 
 		// console.log(state)
-	  console.log(state)
+	  // console.log(state)
 	  this.props.updateGenerator(state);
 	  // this.getGoogleFonts(value);
 	}
