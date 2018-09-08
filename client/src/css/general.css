@@ -1264,6 +1264,8 @@ input[type="number"],
   margin-bottom: 22px; }
   .select-wrapper .title {
     margin-bottom: 5px; }
+  .select-wrapper .Select-menu-outer {
+    display: none; }
   .select-wrapper .Select .Select-control,
   .select-wrapper .Select .Select-input {
     height: 35px !important;
