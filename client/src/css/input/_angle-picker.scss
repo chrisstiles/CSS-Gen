@@ -62,8 +62,9 @@ $circle-offset: #{$circle-offset-value}px;
   }
 }
 
-.angle-input {
+input.angle-input {
   float:left;
   margin-left: 4px;
   margin-top: 10px;
+  width:65px;
 }
