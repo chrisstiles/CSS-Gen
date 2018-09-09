@@ -6,7 +6,7 @@
   }
 
   .Select-menu-outer {
-    // display:none;
+    display:none;
   }
 
   .Select {
@@ -90,7 +90,7 @@
 
 }
 
-.menu-wrapper {
+.options-wrapper {
   background-color:#fff;
   overflow:scroll;
   border: 1px solid #C9C9CC;
@@ -99,6 +99,7 @@
   z-index: 9998;
   font-size: 13px;
   font-weight: 600;
+  max-height:300px;
 
   &.has-container {
     position:absolute;
@@ -107,6 +108,7 @@
   .Select-option {
     padding: 7px 12px 8px 12px;
     color:#5a5a5a !important;
+    height: auto !important;
 
     &.is-focused {
       background-color: #f9f9f9;

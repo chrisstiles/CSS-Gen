@@ -60,6 +60,9 @@ class Select extends React.Component {
 	}
 
 	handleOpen() {
+		// setTimeout(() => {
+		// 	debugger;
+		// }, 1000)
 		if (this.props.onOpen) {
 			this.props.onOpen();
 		}
@@ -85,8 +88,8 @@ class Select extends React.Component {
 
 			var maxHeight = window.innerHeight - top - 35;
 
-			if (maxHeight > 350) {
-				maxHeight = 350;
+			if (maxHeight > 450) {
+				maxHeight = 450;
 			}
 
 			return {
@@ -107,7 +110,7 @@ class Select extends React.Component {
 			this.control = this.select.control ? this.select.control : this.select.select.control;
 		}
 		
-		var className = 'menu-wrapper';
+		var className = 'options-wrapper';
 		if (this.props.className && this.props.className.indexOf('small') !== -1) {
 			className += ' small';
 		}
@@ -164,6 +167,8 @@ class Select extends React.Component {
 					renderMenu={this.renderMenu}
 					clearable={false}
 					openOnFocus={true}
+					optionHeight={31}
+					maxHeight={400}
 					{...props}
 				/>
 			</div>

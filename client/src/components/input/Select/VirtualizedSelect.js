@@ -135,7 +135,7 @@ var VirtualizedSelect = function (_Component) {
             },
             rowRenderer: wrappedRowRenderer,
             scrollToIndex: focusedOptionIndex,
-            width: width
+            width: width - 2
           }, listProps));
         }
       );
