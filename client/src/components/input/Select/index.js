@@ -1,13 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactSelect from './VirtualizedSelect';
-// import ReactSelect from 'react-virtualized-select';
-// import ReactSelect from 'react-select';
-import AsyncSelect from 'react-select/lib/Async';
+import VirtualizedSelect from './VirtualizedSelect';
 import 'react-select/dist/react-select.css';
-// import 'react-virtualized-select/styles.css';
-// import defaultMenuRenderer from 'react-select/lib/utils/defaultMenuRenderer';
-import defaultMenuRenderer from 'react-select/lib/utils/defaultMenuRenderer';
 import _ from 'underscore';
 
 class Select extends React.Component {
@@ -15,8 +9,9 @@ class Select extends React.Component {
 		super(props);
 
 		this.handleChange = this.handleChange.bind(this);
-		this.handleOpen = this.handleOpen.bind(this);
 		this.handleFocus = this.handleFocus.bind(this);
+		this.handleOpen = this.handleOpen.bind(this);
+		this.handleClose = this.handleClose.bind(this);
 		this.getWrapperStyles = this.getWrapperStyles.bind(this);
 		this.scrollMenu = this.scrollMenu.bind(this);
 		this.renderMenu = this.renderMenu.bind(this);
@@ -25,10 +20,6 @@ class Select extends React.Component {
 	componentDidMount() {
 		this.menuContainer = document.querySelector(this.props.menuContainer);
 
-		// if (!this.select.control) {
-		// 	this.select = this.select.select;
-		// }
-		
 		if (this.menuContainer) {
 			this.scrollWrapper = this.props.scrollWrapper ? document.querySelector(this.props.scrollWrapper) : this.menuContainer;
 
@@ -38,10 +29,8 @@ class Select extends React.Component {
 	}
 
 	componentWillUnmount(){
-		if (this.menuContainer) {
-			window.removeEventListener('scroll', this.scrollMenu, true);
-			window.removeEventListener('resize', this.scrollMenu, true);
-		}
+		window.removeEventListener('scroll', this.scrollMenu, true);
+		window.removeEventListener('resize', this.scrollMenu, true);
 	}
 
 	scrollMenu(event) {
@@ -50,7 +39,7 @@ class Select extends React.Component {
 		}
 
 		if (event.type === 'resize' || event.target === this.menuContainer || this.menuContainer.contains(event.target)) {
-			const styles = this.getWrapperStyles(event.target);
+			const styles = this.getWrapperStyles();
 
 			this.wrapper.style.top = `${styles.top}px`;
 			this.wrapper.style.maxHeight = `${styles.maxHeight}px`;
@@ -62,26 +51,29 @@ class Select extends React.Component {
 		this.props.onChange(value, this.props.name);
 	}
 
+	handleFocus(e) {
+		this.input = e.target;
+
+		if (this.props.onFocus) {
+			this.props.onFocus();
+		}
+	}
+
 	handleOpen() {
 		if (this.props.onOpen) {
 			this.props.onOpen();
 		}
 	}
 
-	handleFocus(event) {
-		this.control = event.target;
+	handleClose() {
+		if (this.props.onClose) {
+			this.props.onClose();
+		}
 	}
 
 	getWrapperStyles() {
-
-		// console.log(this.select)
-
-		const select = this.select._selectRef;
-		console.log(select)
-		if (select) {
-			const control = select ? select.control : select.select.control;
-			console.log(control)
-			const selectRect = control.getBoundingClientRect();
+		if (this.control) {
+			const selectRect = this.control.getBoundingClientRect();
 			const containerRect = this.scrollWrapper.getBoundingClientRect();
 			const borderLeftWidth = getComputedStyle(this.scrollWrapper, null).getPropertyValue('border-left-width');
 			const scrollWrapperHeight = containerRect.height;
@@ -97,45 +89,46 @@ class Select extends React.Component {
 				maxHeight = 350;
 			}
 
-			const style = {
+			return {
 				width: selectRect.width,
 				top: top,
 				left: selectRect.left - containerRect.left + parseInt(borderLeftWidth, 10),
 				maxHeight: maxHeight
 			}
-
-			return style;
+		} else {
+			return {};
 		}
-
 	}
 
 	renderMenu(menu) {
-		console.log('renderMenu()')
-		console.log(menu)
-		// const options = defaultMenuRenderer(params);
+		this.select = this.virtualizedSelect._selectRef;
+
+		if (this.select) {
+			this.control = this.select.control ? this.select.control : this.select.select.control;
+		}
 		
 		var className = 'menu-wrapper';
 		if (this.props.className && this.props.className.indexOf('small') !== -1) {
 			className += ' small';
 		}
-		console.log(this.select)
+
 		if (this.menuContainer) {
-			// const style = this.getWrapperStyles();
-			const style = {};
 			className += ' has-container';
 
+			const style = this.getWrapperStyles();
 			const menuWrapper = (
 				<div 
 					className={className}
 					style={style}
 					ref={wrapper => { this.wrapper = wrapper }}
+					onMouseDown={this.handleMenuWrapperMouseDown}
 				>
 					{menu}
 				</div>
 			);
 
 			return ReactDOM.createPortal(
-		    menu,
+		    menuWrapper,
 		    this.menuContainer
 		  );
 		} else {
@@ -162,12 +155,15 @@ class Select extends React.Component {
 			<div className={className}>
 				{this.props.label ? <label className="title">{this.props.label}</label> : null}
 				
-				<ReactSelect
-					ref={select => { this.select = select }}
+				<VirtualizedSelect
+					ref={virtualizedSelect => { this.virtualizedSelect = virtualizedSelect; }}
+					value={this.props.value}
 					onFocus={this.handleFocus}
 					onOpen={this.handleOpen}
+					onClose={this.handleClose}
 					renderMenu={this.renderMenu}
 					clearable={false}
+					openOnFocus={true}
 					{...props}
 				/>
 			</div>

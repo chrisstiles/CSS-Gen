@@ -1264,8 +1264,6 @@ input[type="number"],
   margin-bottom: 22px; }
   .select-wrapper .title {
     margin-bottom: 5px; }
-  .select-wrapper .Select-menu-outer {
-    display: none; }
   .select-wrapper .Select .Select-control,
   .select-wrapper .Select .Select-input {
     height: 35px !important;
@@ -1290,7 +1288,6 @@ input[type="number"],
     .select-wrapper .Select .Select-control .Select-input {
       padding: 0 5px 1px 9px !important; }
     .select-wrapper .Select .Select-control .Select-value-label {
-      font-size: 15px;
       color: #505050 !important;
       line-height: 35px !important;
       display: block; }

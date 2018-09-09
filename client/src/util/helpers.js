@@ -5,7 +5,9 @@ import {
 	notificationTypes,
 	getGlobalState as _getGlobalState,
 	getGlobalDefaults as _getGlobalDefaults,
-	updateGlobalState as _updateGlobalState
+	updateGlobalState as _updateGlobalState,
+	getGlobalVariable as _getGlobalVariable,
+	setGlobalVariable as _setGlobalVariable
 } from '../components/App';
 
 export function addNotification(type, message) {
@@ -33,6 +35,14 @@ export function updateGlobalState(stateOrValue, name) {
 	}
 
 	_updateGlobalState(state);
+}
+
+export function getGlobalVariable(name) {
+	return _getGlobalVariable(name);
+}
+
+export function setGlobalVariable(value, name) {
+	return _setGlobalVariable(value, name);
 }
 
 export function extendSameTypes(object1, object2) {

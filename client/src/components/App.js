@@ -39,7 +39,7 @@ var notificationTypes = {
 }
 
 // Global State
-var getGlobalState, getGlobalDefaults, updateGlobalState;
+var getGlobalState, getGlobalDefaults, updateGlobalState, getGlobalVariable, setGlobalVariable;
 
 class PrimaryLayout extends React.Component {
   constructor() {
@@ -77,6 +77,8 @@ class PrimaryLayout extends React.Component {
     getGlobalState = this.getGlobalState.bind(this);
     updateGlobalState = this.updateGlobalState.bind(this);
     getGlobalDefaults = this.getGlobalDefaults.bind(this);
+    getGlobalVariable = this.getGlobalVariable.bind(this);
+    setGlobalVariable = this.setGlobalVariable.bind(this);
   }
 
   createNotification(type, message) {
@@ -102,6 +104,14 @@ class PrimaryLayout extends React.Component {
       // Save generator styles
       window.localStorage.setItem(key, JSON.stringify(state));
     }
+  }
+
+  getGlobalVariable(name) {
+    return this[name];
+  }
+
+  setGlobalVariable(value, name) {
+    this[name] = value;
   }
 
   render() {
@@ -136,6 +146,14 @@ class App extends React.Component {
   }
 }
 
-export { addNotification, notificationTypes, getGlobalState, updateGlobalState, getGlobalDefaults };
+export { 
+  addNotification, 
+  notificationTypes,
+   getGlobalState, 
+   updateGlobalState, 
+   getGlobalDefaults ,
+   getGlobalVariable,
+   setGlobalVariable
+ };
 
 export default App;

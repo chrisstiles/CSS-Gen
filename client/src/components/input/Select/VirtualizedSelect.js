@@ -46,6 +46,7 @@ var VirtualizedSelect = function (_Component) {
     key: 'focus',
     value: function focus() {
       if (this._selectRef) {
+        this._selectRef.focus()
         return this._selectRef.focus();
       }
     }
@@ -53,11 +54,13 @@ var VirtualizedSelect = function (_Component) {
     key: 'render',
     value: function render() {
       var SelectComponent = this._getSelectComponent();
-      return React.createElement(SelectComponent, _extends({}, this.props, {
+      var options = _extends({}, this.props, {
         ref: this._setSelectRef,
         menuRenderer: this._renderMenu,
+        onChange: this.props.onChange,
         menuStyle: { overflow: 'hidden' }
-      }));
+      });
+      return React.createElement(SelectComponent, options);
     }
 
     // See https://github.com/JedWatson/react-select/#effeciently-rendering-large-lists-with-windowing
@@ -109,7 +112,8 @@ var VirtualizedSelect = function (_Component) {
           selectValue: onSelect,
           style: style,
           valueArray: valueArray,
-          valueKey: valueKey
+          valueKey: valueKey,
+          _selectValue: selectValue
         });
       }
 
@@ -200,27 +204,32 @@ var VirtualizedSelect = function (_Component) {
           style = _ref7.style,
           valueArray = _ref7.valueArray;
 
-      var className = ['VirtualizedSelectOption'];
+      var className = ['Select-option'];
 
       if (option === focusedOption) {
-        className.push('VirtualizedSelectFocusedOption');
+        className.push('is-focused');
       }
 
       if (option.disabled) {
-        className.push('VirtualizedSelectDisabledOption');
+        className.push('is-disabled');
       }
 
       if (valueArray && valueArray.indexOf(option) >= 0) {
-        className.push('VirtualizedSelectSelectedOption');
+        className.push('is-selected');
       }
 
       if (option.className) {
         className.push(option.className);
       }
 
+      var onChange = this.props.onChange;
+
       var events = option.disabled ? {} : {
         onClick: function onClick() {
           return selectValue(option);
+        },
+        onMouseDown: function onMouseDown() {
+          onChange(option);
         },
         onMouseEnter: function onMouseEnter() {
           return focusOption(option);

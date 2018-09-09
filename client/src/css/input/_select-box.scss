@@ -6,7 +6,7 @@
   }
 
   .Select-menu-outer {
-    display:none;
+    // display:none;
   }
 
   .Select {
@@ -43,7 +43,6 @@
       }
 
       .Select-value-label {
-        font-size: 15px;
         color:$input-text-color !important;
         line-height: $input-height !important;
         display: block;

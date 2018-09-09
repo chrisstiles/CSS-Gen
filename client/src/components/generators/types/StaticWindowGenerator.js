@@ -4,8 +4,7 @@ import StaticWindowPreview from '../previews/StaticWindowPreview';
 import Toolbar from '../toolbars/Toolbar';
 import ColorPicker from '../../input/ColorPicker';
 import Toggle from '../../input/Toggle';
-import { getState, getGlobalDefaults, updateGlobalState } from '../../../util/helpers';
-import _ from 'underscore';
+import { getGlobalDefaults, updateGlobalState } from '../../../util/helpers';
 
 class StaticWindowGenerator extends React.Component {
 	constructor(props) {

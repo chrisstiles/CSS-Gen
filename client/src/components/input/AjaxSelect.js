@@ -6,35 +6,41 @@ class AjaxSelect extends React.Component {
 	constructor(props) {
 		super(props);
 
+		const { value } = props;
+
 		this.state = {
-			options: []
+			options: [
+				{ value: value, label: value }
+			]
 		};
 
-		const { debounceTime = 150 } = props;
-
-		this.loadOptions = _.debounce(this._loadOptions.bind(this), debounceTime);
-		this.handleFocus = this.handleFocus.bind(this);
+		this.debounceTime = props.debounceTime === undefined ? 850 : props.debounceTime;
+		this.getOptions = this._getOptions.bind(this)
 	}
 
-	_loadOptions(inputValue) {
-		// console.log(inputValue)
+	_getOptions(inputValue) {
 		const options = this.props.getOptions(inputValue);
-		this.setState({ options });
+
+		if (_.isObject(options)) {
+			return Promise.resolve(options);
+		} else {
+			return options;
+		}
+
+		if (!this.debounceAdded) {
+			this.getOptions = _.debounce(this._getOptions.bind(this), this.debounceTime);
+			this.debounceAdded = true;
+		}
 	}
-
-	handleFocus() {
-		this.loadOptions();
-	}
-
-	// handleBlur() {
-
-	// }
 
 	render() {
+		const { autoload } = this.props;
+
 		return (
 			<Select
-				onInputChange={this.loadOptions}
-				options={this.state.options}
+				async={true}
+				loadOptions={this.getOptions}
+				autoload={autoload}
 				{...this.props}
 			/>
 		)
