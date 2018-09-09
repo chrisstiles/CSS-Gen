@@ -25,20 +25,25 @@ class StaticWindowGenerator extends React.Component {
 	}
 
 	renderPreview() {
-		var preview;
+		var preview, isDefault;
 
 		if (this.props.renderPreview) {
 			preview = this.props.renderPreview();
+			isDefault = false;
 		} else {
 			const styles = this.props.generatorState.css.styles;
-			preview = <div className="preview" style={styles} />
+			preview = <div className="preview" style={styles} />;
+			isDefault = true;
 		}
 
 		const { showEditorBackgroundColor, editorBackgroundColor } = this.props.globalState;
 		const backgroundColor = showEditorBackgroundColor ? editorBackgroundColor : 'transparent';
 
 		return (
-			<StaticWindowPreview backgroundColor={backgroundColor}>
+			<StaticWindowPreview 
+				backgroundColor={backgroundColor}
+				isDefault={isDefault}
+			>
 				{preview}
 			</StaticWindowPreview>
 		);
@@ -68,8 +73,6 @@ class StaticWindowGenerator extends React.Component {
 		  		  : null}
 				  </Toggle>
 				</div>
-
-				
 
 				<div className="right">
 				  <button

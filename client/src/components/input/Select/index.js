@@ -60,9 +60,6 @@ class Select extends React.Component {
 	}
 
 	handleOpen() {
-		// setTimeout(() => {
-		// 	debugger;
-		// }, 1000)
 		if (this.props.onOpen) {
 			this.props.onOpen();
 		}

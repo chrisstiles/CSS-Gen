@@ -1,6 +1,7 @@
 import React from 'react';
 import StaticWindowGenerator from '../types/StaticWindowGenerator';
 import TextShadowInputs from './TextShadowInputs';
+import ContentEditable from '../../input/ContentEditable';
 import { getState, generateCSSString } from '../../../util/helpers';
 import _ from 'underscore';
 
@@ -54,7 +55,9 @@ class TextShadow extends React.Component {
 
 	renderPreview() {
 		return (
-			<div>{this.state.text}</div>
+			<ContentEditable
+				content={this.state.text}
+			/>
 		);
 	}
 

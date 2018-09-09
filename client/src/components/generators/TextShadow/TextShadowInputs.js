@@ -14,6 +14,7 @@ class TextShadowInputs extends React.Component {
 	  this.state = {};
 	  
 	  this.handleChange = this.handleChange.bind(this);
+	  this.handleTextCange = this.handleTextCange.bind(this);
 	  this.getGoogleFonts = this.getGoogleFonts.bind(this);
 	  this.filterFontOptions = this.filterFontOptions.bind(this);
 	  this.getFontOptions = this.getFontOptions.bind(this);
@@ -24,6 +25,10 @@ class TextShadowInputs extends React.Component {
 		state[name] = value;
 
 	  this.props.updateGenerator(state);
+	}
+
+	handleTextCange(event) {
+		this.props.updateGenerator({ 'text': event.target.value });
 	}
 
 	setFontOptions() {
@@ -111,18 +116,29 @@ class TextShadowInputs extends React.Component {
 	}
 
 	render() {
+		const { text, googleFont } = this.props;
 		return (
-			<AjaxSelect
-			  label="Google Font"
-			  placeholder="Search Google Fonts"
-			  name="googleFont"
-			  value={this.props.googleFont}
-			  getOptions={this.getFontOptions}
-			  onChange={this.handleChange}
-			  menuContainer="#sidebar"
-			  scrollWrapper="#sidebar-controls"
-			  autoload={true}
-			/>
+			<div>
+				<div className="field-wrapper">
+					<label className="title">Text</label>
+					<textarea 
+						onChange={this.handleTextCange}
+						name="text"
+						value={text}
+					/>
+				</div>
+				<AjaxSelect
+				  label="Google Font"
+				  placeholder="Search Google Fonts"
+				  name="googleFont"
+				  value={this.props.googleFont}
+				  getOptions={this.getFontOptions}
+				  onChange={this.handleChange}
+				  menuContainer="#sidebar"
+				  scrollWrapper="#sidebar-controls"
+				  autoload={true}
+				/>
+			</div>
 		);
 	}
 }
