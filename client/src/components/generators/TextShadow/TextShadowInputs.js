@@ -10,7 +10,6 @@ class TextShadowInputs extends React.Component {
 	  super(props);
 	  
 	  this.handleChange = this.handleChange.bind(this);
-	  // this.getGoogleFonts = this.getGoogleFonts.bind(this);
 	  this.filterFontOptions = this.filterFontOptions.bind(this);
 	  this.getFontOptions = this.getFontOptions.bind(this);
 	}
@@ -32,33 +31,6 @@ class TextShadowInputs extends React.Component {
 			});
 		});
 	}
-
-	// getGoogleFonts(updateOptions) {
-	// 	const googleFontList = getGlobalVariable('googleFontList');
-
-	// 	// Save the fonts list to the global session state to prevent
-	// 	// having to hit the API every time the user navigates away
-	// 	if (googleFontList) {
-	// 		// Fonts have already been loaded
-	// 		this.fontList = googleFontList;
-	// 		this.setFontOptions();
-	// 		updateOptions();
-	// 	} else {
-	// 		// Use Google API to get list of available fonts
-	// 		const apiUrl = [];
-	// 		apiUrl.push('https://www.googleapis.com/webfonts/v1/webfonts');
-	// 		apiUrl.push('?key=AIzaSyBAeBGJ5r_JdheXlg46qkgsiFemJ7zfuek');
-	// 		const url = apiUrl.join('');
-
-	// 		axios.get(url).then(response => {
-	// 			this.fontList = response.data.items || [];
-	// 			this.setFontOptions();
-	// 			updateOptions();
-	// 			setGlobalVariable(this.fontList, 'googleFontList');
-	// 		});
-
-	// 	}
-	// }
 
 	getFontOptions(inputValue) {
 		// No need to refetch data

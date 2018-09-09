@@ -11,7 +11,7 @@ class TextShadow extends React.Component {
 
 		this.defaultState = {
 			text: 'My text here',
-			fontSize: 20,
+			fontSize: 40,
 			googleFont: 'Montserrat'
 		};
 
@@ -36,7 +36,8 @@ class TextShadow extends React.Component {
 		const rules = _.extend({}, this.state, styles);
 		const css = {};
 
-		css.fontSize = rules.fontSize;
+		css.fontSize = `${rules.fontSize}px`;
+		css.textShadow = '2px 2px 2px #1C6EA4';
 
 		return {
 			styles: css,
@@ -60,6 +61,7 @@ class TextShadow extends React.Component {
 				value={this.state.text}
 				name="text"
 				style={style}
+				placeholder="Click here to enter text"
 				onChange={this.updateGenerator}
 			/>
 		);

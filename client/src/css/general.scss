@@ -107,7 +107,7 @@ p:last-child {
 }
 
 #generator-wrapper {
-  margin-right: 323px;
+  margin-right: 320px;
   position:relative;
 }
 
@@ -149,3 +149,4 @@ p:last-child {
 // Generator Previews
 @import './generators/_border-radius.scss';
 @import './generators/_triangle.scss';
+@import './generators/_text-shadow.scss';
