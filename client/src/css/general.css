@@ -80,6 +80,10 @@ p:last-child {
 .p100 {
   width: 100%; }
 
+.disable-mouse {
+  pointer-events: none !important;
+  cursor: none !important; }
+
 #generator-wrapper {
   margin-right: 323px;
   position: relative; }
@@ -455,6 +459,11 @@ p:last-child {
     position: relative;
     z-index: 200; }
 
+/* ------------------------- */
+/* Text Area Preview */
+#text-area-preview {
+  background-color: transparent; }
+
 #sidebar {
   position: fixed;
   top: 0;
@@ -827,7 +836,6 @@ input[type="number"],
 
 input.number-input {
   font-weight: 600;
-  font-size: 16px;
   width: 65px; }
 
 input.slider-input {
@@ -870,6 +878,9 @@ textarea {
   padding: 7px 10px;
   font-weight: 500;
   resize: vertical;
+  white-space: pre-line;
+  display: block;
+  width: 100%;
   -webkit-appearance: none;
   apperance: none;
   border: 1px solid #d2d2d2 !important;
@@ -1253,6 +1264,8 @@ textarea {
       background-color: #4834d4; }
       .toggle-wrapper input:checked + .toggle:before {
         transform: translateX(22px); }
+      .toggle-wrapper input:checked + .toggle:hover:before {
+        transform: translateX(22px) scale(1.08); }
     .toggle-wrapper input:focus + .toggle {
       box-shadow: 0 0 1px #4834d4; }
   .toggle-wrapper .toggle {
@@ -1272,9 +1285,11 @@ textarea {
       width: 20px;
       left: 4px;
       bottom: 4px;
-      background-color: white;
+      background-color: #fff;
       transition: .15s;
       border-radius: 50%; }
+    .toggle-wrapper .toggle:hover:before {
+      transform: scale(1.08); }
   .toggle-wrapper .toggle-content {
     float: left; }
 

@@ -19,17 +19,17 @@ class AjaxSelect extends React.Component {
 	}
 
 	_getOptions(inputValue) {
+		if (!this.debounceAdded) {
+			this.getOptions = _.debounce(this._getOptions.bind(this), this.debounceTime);
+			this.debounceAdded = true;
+		}
+		
 		const options = this.props.getOptions(inputValue);
 
 		if (_.isObject(options)) {
 			return Promise.resolve(options);
 		} else {
 			return options;
-		}
-
-		if (!this.debounceAdded) {
-			this.getOptions = _.debounce(this._getOptions.bind(this), this.debounceTime);
-			this.debounceAdded = true;
 		}
 	}
 

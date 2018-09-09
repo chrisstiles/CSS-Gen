@@ -101,6 +101,11 @@ p:last-child {
   width:100%;
 }
 
+.disable-mouse {
+  pointer-events: none !important;
+  cursor:none !important;
+}
+
 #generator-wrapper {
   margin-right: 323px;
   position:relative;

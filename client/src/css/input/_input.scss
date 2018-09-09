@@ -154,7 +154,6 @@
   font-family: $main-font;
   color: $input-text-color;
   width:100%;
-
   box-shadow:none !important;
   border-radius: 0 !important;
 
@@ -177,7 +176,6 @@ input[type="number"],
 
 input.number-input {
   font-weight: 600;
-  font-size:16px;
   width: 65px;
 }
 
@@ -239,6 +237,9 @@ textarea {
   padding: 7px 10px;
   font-weight:500;
   resize: vertical;
+  white-space: pre-line;
+  display:block;
+  width:100%;
 
   @include text-input-styles;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { isObjectOfShape } from '../util/helpers';
 import _ from 'underscore';
 
 // CSS Styles
@@ -49,12 +50,16 @@ class PrimaryLayout extends React.Component {
     this.state = {
       showPreviewText: true,
       outputPreviewStyles: false,
-      showBrowserPrefixes: false,
-      showEditorBackgroundColor: false,
-      editorBackgroundColor: '#fff'
-    }
+      showBrowserPrefixes: false
+    };
 
     this.globalDefaults = _.extend({}, this.state);
+
+    this.stateTypes = {
+      showPreviewText: Boolean,
+      outputPreviewStyles: Boolean,
+      showBrowserPrefixes: Boolean
+    };
 
     // Add persisted global state
     const key = 'globalState';
@@ -66,7 +71,9 @@ class PrimaryLayout extends React.Component {
         previousState = JSON.parse(previousState);
 
         if (previousState) {
-          this.state = _.extend(this.state, previousState);
+          if (isObjectOfShape(previousState, this.stateTypes)) {
+            this.state = _.extend(this.state, previousState);
+          }
         }
       } catch(e) {
         console.log(e);

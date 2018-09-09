@@ -1,7 +1,7 @@
 import React from 'react';
 import StaticWindowGenerator from '../types/StaticWindowGenerator';
 import TextShadowInputs from './TextShadowInputs';
-import ContentEditable from '../../input/ContentEditable';
+import TextAreaPreview from '../previews/TextAreaPreview';
 import { getState, generateCSSString } from '../../../util/helpers';
 import _ from 'underscore';
 
@@ -53,10 +53,14 @@ class TextShadow extends React.Component {
 	  );
 	}
 
-	renderPreview() {
+	renderPreview(style) {
 		return (
-			<ContentEditable
-				content={this.state.text}
+			<TextAreaPreview
+				className="text-shadow-preview"
+				value={this.state.text}
+				name="text"
+				style={style}
+				onChange={this.updateGenerator}
 			/>
 		);
 	}

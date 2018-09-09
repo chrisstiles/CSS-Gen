@@ -4,39 +4,51 @@ import StaticWindowPreview from '../previews/StaticWindowPreview';
 import Toolbar from '../toolbars/Toolbar';
 import ColorPicker from '../../input/ColorPicker';
 import Toggle from '../../input/Toggle';
-import { getGlobalDefaults, updateGlobalState } from '../../../util/helpers';
+import { getState } from '../../../util/helpers';
+import _ from 'underscore';
 
 class StaticWindowGenerator extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.defaultState = {
+			showEditorBackgroundColor: false,
+			editorBackgroundColor: '#fff'
+		};
+
+		_.extend(this.defaultState, props.previewStyles);
+
+		this.stateTypes = {
+			showEditorBackgroundColor: Boolean,
+			editorBackgroundColor: String
+		};
+
+		this.state = getState(this.defaultState, this.stateTypes, true);
+
 		this.reset = this.reset.bind(this);
+		this.handlePreviewUpdate = this.handlePreviewUpdate.bind(this);
 		this.renderPreview = this.renderPreview.bind(this);
 		this.renderToolbar = this.renderToolbar.bind(this);
 	}
 
 	reset() {
-		// Revert global defaults
-		const { showEditorBackgroundColor, editorBackgroundColor } = getGlobalDefaults();
-		updateGlobalState({ showEditorBackgroundColor, editorBackgroundColor });
-		
 		this.setState(this.defaultState);
 		this.props.updateGenerator(this.props.generatorDefaultState);
 	}
 
 	renderPreview() {
 		var preview, isDefault;
+		const style = this.props.generatorState.css.styles;
 
 		if (this.props.renderPreview) {
-			preview = this.props.renderPreview();
+			preview = this.props.renderPreview(style);
 			isDefault = false;
 		} else {
-			const styles = this.props.generatorState.css.styles;
-			preview = <div className="preview" style={styles} />;
+			preview = <div className="preview" style={style} />;
 			isDefault = true;
 		}
 
-		const { showEditorBackgroundColor, editorBackgroundColor } = this.props.globalState;
+		const { showEditorBackgroundColor, editorBackgroundColor } = this.state;
 		const backgroundColor = showEditorBackgroundColor ? editorBackgroundColor : 'transparent';
 
 		return (
@@ -49,8 +61,14 @@ class StaticWindowGenerator extends React.Component {
 		);
 	}
 
+	handlePreviewUpdate(value, name) {
+		const state = {};
+		state[name] = value
+	  this.setState(state);
+	}
+
 	renderToolbar() {
-		const { showEditorBackgroundColor, editorBackgroundColor } = this.props.globalState;
+		const { showEditorBackgroundColor, editorBackgroundColor } = this.state;
 
 		return (
 			<Toolbar>
@@ -59,7 +77,7 @@ class StaticWindowGenerator extends React.Component {
 				<div className="item input">
 				  <Toggle
 				    name="showEditorBackgroundColor"
-				    onChange={updateGlobalState}
+				    onChange={this.handlePreviewUpdate}
 				    label="Background Color:"
 				    className="left"
 				    checked={showEditorBackgroundColor}
@@ -68,7 +86,7 @@ class StaticWindowGenerator extends React.Component {
 		  	  	  <ColorPicker
 		  	  	    name="editorBackgroundColor"
 		  	  	    color={editorBackgroundColor}
-		  	  	    onChange={updateGlobalState}
+		  	  	    onChange={this.handlePreviewUpdate}
 		  	  	  />
 		  		  : null}
 				  </Toggle>
@@ -96,6 +114,7 @@ class StaticWindowGenerator extends React.Component {
 				renderToolbar={this.renderToolbar}
 				outputPreviewStyles={this.props.globalState.outputPreviewStyles}
 				showBrowserPrefixes={this.props.globalState.showBrowserPrefixes}
+				previewState={this.state}
 				{...props}
 			/>
 		);

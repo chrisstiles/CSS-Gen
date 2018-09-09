@@ -60,12 +60,19 @@ class Select extends React.Component {
 	}
 
 	handleOpen() {
+		// setTimeout(() => {
+		// 	debugger;
+		// }, 1500)
+		this.isOpen = true;
+
 		if (this.props.onOpen) {
 			this.props.onOpen();
 		}
 	}
 
 	handleClose() {
+		this.isOpen = false;
+
 		if (this.props.onClose) {
 			this.props.onClose();
 		}
@@ -107,18 +114,19 @@ class Select extends React.Component {
 			this.control = this.select.control ? this.select.control : this.select.select.control;
 		}
 		
-		var className = 'options-wrapper';
+		const className = ['options-wrapper'];
+
 		if (this.props.className && this.props.className.indexOf('small') !== -1) {
-			className += ' small';
+			className.push('small');
 		}
 
 		if (this.menuContainer) {
-			className += ' has-container';
+			className.push('has-container');
 
 			const style = this.getWrapperStyles();
 			const menuWrapper = (
 				<div 
-					className={className}
+					className={className.join(' ')}
 					style={style}
 					ref={wrapper => { this.wrapper = wrapper }}
 					onMouseDown={this.handleMenuWrapperMouseDown}
@@ -158,13 +166,13 @@ class Select extends React.Component {
 				<VirtualizedSelect
 					ref={virtualizedSelect => { this.virtualizedSelect = virtualizedSelect; }}
 					value={this.props.value}
-					onFocus={this.handleFocus}
-					onOpen={this.handleOpen}
-					onClose={this.handleClose}
 					renderMenu={this.renderMenu}
 					clearable={false}
 					openOnFocus={true}
 					maxHeight={400}
+					onFocus={this.handleFocus}
+					onOpen={this.handleOpen}
+					onClose={this.handleClose}
 					{...props}
 				/>
 			</div>
