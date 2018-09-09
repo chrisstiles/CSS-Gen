@@ -88,8 +88,8 @@ class Select extends React.Component {
 
 			var maxHeight = window.innerHeight - top - 35;
 
-			if (maxHeight > 450) {
-				maxHeight = 450;
+			if (maxHeight > 400) {
+				maxHeight = 400;
 			}
 
 			return {
@@ -167,7 +167,6 @@ class Select extends React.Component {
 					renderMenu={this.renderMenu}
 					clearable={false}
 					openOnFocus={true}
-					optionHeight={31}
 					maxHeight={400}
 					{...props}
 				/>

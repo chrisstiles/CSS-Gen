@@ -273,6 +273,6 @@ VirtualizedSelect.propTypes = {
 VirtualizedSelect.defaultProps = {
   async: false,
   maxHeight: 200,
-  optionHeight: 35
+  optionHeight: 31
 };
 export default VirtualizedSelect;
