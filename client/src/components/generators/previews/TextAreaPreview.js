@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'underscore';
+import autosize from 'autosize';
 
 class TextAreaPreview extends React.Component {
 	constructor(props) {
@@ -10,30 +11,24 @@ class TextAreaPreview extends React.Component {
 		}
 	}
 
+	componentDidMount() {
+		autosize(this.textarea);
+	}
+
 	handleChange(event) {
 		const state = {};
 		state[this.props.name] = event.target.value;
 		this.props.onChange(state);
-		// this.setState({ value: event.target.value });
 	}
 
 	render() {
-		// const newProps = {
-		// 	onChange: this.handleChange.bind(this),
-		// 	value: this.state.value
-		// };
-
-		// const props = _.extend({}, this.props, newProps);
-
 		const props = _.extend({}, this.props, { onChange: this.handleChange.bind(this) });
-
-		// props.defaultValue = this.props.value;
-		// delete props.value;
-		// console.log(props)
 
 		return (
 			<textarea
+				ref={textarea => { this.textarea = textarea }}
 				id="text-area-preview"
+				rows={1}
 				{...props}
 			/>
 		);

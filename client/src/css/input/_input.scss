@@ -240,6 +240,7 @@ textarea {
   white-space: pre-line;
   display:block;
   width:100%;
+  overflow:auto;
 
   @include text-input-styles;
 }

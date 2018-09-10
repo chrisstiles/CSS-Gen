@@ -464,12 +464,17 @@ p:last-child {
 #text-area-preview {
   background-color: transparent;
   resize: none;
-  border: none !important;
+  border: 2px dashed transparent !important;
   cursor: pointer;
-  padding: 15px;
-  line-height: 1.2em; }
+  padding: 15px 20px 20px 20px;
+  line-height: 1.2em;
+  min-height: 300px;
+  max-height: 700px; }
+  #text-area-preview:hover {
+    border: 2px dashed #ff6969 !important; }
   #text-area-preview:focus {
-    cursor: text; }
+    cursor: text;
+    border: 2px dashed #4834d4 !important; }
   #text-area-preview::-webkit-input-placeholder {
     color: #c8c8c8 !important;
     opacity: 1;
@@ -904,6 +909,7 @@ textarea {
   white-space: pre-line;
   display: block;
   width: 100%;
+  overflow: auto;
   -webkit-appearance: none;
   apperance: none;
   border: 1px solid #d2d2d2 !important;

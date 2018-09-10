@@ -1,16 +1,22 @@
 import React from 'react';
+import Sliders from '../../input/Sliders';
 import AjaxSelect from '../../input/AjaxSelect';
 import axios from 'axios';
-import Fuse from 'fuse-js-latest';
 import _ from 'underscore';
 import { getGlobalVariable, setGlobalVariable } from '../../../util/helpers';
+
+const sliders = [
+  { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200, appendString: 'px' },
+  { title: 'Vertical Shift', name: 'verticalShift', min: -200, max: 200, appendString: 'px' },
+  { title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px' },
+  { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%' }
+];
 
 class TextShadowInputs extends React.Component {
 	constructor(props) {
 	  super(props);
 	  
 	  this.handleChange = this.handleChange.bind(this);
-	  this.filterFontOptions = this.filterFontOptions.bind(this);
 	  this.getFontOptions = this.getFontOptions.bind(this);
 	}
 
@@ -65,19 +71,6 @@ class TextShadowInputs extends React.Component {
 		}
 	}
 
-	filterFontOptions(inputValue = this.props.googleFont) {		
-		if (!inputValue) {
-			return this.allFontOptions;
-		}
-
-		const fuse = new Fuse(this.allFontOptions, {
-			shouldSort: false,
-			keys: ['label']
-		});
-
-		return fuse.search(inputValue);
-	}
-
 	render() {
 		return (
 			<div>
@@ -91,6 +84,11 @@ class TextShadowInputs extends React.Component {
 				  menuContainer="#sidebar"
 				  scrollWrapper="#sidebar-controls"
 				  autoload={true}
+				/>
+				<Sliders
+					sliders={sliders}
+					onChange={this.handleChange}
+					{...this.props}
 				/>
 			</div>
 		);

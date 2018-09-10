@@ -2,7 +2,7 @@ import React from 'react';
 import StaticWindowGenerator from '../types/StaticWindowGenerator';
 import TextShadowInputs from './TextShadowInputs';
 import TextAreaPreview from '../previews/TextAreaPreview';
-import { getState, generateCSSString } from '../../../util/helpers';
+import { getState, generateCSSString, hexOrRgba } from '../../../util/helpers';
 import _ from 'underscore';
 
 class TextShadow extends React.Component {
@@ -12,7 +12,12 @@ class TextShadow extends React.Component {
 		this.defaultState = {
 			text: 'My text here',
 			fontSize: 40,
-			googleFont: 'Montserrat'
+			googleFont: 'Montserrat',
+			horizontalShift: 0,
+			verticalShift: 2,
+			blurRadius: 10,
+			shadowOpacity: 15,
+			shadowColor: '#000',
 		};
 
 		this.stateTypes = {
@@ -37,7 +42,7 @@ class TextShadow extends React.Component {
 		const css = {};
 
 		css.fontSize = `${rules.fontSize}px`;
-		css.textShadow = '2px 2px 2px #1C6EA4';
+		css.textShadow = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${hexOrRgba(rules.shadowColor)}`;
 
 		return {
 			styles: css,
