@@ -6,6 +6,7 @@ import _ from 'underscore';
 import { getGlobalVariable, setGlobalVariable } from '../../../util/helpers';
 
 const sliders = [
+	{ title: 'Font Size', name: 'fontSize', min: 1, max: 120, appendString: 'px' },
   { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200, appendString: 'px' },
   { title: 'Vertical Shift', name: 'verticalShift', min: -200, max: 200, appendString: 'px' },
   { title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px' },
