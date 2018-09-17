@@ -18,12 +18,19 @@ class TextShadow extends React.Component {
 			blurRadius: 10,
 			shadowOpacity: 15,
 			shadowColor: '#000',
+			fontColor: '#000'
 		};
 
 		this.stateTypes = {
 			text: String,
 			fontSize: Number,
-			googleFont: String
+			googleFont: String,
+			horizontalShift: Number,
+			verticalShift: Number,
+			blurRadius: Number,
+			shadowOpacity: Number,
+			shadowColor: String,
+			fontColor: String
 		};
 
 		this.state = getState(this.defaultState, this.stateTypes);
@@ -41,6 +48,11 @@ class TextShadow extends React.Component {
 		const rules = _.extend({}, this.state, styles);
 		const css = {};
 
+		// Create tiny color with correct alpha
+		// var color = rules.color === undefined ? this.state.shadowColor : rules.color;
+		// color = tinycolor(color).setAlpha(rules.shadowOpacity / 100);
+
+		css.color = hexOrRgba(rules.fontColor);
 		css.fontSize = `${rules.fontSize}px`;
 		css.textShadow = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${hexOrRgba(rules.shadowColor)}`;
 

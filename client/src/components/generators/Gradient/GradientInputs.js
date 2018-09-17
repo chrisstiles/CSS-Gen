@@ -99,7 +99,7 @@ class GradientInputs extends React.Component {
             menuContainer="#sidebar"
             scrollWrapper="#sidebar-controls"
             searchable={false}
-            className="half"
+            className="w60"
           />
           <div className="field-wrapper right">
             <Toggle

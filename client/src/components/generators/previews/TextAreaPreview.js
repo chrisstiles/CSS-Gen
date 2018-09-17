@@ -15,6 +15,10 @@ class TextAreaPreview extends React.Component {
 		autosize(this.textarea);
 	}
 
+	componentWillReceiveProps() {
+		autosize.update(this.textarea);
+	}
+
 	handleChange(event) {
 		const state = {};
 		state[this.props.name] = event.target.value;
@@ -28,6 +32,7 @@ class TextAreaPreview extends React.Component {
 			<textarea
 				ref={textarea => { this.textarea = textarea }}
 				id="text-area-preview"
+				spellCheck="false"
 				rows={1}
 				{...props}
 			/>

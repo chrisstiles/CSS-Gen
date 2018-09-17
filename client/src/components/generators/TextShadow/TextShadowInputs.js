@@ -1,16 +1,20 @@
 import React from 'react';
 import Sliders from '../../input/Sliders';
 import AjaxSelect from '../../input/AjaxSelect';
+import ColorPicker from '../../input/ColorPicker';
 import axios from 'axios';
 import _ from 'underscore';
 import { getGlobalVariable, setGlobalVariable } from '../../../util/helpers';
 
-const sliders = [
-	{ title: 'Font Size', name: 'fontSize', min: 1, max: 120, appendString: 'px' },
+const shadowSliders = [
   { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200, appendString: 'px' },
   { title: 'Vertical Shift', name: 'verticalShift', min: -200, max: 200, appendString: 'px' },
   { title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px' },
   { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%' }
+];
+
+const fontSliders = [
+	{ title: 'Font Size', name: 'fontSize', min: 1, max: 200, appendString: 'px', className: 'w70 no-margin left' }
 ];
 
 class TextShadowInputs extends React.Component {
@@ -73,8 +77,28 @@ class TextShadowInputs extends React.Component {
 	}
 
 	render() {
+		// Add font color to slider
+		const _fontSliders = fontSliders.slice();
+		_fontSliders.push(
+			<ColorPicker
+			  color={this.props.fontColor}
+			  onChange={this.handleChange}
+			  name="fontColor"
+			  key="fontColor"
+			  className="small no-margin align-right small-preview"
+			/>
+		);
+
 		return (
 			<div>
+				<div className="section-title">Text Shadow Settings</div>
+				<Sliders
+					sliders={shadowSliders}
+					onChange={this.handleChange}
+					{...this.props}
+				/>
+				<div className="divider" />
+				<div className="section-title">Font Settings</div>
 				<AjaxSelect
 				  label="Google Font"
 				  placeholder="Search Google Fonts"
@@ -87,7 +111,7 @@ class TextShadowInputs extends React.Component {
 				  autoload={true}
 				/>
 				<Sliders
-					sliders={sliders}
+					sliders={_fontSliders}
 					onChange={this.handleChange}
 					{...this.props}
 				/>

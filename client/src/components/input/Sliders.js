@@ -3,10 +3,6 @@ import Slider from './Slider';
 import Toggle from './Toggle';
 import _ from 'underscore';
 
-// const Sliders = ({title, sliders, onChange, onActiveToggle, stateKey = null, optional, ...initialState}) => {
-  
-// }
-
 class Sliders extends React.Component {
   constructor(props) {
     super(props);
