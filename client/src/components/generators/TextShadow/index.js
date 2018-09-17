@@ -13,6 +13,7 @@ class TextShadow extends React.Component {
 			text: 'My text here',
 			fontSize: 40,
 			googleFont: 'Montserrat',
+			fontFamily: '"Montserrat", sans-serif',
 			horizontalShift: 0,
 			verticalShift: 2,
 			blurRadius: 10,
@@ -25,6 +26,7 @@ class TextShadow extends React.Component {
 			text: String,
 			fontSize: Number,
 			googleFont: String,
+			fontFamily: String,
 			horizontalShift: Number,
 			verticalShift: Number,
 			blurRadius: Number,
@@ -53,6 +55,7 @@ class TextShadow extends React.Component {
 		// color = tinycolor(color).setAlpha(rules.shadowOpacity / 100);
 
 		css.color = hexOrRgba(rules.fontColor);
+		css.fontFamily = rules.fontFamily;
 		css.fontSize = `${rules.fontSize}px`;
 		css.textShadow = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${hexOrRgba(rules.shadowColor)}`;
 

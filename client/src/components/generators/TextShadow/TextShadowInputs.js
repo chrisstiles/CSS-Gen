@@ -2,9 +2,10 @@ import React from 'react';
 import Sliders from '../../input/Sliders';
 import AjaxSelect from '../../input/AjaxSelect';
 import ColorPicker from '../../input/ColorPicker';
+import { getGlobalVariable, setGlobalVariable } from '../../../util/helpers';
 import axios from 'axios';
 import _ from 'underscore';
-import { getGlobalVariable, setGlobalVariable } from '../../../util/helpers';
+import WebFont from 'webfontloader';
 
 const shadowSliders = [
   { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200, appendString: 'px' },
@@ -21,9 +22,16 @@ class TextShadowInputs extends React.Component {
 	constructor(props) {
 	  super(props);
 	  
+	  this.loadFont = this.loadFont.bind(this);
 	  this.handleChange = this.handleChange.bind(this);
+	  this.handleFontSelect = this.handleFontSelect.bind(this);
+	  this.handleFontLoaded = this.handleFontLoaded.bind(this);
 	  this.getFontOptions = this.getFontOptions.bind(this);
 	}
+
+	// componentDidMount() {
+	// 	this.loadFont();
+	// }
 
 	handleChange(value, name) {
 		var state = {};
@@ -32,15 +40,68 @@ class TextShadowInputs extends React.Component {
 	  this.props.updateGenerator(state);
 	}
 
-	setFontOptions() {
+	loadFont(googleFont) {
+		if (googleFont !== 'Montserrat') {
+			if (this.fontList[googleFont]) {
+				WebFont.load({
+					google: {
+						families: [googleFont]
+					},
+					fontloading: this.handleFontLoaded,
+					classes: false
+				})
+			}
+		} else {
+			this.handleFontLoaded(googleFont);
+		}
+	}
+
+	handleFontSelect(googleFont) {
+		// Montserrat is the default application font
+		// and therefor does not need to be loaded
+		this.loadFont(googleFont);
+		this.props.updateGenerator({ googleFont });
+	}
+
+	handleFontLoaded(googleFont) {
+		const { fontFamily } = this.fontList[googleFont];
+		this.props.updateGenerator({ fontFamily });
+	}
+
+	setFontOptions(fontData) {
 		this.allFontOptions = [];
 
-		_.each(this.fontList, ({ family: font }) => {
-			this.allFontOptions.push({
-				value: font,
-				label: font
+		if (_.isArray(fontData)) {
+			// Data from API passed in
+			this.fontList = {};
+			
+			// Loop through API data to format object with fonts
+			// and array with select options
+			_.each(fontData, ({ family: font, variants, category }) => {
+				this.allFontOptions.push({
+					value: font,
+					label: font
+				});
+
+				this.fontList[font] = {
+					fontFamily: `"${font}", ${category}`,
+					variants
+				};
 			});
-		});
+		} else if (_.isObject(fontData)) {
+			// Fonts already formatted into object
+			this.fontList = fontData;
+
+			// Save options for drop down
+			_.each(fontData, (value, font) => {
+				this.allFontOptions.push({
+					value: font,
+					label: font
+				});
+			});
+		} else {
+			return;
+		}
 	}
 
 	getFontOptions(inputValue) {
@@ -55,8 +116,7 @@ class TextShadowInputs extends React.Component {
 		// having to hit the API every time the user navigates away
 		if (googleFontList && _.isArray(googleFontList)) {
 			// Fonts have already been loaded
-			this.fontList = googleFontList;
-			this.setFontOptions();
+			this.setFontOptions(googleFontList);
 			
 			return { options: this.allFontOptions, complete: true };
 		} else {
@@ -67,8 +127,8 @@ class TextShadowInputs extends React.Component {
 			const url = apiUrl.join('');
 
 			return axios.get(url).then(response => {
-				this.fontList = response.data.items || [];
-				this.setFontOptions();
+				const fontData = response.data.items || [];
+				this.setFontOptions(fontData);
 				setGlobalVariable(this.fontList, 'googleFontList');
 				return { options: this.allFontOptions, complete: true };
 			});
@@ -105,7 +165,7 @@ class TextShadowInputs extends React.Component {
 				  name="googleFont"
 				  value={this.props.googleFont}
 				  getOptions={this.getFontOptions}
-				  onChange={this.handleChange}
+				  onChange={this.handleFontSelect}
 				  menuContainer="#sidebar"
 				  scrollWrapper="#sidebar-controls"
 				  autoload={true}
