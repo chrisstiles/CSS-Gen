@@ -421,8 +421,12 @@ export function getColorObject(color) {
 	return color.rgb;
 }
 
-export function hexOrRgba(color) {
+export function hexOrRgba(color, alpha) {
 	color = tinycolor(color);
+
+	if (alpha !== undefined) {
+		color.setAlpha(alpha);
+	}
 
 	if (color.getAlpha() === 1) {
 		return color.toHexString();

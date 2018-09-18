@@ -54,10 +54,14 @@ class TextShadow extends React.Component {
 		// var color = rules.color === undefined ? this.state.shadowColor : rules.color;
 		// color = tinycolor(color).setAlpha(rules.shadowOpacity / 100);
 
+		// Text shadow
+		const { horizontalShift, verticalShift, blurRadius, shadowColor, shadowOpacity } = rules;
+		css.textShadow = `${horizontalShift}px ${verticalShift}px ${blurRadius}px ${hexOrRgba(shadowColor, shadowOpacity / 100)}`;
+
+		// Font settings
 		css.color = hexOrRgba(rules.fontColor);
 		css.fontFamily = rules.fontFamily;
 		css.fontSize = `${rules.fontSize}px`;
-		css.textShadow = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${hexOrRgba(rules.shadowColor)}`;
 
 		return {
 			styles: css,
