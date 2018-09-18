@@ -40,16 +40,16 @@ class TextShadowInputs extends React.Component {
 	  this.props.updateGenerator(state);
 	}
 
-	loadFont(googleFont) {
+	loadFont(googleFont = this.props.googleFont) {
 		if (googleFont !== 'Montserrat') {
 			if (this.fontList[googleFont]) {
 				WebFont.load({
 					google: {
 						families: [googleFont]
 					},
-					fontloading: this.handleFontLoaded,
+					fontactive: this.handleFontLoaded,
 					classes: false
-				})
+				});
 			}
 		} else {
 			this.handleFontLoaded(googleFont);
@@ -66,6 +66,7 @@ class TextShadowInputs extends React.Component {
 	handleFontLoaded(googleFont) {
 		const { fontFamily } = this.fontList[googleFont];
 		this.props.updateGenerator({ fontFamily });
+		// this.props.updateGenerator({ fontFamily, previewContentLoaded: true });
 	}
 
 	setFontOptions(fontData) {
