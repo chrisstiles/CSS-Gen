@@ -21,7 +21,8 @@ class TextShadow extends React.Component {
 			blurRadius: 10,
 			shadowOpacity: 15,
 			shadowColor: '#000',
-			fontColor: '#000'
+			fontColor: '#000',
+			fontLoaded: true
 		};
 
 		this.stateTypes = {
@@ -34,16 +35,17 @@ class TextShadow extends React.Component {
 			blurRadius: Number,
 			shadowOpacity: Number,
 			shadowColor: String,
-			fontColor: String
+			fontColor: String,
+			fontLoaded: Boolean
 		};
 
 		this.state = getState(this.defaultState, this.stateTypes);
 
 		// Load font if default is not selected
 		if (this.state.googleFont !== defaultFont) {
-			this.state.previewContentLoaded = false;
+			this.state.fontLoaded = false;
 		} else {
-			this.state.previewContentLoaded = true;
+			this.state.fontLoaded = true;
 		}
 
 		this.updateGenerator = this.updateGenerator.bind(this);
@@ -52,14 +54,14 @@ class TextShadow extends React.Component {
 	}
 
 	componentDidMount() {
-		const { previewContentLoaded, googleFont } = this.state;
-		if (!previewContentLoaded) {
+		const { fontLoaded, googleFont } = this.state;
+		if (!fontLoaded) {
 			WebFont.load({
 				google: {
 					families: [googleFont]
 				},
 				fontactive: () => {
-					this.setState({ previewContentLoaded: true });
+					this.setState({ fontLoaded: true });
 				},
 				fontinactive: () => {
 					this.setState(this.defaultState);
@@ -106,6 +108,7 @@ class TextShadow extends React.Component {
 			<TextAreaPreview
 				className="text-shadow-preview"
 				value={this.state.text}
+				// fontLoaded={this.state.fontLoaded}
 				name="text"
 				style={style}
 				placeholder="Click here to enter text"
@@ -116,8 +119,7 @@ class TextShadow extends React.Component {
 
 	render() {
 		const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
-		const previewStyles = { previewContentLoaded: this.state.previewContentLoaded };
-		console.log(previewStyles)
+
 		return (
 		  <StaticWindowGenerator 
 		    // Text Content
@@ -130,7 +132,6 @@ class TextShadow extends React.Component {
 		    generatorState={generatorState}
 		    generatorDefaultState={this.defaultState}
 				globalState={this.props.globalState}
-				previewStyles={previewStyles}
 
 		    // Render generator components
 		    renderInputs={this.renderInputs}
