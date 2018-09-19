@@ -39,6 +39,7 @@ class SingleWindowToolbar extends React.Component {
             value={width}
             name="width"
             onChange={this.handleChange}
+            appendString="px"
             min={minWidth}
             max={maxWidth}
           />
@@ -51,6 +52,7 @@ class SingleWindowToolbar extends React.Component {
             value={height}
             name="height"
             onChange={this.handleChange}
+            appendString="px"
             min={minHeight}
             max={maxHeight}
           />

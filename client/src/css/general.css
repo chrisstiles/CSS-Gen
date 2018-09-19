@@ -856,12 +856,13 @@ input[type="number"],
   color: #505050;
   width: 100%;
   box-shadow: none !important;
-  border-radius: 0 !important; }
+  border-radius: 2px !important; }
   input[type="text"]:focus,
   input[type="number"]:focus,
   .chrome-picker input:focus,
   .select-wrapper .Select-control:focus {
-    border: 1px solid #4834d4 !important; }
+    border: 1px solid #4834d4 !important;
+    box-shadow: 0px 0px 0px 3px rgba(72, 52, 212, 0.4) !important; }
 
 input.number-input {
   font-weight: 600;
@@ -919,9 +920,10 @@ textarea {
   color: #505050;
   width: 100%;
   box-shadow: none !important;
-  border-radius: 0 !important; }
+  border-radius: 2px !important; }
   textarea:focus {
-    border: 1px solid #4834d4 !important; }
+    border: 1px solid #4834d4 !important;
+    box-shadow: 0px 0px 0px 3px rgba(72, 52, 212, 0.4) !important; }
 
 .button {
   -webkit-appearance: none;
@@ -1360,7 +1362,8 @@ textarea {
       border-width: 6px 4px 2px;
       left: -2px; }
   .select-wrapper .Select.is-focused .Select-control {
-    border: 1px solid #4834d4 !important; }
+    border: 1px solid #4834d4 !important;
+    box-shadow: 0px 0px 0px 3px rgba(72, 52, 212, 0.4) !important; }
   .select-wrapper.small .Select .Select-control {
     height: 27px !important; }
   .select-wrapper.small .Select .Select-input {

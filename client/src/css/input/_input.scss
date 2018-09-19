@@ -155,10 +155,11 @@
   color: $input-text-color;
   width:100%;
   box-shadow:none !important;
-  border-radius: 0 !important;
+  border-radius: 2px !important;
 
   &:focus {
     border:1px solid $accent-color !important;
+    box-shadow: 0px 0px 0px 3px rgba(72, 52, 212, 0.4) !important;
   }
 }
 

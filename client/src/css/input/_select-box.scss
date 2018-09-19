@@ -57,6 +57,7 @@
     &.is-focused {
       .Select-control {
         border:1px solid $accent-color !important;
+        box-shadow: 0px 0px 0px 3px rgba(72, 52, 212, 0.4) !important;
       }
     }
   }
