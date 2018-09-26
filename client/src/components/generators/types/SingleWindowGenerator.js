@@ -227,7 +227,7 @@ class SingleWindowGenerator extends React.Component {
     const { generatorState, renderInputs, renderPresets, title, heading, intro, className, hasBrowserPrefixes } = this.props;
     const props = { generatorState, renderInputs, renderPresets, title, heading, intro, className, hasBrowserPrefixes };
     const previewState = _.extend({}, this.state, { previewCSS: this.generatePreviewCSS() });
-
+    
     return (
       <div>
         <FileDrop onFileDrop={this.handleFileDrop} />

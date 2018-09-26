@@ -108,7 +108,7 @@ class Generator extends React.Component {
 
     var hasLoaded = true;
     var previewCSS = '';
-
+    
     if (this.props.previewState) {
       const { previewContentLoaded, previewCSS: styles } = this.props.previewState;
       previewCSS = styles;
