@@ -8,10 +8,10 @@ import _ from 'underscore';
 import WebFont from 'webfontloader';
 
 const shadowSliders = [
-  { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200, appendString: 'px' },
-  { title: 'Vertical Shift', name: 'verticalShift', min: -200, max: 200, appendString: 'px' },
-  { title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px' },
-  { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%' }
+	{ title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px', className: 'small' },
+  { title: 'Shift X', name: 'horizontalShift', min: -200, max: 200, appendString: 'px', className: 'half' },
+  { title: 'Shift Y', name: 'verticalShift', min: -200, max: 200, appendString: 'px', className: 'half no-margin' },
+	{ title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%', className: 'w70 small no-margin left' }
 ];
 
 const fontSliders = [
@@ -138,6 +138,17 @@ class TextShadowInputs extends React.Component {
 	}
 
 	render() {
+		const _shadowSlideres = shadowSliders.slice();
+		_shadowSlideres.push(
+			<ColorPicker
+				className="small no-margin align-right small-preview"
+				name="shadowColor"
+				key="ShadowColor"
+				color={this.props.shadowColor}
+				onChange={this.handleChange}
+			/>
+		);
+
 		// Add font color to slider
 		const _fontSliders = fontSliders.slice();
 		_fontSliders.push(
@@ -154,7 +165,7 @@ class TextShadowInputs extends React.Component {
 			<div>
 				<div className="section-title">Text Shadow Settings</div>
 				<Sliders
-					sliders={shadowSliders}
+					sliders={_shadowSlideres}
 					onChange={this.handleChange}
 					{...this.props}
 				/>
