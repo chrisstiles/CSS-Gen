@@ -2,9 +2,10 @@ import React from 'react';
 import Sliders from '../../input/Sliders';
 import AjaxSelect from '../../input/AjaxSelect';
 import ColorPicker from '../../input/ColorPicker';
-import { getGlobalVariable, setGlobalVariable } from '../../../util/helpers';
+import { getGlobalVariable, setGlobalVariable, hexOrRgba } from '../../../util/helpers';
 import axios from 'axios';
 import _ from 'underscore';
+import tinycolor from 'tinycolor2';
 import WebFont from 'webfontloader';
 
 const shadowSliders = [
@@ -36,6 +37,15 @@ class TextShadowInputs extends React.Component {
 	handleChange(value, name) {
 		var state = {};
 		state[name] = value;
+
+		// Keep color and shadow opacity in sync
+		if (name === 'shadowColor') {
+			const alpha = tinycolor(value).getAlpha() * 100;
+			state.shadowOpacity = parseInt(alpha, 10);
+		} else if (name === 'shadowOpacity') {
+			const color = this.props.shadowColor;
+			state.shadowColor = hexOrRgba(tinycolor(color).setAlpha(value / 100));
+		}
 
 	  this.props.updateGenerator(state);
 	}
