@@ -171,6 +171,7 @@ input[type="number"],
   padding: 0 6px;
   font-size: 14px;
   line-height: normal;
+  cursor: pointer;
 
   @include text-input-styles;
 }

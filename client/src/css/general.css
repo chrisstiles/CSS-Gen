@@ -467,7 +467,7 @@ p:last-child {
   resize: none;
   border: 2px dashed transparent !important;
   cursor: pointer;
-  padding: 15px 20px 20px 20px;
+  padding: 15px 25px 20px 25px;
   line-height: 1.2em;
   min-height: 300px;
   max-height: 700px; }
@@ -492,6 +492,14 @@ p:last-child {
     color: #c8c8c8 !important;
     opacity: 1;
     text-shadow: none; }
+
+.no-bg #text-area-preview {
+  border: 2px dashed #eaeaea !important; }
+  .no-bg #text-area-preview:hover {
+    border: 2px dashed #ff6969 !important; }
+  .no-bg #text-area-preview:focus {
+    cursor: text;
+    border: 2px dashed #4834d4 !important; }
 
 #sidebar {
   position: fixed;
@@ -848,6 +856,7 @@ input[type="number"],
   padding: 0 6px;
   font-size: 14px;
   line-height: normal;
+  cursor: pointer;
   -webkit-appearance: none;
   apperance: none;
   border: 1px solid #d2d2d2 !important;

@@ -35,16 +35,7 @@
 /* ------------------------- */
 /* Text Area Preview */
 
-#text-area-preview {
-	background-color:transparent;
-	resize:none;
-	border:2px dashed transparent !important;
-	cursor: pointer;
-	padding:15px 20px 20px 20px;
-	line-height:1.2em;
-	min-height:300px;
-	max-height:700px;
-
+@mixin text-area-input-styles {
 	&:hover {
 		border:2px dashed #ff6969 !important;
 	}
@@ -53,6 +44,19 @@
 		cursor:text;
 		border:2px dashed $accent-color !important;
 	}
+}
+
+#text-area-preview {
+	background-color:transparent;
+	resize:none;
+	border:2px dashed transparent !important;
+	cursor: pointer;
+	padding:15px 25px 20px 25px;
+	line-height:1.2em;
+	min-height:300px;
+	max-height:700px;
+
+	@include text-area-input-styles;
 
 	@mixin placeholder {
 	  &::-webkit-input-placeholder {@content}
@@ -65,5 +69,13 @@
 		color:#c8c8c8 !important;
 		opacity: 1;
 		text-shadow:none;
+	}
+}
+
+.no-bg {
+	#text-area-preview {
+		border:2px dashed #eaeaea !important;
+
+		@include text-area-input-styles;
 	}
 }
