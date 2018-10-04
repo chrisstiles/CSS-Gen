@@ -1,4 +1,4 @@
-import React from 'react';
+wimport React from 'react';
 import { numberInConstraints, createSelection } from '../../util/helpers';
 
 class NumberInput extends React.Component {

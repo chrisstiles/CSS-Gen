@@ -118,6 +118,7 @@ export function isArrayOfType(array, correct) {
 		var isValid = true;
 
 		_.each(correct, (element, index) => {
+			console.log(value)
 			if (!areSameType(element, value[index])) {
 				isValid = false;
 				return;

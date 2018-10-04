@@ -1,5 +1,6 @@
 import React from 'react';
 import Sliders from '../../input/Sliders';
+import Select from '../../input/Select';
 import AjaxSelect from '../../input/AjaxSelect';
 import ColorPicker from '../../input/ColorPicker';
 import { getGlobalVariable, setGlobalVariable, hexOrRgba } from '../../../util/helpers';
@@ -29,10 +30,6 @@ class TextShadowInputs extends React.Component {
 	  this.handleFontLoaded = this.handleFontLoaded.bind(this);
 	  this.getFontOptions = this.getFontOptions.bind(this);
 	}
-
-	// componentDidMount() {
-	// 	this.loadFont();
-	// }
 
 	handleChange(value, name) {
 		var state = {};
@@ -74,8 +71,8 @@ class TextShadowInputs extends React.Component {
 	}
 
 	handleFontLoaded(googleFont) {
-		const { fontFamily } = this.fontList[googleFont];
-		this.props.updateGenerator({ fontFamily });
+		const { fontFamily, variants } = this.fontList[googleFont];
+		this.props.updateGenerator({ fontFamily, variants });
 		// this.props.updateGenerator({ fontFamily, previewContentLoaded: true });
 	}
 
@@ -171,6 +168,12 @@ class TextShadowInputs extends React.Component {
 			/>
 		);
 
+		const { googleFont, variants } = this.props;
+
+		// if (this.fontList && this.fontList[googleFont]) {
+		// 	console.log(this.fontList[this.props.googleFont])
+		// 	_fontSliders.push()
+		// }
 		return (
 			<div>
 				<div className="section-title">Text Shadow Settings</div>
@@ -181,22 +184,29 @@ class TextShadowInputs extends React.Component {
 				/>
 				<div className="divider" />
 				<div className="section-title">Font Settings</div>
-				<AjaxSelect
-				  label="Google Font"
-				  placeholder="Search Google Fonts"
-				  name="googleFont"
-				  value={this.props.googleFont}
-				  getOptions={this.getFontOptions}
-				  onChange={this.handleFontSelect}
-				  menuContainer="#sidebar"
-				  scrollWrapper="#sidebar-controls"
-				  autoload={true}
-				/>
 				<Sliders
 					sliders={_fontSliders}
 					onChange={this.handleChange}
 					{...this.props}
 				/>
+				<AjaxSelect
+					label="Google Font"
+					placeholder="Search Google Fonts"
+					name="googleFont"
+					value={googleFont}
+					getOptions={this.getFontOptions}
+					onChange={this.handleFontSelect}
+					menuContainer="#sidebar"
+					scrollWrapper="#sidebar-controls"
+					autoload={true}
+				/>
+				{variants ?
+					<Select
+						label="Font Weight"
+						name="variants"
+						// value=
+					/>
+				: null}
 			</div>
 		);
 	}
