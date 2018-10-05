@@ -71,8 +71,8 @@ class TextShadowInputs extends React.Component {
 	}
 
 	handleFontLoaded(googleFont) {
-		const { fontFamily, variants } = this.fontList[googleFont];
-		this.props.updateGenerator({ fontFamily, variants });
+		const { fontFamily, variantOptions } = this.fontList[googleFont];
+		this.props.updateGenerator({ fontFamily, variantOptions, variant: 'regular' });
 		// this.props.updateGenerator({ fontFamily, previewContentLoaded: true });
 	}
 
@@ -85,7 +85,7 @@ class TextShadowInputs extends React.Component {
 			
 			// Loop through API data to format object with fonts
 			// and array with select options
-			_.each(fontData, ({ family: font, variants, category }) => {
+			_.each(fontData, ({ family: font, variants: variantOptions, category }) => {
 				this.allFontOptions.push({
 					value: font,
 					label: font
@@ -93,7 +93,7 @@ class TextShadowInputs extends React.Component {
 
 				this.fontList[font] = {
 					fontFamily: `"${font}", ${category}`,
-					variants
+					variantOptions
 				};
 			});
 		} else if (_.isObject(fontData)) {
@@ -168,12 +168,18 @@ class TextShadowInputs extends React.Component {
 			/>
 		);
 
-		const { googleFont, variants } = this.props;
+		const { googleFont, variantOptions, variant } = this.props;
 
-		// if (this.fontList && this.fontList[googleFont]) {
-		// 	console.log(this.fontList[this.props.googleFont])
-		// 	_fontSliders.push()
-		// }
+		var variants = null;
+		if (variantOptions) {
+			variants = _.map(variantOptions, element => {
+				return { 
+					value: element, 
+					label: element.charAt(0).toUpperCase() + element.slice(1)
+				};
+			});
+		}
+
 		return (
 			<div>
 				<div className="section-title">Text Shadow Settings</div>
@@ -202,9 +208,14 @@ class TextShadowInputs extends React.Component {
 				/>
 				{variants ?
 					<Select
-						label="Font Weight"
-						name="variants"
-						// value=
+						label="Font Variant"
+						name="variant"
+						value={variant}
+						onChange={this.handleChange}
+						options={variants}
+						searchable={false}
+						menuContainer="#sidebar"
+						scrollWrapper="#sidebar-controls"
 					/>
 				: null}
 			</div>
