@@ -14,7 +14,7 @@ class AjaxSelect extends React.Component {
 			]
 		};
 
-		this.debounceTime = props.debounceTime === undefined ? 250 : props.debounceTime;
+		this.debounceTime = props.debounceTime === undefined ? 50 : props.debounceTime;
 		this.getOptions = this._getOptions.bind(this);
 	}
 
