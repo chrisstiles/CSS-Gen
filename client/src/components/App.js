@@ -40,7 +40,7 @@ var notificationTypes = {
 }
 
 // Global State
-var getGlobalState, getGlobalDefaults, updateGlobalState, getGlobalVariable, setGlobalVariable;
+var getGlobalState, getGlobalDefaults, updateGlobalState, getGlobalVariable, setGlobalVariable, setLoading;
 
 class PrimaryLayout extends React.Component {
   constructor() {
@@ -50,7 +50,8 @@ class PrimaryLayout extends React.Component {
     this.state = {
       showPreviewText: true,
       outputPreviewStyles: false,
-      showBrowserPrefixes: false
+      showBrowserPrefixes: false,
+      loading: false
     };
 
     this.globalDefaults = _.extend({}, this.state);
@@ -58,7 +59,8 @@ class PrimaryLayout extends React.Component {
     this.stateTypes = {
       showPreviewText: Boolean,
       outputPreviewStyles: Boolean,
-      showBrowserPrefixes: Boolean
+      showBrowserPrefixes: Boolean,
+      loading: Boolean
     };
 
     // Add persisted global state
@@ -86,6 +88,7 @@ class PrimaryLayout extends React.Component {
     getGlobalDefaults = this.getGlobalDefaults.bind(this);
     getGlobalVariable = this.getGlobalVariable.bind(this);
     setGlobalVariable = this.setGlobalVariable.bind(this);
+    setLoading = this.setLoading.bind(this);
   }
 
   createNotification(type, message) {
@@ -121,6 +124,10 @@ class PrimaryLayout extends React.Component {
     this[name] = value;
   }
 
+  setLoading(loading) {
+    this.setState({ loading });
+  }
+
   render() {
     const routeComponents = routes.map(({ path, component: Component }) => {
       return (
@@ -133,8 +140,10 @@ class PrimaryLayout extends React.Component {
       );
     });
 
+    const className = this.state.loading ? 'app-loading' : '';
+
     return (
-      <div>
+      <div className={className}>
         <NotificationContainer />
         <NavWindow />
         {routeComponents}
@@ -160,7 +169,8 @@ export {
    updateGlobalState, 
    getGlobalDefaults ,
    getGlobalVariable,
-   setGlobalVariable
+   setGlobalVariable,
+   setLoading
  };
 
 export default App;

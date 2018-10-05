@@ -3,7 +3,7 @@ import Generator from '../../Generator';
 import SingleWindowToolbar from '../toolbars/SingleWindowToolbar';
 import SingleWindowPreview from '../previews/SingleWindowPreview';
 import FileDrop from '../../FileDrop';
-import { getGlobalDefaults, updateGlobalState, getImageSize, getNativeImageSize, getState } from '../../../util/helpers';
+import { getGlobalDefaults, updateGlobalState, getImageSize, getNativeImageSize, getState, setLoading } from '../../../util/helpers';
 import _ from 'underscore';
 
 class SingleWindowGenerator extends React.Component {
@@ -38,8 +38,8 @@ class SingleWindowGenerator extends React.Component {
 
     this.state = getState(this.defaultState, this.stateTypes, true);
 
-    // this.state.previewContentLoaded = this.state.image ? this.state.previewContentLoaded : true;
     this.state.previewContentLoaded = this.state.image ? false : true;
+    setLoading(this.state.previewContentLoaded);
 
     // Preview window size constrains
     this.previewConstraints = props.previewConstraints || {
@@ -224,8 +224,8 @@ class SingleWindowGenerator extends React.Component {
   }
 
   render() {
-    const { generatorState, renderInputs, renderPresets, title, heading, intro, className, hasBrowserPrefixes } = this.props;
-    const props = { generatorState, renderInputs, renderPresets, title, heading, intro, className, hasBrowserPrefixes };
+    const { generatorState, renderInputs, renderPresets, title, heading, intro, className, globalState } = this.props;
+    const props = { generatorState, renderInputs, renderPresets, title, heading, intro, className, globalState };
     const previewState = _.extend({}, this.state, { previewCSS: this.generatePreviewCSS() });
     
     return (

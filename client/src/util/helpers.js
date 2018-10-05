@@ -7,7 +7,8 @@ import {
 	getGlobalDefaults as _getGlobalDefaults,
 	updateGlobalState as _updateGlobalState,
 	getGlobalVariable as _getGlobalVariable,
-	setGlobalVariable as _setGlobalVariable
+	setGlobalVariable as _setGlobalVariable,
+	setLoading as _setLoading
 } from '../components/App';
 
 export function addNotification(type, message) {
@@ -43,6 +44,10 @@ export function getGlobalVariable(name) {
 
 export function setGlobalVariable(value, name) {
 	return _setGlobalVariable(value, name);
+}
+
+export function setLoading(loading) {
+	return _setLoading(loading);
 }
 
 export function extendSameTypes(object1, object2) {
@@ -569,8 +574,6 @@ export function bytesToSize(bytes) {
   if (i === 0) return bytes + ' ' + sizes[i];
   return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
 };
-
-
 
 
 

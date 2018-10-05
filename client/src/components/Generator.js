@@ -108,9 +108,19 @@ class Generator extends React.Component {
 
     var hasLoaded = true;
     var previewCSS = '';
+
+    const { previewState, generatorState } = this.props;
     
-    if (this.props.previewState) {
-      const { previewContentLoaded, previewCSS: styles } = this.props.previewState;
+    if (previewState) {
+      var previewContentLoaded;
+
+      if (generatorState.previewContentLoaded !== undefined) {
+        previewContentLoaded = generatorState.previewContentLoaded;  
+      } else {
+        previewContentLoaded = previewState.previewContentLoaded;
+      }
+
+      const { previewCSS: styles } = this.props.previewState;
       previewCSS = styles;
 
       if (previewContentLoaded === undefined) {
@@ -118,6 +128,12 @@ class Generator extends React.Component {
       } else {
         hasLoaded = previewContentLoaded
       }
+    }
+
+    const { outputPreviewStyles, showBrowserPrefixes, loading } = this.props.globalState;
+
+    if (loading) {
+      hasLoaded = false;
     }
 
     return (
@@ -144,8 +160,8 @@ class Generator extends React.Component {
             {this.props.renderPreview()}
             <Sidebar
               outputCSS={this.props.generatorState.css.output}
-              outputPreviewStyles={this.props.outputPreviewStyles}
-              showBrowserPrefixes={this.props.showBrowserPrefixes}
+              outputPreviewStyles={outputPreviewStyles}
+              showBrowserPrefixes={showBrowserPrefixes}
               previewCSS={previewCSS}
               hasBrowserPrefixes={this.props.hasBrowserPrefixes}
             >

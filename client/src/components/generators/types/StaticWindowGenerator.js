@@ -105,15 +105,13 @@ class StaticWindowGenerator extends React.Component {
 	}
 
 	render() {
-		const { generatorState, renderInputs, renderPresets, title, heading, intro, className, hasBrowserPrefixes } = this.props;
-		const props = { generatorState, renderInputs, renderPresets, title, heading, intro, className, hasBrowserPrefixes };
+		const { generatorState, renderInputs, renderPresets, title, heading, intro, className, globalState } = this.props;
+		const props = { generatorState, renderInputs, renderPresets, title, heading, intro, className, globalState };
 
 		return (
 			<Generator
 				renderPreview={this.renderPreview}
 				renderToolbar={this.renderToolbar}
-				outputPreviewStyles={this.props.globalState.outputPreviewStyles}
-				showBrowserPrefixes={this.props.globalState.showBrowserPrefixes}
 				previewState={this.state}
 				{...props}
 			/>

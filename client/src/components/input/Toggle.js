@@ -8,10 +8,12 @@ class Toggle extends React.Component {
 	}
 
 	handleChange(event) {
-		const el = event.target;
-		const value = el.type === 'checkbox' ? el.checked : el.value;
+		if (!this.props.disabled) {
+			const el = event.target;
+			const value = el.type === 'checkbox' ? el.checked : el.value;
 
-		this.props.onChange(value, this.props.name);
+			this.props.onChange(value, this.props.name);
+		}
 	}
 
 	renderLabel() {
@@ -21,8 +23,14 @@ class Toggle extends React.Component {
 	}
 
 	render() {
+		var className = this.props.className || '';
+
+		if (this.props.disabled) {
+			className += ' disabled';
+		}
+
 		return (
-			<div>
+			<div className={className}>
 				{this.renderLabel()}
 				<label className="toggle-wrapper">
 					<input

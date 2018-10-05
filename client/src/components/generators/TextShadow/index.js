@@ -15,7 +15,26 @@ class TextShadow extends React.Component {
 			text: 'My text here',
 			fontSize: 40,
 			googleFont: defaultFont,
-			variantOptions: ['regular', '600'],
+			variantOptions: [
+				'100', 
+				'100italic', 
+				'200', 
+				'200italic', 
+				'300', 
+				'300italic', 
+				'regular', 
+				'italic',
+				'500',
+				'500italic',
+				'600',
+				'600italic',
+				'700',
+				'700italic',
+				'800',
+				'800italic', 
+				'900',
+				'900italic'
+			],
 			variant: 'regular',
 			fontFamily: `"${defaultFont}", sans-serif`,
 			horizontalShift: 0,
@@ -96,15 +115,19 @@ class TextShadow extends React.Component {
 
 		// Font variants
 		const { variant } = rules;
-		if (variant !== 'regular') {
-			// Font style
-			if (variant.indexOf('italic') !== -1) {
-				css.fontStyle = 'italic';
-			}
-
-			// Font weight
-			css.fontWeight = variant.match(/\d+/g).map(Number);
+		
+		// Font style
+		if (variant.indexOf('italic') !== -1) {
+			css.fontStyle = 'italic';
 		}
+
+		// Font weight
+		var weight = variant.replace('italic', '');
+		if (!weight || weight === 'regular') {
+			weight = '400';
+		}
+
+		css.fontWeight = weight;
 
 		return {
 			styles: css,

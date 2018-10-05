@@ -3,7 +3,8 @@ import Sliders from '../../input/Sliders';
 import Select from '../../input/Select';
 import AjaxSelect from '../../input/AjaxSelect';
 import ColorPicker from '../../input/ColorPicker';
-import { getGlobalVariable, setGlobalVariable, hexOrRgba } from '../../../util/helpers';
+import Toggle from '../../input/Toggle';
+import { getGlobalVariable, setGlobalVariable, hexOrRgba, setLoading } from '../../../util/helpers';
 import axios from 'axios';
 import _ from 'underscore';
 import tinycolor from 'tinycolor2';
@@ -25,10 +26,16 @@ class TextShadowInputs extends React.Component {
 	  super(props);
 	  
 	  this.loadFont = this.loadFont.bind(this);
-	  this.handleChange = this.handleChange.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		this.handleFontVariantChange = this.handleFontVariantChange.bind(this);
 	  this.handleFontSelect = this.handleFontSelect.bind(this);
 	  this.handleFontLoaded = this.handleFontLoaded.bind(this);
-	  this.getFontOptions = this.getFontOptions.bind(this);
+		this.getFontOptions = this.getFontOptions.bind(this);
+	}
+
+	componentDidMount() {
+		const { googleFont, variantOptions } = this.props;
+		this.loadFont(googleFont, variantOptions, true);
 	}
 
 	handleChange(value, name) {
@@ -47,19 +54,50 @@ class TextShadowInputs extends React.Component {
 	  this.props.updateGenerator(state);
 	}
 
-	loadFont(googleFont = this.props.googleFont) {
-		if (googleFont !== 'Montserrat') {
-			if (this.fontList[googleFont]) {
-				WebFont.load({
-					google: {
-						families: [googleFont]
-					},
-					fontactive: this.handleFontLoaded,
-					classes: false
-				});
+	handleFontVariantChange(value, name) {
+		var { variant } = this.props;
+		variant = variant.toLowerCase();
+		if (name === 'italic') {
+			if (variant === 'regular' && value) {
+				variant = 'italic'
+			} else {
+				variant = variant.replace('italic', '');
+				if (value) {
+					variant += 'italic';
+				} else {
+					if (variant === '') {
+						variant = 'regular';
+					}
+				}
 			}
 		} else {
-			this.handleFontLoaded(googleFont);
+			if (variant.indexOf('italic') === -1) {
+				variant = value;
+			} else {
+				if (value === 'regular') {
+					variant = 'italic';
+				} else {
+					variant = `${value}italic`;
+				}
+			}
+		}
+
+		this.props.updateGenerator({ variant });
+	}
+
+	loadFont(googleFont = this.props.googleFont, variantOptions = this.props.variantOptions, forceLoad) {
+		if (forceLoad || this.fontList[googleFont]) {
+			setLoading(true);
+
+			const family = `${googleFont}:${variantOptions.join(',')}`;
+
+			WebFont.load({
+				google: {
+					families: [family]
+				},
+				fontactive: this.handleFontLoaded,
+				classes: false
+			});
 		}
 	}
 
@@ -71,9 +109,12 @@ class TextShadowInputs extends React.Component {
 	}
 
 	handleFontLoaded(googleFont) {
-		const { fontFamily, variantOptions } = this.fontList[googleFont];
-		this.props.updateGenerator({ fontFamily, variantOptions, variant: 'regular' });
-		// this.props.updateGenerator({ fontFamily, previewContentLoaded: true });
+		if (this.fontList) {
+			const { fontFamily, variantOptions } = this.fontList[googleFont];
+			this.props.updateGenerator({ fontFamily, variantOptions, variant: 'regular' });
+		}
+
+		setLoading(false);
 	}
 
 	setFontOptions(fontData) {
@@ -107,8 +148,6 @@ class TextShadowInputs extends React.Component {
 					label: font
 				});
 			});
-		} else {
-			return;
 		}
 	}
 
@@ -169,15 +208,30 @@ class TextShadowInputs extends React.Component {
 		);
 
 		const { googleFont, variantOptions, variant } = this.props;
+		const weights = [];
+		var hasItalicVariant = false;
+		var italicActive = false;
+		var weightValue = variant.replace('italic', '');
 
-		var variants = null;
 		if (variantOptions) {
-			variants = _.map(variantOptions, element => {
-				return { 
-					value: element, 
-					label: element.charAt(0).toUpperCase() + element.slice(1)
-				};
+			_.each(variantOptions, element => {
+				if (element.toLowerCase().indexOf('italic') === -1) {
+					weights.push({
+						value: element,
+						label: element.charAt(0).toUpperCase() + element.slice(1)
+					});
+				} else {
+					hasItalicVariant = true;
+				}
 			});
+
+			if (variant.toLowerCase().indexOf('italic') !== -1) {
+				italicActive = true;
+
+				if (variant === 'italic') {
+					weightValue = 'regular';
+				}
+			}
 		}
 
 		return (
@@ -195,29 +249,44 @@ class TextShadowInputs extends React.Component {
 					onChange={this.handleChange}
 					{...this.props}
 				/>
-				<AjaxSelect
-					label="Google Font"
-					placeholder="Search Google Fonts"
-					name="googleFont"
-					value={googleFont}
-					getOptions={this.getFontOptions}
-					onChange={this.handleFontSelect}
-					menuContainer="#sidebar"
-					scrollWrapper="#sidebar-controls"
-					autoload={true}
-				/>
-				{variants ?
-					<Select
-						label="Font Variant"
-						name="variant"
-						value={variant}
-						onChange={this.handleChange}
-						options={variants}
-						searchable={false}
+				<div id="google-font-settings">
+					<AjaxSelect
+						label="Google Font"
+						placeholder="Search Google Fonts"
+						name="googleFont"
+						value={googleFont}
+						getOptions={this.getFontOptions}
+						onChange={this.handleFontSelect}
 						menuContainer="#sidebar"
 						scrollWrapper="#sidebar-controls"
+						autoload={true}
+						autoBlur={true}
 					/>
-				: null}
+					{variantOptions ?
+						<div className="inputs-row">
+							<Select
+								label="Font Weight"
+								name="variant"
+								value={weightValue}
+								onChange={this.handleFontVariantChange}
+								options={weights}
+								searchable={false}
+								menuContainer="#sidebar"
+								scrollWrapper="#sidebar-controls"
+								className="w77"
+							/>
+							<div className="field-wrapper right">
+								<Toggle
+									onChange={this.handleFontVariantChange}
+									checked={italicActive}
+									disabled={!hasItalicVariant}
+									label="Italic"
+									name="italic"
+								/>
+							</div>
+						</div>
+						: null}
+				</div>
 			</div>
 		);
 	}
