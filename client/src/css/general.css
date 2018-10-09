@@ -435,9 +435,16 @@ p:last-child {
 
 /* ------------------------- */
 /* Static Window Preview */
+#static-preview {
+  min-height: 400px; }
+
 #checker-window {
   width: 100%;
-  min-height: 400px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background-image: url("../images/checker-bg.svg");
   background-size: 18px 18px;
   background-repeat: repeat;
@@ -448,7 +455,7 @@ p:last-child {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; }
+  overflow: scroll; }
   #checker-window .overlay {
     position: absolute;
     z-index: 1;
@@ -469,8 +476,9 @@ p:last-child {
   cursor: pointer;
   padding: 15px 25px 20px 25px;
   line-height: 1.2em;
-  min-height: 300px;
-  max-height: 700px; }
+  min-height: 400px;
+  height: 100%;
+  width: 100%; }
   #text-area-preview:hover {
     border: 2px dashed #ff6969 !important; }
   #text-area-preview:focus {

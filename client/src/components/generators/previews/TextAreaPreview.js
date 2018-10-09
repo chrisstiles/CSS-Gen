@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'underscore';
-import autosize from 'autosize';
 
 class TextAreaPreview extends React.Component {
 	constructor(props) {
@@ -9,14 +8,6 @@ class TextAreaPreview extends React.Component {
 		this.state = {
 			value: props.value
 		}
-	}
-
-	componentDidMount() {
-		autosize(this.textarea);
-	}
-
-	componentWillReceiveProps() {
-		autosize.update(this.textarea);
 	}
 
 	handleChange(event) {

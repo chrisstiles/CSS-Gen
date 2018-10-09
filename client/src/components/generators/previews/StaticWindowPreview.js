@@ -2,8 +2,10 @@ import React from 'react';
 
 class StaticWindowPreview extends React.Component {
 	render() {
-		const { isDefault, backgroundColor, children } = this.props;
+		const { isDefault, backgroundColor, children, wrapperHeight } = this.props;
 		const wrapperStyle = isDefault ? {} : { backgroundColor };
+		wrapperStyle.height = wrapperHeight;
+
 		const className = backgroundColor === 'transparent' ? 'no-bg' : 'has-bg';
 
 		return (

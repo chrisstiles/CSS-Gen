@@ -476,6 +476,32 @@ export function createSelection(field, start, end) {
   }
 }
 
+export function getFullHeight() {
+	const wrapper = document.querySelector('#generator-wrapper');
+
+	if (!wrapper) {
+		return 0;
+	}
+
+	const rect = wrapper.getBoundingClientRect();
+	var height = window.innerHeight - rect.top;
+
+	const presetBar = document.querySelector('#preset-bar');
+	if (presetBar) {
+		height -= presetBar.offsetHeight;
+	}
+	
+	// Offset the height from the bottom by the same amount as the top
+	const toolbar = document.querySelector('#toolbar');
+	if (toolbar) {
+		const toolbarRect = toolbar.getBoundingClientRect();
+		const offset = rect.top - (toolbarRect.top + toolbarRect.height);
+		height -= offset;
+	}
+
+	return height;
+}
+
 // Returns a Promise that resolves with the image dimensions
 export function getNativeImageSize(src) {
   return new Promise((resolve, reject = () => {}) => {

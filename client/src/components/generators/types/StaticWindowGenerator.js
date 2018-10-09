@@ -4,7 +4,7 @@ import StaticWindowPreview from '../previews/StaticWindowPreview';
 import Toolbar from '../toolbars/Toolbar';
 import ColorPicker from '../../input/ColorPicker';
 import Toggle from '../../input/Toggle';
-import { getState } from '../../../util/helpers';
+import { getState, getFullHeight } from '../../../util/helpers';
 import _ from 'underscore';
 
 class StaticWindowGenerator extends React.Component {
@@ -25,10 +25,27 @@ class StaticWindowGenerator extends React.Component {
 
 		this.state = getState(this.defaultState, this.stateTypes, true);
 
+		this.state.wrapperHeight = 400;
+
+		this.handleWindowResize = this.handleWindowResize.bind(this);
 		this.reset = this.reset.bind(this);
 		this.handlePreviewUpdate = this.handlePreviewUpdate.bind(this);
 		this.renderPreview = this.renderPreview.bind(this);
 		this.renderToolbar = this.renderToolbar.bind(this);
+	}
+
+	componentDidMount() {
+		this.handleWindowResize();
+
+		window.addEventListener('resize', this.handleWindowResize, false);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleWindowResize);
+	}
+
+	handleWindowResize() {
+		this.setState({ wrapperHeight: getFullHeight() });
 	}
 
 	reset() {
@@ -48,12 +65,13 @@ class StaticWindowGenerator extends React.Component {
 			isDefault = true;
 		}
 
-		const { showEditorBackgroundColor, editorBackgroundColor } = this.state;
+		const { showEditorBackgroundColor, editorBackgroundColor, wrapperHeight} = this.state;
 		const backgroundColor = showEditorBackgroundColor ? editorBackgroundColor : 'transparent';
 
 		return (
 			<StaticWindowPreview 
 				backgroundColor={backgroundColor}
+				wrapperHeight={wrapperHeight}
 				isDefault={isDefault}
 			>
 				{preview}
