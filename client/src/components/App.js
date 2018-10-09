@@ -12,6 +12,7 @@ import NavWindow from './NavWindow';
 
 // Generator Pages
 import Home from './Home';
+import Flexbox from './generators/Flexbox/';
 import BoxShadow from './generators/BoxShadow/';
 import BorderRadius from './generators/BorderRadius/';
 import Gradient from './generators/Gradient';
@@ -22,6 +23,7 @@ import TextShadow from './generators/TextShadow';
 // Routes
 const routes = [
   { path: '/', component: Home },
+  { path: '/flexbox-generator', component: Flexbox },
   { path: '/box-shadow-generator', component: BoxShadow },
   { path: '/border-radius-generator', component: BorderRadius },
   { path: '/gradient-generator', component: Gradient },

@@ -239,6 +239,11 @@ p:last-child {
       background-image: url("../images/nav-icons/border-radius.svg"); }
     #page-links a.gradient:before {
       background-image: url("../images/nav-icons/gradient.svg"); }
+    #page-links a.text-shadow:before {
+      background-image: url("../images/nav-icons/text-shadow.svg");
+      width: 17px;
+      height: 17px;
+      left: 32px; }
 
 /* Media Queries */
 @media screen and (max-width: 1250px) {

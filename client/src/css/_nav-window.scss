@@ -113,6 +113,13 @@
 		&.gradient:before {
 			background-image:url('../images/nav-icons/gradient.svg');
 		}
+
+		&.text-shadow:before {
+			background-image:url('../images/nav-icons/text-shadow.svg');
+			width: 17px;
+			height: 17px;
+			left:32px;
+		}
 	}
 }
 
