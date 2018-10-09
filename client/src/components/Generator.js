@@ -105,42 +105,14 @@ class Generator extends React.Component {
 
   render() {
     const cssClasses = `${this.props.className}${this.state.keys}`;
-
-    var hasLoaded = true;
-    var previewCSS = '';
-
-    const { previewState, generatorState } = this.props;
-    
-    if (previewState) {
-      var previewContentLoaded;
-
-      if (generatorState.previewContentLoaded !== undefined) {
-        previewContentLoaded = generatorState.previewContentLoaded;  
-      } else {
-        previewContentLoaded = previewState.previewContentLoaded;
-      }
-
-      const { previewCSS: styles } = this.props.previewState;
-      previewCSS = styles;
-
-      if (previewContentLoaded === undefined) {
-        hasLoaded = true;
-      } else {
-        hasLoaded = previewContentLoaded
-      }
-    }
-
+    const { title, heading, intro, generatorState, hasBrowserPrefixes, previewState = '' } = this.props;
     const { outputPreviewStyles, showBrowserPrefixes, loading } = this.props.globalState;
-
-    if (loading) {
-      hasLoaded = false;
-    }
 
     return (
       <Page
-        title={this.props.title}
-        heading={this.props.heading}
-        intro={this.props.intro}
+        title={title}
+        heading={heading}
+        intro={intro}
         toolbar={this.renderToolbar()}
       >
         <div 
@@ -152,18 +124,18 @@ class Generator extends React.Component {
             className="page-content"
             ref={generatorWrapper => { this.generatorWrapper = generatorWrapper }}
           >
-            {!hasLoaded ?
+            {loading ?
               <div id="generator-loading">
                 <LoadingSpinner />
               </div>
             : null}
             {this.props.renderPreview()}
             <Sidebar
-              outputCSS={this.props.generatorState.css.output}
+              outputCSS={generatorState.css.output}
               outputPreviewStyles={outputPreviewStyles}
               showBrowserPrefixes={showBrowserPrefixes}
-              previewCSS={previewCSS}
-              hasBrowserPrefixes={this.props.hasBrowserPrefixes}
+              previewCSS={previewState.previewCSS}
+              hasBrowserPrefixes={hasBrowserPrefixes}
             >
               {this.props.renderInputs()}
             </Sidebar>

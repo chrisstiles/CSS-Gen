@@ -82,6 +82,8 @@ class PrimaryLayout extends React.Component {
       }
     }
 
+    this.state.loading = false;
+
     addNotification = this.createNotification.bind(this);
     getGlobalState = this.getGlobalState.bind(this);
     updateGlobalState = this.updateGlobalState.bind(this);

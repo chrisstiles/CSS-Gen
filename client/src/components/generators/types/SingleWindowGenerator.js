@@ -39,7 +39,7 @@ class SingleWindowGenerator extends React.Component {
     this.state = getState(this.defaultState, this.stateTypes, true);
 
     this.state.previewContentLoaded = this.state.image ? false : true;
-    setLoading(this.state.previewContentLoaded);
+    setLoading(!this.state.previewContentLoaded);
 
     // Preview window size constrains
     this.previewConstraints = props.previewConstraints || {
@@ -224,8 +224,8 @@ class SingleWindowGenerator extends React.Component {
   }
 
   render() {
-    const { generatorState, renderInputs, renderPresets, title, heading, intro, className, globalState } = this.props;
-    const props = { generatorState, renderInputs, renderPresets, title, heading, intro, className, globalState };
+    const { generatorState, renderInputs, renderPresets, title, heading, intro, className, globalState, hasBrowserPrefixes } = this.props;
+    const props = { generatorState, renderInputs, renderPresets, title, heading, intro, className, globalState, hasBrowserPrefixes };
     const previewState = _.extend({}, this.state, { previewCSS: this.generatePreviewCSS() });
     
     return (
@@ -237,8 +237,6 @@ class SingleWindowGenerator extends React.Component {
           setPreset={this.setPreset}
           reset={this.reset}
           onWrapperMount={this.handleWrapperMount}
-          outputPreviewStyles={this.props.globalState.outputPreviewStyles}
-          showBrowserPrefixes={this.props.globalState.showBrowserPrefixes}
           preview={this}
           previewState={previewState}
           {...props}
