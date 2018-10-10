@@ -1,0 +1,22 @@
+#flexbox-preview {
+  .parent {
+    display:flex;
+    width:100%;
+  }
+
+  .child {
+    background-color:red;
+    border:3px solid blue;
+    height:200px;
+    flex-grow:1;
+    cursor:pointer;
+
+    &:hover {
+      opacity:.8;
+    }
+
+    &.selected {
+      background-color:green;
+    }
+  }
+}

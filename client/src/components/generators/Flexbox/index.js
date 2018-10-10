@@ -1,5 +1,7 @@
 import React from 'react';
 import StaticWindowGenerator from '../types/StaticWindowGenerator';
+import FlexboxPreview from './FlexboxPreview';
+import FlexboxInputs from './FlexboxInputs';
 import { getState } from '../../../util/helpers';
 import _ from 'underscore';
 
@@ -8,18 +10,27 @@ class Flexbox extends React.Component {
     super(props);
 
     this.defaultState = {
-      children: [{ test: 'hello' }]
+      childElements: [{ text: 'hello' }, { text: 'hello2' }]
     };
 
     this.stateTypes = {
-      children: [{ test: String }]
+      childElements: [{ text: String }]
     };
 
     this.state = getState(this.defaultState, this.stateTypes);
 
+    // Add unique keys to each child element
+    _.map(this.state.childElements, child => {
+      child.id = _.uniqueId('child-');
+    });
+
+    // The index of the selected child element
+    this.state.selectedIndex = null;
+
     this.updateGenerator = this.updateGenerator.bind(this);
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
+    this.renderPreview = this.renderPreview.bind(this);
   }
 
   updateGenerator(state) {
@@ -31,14 +42,26 @@ class Flexbox extends React.Component {
   }
 
   renderInputs() {
-    return 'Testing';
+    const { childElements, selectedIndex } = this.state;
+    const currentChild = selectedIndex === null ? null : childElements[selectedIndex];
+
+    return (
+      <FlexboxInputs
+        updateGenerator={this.updateGenerator}
+        currentChild={currentChild}
+        {...this.state}
+      />
+    );
   }
 
-  renderPreview() {
+  renderPreview(style) {
     return (
-      <div>
-        Preview Here
-      </div>
+      <FlexboxPreview
+        style={style}
+        childElements={this.state.childElements}
+        selectedIndex={this.state.selectedIndex}
+        updateGenerator={this.updateGenerator}
+      />
     );
   }
 
@@ -49,7 +72,6 @@ class Flexbox extends React.Component {
       <StaticWindowGenerator
         // Text Content
         title="CSS Flexbox Generator | CSS-GEN"
-        previewID="flexbox-preview"
         className="flexbox"
         heading="CSS Flexbox Generator"
 

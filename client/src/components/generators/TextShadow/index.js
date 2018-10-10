@@ -1,7 +1,7 @@
 import React from 'react';
 import StaticWindowGenerator from '../types/StaticWindowGenerator';
 import TextShadowInputs from './TextShadowInputs';
-import TextAreaPreview from '../previews/TextAreaPreview';
+import TextShadowPreview from './TextShadowPreview';
 import { getState, generateCSSString, hexOrRgba } from '../../../util/helpers';
 import _ from 'underscore';
 import WebFont from 'webfontloader';
@@ -137,7 +137,7 @@ class TextShadow extends React.Component {
 
 	renderInputs() {
 		return (
-	    <TextShadowInputs
+			<TextShadowInputs
 	      updateGenerator={this.updateGenerator}
 	      {...this.state}
 	    />
@@ -146,10 +146,8 @@ class TextShadow extends React.Component {
 
 	renderPreview(style) {
 		return (
-			<TextAreaPreview
-				className="text-shadow-preview"
+			<TextShadowPreview
 				value={this.state.text}
-				// fontLoaded={this.state.fontLoaded}
 				name="text"
 				style={style}
 				placeholder="Click here to enter text"

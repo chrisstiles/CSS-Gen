@@ -2009,3 +2009,18 @@ input.angle-input {
 .app-loading .text-shadow #static-preview {
   opacity: .4;
   pointer-events: none; }
+
+#flexbox-preview .parent {
+  display: flex;
+  width: 100%; }
+
+#flexbox-preview .child {
+  background-color: red;
+  border: 3px solid blue;
+  height: 200px;
+  flex-grow: 1;
+  cursor: pointer; }
+  #flexbox-preview .child:hover {
+    opacity: .8; }
+  #flexbox-preview .child.selected {
+    background-color: green; }
