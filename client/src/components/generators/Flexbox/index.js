@@ -19,7 +19,8 @@ class Flexbox extends React.Component {
     this.defaultState = {
       childElements: [{ text: 'hello', id: 'child-1' }, { text: 'hello2', id: 'child-2' }],
       containerStyles: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justfyContent: 'flex-start' 
       }
     };
 
