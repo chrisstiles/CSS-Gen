@@ -601,6 +601,24 @@ export function bytesToSize(bytes) {
   return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
 };
 
+export function sameOrChild(el1, el2) {
+	if (typeof el2 === 'string') {
+		el2 = document.querySelector(el2);
+	}
+
+	if (!el2) {
+		return false;
+	}
+
+	// Same element
+	if (el1 === el2) {
+		return true;
+	}
+
+	// Child element
+	return el2.contains(el1);
+}
+
 
 
 

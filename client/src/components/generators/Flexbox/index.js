@@ -5,12 +5,22 @@ import FlexboxInputs from './FlexboxInputs';
 import { getState } from '../../../util/helpers';
 import _ from 'underscore';
 
+// flex-direction
+// flex-wrap
+// flex-flow
+// justify-content
+// align-items
+// align-content
+
 class Flexbox extends React.Component {
   constructor(props) {
     super(props);
 
     this.defaultState = {
-      childElements: [{ text: 'hello' }, { text: 'hello2' }]
+      childElements: [{ text: 'hello', id: 'child-1' }, { text: 'hello2', id: 'child-2' }],
+      containerStyles: {
+        flexDirection: 'row'
+      }
     };
 
     this.stateTypes = {
@@ -55,9 +65,13 @@ class Flexbox extends React.Component {
   }
 
   renderPreview(style) {
+    // _.extend(style, this.state.containerStyles);
+    
+    const containerStyles = _.extend({}, style, this.state.containerStyles);
+    console.log(containerStyles)
     return (
       <FlexboxPreview
-        style={style}
+        containerStyles={containerStyles}
         childElements={this.state.childElements}
         selectedIndex={this.state.selectedIndex}
         updateGenerator={this.updateGenerator}

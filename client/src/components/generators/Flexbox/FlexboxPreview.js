@@ -1,7 +1,8 @@
 import React from 'react';
 import _ from 'underscore';
+import { sameOrChild } from '../../../util/helpers';
 
-class FlexChild extends React.Component {
+class FlexItem extends React.Component {
   constructor(props) {
     super(props);
 
@@ -13,7 +14,7 @@ class FlexChild extends React.Component {
   }
 
   render() {
-    var className = 'child';
+    var className = 'item';
 
     if (this.props.selected) {
       className += ' selected';
@@ -35,6 +36,28 @@ class FlexboxPreview extends React.Component {
     super(props);
 
     this.handleClick = this.handleClick.bind(this);
+    this.deselectChildElement = this.deselectChildElement.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this.deselectChildElement, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.deselectChildElement);
+  }
+
+  deselectChildElement(event) {
+    if (this.props.selectedIndex === null) {
+      return;
+    }
+    
+    const FlexItem = sameOrChild(event.target, '#flexbox-preview');
+    const isSidebar = sameOrChild(event.target, '#sidebar');
+
+    if (!FlexItem && !isSidebar) {
+      this.props.updateGenerator({ selectedIndex: null });
+    }
   }
 
   handleClick(id) {
@@ -49,7 +72,7 @@ class FlexboxPreview extends React.Component {
       const selected = this.props.selectedIndex === index ? true : false;
 
       return (
-        <FlexChild
+        <FlexItem
           key={id}
           id={id}
           text={id}
@@ -61,7 +84,10 @@ class FlexboxPreview extends React.Component {
 
     return (
       <div id="flexbox-preview">
-        <div className="parent">
+        <div 
+          className="container"
+          style={this.props.containerStyles}
+        >
           {childElements}
         </div>
       </div>

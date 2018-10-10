@@ -1920,6 +1920,11 @@ input.angle-input {
       display: block; }
   .button-select.equal-widths .option {
     flex-basis: 0; }
+  .button-select.half .option {
+    width: calc(50% - 3px);
+    flex-grow: 0; }
+    .button-select.half .option:nth-child(even) {
+      margin-right: 0; }
 
 #generator-wrapper.border-radius .corners-wrapper {
   margin-bottom: -27px; }
@@ -2010,17 +2015,17 @@ input.angle-input {
   opacity: .4;
   pointer-events: none; }
 
-#flexbox-preview .parent {
+#flexbox-preview .container {
   display: flex;
   width: 100%; }
 
-#flexbox-preview .child {
+#flexbox-preview .item {
   background-color: red;
   border: 3px solid blue;
   height: 200px;
   flex-grow: 1;
   cursor: pointer; }
-  #flexbox-preview .child:hover {
+  #flexbox-preview .item:hover {
     opacity: .8; }
-  #flexbox-preview .child.selected {
+  #flexbox-preview .item.selected {
     background-color: green; }

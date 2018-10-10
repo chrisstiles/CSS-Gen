@@ -54,4 +54,13 @@
 	&.equal-widths .option {
 		flex-basis: 0;
 	}
+
+	&.half .option {
+		width:calc(50% - 3px);
+		flex-grow:0;
+
+		&:nth-child(even) {
+			margin-right:0;
+		}
+	}
 }
