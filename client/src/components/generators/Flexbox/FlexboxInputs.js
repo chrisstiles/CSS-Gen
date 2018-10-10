@@ -27,7 +27,7 @@ class FlexboxInputs extends React.Component {
 
   render() {
     const { currentChild, containerStyles } = this.props;
-    const { flexDirection } = containerStyles;
+    const { flexDirection, justifyContent } = containerStyles;
 
     return (
       <div>
@@ -43,6 +43,17 @@ class FlexboxInputs extends React.Component {
             { value: 'column-reverse', label: 'Column Reverse' }
           ]}
           value={flexDirection}
+          onChange={this.handleContainerChange}
+        />
+        <ButtonSelect
+          label="Justify Content"
+          name="justifyContent"
+          className="half"
+          options={[
+            { value: 'flex-start', label: 'Flex Start' },
+            { value: 'center', label: 'Center' }
+          ]}
+          value={justifyContent}
           onChange={this.handleContainerChange}
         />
         <div 
