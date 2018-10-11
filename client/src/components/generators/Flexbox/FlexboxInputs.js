@@ -1,5 +1,6 @@
 import React from 'react';
 import ButtonSelect from '../../input/ButtonSelect';
+import ContainerInputs from './ContainerInputs';
 import _ from 'underscore';
 
 class FlexboxInputs extends React.Component {
@@ -27,34 +28,13 @@ class FlexboxInputs extends React.Component {
 
   render() {
     const { currentChild, containerStyles } = this.props;
-    const { flexDirection, justifyContent } = containerStyles;
 
     return (
       <div>
         <div className="section-title">Container Settings</div>
-        <ButtonSelect
-          label="Flex Direction"
-          name="flexDirection"
-          className="half"
-          options={[
-            { value: 'row', label: 'Row' },
-            { value: 'column', label: 'Column' },
-            { value: 'row-reverse', label: 'Row Reverse' },
-            { value: 'column-reverse', label: 'Column Reverse' }
-          ]}
-          value={flexDirection}
+        <ContainerInputs
           onChange={this.handleContainerChange}
-        />
-        <ButtonSelect
-          label="Justify Content"
-          name="justifyContent"
-          className="half"
-          options={[
-            { value: 'flex-start', label: 'Flex Start' },
-            { value: 'center', label: 'Center' }
-          ]}
-          value={justifyContent}
-          onChange={this.handleContainerChange}
+          {...containerStyles}
         />
         <div 
           className="button"

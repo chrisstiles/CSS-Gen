@@ -619,7 +619,11 @@ export function sameOrChild(el1, el2) {
 	return el2.contains(el1);
 }
 
-
+export function valueToLabel(str) {
+	return str.replace(/(-|^)([^-]?)/g, function (_, prep, letter) {
+		return (prep && ' ') + letter.toUpperCase();
+	});
+}
 
 
 

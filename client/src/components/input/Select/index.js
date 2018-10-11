@@ -18,10 +18,13 @@ class Select extends React.Component {
 	}
 
 	componentDidMount() {
-		this.menuContainer = document.querySelector(this.props.menuContainer);
+		const { scrollWrapper = '#sidebar-controls', menuContainer = '#sidebar' } = this.props;
+
+		this.menuContainer = document.querySelector(menuContainer);
+		console.log(this.menuContainer)
 
 		if (this.menuContainer) {
-			this.scrollWrapper = this.props.scrollWrapper ? document.querySelector(this.props.scrollWrapper) : this.menuContainer;
+			this.scrollWrapper = scrollWrapper ? document.querySelector(scrollWrapper) : this.menuContainer;
 
 			window.addEventListener('scroll', this.scrollMenu, true);
 			window.addEventListener('resize', this.scrollMenu, true);
@@ -155,6 +158,10 @@ class Select extends React.Component {
 		}
 
 		const props = _.extend({}, this.props, { onChange: this.handleChange, className: '' });
+
+		if (props.searchable === undefined) {
+			props.searchable = false;
+		}
 
 		return(
 			<div className={className}>

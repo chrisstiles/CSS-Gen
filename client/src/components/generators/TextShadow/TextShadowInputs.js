@@ -257,8 +257,6 @@ class TextShadowInputs extends React.Component {
 						value={googleFont}
 						getOptions={this.getFontOptions}
 						onChange={this.handleFontSelect}
-						menuContainer="#sidebar"
-						scrollWrapper="#sidebar-controls"
 						autoload={true}
 						autoBlur={true}
 					/>
@@ -271,8 +269,6 @@ class TextShadowInputs extends React.Component {
 								onChange={this.handleFontVariantChange}
 								options={weights}
 								searchable={false}
-								menuContainer="#sidebar"
-								scrollWrapper="#sidebar-controls"
 								className="w77"
 							/>
 							<div className="field-wrapper right">

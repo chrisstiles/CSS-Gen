@@ -42,8 +42,6 @@ class GradientInputs extends React.Component {
                 { value: 'circle', label: 'Circle' },
                 { value: 'ellipse', label: 'Ellipse' }
               ]}
-              menuContainer="#sidebar"
-              scrollWrapper="#sidebar-controls"
               searchable={false}
             />
             <Select
@@ -58,8 +56,6 @@ class GradientInputs extends React.Component {
                 { value: 'farthest-side', label: 'Farthest Side' },
                 { value: 'farthest-corner', label: 'Farthest Corner' }
               ]}
-              menuContainer="#sidebar"
-              scrollWrapper="#sidebar-controls"
               searchable={false}
             />
           </div>
