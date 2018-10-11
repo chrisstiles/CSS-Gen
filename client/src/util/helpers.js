@@ -494,27 +494,22 @@ export function getHeaderHeight() {
 }
 
 export function getFullHeight() {
-	const wrapper = document.querySelector('#generator-wrapper');
+	// const wrapper = document.querySelector('#generator-wrapper');
+	const headerHeight = getHeaderHeight();
 
-	if (!wrapper) {
+	if (!headerHeight) {
 		return 0;
 	}
 
-	const rect = wrapper.getBoundingClientRect();
-	var height = window.innerHeight - rect.top;
+	var height = window.innerHeight - headerHeight;
 
 	const presetBar = document.querySelector('#preset-bar');
 	if (presetBar) {
 		height -= presetBar.offsetHeight;
 	}
-	
-	// Offset the height from the bottom by the same amount as the top
-	const toolbar = document.querySelector('#toolbar');
-	if (toolbar) {
-		const toolbarRect = toolbar.getBoundingClientRect();
-		const offset = rect.top - (toolbarRect.top + toolbarRect.height);
-		height -= offset;
-	}
+
+	// Adjust height based on main content padding
+	height -= 60;
 
 	return height;
 }

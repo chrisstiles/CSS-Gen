@@ -36,7 +36,6 @@ body {
   right:0;
   left:0;
   bottom:0;
-  // overflow:hidden;
 }
 
 .dragging #app {
@@ -44,7 +43,8 @@ body {
 }
 
 #main {
-  margin:30px 50px 60px 335px;
+  margin:0 50px 0 335px;
+  padding:30px 0;
   position:relative;
 }
 
