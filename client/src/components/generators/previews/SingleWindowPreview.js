@@ -87,7 +87,7 @@ class SingleWindowPreview extends React.Component {
   }
 
   handleDragStart() {
-    // this.setState({ axis: 'both', axisSelected: false });
+    document.body.classList.add('dragging');
   }
 
   handleDrag(event, data) {
@@ -139,6 +139,8 @@ class SingleWindowPreview extends React.Component {
     this.draggable.setState({ x: dragX, y: dragY });
     this.checkPreviewPosition();
     this.props.onUpdate({ dragX, dragY });
+
+    document.body.classList.remove('dragging');
   }
 
   handleResizeStart() {
@@ -311,6 +313,7 @@ class SingleWindowPreview extends React.Component {
         handle=".drag-handle"
         axis={this.state.axis}
         ref={draggable => { this.draggable = draggable; }}
+        onStart={this.handleDragStart}
         onDrag={this.handleDrag}
         onStop={this.handleDragStop}
         defaultPosition={position}

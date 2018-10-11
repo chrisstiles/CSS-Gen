@@ -476,6 +476,23 @@ export function createSelection(field, start, end) {
   }
 }
 
+export function getHeaderHeight() {
+	const header = document.querySelector('#header');
+
+	if (!header) {
+		return 0;
+	}
+
+	var height = header.offsetHeight;
+
+	const toolbar = document.querySelector('#toolbar');
+	if (toolbar) {
+		height += toolbar.offsetHeight;
+	}
+
+	return height;
+}
+
 export function getFullHeight() {
 	const wrapper = document.querySelector('#generator-wrapper');
 

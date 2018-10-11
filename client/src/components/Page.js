@@ -1,13 +1,33 @@
 import React from 'react';
 import Header from './Header';
+import { getHeaderHeight } from '../util/helpers';
 
 class Page extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      headerHeight: 0
+    };
+
     document.title = props.title;
 
+    this.updateTopOffset = this.updateTopOffset.bind(this);
     this.renderToolbar = this.renderToolbar.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateTopOffset();
+    window.addEventListener('resize', this.updateTopOffset, false);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateTopOffset);
+  }
+
+  updateTopOffset() {
+    const headerHeight = getHeaderHeight();
+    this.setState({ headerHeight });
   }
 
   renderToolbar() {
@@ -17,16 +37,27 @@ class Page extends React.Component {
   }
 
   render() {
+    const style = {
+      paddingTop: this.state.headerHeight
+    };
+
     return (
       <div>
-        <Header 
-          title={this.props.heading} 
-          intro={this.props.intro}
-        />
-        {this.props.toolbar}
-        <main id="main">
-          {this.props.children}
-        </main>
+        <div id="header-wrapper">
+          <Header
+            title={this.props.heading}
+            intro={this.props.intro}
+          />
+          {this.props.toolbar}
+        </div>
+        <div 
+          id="main-wrapper"
+          style={style}
+        >
+          <main id="main">
+            {this.props.children}
+          </main>
+        </div>
       </div>
     );
   }
