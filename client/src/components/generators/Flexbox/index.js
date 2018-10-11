@@ -20,12 +20,16 @@ class Flexbox extends React.Component {
       childElements: [{ text: 'hello', id: 'child-1' }, { text: 'hello2', id: 'child-2' }],
       containerStyles: {
         flexDirection: 'row',
-        justfyContent: 'flex-start' 
+        justifyContent: 'flex-start' 
       }
     };
 
     this.stateTypes = {
-      childElements: [{ text: String }]
+      childElements: [{ text: String }],
+      containerStyles: {
+        flexDirection: String,
+        justifyContent: String
+      }
     };
 
     this.state = getState(this.defaultState, this.stateTypes);

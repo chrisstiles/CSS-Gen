@@ -21,7 +21,6 @@ class Select extends React.Component {
 		const { scrollWrapper = '#sidebar-controls', menuContainer = '#sidebar' } = this.props;
 
 		this.menuContainer = document.querySelector(menuContainer);
-		console.log(this.menuContainer)
 
 		if (this.menuContainer) {
 			this.scrollWrapper = scrollWrapper ? document.querySelector(scrollWrapper) : this.menuContainer;
