@@ -7,7 +7,7 @@ import _ from 'underscore';
 
 // flex-direction
 // flex-wrap
-// flex-flow
+// **flex-flow
 // justify-content
 // align-items
 // align-content
@@ -20,7 +20,10 @@ class Flexbox extends React.Component {
       childElements: [{ text: 'hello', id: 'child-1' }, { text: 'hello2', id: 'child-2' }],
       containerStyles: {
         flexDirection: 'row',
-        justifyContent: 'flex-start' 
+        flexWrap: 'nowrap',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        alignContent: 'flex-start'
       }
     };
 
@@ -28,7 +31,10 @@ class Flexbox extends React.Component {
       childElements: [{ text: String }],
       containerStyles: {
         flexDirection: String,
-        justifyContent: String
+        flexWrap: String,
+        justifyContent: String,
+        alignItems: String,
+        alignContent: String
       }
     };
 
