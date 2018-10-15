@@ -5,12 +5,12 @@ import FlexboxInputs from './FlexboxInputs';
 import { getState } from '../../../util/helpers';
 import _ from 'underscore';
 
-// flex-direction
-// flex-wrap
-// **flex-flow
-// justify-content
-// align-items
-// align-content
+// **order
+// flex-grow
+// flex-shrink
+// flex-basis
+// **flex
+// align-self
 
 class Flexbox extends React.Component {
   constructor(props) {
