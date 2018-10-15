@@ -1,5 +1,5 @@
 .select-wrapper {
-  margin-bottom:22px;
+  margin-bottom:15px;
 
   .title {
     margin-bottom:5px;
@@ -26,6 +26,11 @@
       padding:0 !important;
       box-shadow:none !important;
       position:relative;
+      transition:box-shadow .1s;
+
+      &:hover {
+        box-shadow: 0px 6px 18px 0px rgba(0, 0, 0, 0.08) !important;
+      }
 
       input {
         padding: 0;
@@ -34,7 +39,7 @@
         line-height: normal;
         color:$input-text-color;
         font-weight:600;
-        font-wize:15px;
+        font-size:15px;
       }
 
       .Select-value,
@@ -62,27 +67,31 @@
     }
   }
 
+  $small-select-height: 30px;
+
   &.small {
     .Select {
       .Select-control {
-        height:$small-input-height !important;
+        height:$small-select-height !important;
       }
 
       .Select-input {
-        height:calc(#{$small-input-height} - 2px) !important;
+        height:calc(#{$small-select-height} - 2px) !important;
       }
 
       .Select-control {
         input {
-          height:$small-input-height;
+          height:$small-select-height;
         }
 
         .Select-value,
         .Select-value-label {
-          line-height:calc(#{$small-input-height} - 2px) !important;
+          line-height:calc(#{$small-select-height} - 2px) !important;
+          font-size:11px;
+          text-align:left;
 
           &.shift .Select-value-label {
-            line-height:calc(#{$small-input-height} - 4px) !important;
+            line-height:calc(#{$small-select-height} - 4px) !important;
           }
         }
       }
@@ -107,8 +116,9 @@
   }
 
   .Select-option {
-    padding: 7px 12px 8px 12px;
+    padding: 7px 12px 8px 12px !important;
     color:#5a5a5a !important;
+    text-align:left !important;
 
     &.is-focused {
       background-color: #f9f9f9;
@@ -122,5 +132,6 @@
   &.small .Select-option {
     padding: 7px 0 8px 0;
     text-align: center;
+    font-size:11px !important;
   }
 }

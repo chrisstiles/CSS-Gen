@@ -15,12 +15,13 @@ class ContainerInputs extends React.Component {
 
         return { value, label: valueToLabel(value) }
       });
-      // console.log(this.props[name])
+
       return (
         <Select
           name={name}
           key={name}
           value={this.props[name]}
+          className="half small"
           options={options}
           onChange={this.props.onChange}
           {...props}
