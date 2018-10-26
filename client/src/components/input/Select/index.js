@@ -63,7 +63,7 @@ class Select extends React.Component {
 
 	handleOpen() {
 		this.isOpen = true;
-		// setTimeout(()=> {debugger}, 300)
+
 		if (this.props.onOpen) {
 			this.props.onOpen();
 		}
@@ -163,6 +163,8 @@ class Select extends React.Component {
 		if (props.searchable === undefined) {
 			props.searchable = false;
 		}
+
+		console.log(props)
 
 		return(
 			<div className={className}>

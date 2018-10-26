@@ -91,13 +91,18 @@ class TextShadowInputs extends React.Component {
 
 			const family = `${googleFont}:${variantOptions.join(',')}`;
 
-			WebFont.load({
-				google: {
-					families: [family]
-				},
-				fontactive: this.handleFontLoaded,
-				classes: false
-			});
+			try {
+				WebFont.load({
+					google: {
+						families: [family]
+					},
+					fontactive: this.handleFontLoaded,
+					classes: false
+				});
+			} catch(error) {
+				console.log('Font load error');
+			}
+			
 		}
 	}
 
