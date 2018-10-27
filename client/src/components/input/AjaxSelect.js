@@ -39,6 +39,7 @@ class AjaxSelect extends React.Component {
 		return (
 			<Select
 				async={true}
+				searchable={true}
 				loadOptions={this.getOptions}
 				autoload={autoload}
 				{...this.props}
