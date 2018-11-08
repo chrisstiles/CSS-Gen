@@ -33,7 +33,7 @@ class SingleWindowToolbar extends React.Component {
       > 
         <div className="toolbar-title">Preview<br /> Settings</div>
         <div className="item input">
-          <label>Width:</label>
+          <label>Width</label>
           <NumberInput 
             type="text"
             value={width}
@@ -46,7 +46,7 @@ class SingleWindowToolbar extends React.Component {
         </div>
 
         <div className="item input border">
-          <label>Height:</label>
+          <label>Height</label>
           <NumberInput 
             type="text"
             value={height}
@@ -61,7 +61,7 @@ class SingleWindowToolbar extends React.Component {
         { !this.props.hideToolbarBackground ? 
 
         <div className="item input border">
-          <label>Background:</label>
+          <label>Background</label>
           <ColorPicker
             name="backgroundColor"
             color={this.props.previewBackgroundColor}
@@ -75,7 +75,7 @@ class SingleWindowToolbar extends React.Component {
           <Toggle
             name="outputPreviewStyles"
             onChange={updateGlobalState}
-            label="Output CSS:"
+            label="Output CSS"
             className="left"
             checked={this.props.outputPreviewStyles}
           />
@@ -85,7 +85,7 @@ class SingleWindowToolbar extends React.Component {
           <Toggle
             name="showPreviewText"
             onChange={updateGlobalState}
-            label="Preview Text:"
+            label="Preview Text"
             className="left"
             checked={this.props.showPreviewText}
           />
