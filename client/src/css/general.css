@@ -319,6 +319,10 @@ p:last-child {
       border-right: 1px solid #dedede;
       padding-right: 13px;
       margin-right: 13px; }
+    #toolbar .item.border-left {
+      border-left: 1px solid #dedede;
+      padding-left: 13px;
+      margin-left: 13px; }
     #toolbar .item .color-preview {
       width: 77px;
       height: 27px;
@@ -2064,7 +2068,6 @@ input.angle-input {
   background-color: #4834d4;
   border: 2px solid #fdfdfd;
   border-radius: 3px;
-  flex-grow: 0;
   cursor: pointer;
   min-width: 120px;
   min-height: 120px; }

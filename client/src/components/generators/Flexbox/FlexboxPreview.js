@@ -88,21 +88,23 @@ class FlexboxPreview extends React.Component {
     });
 
     // Final flex item for adding new child element 
-    const newItemText = (
-      <div>
-        <span className="plus"></span>
-        <div>Add Item</div>
-      </div>
-    );
+    if (this.props.showAddItemButton) {
+      const newItemText = (
+        <div>
+          <span className="plus"></span>
+          <div>Add Item</div>
+        </div>
+      );
 
-    childElements.push(
-      <FlexItem
-        key="add-item"
-        className="new-item"
-        text={newItemText}
-        onClick={this.props.addChildElement}
-      />
-    );
+      childElements.push(
+        <FlexItem
+          key="add-item"
+          className="new-item"
+          text={newItemText}
+          onClick={this.props.addChildElement}
+        />
+      );
+    }
 
     return (
       <div id="flexbox-preview">

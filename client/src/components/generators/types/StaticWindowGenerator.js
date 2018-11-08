@@ -87,16 +87,19 @@ class StaticWindowGenerator extends React.Component {
 
 	renderToolbar() {
 		const { showEditorBackgroundColor, editorBackgroundColor } = this.state;
+		const { renderToolbarItems } = this.props;
 
 		return (
 			<Toolbar>
 				<div className="toolbar-title">Preview<br /> Settings</div>
 
+				{renderToolbarItems ? renderToolbarItems() : null}
+
 				<div className="item input">
 				  <Toggle
 				    name="showEditorBackgroundColor"
 				    onChange={this.handlePreviewUpdate}
-				    label="Background Color:"
+				    label="Background"
 				    className="left"
 				    checked={showEditorBackgroundColor}
 				  >

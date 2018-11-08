@@ -3,6 +3,7 @@ import StaticWindowGenerator from '../types/StaticWindowGenerator';
 import FlexboxPreview from './FlexboxPreview';
 import FlexboxInputs from './FlexboxInputs';
 import { getState } from '../../../util/helpers';
+import Toggle from '../../input/Toggle';
 import _ from 'underscore';
 
 // **order
@@ -20,11 +21,12 @@ class Flexbox extends React.Component {
       childElements: [{ text: 'hello', id: 'child-1' }, { text: 'hello2', id: 'child-2' }],
       containerStyles: {
         flexDirection: 'row',
-        flexWrap: 'nowrap',
+        flexWrap: 'wrap',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         alignContent: 'flex-start'
-      }
+      },
+      showAddItemButton: true
     };
 
     this.stateTypes = {
@@ -35,7 +37,8 @@ class Flexbox extends React.Component {
         justifyContent: String,
         alignItems: String,
         alignContent: String
-      }
+      },
+      showAddItemButton: Boolean
     };
 
     this.state = getState(this.defaultState, this.stateTypes);
@@ -51,7 +54,9 @@ class Flexbox extends React.Component {
     this.updateGenerator = this.updateGenerator.bind(this);
     this.addChildElement = this.addChildElement.bind(this);
     this.generateCSS = this.generateCSS.bind(this);
+    this.toggleAddItemButton = this.toggleAddItemButton.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
+    this.renderToolbarItems = this.renderToolbarItems.bind(this);
     this.renderPreview = this.renderPreview.bind(this);
   }
 
@@ -71,6 +76,10 @@ class Flexbox extends React.Component {
     return { styles: {}, output: '' };
   }
 
+  toggleAddItemButton(showAddItemButton) {
+    this.setState({ showAddItemButton });
+  }
+
   renderInputs() {
     const { childElements, selectedIndex } = this.state;
     const currentChild = selectedIndex === null ? null : childElements[selectedIndex];
@@ -85,14 +94,29 @@ class Flexbox extends React.Component {
     );
   }
 
+  renderToolbarItems() {
+    return (
+      <div className="item input border">
+        <Toggle
+          name="showAddItemButton"
+          onChange={this.toggleAddItemButton}
+          label="Show Button"
+          checked={this.state.showAddItemButton}
+        />
+      </div>
+    );
+  }
+
   renderPreview(style) {
     const containerStyles = _.extend({}, style, this.state.containerStyles);
+    const { childElements, selectedIndex, showAddItemButton } = this.state;
 
     return (
       <FlexboxPreview
         containerStyles={containerStyles}
-        childElements={this.state.childElements}
-        selectedIndex={this.state.selectedIndex}
+        childElements={childElements}
+        selectedIndex={selectedIndex}
+        showAddItemButton={showAddItemButton}
         updateGenerator={this.updateGenerator}
         addChildElement={this.addChildElement}
       />
@@ -116,6 +140,7 @@ class Flexbox extends React.Component {
 
         // Render generator components
         renderInputs={this.renderInputs}
+        renderToolbarItems={this.renderToolbarItems}
         renderPreview={this.renderPreview}
 
         // Generator methods
