@@ -19,9 +19,11 @@ class FlexboxInputs extends React.Component {
 
   removeChild() {
     var childElements = this.props.childElements.slice();
-    childElements.splice(this.props.selectedIndex, 1);
-    
-    this.props.updateGenerator({ childElements, selectedIndex: null });
+
+    if (childElements.length > 1) {
+      childElements.splice(this.props.selectedIndex, 1);
+      this.props.updateGenerator({ childElements, selectedIndex: null });
+    }
   }
 
   render() {
