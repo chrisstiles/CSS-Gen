@@ -4,6 +4,7 @@ import FlexboxPreview from './FlexboxPreview';
 import FlexboxInputs from './FlexboxInputs';
 import { getState } from '../../../util/helpers';
 import Toggle from '../../input/Toggle';
+import ColorPicker from '../../input/ColorPicker';
 import _ from 'underscore';
 
 // **order
@@ -26,7 +27,9 @@ class Flexbox extends React.Component {
         alignItems: 'flex-start',
         alignContent: 'flex-start'
       },
-      showAddItemButton: true
+      showAddItemButton: true,
+      showContainerBackground: false,
+      containerBackgroundColor: '#fff'
     };
 
     this.stateTypes = {
@@ -38,7 +41,9 @@ class Flexbox extends React.Component {
         alignItems: String,
         alignContent: String
       },
-      showAddItemButton: Boolean
+      showAddItemButton: Boolean,
+      showContainerBackground: Boolean,
+      containerBackgroundColor: String
     };
 
     this.state = getState(this.defaultState, this.stateTypes);
@@ -54,7 +59,7 @@ class Flexbox extends React.Component {
     this.updateGenerator = this.updateGenerator.bind(this);
     this.addChildElement = this.addChildElement.bind(this);
     this.generateCSS = this.generateCSS.bind(this);
-    this.toggleAddItemButton = this.toggleAddItemButton.bind(this);
+    this.handlePreviewUpdate = this.handlePreviewUpdate.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
     this.renderToolbarItems = this.renderToolbarItems.bind(this);
     this.renderPreview = this.renderPreview.bind(this);
@@ -76,8 +81,10 @@ class Flexbox extends React.Component {
     return { styles: {}, output: '' };
   }
 
-  toggleAddItemButton(showAddItemButton) {
-    this.setState({ showAddItemButton });
+  handlePreviewUpdate(value, name) {
+    const state = {};
+    state[name] = value
+    this.setState(state);
   }
 
   renderInputs() {
@@ -95,21 +102,42 @@ class Flexbox extends React.Component {
   }
 
   renderToolbarItems() {
+    const { showAddItemButton, showContainerBackground, containerBackgroundColor } = this.state;
+
     return (
-      <div className="item input border">
-        <Toggle
-          name="showAddItemButton"
-          onChange={this.toggleAddItemButton}
-          label="Show Button"
-          checked={this.state.showAddItemButton}
-        />
+      <div>
+        <div className="item input border">
+          <Toggle
+            name="showAddItemButton"
+            onChange={this.handlePreviewUpdate}
+            label="Show Button"
+            checked={showAddItemButton}
+          />
+        </div>
+        <div className="item input">
+          <Toggle
+            name="showContainerBackground"
+            onChange={this.handlePreviewUpdate}
+            label="Background"
+            className="left"
+            checked={showContainerBackground}
+          >
+            {showContainerBackground ?
+              <ColorPicker
+                name="containerBackgroundColor"
+                color={containerBackgroundColor}
+                onChange={this.handlePreviewUpdate}
+              />
+              : null}
+          </Toggle>
+        </div>	
       </div>
     );
   }
 
   renderPreview(style) {
     const containerStyles = _.extend({}, style, this.state.containerStyles);
-    const { childElements, selectedIndex, showAddItemButton } = this.state;
+    const { childElements, selectedIndex, showAddItemButton, showContainerBackground, containerBackgroundColor } = this.state;
 
     return (
       <FlexboxPreview
@@ -117,6 +145,8 @@ class Flexbox extends React.Component {
         childElements={childElements}
         selectedIndex={selectedIndex}
         showAddItemButton={showAddItemButton}
+        showContainerBackground={showContainerBackground}
+        containerBackgroundColor={containerBackgroundColor}
         updateGenerator={this.updateGenerator}
         addChildElement={this.addChildElement}
       />

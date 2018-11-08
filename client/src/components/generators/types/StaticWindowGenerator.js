@@ -93,25 +93,27 @@ class StaticWindowGenerator extends React.Component {
 			<Toolbar>
 				<div className="toolbar-title">Preview<br /> Settings</div>
 
-				{renderToolbarItems ? renderToolbarItems() : null}
-
-				<div className="item input">
-				  <Toggle
-				    name="showEditorBackgroundColor"
-				    onChange={this.handlePreviewUpdate}
-				    label="Background"
-				    className="left"
-				    checked={showEditorBackgroundColor}
-				  >
-		  		  {showEditorBackgroundColor ? 
-		  	  	  <ColorPicker
-		  	  	    name="editorBackgroundColor"
-		  	  	    color={editorBackgroundColor}
-		  	  	    onChange={this.handlePreviewUpdate}
-		  	  	  />
-		  		  : null}
-				  </Toggle>
-				</div>
+				{
+					renderToolbarItems ? renderToolbarItems() : 
+					
+					<div className="item input">
+						<Toggle
+							name="showEditorBackgroundColor"
+							onChange={this.handlePreviewUpdate}
+							label="Background"
+							className="left"
+							checked={showEditorBackgroundColor}
+						>
+							{showEditorBackgroundColor ?
+								<ColorPicker
+									name="editorBackgroundColor"
+									color={editorBackgroundColor}
+									onChange={this.handlePreviewUpdate}
+								/>
+								: null}
+						</Toggle>
+					</div>	
+				}
 
 				<div className="right">
 				  <button

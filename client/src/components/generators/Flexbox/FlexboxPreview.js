@@ -74,6 +74,7 @@ class FlexboxPreview extends React.Component {
   }
 
   render() {
+    const { showAddItemButton, addChildElement, containerStyles, showContainerBackground, containerBackgroundColor } = this.props
     const childElements = _.map(this.props.childElements, ({ id, text }, index) => {
       const selected = this.props.selectedIndex === index ? true : false;
 
@@ -88,7 +89,7 @@ class FlexboxPreview extends React.Component {
     });
 
     // Final flex item for adding new child element 
-    if (this.props.showAddItemButton) {
+    if (showAddItemButton) {
       const newItemText = (
         <div>
           <span className="plus"></span>
@@ -101,16 +102,26 @@ class FlexboxPreview extends React.Component {
           key="add-item"
           className="new-item"
           text={newItemText}
-          onClick={this.props.addChildElement}
+          onClick={addChildElement}
         />
       );
     }
 
+    const wrapperStyles = {};
+
+    if (showContainerBackground) {
+      wrapperStyles.backgroundColor = containerBackgroundColor;
+    }
+
+
     return (
-      <div id="flexbox-preview">
+      <div 
+        id="flexbox-preview"
+        style={wrapperStyles}
+      >
         <div 
           className="container"
-          style={this.props.containerStyles}
+          style={containerStyles}
         >
           {childElements}
         </div>
