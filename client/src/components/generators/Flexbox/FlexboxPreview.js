@@ -14,15 +14,21 @@ class FlexItem extends React.Component {
   }
 
   render() {
-    var className = 'item';
+    const { className, selected } = this.props;
+    const classes = ['item'];
 
-    if (this.props.selected) {
-      className += ' selected';
+    if (className) {
+      classes.push(className);
     }
+
+    if (selected) {
+      classes.push('selected');
+    }
+    
 
     return (
       <div
-        className={className}
+        className={classes.join(' ')}
         onClick={this.handleClick}
       >
         {this.props.text}
@@ -75,12 +81,28 @@ class FlexboxPreview extends React.Component {
         <FlexItem
           key={id}
           id={id}
-          text={id}
           selected={selected}
           onClick={this.handleClick}
         />
       );
     });
+
+    // Final flex item for adding new child element 
+    const newItemText = (
+      <div>
+        <span className="plus"></span>
+        <div>Add Item</div>
+      </div>
+    );
+
+    childElements.push(
+      <FlexItem
+        key="add-item"
+        className="new-item"
+        text={newItemText}
+        onClick={this.props.addChildElement}
+      />
+    );
 
     return (
       <div id="flexbox-preview">

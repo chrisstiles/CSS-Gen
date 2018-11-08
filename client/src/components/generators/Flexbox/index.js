@@ -49,6 +49,7 @@ class Flexbox extends React.Component {
     this.state.selectedIndex = null;
 
     this.updateGenerator = this.updateGenerator.bind(this);
+    this.addChildElement = this.addChildElement.bind(this);
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
     this.renderPreview = this.renderPreview.bind(this);
@@ -56,6 +57,14 @@ class Flexbox extends React.Component {
 
   updateGenerator(state) {
     this.setState(state);
+  }
+
+  addChildElement() {
+    const child = { id: _.uniqueId('child-') };
+    const childElements = this.state.childElements.slice();
+    childElements.push(child);
+
+    this.setState({ childElements });
   }
 
   generateCSS(styles = {}) {
@@ -69,6 +78,7 @@ class Flexbox extends React.Component {
     return (
       <FlexboxInputs
         updateGenerator={this.updateGenerator}
+        addChildElement={this.addChildElement}
         currentChild={currentChild}
         {...this.state}
       />
@@ -76,16 +86,15 @@ class Flexbox extends React.Component {
   }
 
   renderPreview(style) {
-    // _.extend(style, this.state.containerStyles);
-    
     const containerStyles = _.extend({}, style, this.state.containerStyles);
-    console.log(containerStyles)
+
     return (
       <FlexboxPreview
         containerStyles={containerStyles}
         childElements={this.state.childElements}
         selectedIndex={this.state.selectedIndex}
         updateGenerator={this.updateGenerator}
+        addChildElement={this.addChildElement}
       />
     );
   }
