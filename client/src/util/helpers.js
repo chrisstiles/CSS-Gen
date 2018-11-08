@@ -427,6 +427,12 @@ export function getColorObject(color) {
 }
 
 export function hexOrRgba(color, alpha) {
+	const { _originalInput: input = '' } = color;
+
+	if (color === 'transparent' || (typeof input === 'string' && input.toLowerCase() === 'transparent')) {
+		return 'transparent';
+	}
+
 	color = tinycolor(color);
 
 	if (alpha !== undefined) {

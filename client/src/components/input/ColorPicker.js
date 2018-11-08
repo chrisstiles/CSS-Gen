@@ -20,11 +20,15 @@ class ColorPicker extends React.Component {
       }
     };
 
+    this.state.transparent = this.props.color === 'transparent';
+
     this.setPosition = this.setPosition.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.setTransparent = this.setTransparent.bind(this);
     this.keyEvent = this.keyEvent.bind(this);
+
   }
 
   componentDidMount() {
@@ -72,9 +76,13 @@ class ColorPicker extends React.Component {
   };
 
   handleChange(color) {
-    this.setState({ color: color.rgb });
+    color = tinycolor(color.rgb);
+
     if (this.props.onChange) {
-      color = tinycolor(color.rgb);
+      // Reset alpha if switching from transparent to regular color
+      if (this.state.transparent) {
+        color.setAlpha(1);
+      }
 
       var returnColor;
       if (this.props.returnColorObject) {
@@ -85,9 +93,23 @@ class ColorPicker extends React.Component {
 
       this.props.onChange(returnColor, this.props.name);
     }
+
+    this.setState({ color, transparent: false });
   };
 
+  setTransparent() {
+    this.setState({ transparent: true });
+
+    if (this.props.onChange) {
+      this.props.onChange('transparent', this.props.name);
+    }
+  }
+
   generateColorCSS(color = this.state.color) {
+    if (this.state.transparent) {
+      return 'transparent';
+    }
+
     const { r, g, b, a } = color;
     const colorString = `rgba(${r}, ${g}, ${b}, ${a})`;
 
@@ -107,7 +129,8 @@ class ColorPicker extends React.Component {
         g: '255',
         b: '255',
         a: '1'
-      }
+      },
+      transparent: false
     });
   }
 
@@ -151,17 +174,17 @@ class ColorPicker extends React.Component {
       margin = this.previewWidth ? this.previewWidth / 2 : 0;
     }
 
-    const wrapperStyle = {
+    const wrapperStyles = {
       marginLeft: margin
     };
 
     // Adjust top position in case user has scrolled
     if (this.previewTop) {
-      wrapperStyle.top = this.previewTop;
+      wrapperStyles.top = this.previewTop;
     }
 
     if (this.previewLeft) {
-      wrapperStyle.left = this.previewLeft;
+      wrapperStyles.left = this.previewLeft;
     }
 
     const previewStyle = {
@@ -180,9 +203,14 @@ class ColorPicker extends React.Component {
       }
     }
 
-    var className = "field-wrapper color-wrapper";
+    const className = ['field-wrapper', 'color-wrapper'];
+
     if (this.props.className) {
-      className += ` ${this.props.className}`;
+      className.push(this.props.className);
+    }
+
+    if (this.state.transparent) {
+      className.push('transparent-active');
     }
 
     const style = {};
@@ -194,7 +222,7 @@ class ColorPicker extends React.Component {
     }
 
     return (
-      <div className={className}>
+      <div className={className.join(' ')}>
         {this.props.label ? 
           <label className="title">{this.props.label}</label>
         : null}
@@ -203,14 +231,20 @@ class ColorPicker extends React.Component {
           <div style={cover} onClick={this.handleClose} />
           <div 
             className="color-picker-wrapper"
-            style={wrapperStyle}
+            style={wrapperStyles}
           >
-            <ChromePicker 
-              color={color.toRgbString()}
-              onChange={this.handleChange}
-              disableAlpha={this.props.disableAlpha}
-              style={{ opacity: .4 }}
-            />
+            <div className="content">
+              <ChromePicker
+                color={color.toRgbString()}
+                onChange={this.handleChange}
+                disableAlpha={this.props.disableAlpha}
+                style={{ opacity: .4 }}
+              />
+              <div
+                className="transparent-button"
+                onClick={this.setTransparent}
+              />
+            </div>
           </div>
         </div>
 
