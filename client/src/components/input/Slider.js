@@ -64,8 +64,8 @@ class Slider extends React.Component {
       return (
         <Select
           options={[
-            { value: 'px', label: 'px', className: 'shift' },
-            { value: '%', label: '%' }
+            { value: 'px', label: 'px', className: 'px' },
+            { value: '%', label: '%', className: 'percent' }
           ]}
           className="units-select small"
           value={this.props.units}

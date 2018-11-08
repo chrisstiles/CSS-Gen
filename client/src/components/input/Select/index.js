@@ -117,6 +117,10 @@ class Select extends React.Component {
 
 		if (this.props.className && this.props.className.indexOf('small') !== -1) {
 			className.push('small');
+
+			if (this.props.className.indexOf('units-select') !== -1) {
+				className.push('units');
+			}
 		}
 
 		if (this.menuContainer) {
@@ -151,11 +155,9 @@ class Select extends React.Component {
 
 	render() {
 		var className = 'field-wrapper select-wrapper';
-		var optionHeight = 31;
 
 		if (this.props.className) {
 			className += ` ${this.props.className}`;
-			optionHeight = 28;
 		}
 
 		const props = _.extend({}, this.props, { onChange: this.handleChange, className: '' });
@@ -163,8 +165,6 @@ class Select extends React.Component {
 		if (props.searchable === undefined) {
 			props.searchable = false;
 		}
-
-		console.log(props)
 
 		return(
 			<div className={className}>
@@ -177,7 +177,7 @@ class Select extends React.Component {
 					clearable={false}
 					openOnFocus={true}
 					maxHeight={400}
-					optionHeight={optionHeight}
+					optionHeight={31}
 					onFocus={this.handleFocus}
 					onOpen={this.handleOpen}
 					onClose={this.handleClose}

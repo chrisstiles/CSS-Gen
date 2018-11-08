@@ -163,6 +163,7 @@ input.slider-input {
   .units-select {
     float:right;
     margin-top:-20px;
+    height:26px;
   }
 
   .slider-input {
@@ -170,25 +171,49 @@ input.slider-input {
   }
 
   .select-wrapper.units-select {
-    left:-1px;
     position:relative;
-    width:32px;
+    width:28px;
     cursor: pointer;
 
-    .Select-control {
-      background-color: #f6f6f6;
+    .Select {
+      left:-1px;
 
-      &:hover {
-        background-color:#efefef;
-      }
+      .Select-control {
+        background-color: #f6f6f6;
+        height:25px !important;
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
 
-      .Select-value {
-        padding:0 0 1px 0 !important;
-        text-align: center;
+        &:hover {
+          background-color:#efefef;
+        }
 
-        .Select-value-label {
-          color: #7a7a7a !important;
-          font-size:13px;
+        .Select-input {
+          height:25px !important;
+        }
+
+        .Select-value {
+          padding:0 1px 1px 0 !important;
+          text-align: center;
+          width:100%;
+          line-height:25px !important;
+
+          &.px .Select-value-label {
+            line-height:23px !important;
+          }
+
+          &.percent .Select-value-label {
+            font-weight:700;
+          }
+
+          .Select-value-label {
+            color: #7a7a7a !important;
+            font-size:12px;
+            text-align: center;
+            line-height:25px !important;
+            height:25px !important;
+            font-weight:600;
+          }
         }
       }
     }
@@ -196,6 +221,16 @@ input.slider-input {
     .Select.is-focused .Select-control {
       z-index: 200;
     }
+  }
+}
+
+.options-wrapper.units {
+  .Select-option {
+    padding-left:0 !important;
+    padding-right:0 !important;
+    text-align:center;
+    width:100% !important;
+    display:block;
   }
 }
 

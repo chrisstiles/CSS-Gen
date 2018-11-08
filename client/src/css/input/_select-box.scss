@@ -67,37 +67,30 @@
     }
   }
 
-  $small-select-height: 30px;
-
   &.small {
     .Select {
       .Select-control {
-        height:$small-select-height !important;
+        height:28px !important;
       }
 
       .Select-input {
-        height:calc(#{$small-select-height} - 2px) !important;
+        height:28px !important;
       }
 
       .Select-control {
         input {
-          height:$small-select-height;
+          height:28px;
         }
 
         .Select-value,
         .Select-value-label {
-          line-height:calc(#{$small-select-height} - 2px) !important;
+          line-height:28px !important;
           font-size:11px;
           text-align:left;
-
-          &.shift .Select-value-label {
-            line-height:calc(#{$small-select-height} - 4px) !important;
-          }
         }
       }
     }
   }
-
 }
 
 .options-wrapper {
@@ -119,6 +112,7 @@
     padding: 7px 12px 8px 12px !important;
     color:#5a5a5a !important;
     text-align:left !important;
+    border-radius:0 !important;
 
     &.is-focused {
       background-color: #f9f9f9;
