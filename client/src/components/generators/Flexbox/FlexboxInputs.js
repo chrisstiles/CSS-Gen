@@ -7,6 +7,7 @@ class FlexboxInputs extends React.Component {
     super(props);
 
     this.handleContainerChange = this.handleContainerChange.bind(this);
+    this.removeChild = this.removeChild.bind(this);
   }
 
   handleContainerChange(value, name) {
@@ -14,6 +15,13 @@ class FlexboxInputs extends React.Component {
     containerStyles[name] = value;
 
     this.props.updateGenerator({ containerStyles });
+  }
+
+  removeChild() {
+    var childElements = this.props.childElements.slice();
+    childElements.splice(this.props.selectedIndex, 1);
+    
+    this.props.updateGenerator({ childElements, selectedIndex: null });
   }
 
   render() {
@@ -36,7 +44,12 @@ class FlexboxInputs extends React.Component {
         <div className="section-title">Child Settings</div>
         {currentChild ? 
           <div>
-            Selected: {currentChild.id}
+            <div
+              className="button"
+              onClick={this.removeChild}
+            >
+              Remove Child
+            </div>
           </div>
         : null}
       </div>
