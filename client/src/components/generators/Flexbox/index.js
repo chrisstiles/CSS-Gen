@@ -28,7 +28,7 @@ class Flexbox extends React.Component {
         alignContent: 'flex-start'
       },
       showAddItemButton: true,
-      containerBackgroundColor: '#fff'
+      containerBackgroundColor: 'transparent'
     };
 
     this.stateTypes = {
