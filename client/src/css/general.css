@@ -1133,12 +1133,14 @@ input.slider-input {
   .has-units .select-wrapper.units-select .Select.is-focused .Select-control {
     z-index: 200; }
 
-.options-wrapper.units .Select-option {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  text-align: center;
+.options-wrapper.units.small .Select-option {
+  padding: 0 !important;
+  text-align: center !important;
   width: 100% !important;
-  display: block; }
+  display: block;
+  line-height: 24px !important; }
+  .options-wrapper.units.small .Select-option.px {
+    line-height: 22px !important; }
 
 textarea {
   min-height: 100px;
@@ -1580,10 +1582,12 @@ textarea {
   .select-wrapper .Select .Select-control {
     padding: 0 !important;
     box-shadow: none !important;
-    position: relative;
-    transition: box-shadow .1s; }
+    position: relative; }
     .select-wrapper .Select .Select-control:hover {
+      transition: box-shadow .1s;
       box-shadow: 0px 6px 18px 0px rgba(0, 0, 0, 0.08) !important; }
+    .select-wrapper .Select .Select-control:active {
+      transition: none; }
     .select-wrapper .Select .Select-control input {
       padding: 0;
       width: 100% !important;

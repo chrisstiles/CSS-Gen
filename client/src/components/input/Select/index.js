@@ -8,6 +8,10 @@ class Select extends React.Component {
 	constructor(props) {
 		super(props);
 
+		if (props.className && props.className.indexOf('units-select') !== -1) {
+			this.units = true;
+		}
+
 		this.handleChange = this.handleChange.bind(this);
 		this.handleFocus = this.handleFocus.bind(this);
 		this.handleOpen = this.handleOpen.bind(this);
@@ -118,7 +122,7 @@ class Select extends React.Component {
 		if (this.props.className && this.props.className.indexOf('small') !== -1) {
 			className.push('small');
 
-			if (this.props.className.indexOf('units-select') !== -1) {
+			if (this.units) {
 				className.push('units');
 			}
 		}
@@ -166,6 +170,8 @@ class Select extends React.Component {
 			props.searchable = false;
 		}
 
+		const optionHeight = this.units ? 25 : 31;
+
 		return(
 			<div className={className}>
 				{this.props.label ? <label className="title">{this.props.label}</label> : null}
@@ -177,7 +183,7 @@ class Select extends React.Component {
 					clearable={false}
 					openOnFocus={true}
 					maxHeight={400}
-					optionHeight={31}
+					optionHeight={optionHeight}
 					onFocus={this.handleFocus}
 					onOpen={this.handleOpen}
 					onClose={this.handleClose}
