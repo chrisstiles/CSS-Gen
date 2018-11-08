@@ -32,7 +32,8 @@ class ColorPicker extends React.Component {
   }
 
   componentWillUnmount(){
-    document.removeEventListener('keydown', this.keyEvent, false);
+    currentPicker = null;
+    document.removeEventListener('keydown', this.keyEvent);
   }
 
   setPosition(el, includeLeftOffset) {
