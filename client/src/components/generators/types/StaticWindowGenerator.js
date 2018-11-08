@@ -3,7 +3,6 @@ import Generator from '../../Generator';
 import StaticWindowPreview from '../previews/StaticWindowPreview';
 import Toolbar from '../toolbars/Toolbar';
 import ColorPicker from '../../input/ColorPicker';
-import Toggle from '../../input/Toggle';
 import { getState, getFullHeight } from '../../../util/helpers';
 import _ from 'underscore';
 
@@ -13,7 +12,7 @@ class StaticWindowGenerator extends React.Component {
 
 		this.defaultState = {
 			showEditorBackgroundColor: false,
-			editorBackgroundColor: '#fff'
+			editorBackgroundColor: 'transparent'
 		};
 
 		_.extend(this.defaultState, props.previewStyles);
@@ -65,8 +64,8 @@ class StaticWindowGenerator extends React.Component {
 			isDefault = true;
 		}
 
-		const { showEditorBackgroundColor, editorBackgroundColor, wrapperHeight} = this.state;
-		const backgroundColor = showEditorBackgroundColor ? editorBackgroundColor : 'transparent';
+		const { editorBackgroundColor: backgroundColor, wrapperHeight} = this.state;
+		// const backgroundColor = showEditorBackgroundColor ? editorBackgroundColor : 'transparent';
 
 		return (
 			<StaticWindowPreview 
@@ -86,7 +85,7 @@ class StaticWindowGenerator extends React.Component {
 	}
 
 	renderToolbar() {
-		const { showEditorBackgroundColor, editorBackgroundColor } = this.state;
+		const { editorBackgroundColor } = this.state;
 		const { renderToolbarItems } = this.props;
 
 		return (
@@ -97,21 +96,12 @@ class StaticWindowGenerator extends React.Component {
 					renderToolbarItems ? renderToolbarItems() : 
 					
 					<div className="item input">
-						<Toggle
-							name="showEditorBackgroundColor"
-							onChange={this.handlePreviewUpdate}
+						<ColorPicker
 							label="Background"
-							className="left"
-							checked={showEditorBackgroundColor}
-						>
-							{showEditorBackgroundColor ?
-								<ColorPicker
-									name="editorBackgroundColor"
-									color={editorBackgroundColor}
-									onChange={this.handlePreviewUpdate}
-								/>
-								: null}
-						</Toggle>
+							name="editorBackgroundColor"
+							color={editorBackgroundColor}
+							onChange={this.handlePreviewUpdate}
+						/>
 					</div>	
 				}
 

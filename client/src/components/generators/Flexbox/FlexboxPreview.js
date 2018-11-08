@@ -74,7 +74,7 @@ class FlexboxPreview extends React.Component {
   }
 
   render() {
-    const { showAddItemButton, addChildElement, containerStyles, showContainerBackground, containerBackgroundColor } = this.props
+    const { showAddItemButton, addChildElement, containerStyles, containerBackgroundColor: backgroundColor } = this.props
     const childElements = _.map(this.props.childElements, ({ id, text }, index) => {
       const selected = this.props.selectedIndex === index ? true : false;
 
@@ -107,17 +107,10 @@ class FlexboxPreview extends React.Component {
       );
     }
 
-    const wrapperStyles = {};
-
-    if (showContainerBackground) {
-      wrapperStyles.backgroundColor = containerBackgroundColor;
-    }
-
-
     return (
       <div 
         id="flexbox-preview"
-        style={wrapperStyles}
+        style={{ backgroundColor }}
       >
         <div 
           className="container"

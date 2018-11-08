@@ -40,6 +40,12 @@ class ColorPicker extends React.Component {
     document.removeEventListener('keydown', this.keyEvent);
   }
 
+  componentWillReceiveProps({ color }) {
+    if ((typeof color === 'string' && color.toLowerCase() === 'transparent') || color._originalInput === 'transparent') {
+      this.setState({ transparent: true });
+    }
+  }
+
   setPosition(el, includeLeftOffset) {
     this.previewWidth = el.offsetWidth;
 

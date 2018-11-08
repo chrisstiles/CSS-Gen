@@ -28,7 +28,6 @@ class Flexbox extends React.Component {
         alignContent: 'flex-start'
       },
       showAddItemButton: true,
-      showContainerBackground: false,
       containerBackgroundColor: '#fff'
     };
 
@@ -42,7 +41,6 @@ class Flexbox extends React.Component {
         alignContent: String
       },
       showAddItemButton: Boolean,
-      showContainerBackground: Boolean,
       containerBackgroundColor: String
     };
 
@@ -102,7 +100,7 @@ class Flexbox extends React.Component {
   }
 
   renderToolbarItems() {
-    const { showAddItemButton, showContainerBackground, containerBackgroundColor } = this.state;
+    const { showAddItemButton, containerBackgroundColor } = this.state;
 
     return (
       <div>
@@ -115,21 +113,12 @@ class Flexbox extends React.Component {
           />
         </div>
         <div className="item input">
-          <Toggle
-            name="showContainerBackground"
-            onChange={this.handlePreviewUpdate}
+          <ColorPicker
             label="Background"
-            className="left"
-            checked={showContainerBackground}
-          >
-            {showContainerBackground ?
-              <ColorPicker
-                name="containerBackgroundColor"
-                color={containerBackgroundColor}
-                onChange={this.handlePreviewUpdate}
-              />
-              : null}
-          </Toggle>
+            name="containerBackgroundColor"
+            color={containerBackgroundColor}
+            onChange={this.handlePreviewUpdate}
+          />
         </div>	
       </div>
     );
@@ -137,7 +126,7 @@ class Flexbox extends React.Component {
 
   renderPreview(style) {
     const containerStyles = _.extend({}, style, this.state.containerStyles);
-    const { childElements, selectedIndex, showAddItemButton, showContainerBackground, containerBackgroundColor } = this.state;
+    const { childElements, selectedIndex, showAddItemButton, containerBackgroundColor } = this.state;
 
     return (
       <FlexboxPreview
@@ -145,7 +134,6 @@ class Flexbox extends React.Component {
         childElements={childElements}
         selectedIndex={selectedIndex}
         showAddItemButton={showAddItemButton}
-        showContainerBackground={showContainerBackground}
         containerBackgroundColor={containerBackgroundColor}
         updateGenerator={this.updateGenerator}
         addChildElement={this.addChildElement}
