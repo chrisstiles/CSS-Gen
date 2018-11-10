@@ -10,15 +10,7 @@ class ColorPicker extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      displayColorPicker: false,
-      color: {
-        r: '255',
-        g: '255',
-        b: '255',
-        a: '1'
-      }
-    };
+    this.state = { displayColorPicker: false };
 
     this.state.transparent = this.props.color === 'transparent';
 
@@ -41,9 +33,8 @@ class ColorPicker extends React.Component {
   }
 
   componentWillReceiveProps({ color }) {
-    if ((typeof color === 'string' && color.toLowerCase() === 'transparent') || color._originalInput === 'transparent') {
-      this.setState({ transparent: true });
-    }
+    const transparent = (typeof color === 'string' && color.toLowerCase() === 'transparent') || color._originalInput === 'transparent';
+    this.setState({ transparent });
   }
 
   setPosition(el, includeLeftOffset) {
@@ -127,19 +118,7 @@ class ColorPicker extends React.Component {
       this.handleClose();
     }
   }
-
-  reset() {
-    this.setState({
-      color: {
-        r: '255',
-        g: '255',
-        b: '255',
-        a: '1'
-      },
-      transparent: false
-    });
-  }
-
+  
   renderPreview(previewStyle) {
     const renderPreview = this.props.renderPreview === undefined || this.props.renderPreview === true;
     if (renderPreview) {
