@@ -22,8 +22,8 @@ export default ItemInputs;
 // align-self
 
 const flexSliders = [
-  { title: 'Flex Grow', name: 'flexGrow', min: 0, max: 10, step: .5 },
-  { title: 'Flex Shrink', name: 'flexShrink', min: 0, max: 10, step: .5 },
+  { title: 'Flex Grow', name: 'flexGrow', min: 0, max: 20 },
+  { title: 'Flex Shrink', name: 'flexShrink', min: 0, max: 20 },
 ];
 
 // const inputs = [

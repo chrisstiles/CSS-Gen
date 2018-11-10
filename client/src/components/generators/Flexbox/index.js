@@ -100,11 +100,13 @@ class Flexbox extends React.Component {
 
   renderPreview(style) {
     const containerStyles = _.extend({}, style, this.state.containerStyles);
+    const itemStyles = _.extend({}, style, this.state.itemStyles);
     const { childElements, selectedIndex, showAddItemButton, containerBackgroundColor } = this.state;
 
     return (
       <FlexboxPreview
         containerStyles={containerStyles}
+        itemStyles={itemStyles}
         childElements={childElements}
         selectedIndex={selectedIndex}
         showAddItemButton={showAddItemButton}

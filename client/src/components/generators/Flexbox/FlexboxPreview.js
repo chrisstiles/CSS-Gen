@@ -14,7 +14,7 @@ class FlexItem extends React.Component {
   }
 
   render() {
-    const { className, selected } = this.props;
+    const { className, selected, style } = this.props;
     const classes = ['item'];
 
     if (className) {
@@ -25,10 +25,10 @@ class FlexItem extends React.Component {
       classes.push('selected');
     }
     
-
     return (
       <div
         className={classes.join(' ')}
+        style={style}
         onClick={this.handleClick}
       >
         {this.props.text}
@@ -74,7 +74,14 @@ class FlexboxPreview extends React.Component {
   }
 
   render() {
-    const { showAddItemButton, addChildElement, containerStyles, containerBackgroundColor: backgroundColor } = this.props
+    const { 
+      showAddItemButton, 
+      addChildElement, 
+      containerStyles, 
+      containerBackgroundColor: backgroundColor,
+      itemStyles
+    } = this.props;
+
     const childElements = _.map(this.props.childElements, ({ id, text }, index) => {
       const selected = this.props.selectedIndex === index ? true : false;
 
@@ -83,6 +90,7 @@ class FlexboxPreview extends React.Component {
           key={id}
           id={id}
           selected={selected}
+          style={itemStyles}
           onClick={this.handleClick}
         />
       );
@@ -102,6 +110,7 @@ class FlexboxPreview extends React.Component {
           key="add-item"
           className="new-item"
           text={newItemText}
+          style={itemStyles}
           onClick={addChildElement}
         />
       );

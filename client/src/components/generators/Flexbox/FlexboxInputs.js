@@ -53,12 +53,13 @@ class FlexboxInputs extends React.Component {
         </div>
         <div className="divider" />
         <div className="section-title">Child Settings</div>
-        <ItemInputs
-          onChange={this.handleItemChange}
-          {...itemStyles}
-        />
         {currentChild ? 
           <div>
+            <div className="section-title">Affects just selected child</div>
+            <ItemInputs
+              onChange={this.handleItemChange}
+              {...itemStyles}
+            />
             <div
               className="button"
               onClick={this.removeChild}
@@ -66,7 +67,15 @@ class FlexboxInputs extends React.Component {
               Remove Child
             </div>
           </div>
-        : null}
+        :
+          <div>
+            <div className="section-title">Affects all children</div>
+            <ItemInputs
+              onChange={this.handleItemChange}
+              {...itemStyles}
+            />
+          </div>
+        }
       </div>
     );
   }

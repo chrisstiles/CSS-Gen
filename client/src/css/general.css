@@ -1717,7 +1717,7 @@ textarea {
     .options-wrapper .Select-option.is-selected {
       background-color: rgba(72, 52, 212, 0.1); }
   .options-wrapper.small .Select-option {
-    padding: 7px 0 8px 0;
+    padding: 20px 0 8px 0;
     text-align: center;
     font-size: 11px !important; }
 
@@ -2135,7 +2135,8 @@ input.angle-input {
     width: calc(100% + 4px);
     height: 100%;
     margin-left: -2px;
-    margin-top: -2px; }
+    margin-top: -2px;
+    padding: 4px; }
   #flexbox-preview .item {
     background-color: #4834d4;
     margin: 0 2px 4px 2px;
