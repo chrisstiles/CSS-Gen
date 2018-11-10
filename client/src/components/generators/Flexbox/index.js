@@ -18,33 +18,7 @@ class Flexbox extends React.Component {
   constructor(props) {
     super(props);
 
-    this.defaultState = {
-      childElements: [{ text: 'hello', id: 'child-1' }, { text: 'hello2', id: 'child-2' }],
-      containerStyles: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        alignContent: 'flex-start'
-      },
-      showAddItemButton: true,
-      containerBackgroundColor: 'transparent'
-    };
-
-    this.stateTypes = {
-      childElements: [{ text: String }],
-      containerStyles: {
-        flexDirection: String,
-        flexWrap: String,
-        justifyContent: String,
-        alignItems: String,
-        alignContent: String
-      },
-      showAddItemButton: Boolean,
-      containerBackgroundColor: String
-    };
-
-    this.state = getState(this.defaultState, this.stateTypes);
+    this.state = getState(Flexbox.defaultState, Flexbox.stateTypes);
 
     // Add unique keys to each child element
     _.map(this.state.childElements, child => {
@@ -153,7 +127,7 @@ class Flexbox extends React.Component {
 
         // Generator state
         generatorState={generatorState}
-        generatorDefaultState={this.defaultState}
+        generatorDefaultState={Flexbox.defaultState}
         globalState={this.props.globalState}
 
         // Render generator components
@@ -169,3 +143,37 @@ class Flexbox extends React.Component {
 }
 
 export default Flexbox;
+
+Flexbox.defaultState = {
+  childElements: [{ text: 'hello', id: 'child-1' }, { text: 'hello2', id: 'child-2' }],
+  containerStyles: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    alignContent: 'flex-start'
+  },
+  itemStyles: {
+    flexGrow: 0,
+    flexShrink: 1
+  },
+  showAddItemButton: true,
+  containerBackgroundColor: 'transparent'
+};
+
+Flexbox.stateTypes = {
+  childElements: [{ text: String }],
+  containerStyles: {
+    flexDirection: String,
+    flexWrap: String,
+    justifyContent: String,
+    alignItems: String,
+    alignContent: String
+  },
+  itemStyles: {
+    flexGrow: Number,
+    flexShrink: Number
+  },
+  showAddItemButton: Boolean,
+  containerBackgroundColor: String
+};

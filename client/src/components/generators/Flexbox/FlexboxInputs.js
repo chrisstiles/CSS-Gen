@@ -1,5 +1,6 @@
 import React from 'react';
 import ContainerInputs from './ContainerInputs';
+import ItemInputs from './ItemInputs';
 import _ from 'underscore';
 
 class FlexboxInputs extends React.Component {
@@ -7,6 +8,7 @@ class FlexboxInputs extends React.Component {
     super(props);
 
     this.handleContainerChange = this.handleContainerChange.bind(this);
+    this.handleItemChange = this.handleItemChange.bind(this);
     this.removeChild = this.removeChild.bind(this);
   }
 
@@ -15,6 +17,13 @@ class FlexboxInputs extends React.Component {
     containerStyles[name] = value;
 
     this.props.updateGenerator({ containerStyles });
+  }
+
+  handleItemChange(value, name) {
+    const itemStyles = _.extend({}, this.props.itemStyles);
+    itemStyles[name] = value;
+
+    this.props.updateGenerator({ itemStyles });
   }
 
   removeChild() {
@@ -27,7 +36,7 @@ class FlexboxInputs extends React.Component {
   }
 
   render() {
-    const { currentChild, containerStyles } = this.props;
+    const { currentChild, containerStyles, itemStyles } = this.props;
 
     return (
       <div>
@@ -44,6 +53,10 @@ class FlexboxInputs extends React.Component {
         </div>
         <div className="divider" />
         <div className="section-title">Child Settings</div>
+        <ItemInputs
+          onChange={this.handleItemChange}
+          {...itemStyles}
+        />
         {currentChild ? 
           <div>
             <div

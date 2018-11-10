@@ -1,45 +1,42 @@
 import React from 'react';
 import Select from '../../input/Select';
-// import ButtonSelect from '../../input/ButtonSelect';
 import _ from 'underscore';
 import { valueToLabel } from '../../../util/helpers';
 
-class ContainerInputs extends React.Component {
-  render() {
-    const inputComponents = _.map(inputs, ({ name, options, ...props }) => {
-      // Set options object
-      options = _.map(options, value => {
-        if (_.isObject(value)) {
-          return value;
-        }
+const ContainerInputs = props => {
+  const inputComponents = _.map(flexInputs, ({ name, label, options }) => {
+    // Set options object
+    options = _.map(options, value => {
+      if (_.isObject(value)) {
+        return value;
+      }
 
-        return { value, label: valueToLabel(value) }
-      });
-
-      return (
-        <Select
-          name={name}
-          key={name}
-          value={this.props[name]}
-          className="half small"
-          options={options}
-          onChange={this.props.onChange}
-          {...props}
-        />
-      );
+      return { value, label: valueToLabel(value) }
     });
 
     return (
-      <div>
-        {inputComponents}
-      </div>
+      <Select
+        label={label}
+        name={name}
+        key={name}
+        value={props[name]}
+        className="half small"
+        options={options}
+        onChange={props.onChange}
+      />
     );
-  }
+  });
+
+  return (
+    <div>
+      {inputComponents}
+    </div>
+  );
 }
 
 export default ContainerInputs;
 
-const inputs = [
+const flexInputs = [
   {
     name: 'flexDirection',
     label: 'Flex Direction',
