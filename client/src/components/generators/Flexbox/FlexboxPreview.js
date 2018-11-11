@@ -83,11 +83,13 @@ class FlexboxPreview extends React.Component {
       addChildElement, 
       containerStyles, 
       containerBackgroundColor: backgroundColor,
-      itemStyles
+      itemStyles: _itemStyles,
+      childElements: _childElements
     } = this.props;
 
-    const childElements = _.map(this.props.childElements, ({ id, text }, index) => {
+    const childElements = _.map(_childElements, ({ id, ...props }, index) => {
       const selected = this.props.selectedIndex === index ? true : false;
+      const itemStyles = _.extend({}, _itemStyles, props);
 
       return (
         <FlexItem
@@ -114,7 +116,7 @@ class FlexboxPreview extends React.Component {
           key="add-item"
           className="new-item"
           text={newItemText}
-          style={itemStyles}
+          style={_itemStyles}
           onClick={addChildElement}
         />
       );

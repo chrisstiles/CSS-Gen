@@ -1717,7 +1717,7 @@ textarea {
     .options-wrapper .Select-option.is-selected {
       background-color: rgba(72, 52, 212, 0.1); }
   .options-wrapper.small .Select-option {
-    padding: 20px 0 8px 0;
+    padding: 7px 0 8px 0;
     text-align: center;
     font-size: 11px !important; }
 

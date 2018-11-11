@@ -25,6 +25,8 @@ class Flexbox extends React.Component {
       child.id = _.uniqueId('child-');
     });
 
+    console.log(this.state)
+
     // The index of the selected child element
     this.state.selectedIndex = null;
 
@@ -147,7 +149,7 @@ class Flexbox extends React.Component {
 export default Flexbox;
 
 Flexbox.defaultState = {
-  childElements: [{ text: 'hello', id: 'child-1' }, { text: 'hello2', id: 'child-2' }],
+  childElements: [{}, {}, {}],
   containerStyles: {
     flexDirection: 'row',
     flexWrap: 'wrap',
