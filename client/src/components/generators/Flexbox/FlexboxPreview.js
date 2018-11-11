@@ -61,10 +61,11 @@ class FlexboxPreview extends React.Component {
     }
     
     const isEscapeKey = event.key === 'Escape';
+    const isClick = event.type === 'click';
     const isFlexItem = event.target.classList.contains('item');
     const isSidebar = sameOrChild(event.target, '#sidebar');
 
-    if (isEscapeKey || (!isFlexItem && !isSidebar)) {
+    if (isEscapeKey || (isClick && !isFlexItem && !isSidebar)) {
       this.props.updateGenerator({ selectedIndex: null });
     }
   }
