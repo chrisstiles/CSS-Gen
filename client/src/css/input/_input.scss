@@ -52,12 +52,6 @@
       margin-right:0 !important;
     }
   }
-
-  @for $i from 0 through 100 {
-    &.w#{$i} {
-      width: percentage($i / 100);
-    }
-  }
   
   &.align-right {
     float:right;
@@ -88,6 +82,12 @@
     .title {
       font-size:13px;
     }
+  }
+}
+
+@for $i from 0 through 100 {
+  .w#{$i} {
+    width: percentage($i / 100) !important;
   }
 }
 
@@ -258,10 +258,9 @@ textarea {
   font-family: $main-font;
   background-color:$accent-color;
   font-weight:600;
-  text-transform: uppercase;
   font-size: 14px;
   padding: 12px 15px;
-  letter-spacing: .08em;
+  letter-spacing: .05em;
   line-height:1em;
   outline: none;
   border: none;
@@ -269,9 +268,33 @@ textarea {
   cursor: pointer;
   border-radius: 3px;
   display:inline-block;
+  text-align:center;
 
   &:hover {
     background-color: $accent-color-hover;
+  }
+
+  &.full {
+    width:100%;
+  }
+
+  &.small {
+    font-size:12px;
+    padding:11px 15px;
+  }
+
+  &.disabled {
+    opacity:1 !important;
+    background-color: #d8d8d8;
+    color: #a1a1a1;
+  }
+
+  &.red {
+    background-color:#ec6c6c;
+
+    &:hover {
+      background-color:#F28E8E;
+    }
   }
 }
 

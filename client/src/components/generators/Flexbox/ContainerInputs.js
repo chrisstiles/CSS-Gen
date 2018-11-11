@@ -28,7 +28,7 @@ const ContainerInputs = props => {
   });
 
   return (
-    <div>
+    <div className="clear">
       {inputComponents}
     </div>
   );

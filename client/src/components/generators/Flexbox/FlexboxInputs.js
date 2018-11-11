@@ -56,7 +56,7 @@ class FlexboxInputs extends React.Component {
   }
 
   render() {
-    const { currentChild, containerStyles, itemStyles: _itemStyles } = this.props;
+    const { currentChild, containerStyles, itemStyles: _itemStyles, childElements } = this.props;
 
     var itemStyles;
     if (currentChild) {
@@ -65,44 +65,65 @@ class FlexboxInputs extends React.Component {
       itemStyles = _itemStyles;
     }
 
+    const addButtonClassNames = ['button', 'w100', 'small'];
+    const removeButtonClassNames = addButtonClassNames.slice();
+
+    if (childElements.length > 1) {
+      removeButtonClassNames.push('red');
+    } else {
+      removeButtonClassNames.push('disabled');
+    }
+
+    addButtonClassNames.push('add-item');
+    removeButtonClassNames.push('remove-item');
+
     return (
       <div>
-        <div className="section-title">Container Settings</div>
-        <ContainerInputs
-          onChange={this.handleContainerChange}
-          {...containerStyles}
-        />
-        <div 
-          className="button"
-          onClick={this.props.addChildElement}
-        >
-          Add child element
+        <div className="container-settings">
+          <div className="section-title">Container Settings</div>
+          <ContainerInputs
+            onChange={this.handleContainerChange}
+            {...containerStyles}
+          />
         </div>
         <div className="divider" />
-        <div className="section-title">Child Settings</div>
-        {currentChild ? 
-          <div>
-            <div className="section-title">Affects just selected child</div>
-            <ItemInputs
-              onChange={this.handleSingleItemChange}
-              {...itemStyles}
-            />
-            <div
-              className="button"
-              onClick={this.removeChild}
-            >
-              Remove Child
+        <div className="item-settings">
+          <div
+            className={addButtonClassNames.join(' ')}
+            onClick={this.props.addChildElement}
+          >
+            Add flex item
+          </div>
+          {currentChild ?
+            <div>
+              <div className="section-title">Selected Item Settings</div>
+              <div className="section-info">
+                <p>Affects only the selected child element. Press escape to deselect.</p>
+              </div>
+              <ItemInputs
+                onChange={this.handleSingleItemChange}
+                {...itemStyles}
+              />
+              <div
+                className={removeButtonClassNames.join(' ')}
+                onClick={this.removeChild}
+              >
+                Remove Child
             </div>
-          </div>
-        :
-          <div>
-            <div className="section-title">Affects all children</div>
-            <ItemInputs
-              onChange={this.handleAllItemsChange}
-              {...itemStyles}
-            />
-          </div>
-        }
+            </div>
+            :
+            <div>
+              <div className="section-title">Shared Item Settings</div>
+              <div className="section-info">
+                <p>Affects all child elements. You can change modify a specific item by selecting it.</p>
+              </div>
+              <ItemInputs
+                onChange={this.handleAllItemsChange}
+                {...itemStyles}
+              />
+            </div>
+          }
+        </div>
       </div>
     );
   }

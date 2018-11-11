@@ -66,44 +66,12 @@ p:last-child {
   margin-bottom:0 !important;
 }
 
-.p10 {
-  width:10%;
-}
-
-.p20 {
-  width:20%;
-}
-
-.p30 {
-  width:30%;
-}
-
-.p40 {
-  width:40%;
-}
-
-.p50 {
-  width:50%;
-}
-
-.p60 {
-  width:60%;
-}
-
-.p70 {
-  width:70%;
-}
-
-.p80 {
-  width:80%;
-}
-
-.p90 {
-  width:90%;
-}
-
-.p100 {
-  width:100%;
+.clear {
+  &:after {
+    clear:both;
+    content:"";
+    display: block;
+  }
 }
 
 .disable-mouse {
