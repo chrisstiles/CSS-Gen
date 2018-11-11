@@ -4,76 +4,13 @@ import FilterInputs from './FilterInputs';
 import { getState, generateCSSString, jsToCss, hexOrRgba } from '../../../util/helpers';
 import tinycolor from 'tinycolor2';
 import _ from 'underscore';
-
-// Load default background images
 import waterfall from './images/waterfall.jpg';
-
-const filters = {
-	blur: { title: 'Gaussian Blur', name: 'blur', min: 0, max: 50, defaultValue: 0, unit: 'px' },
-	brightness: { title: 'Brightness', name: 'brightness', min: 0, max: 500, defaultValue: 100, unit: '%' },
-	contrast: { title: 'Contrast', name: 'contrast', min: 0, max: 500, defaultValue: 100, unit: '%' },
-	grayscale: { title: 'Grayscale', name: 'grayscale', min: 0, max: 100, defaultValue: 0, unit: '%' },
-	invert: { title: 'Invert', name: 'invert', min: 0, max: 100, defaultValue: 0, unit: '%' },
-	opacity: { title: 'Opacity', name: 'opacity', min: 0, max: 100, defaultValue: 100, unit: '%' },
-	saturate: { title: 'Saturation', name: 'saturate', min: 0, max: 500, defaultValue: 100, unit: '%' },
-	sepia: { title: 'Sepia', name: 'sepia', min: 0, max: 100, defaultValue: 0, unit: '%' },
-	hueRotate: { defaultValue: 0, slider: false, unit: 'deg' }
-};
-
-const dropShadowSliders = [
-	{ title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px', defaultValue: 10, className: 'small' },
-  { title: 'Shift X', name: 'horizontalShift', min: -200, max: 200, appendString: 'px', defaultValue: 0, className: 'half' },
-  { title: 'Shift Y', name: 'verticalShift', min: -200, max: 200, appendString: 'px', defaultValue: 20, className: 'half no-margin' },
-  { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%', defaultValue: 50, className: 'w70 small no-margin left' }
-];
 
 class Filter extends React.Component {
 	constructor(props) {
 		super(props);
 
-		// Add basic filters that only require one slider
-		this.filterSliders = [];
-
-		this.defaultState = _.mapObject(filters, ({ title, name, min, max, defaultValue, unit, slider }, key) => {
-
-			if (slider || slider === undefined) {
-				this.filterSliders.push({ title, name, min, max, appendString: unit });
-			}
-		
-			return { value: defaultValue, isActive: false };
-		})
-
-		// Add drop shadow separately
-		this.defaultState.dropShadow = {
-			isActive: false,
-			shadowColor: '#000'
-		};
-
-		_.each(dropShadowSliders, ({ name, defaultValue }) => {
-			this.defaultState.dropShadow[name] = defaultValue;
-		});
-
-		this.stateTypes = {
-			blur: { value: Number, isActive: Boolean },
-			brightness: { value: Number, isActive: Boolean },
-			contrast: { value: Number, isActive: Boolean },
-			grayscale: { value: Number, isActive: Boolean },
-			invert: { value: Number, isActive: Boolean },
-			opacity: { value: Number, isActive: Boolean },
-			saturate: { value: Number, isActive: Boolean },
-			sepia: { value: Number, isActive: Boolean },
-			hueRotate: { value: Number, isActive: Boolean },
-			dropShadow: {
-				isActive: Boolean,
-				blurRadius: Number,
-				horizontalShift: Number,
-				verticalShift: Number,
-				shadowColor: null,
-				shadowOpacity: Number
-			}
-		};
-
-		this.state = getState(this.defaultState, this.stateTypes);
+		this.state = getState(Filter.defaultState, Filter.stateTypes);
 
 		this.previewStyles = {
 			image: waterfall
@@ -130,7 +67,7 @@ class Filter extends React.Component {
 		return (
 			<FilterInputs
 				updateGenerator={this.updateGenerator}
-				filterSliders={this.filterSliders}
+				filterSliders={filterSliders}
 				dropShadowSliders={dropShadowSliders}
 				{...this.state}
 			/>
@@ -158,7 +95,7 @@ class Filter extends React.Component {
 	      // Generator state
 	      generatorState={generatorState}
 	      previewStyles={this.previewStyles}
-	      generatorDefaultState={this.defaultState}
+	      generatorDefaultState={Filter.defaultState}
 	      globalState={this.props.globalState}
 	      
 	      // Generator methods
@@ -169,3 +106,63 @@ class Filter extends React.Component {
 }
 
 export default Filter;
+
+const filters = {
+	blur: { title: 'Gaussian Blur', name: 'blur', min: 0, max: 50, defaultValue: 0, unit: 'px' },
+	brightness: { title: 'Brightness', name: 'brightness', min: 0, max: 500, defaultValue: 100, unit: '%' },
+	contrast: { title: 'Contrast', name: 'contrast', min: 0, max: 500, defaultValue: 100, unit: '%' },
+	grayscale: { title: 'Grayscale', name: 'grayscale', min: 0, max: 100, defaultValue: 0, unit: '%' },
+	invert: { title: 'Invert', name: 'invert', min: 0, max: 100, defaultValue: 0, unit: '%' },
+	opacity: { title: 'Opacity', name: 'opacity', min: 0, max: 100, defaultValue: 100, unit: '%' },
+	saturate: { title: 'Saturation', name: 'saturate', min: 0, max: 500, defaultValue: 100, unit: '%' },
+	sepia: { title: 'Sepia', name: 'sepia', min: 0, max: 100, defaultValue: 0, unit: '%' },
+	hueRotate: { defaultValue: 0, slider: false, unit: 'deg' }
+};
+
+const dropShadowSliders = [
+	{ title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px', defaultValue: 10, className: 'small' },
+	{ title: 'Shift X', name: 'horizontalShift', min: -200, max: 200, appendString: 'px', defaultValue: 0, className: 'half' },
+	{ title: 'Shift Y', name: 'verticalShift', min: -200, max: 200, appendString: 'px', defaultValue: 20, className: 'half no-margin' },
+	{ title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%', defaultValue: 50, className: 'w70 small no-margin left' }
+];
+
+const filterSliders = [];
+
+// Add basic filters that only require one slider
+Filter.defaultState = _.mapObject(filters, ({ title, name, min, max, defaultValue, unit, slider }, key) => {
+	if (slider || slider === undefined) {
+		filterSliders.push({ title, name, min, max, appendString: unit });
+	}
+
+	return { value: defaultValue, isActive: false };
+})
+
+// Add drop shadow separately
+Filter.defaultState.dropShadow = {
+	isActive: false,
+	shadowColor: '#000'
+};
+
+_.each(dropShadowSliders, ({ name, defaultValue }) => {
+	Filter.defaultState.dropShadow[name] = defaultValue;
+});
+
+Filter.stateTypes = {
+	blur: { value: Number, isActive: Boolean },
+	brightness: { value: Number, isActive: Boolean },
+	contrast: { value: Number, isActive: Boolean },
+	grayscale: { value: Number, isActive: Boolean },
+	invert: { value: Number, isActive: Boolean },
+	opacity: { value: Number, isActive: Boolean },
+	saturate: { value: Number, isActive: Boolean },
+	sepia: { value: Number, isActive: Boolean },
+	hueRotate: { value: Number, isActive: Boolean },
+	dropShadow: {
+		isActive: Boolean,
+		blurRadius: Number,
+		horizontalShift: Number,
+		verticalShift: Number,
+		shadowColor: null,
+		shadowOpacity: Number
+	}
+};

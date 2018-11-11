@@ -11,58 +11,7 @@ class TextShadow extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.defaultState = {
-			text: 'My text here',
-			fontSize: 40,
-			googleFont: defaultFont,
-			variantOptions: [
-				'100', 
-				'100italic', 
-				'200', 
-				'200italic', 
-				'300', 
-				'300italic', 
-				'regular', 
-				'italic',
-				'500',
-				'500italic',
-				'600',
-				'600italic',
-				'700',
-				'700italic',
-				'800',
-				'800italic', 
-				'900',
-				'900italic'
-			],
-			variant: 'regular',
-			fontFamily: `"${defaultFont}", sans-serif`,
-			horizontalShift: 0,
-			verticalShift: 2,
-			blurRadius: 10,
-			shadowOpacity: 15,
-			shadowColor: '#000',
-			fontColor: '#000',
-			fontLoaded: true
-		};
-
-		this.stateTypes = {
-			text: String,
-			fontSize: Number,
-			googleFont: String,
-			variantOptions: [String],
-			variant: String,
-			fontFamily: String,
-			horizontalShift: Number,
-			verticalShift: Number,
-			blurRadius: Number,
-			shadowOpacity: Number,
-			shadowColor: String,
-			fontColor: String,
-			fontLoaded: Boolean
-		};
-
-		this.state = getState(this.defaultState, this.stateTypes);
+		this.state = getState(TextShadow.defaultState, TextShadow.stateTypes);
 
 		// Load font if default is not selected
 		if (this.state.googleFont !== defaultFont) {
@@ -169,7 +118,7 @@ class TextShadow extends React.Component {
 
 		    // Generator state
 		    generatorState={generatorState}
-		    generatorDefaultState={this.defaultState}
+				generatorDefaultState={TextShadow.defaultState}
 				globalState={this.props.globalState}
 
 		    // Render generator components
@@ -184,3 +133,54 @@ class TextShadow extends React.Component {
 }
 
 export default TextShadow;
+
+TextShadow.defaultState = {
+	text: 'My text here',
+	fontSize: 40,
+	googleFont: defaultFont,
+	variantOptions: [
+		'100',
+		'100italic',
+		'200',
+		'200italic',
+		'300',
+		'300italic',
+		'regular',
+		'italic',
+		'500',
+		'500italic',
+		'600',
+		'600italic',
+		'700',
+		'700italic',
+		'800',
+		'800italic',
+		'900',
+		'900italic'
+	],
+	variant: 'regular',
+	fontFamily: `"${defaultFont}", sans-serif`,
+	horizontalShift: 0,
+	verticalShift: 2,
+	blurRadius: 10,
+	shadowOpacity: 15,
+	shadowColor: '#000',
+	fontColor: '#000',
+	fontLoaded: true
+};
+
+TextShadow.stateTypes = {
+	text: String,
+	fontSize: Number,
+	googleFont: String,
+	variantOptions: [String],
+	variant: String,
+	fontFamily: String,
+	horizontalShift: Number,
+	verticalShift: Number,
+	blurRadius: Number,
+	shadowOpacity: Number,
+	shadowColor: String,
+	fontColor: String,
+	fontLoaded: Boolean
+};

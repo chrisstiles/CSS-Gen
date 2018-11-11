@@ -4,41 +4,11 @@ import TriangleInputs from './TriangleInputs';
 import { getState, hexOrRgba, generateCSSString } from '../../../util/helpers';
 import _ from 'underscore';
 
-////////////////////////////////////
-// Scalene: 0 sides equal
-// Isosceles: 2 sides equal
-// Equilateral: 3 sides equal
-////////////////////////////////////
-
 class Triangle extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.defaultState = {
-			direction: 'top',
-			type: 'isosceles',
-			width: 150,
-			left: 75,
-			right: 75,
-			height: 120,
-			top: 60,
-			bottom: 60,
-			color: '#4834d4'
-		};
-
-		this.stateTypes = {
-			direction: String,
-			type: String,
-			width: Number,
-			left: Number,
-			right: Number,
-			height: Number,
-			top: Number,
-			bottom: Number,
-			color: String
-		};
-
-		this.state = getState(this.defaultState, this.stateTypes);
+		this.state = getState(Triangle.defaultState, Triangle.stateTypes);
 
 		this.renderInputs = this.renderInputs.bind(this);
 		this.updateGenerator = this.updateGenerator.bind(this);
@@ -204,7 +174,7 @@ class Triangle extends React.Component {
 
 		    // Generator state
 		    generatorState={generatorState}
-		    generatorDefaultState={this.defaultState}
+				generatorDefaultState={Triangle.defaultState}
 		    globalState={this.props.globalState}
 
 		    // Render generator components
@@ -218,3 +188,27 @@ class Triangle extends React.Component {
 }
 
 export default Triangle;
+
+Triangle.defaultState = {
+	direction: 'top',
+	type: 'isosceles',
+	width: 150,
+	left: 75,
+	right: 75,
+	height: 120,
+	top: 60,
+	bottom: 60,
+	color: '#4834d4'
+};
+
+Triangle.stateTypes = {
+	direction: String,
+	type: String,
+	width: Number,
+	left: Number,
+	right: Number,
+	height: Number,
+	top: Number,
+	bottom: Number,
+	color: String
+};

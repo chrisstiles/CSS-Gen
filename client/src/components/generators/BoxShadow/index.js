@@ -9,27 +9,7 @@ class BoxShadow extends React.Component {
   constructor(props) {
     super(props);
 
-    this.defaultState = {
-      horizontalShift: 0,
-      verticalShift: 12,
-      blurRadius: 40,
-      spreadRadius: 0,
-      shadowOpacity: 15,
-      shadowColor: '#000',
-      inset: false
-    };
-
-    this.stateTypes = {
-      horizontalShift: Number,
-      verticalShift: Number,
-      blurRadius: Number,
-      spreadRadius: Number,
-      shadowOpacity: Number,
-      shadowColor: String,
-      inset: Boolean
-    };
-
-    this.state = getState(this.defaultState, this.stateTypes);
+    this.state = getState(BoxShadow.defaultState, BoxShadow.stateTypes);
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
@@ -86,7 +66,7 @@ class BoxShadow extends React.Component {
 
         // Generator state
         generatorState={generatorState}
-        generatorDefaultState={this.defaultState}
+        generatorDefaultState={BoxShadow.defaultState}
         globalState={this.props.globalState}
 
         // Generator methods
@@ -97,3 +77,23 @@ class BoxShadow extends React.Component {
 }
 
 export default BoxShadow;
+
+BoxShadow.defaultState = {
+  horizontalShift: 0,
+  verticalShift: 12,
+  blurRadius: 40,
+  spreadRadius: 0,
+  shadowOpacity: 15,
+  shadowColor: '#000',
+  inset: false
+};
+
+BoxShadow.stateTypes = {
+  horizontalShift: Number,
+  verticalShift: Number,
+  blurRadius: Number,
+  spreadRadius: Number,
+  shadowOpacity: Number,
+  shadowColor: String,
+  inset: Boolean
+};

@@ -9,44 +9,7 @@ class BorderRadius extends React.Component {
   constructor(props) {
     super(props);
 
-    const defaultRadius = 10;
-    const defaultUnits = 'px';
-
-    this.defaultState = {
-      radius: defaultRadius,
-      units: defaultUnits,
-      topLeft: defaultRadius,
-      topLeftUnits: defaultUnits,
-      topRight: defaultRadius,
-      topRightUnits: defaultUnits,
-      bottomRight: defaultRadius,
-      bottomRightUnits: defaultUnits,
-      bottomLeft: defaultRadius,
-      bottomLeftUnits: defaultUnits,
-      borderStyle: 'none',
-      borderColor: '#323232',
-      borderWidth: 10,
-      inset: true
-    };
-
-    this.stateTypes = {
-      radius: Number,
-      units: String,
-      topLeft: Number,
-      topLeftUnits: String,
-      topRight: Number,
-      topRightUnits: String,
-      bottomRight: Number,
-      bottomRightUnits: String,
-      bottomLeft: Number,
-      bottomLeftUnits: String,
-      borderStyle: String,
-      borderColor: String,
-      borderWidth: Number,
-      inset: Boolean
-    };
-
-    this.state = getState(this.defaultState, this.stateTypes);
+    this.state = getState(BorderRadius.defaultState, BorderRadius.stateTypes);
 
     this.previewStyles = {
       backgroundColor: '#4834D4'
@@ -149,7 +112,7 @@ class BorderRadius extends React.Component {
         // Generator state
         generatorState={generatorState}
         previewStyles={this.previewStyles}
-        generatorDefaultState={this.defaultState}
+        generatorDefaultState={BorderRadius.defaultState}
         globalState={this.props.globalState}
 
         // Render generator components
@@ -165,6 +128,42 @@ class BorderRadius extends React.Component {
 
 export default BorderRadius;
 
+const defaultRadius = 10;
+const defaultUnits = 'px';
+
+BorderRadius.defaultState = {
+  radius: defaultRadius,
+  units: defaultUnits,
+  topLeft: defaultRadius,
+  topLeftUnits: defaultUnits,
+  topRight: defaultRadius,
+  topRightUnits: defaultUnits,
+  bottomRight: defaultRadius,
+  bottomRightUnits: defaultUnits,
+  bottomLeft: defaultRadius,
+  bottomLeftUnits: defaultUnits,
+  borderStyle: 'none',
+  borderColor: '#323232',
+  borderWidth: 10,
+  inset: true
+};
+
+BorderRadius.stateTypes = {
+  radius: Number,
+  units: String,
+  topLeft: Number,
+  topLeftUnits: String,
+  topRight: Number,
+  topRightUnits: String,
+  bottomRight: Number,
+  bottomRightUnits: String,
+  bottomLeft: Number,
+  bottomLeftUnits: String,
+  borderStyle: String,
+  borderColor: String,
+  borderWidth: Number,
+  inset: Boolean
+};
 
 
 

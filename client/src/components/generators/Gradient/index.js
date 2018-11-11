@@ -10,38 +10,7 @@ class Gradient extends React.Component {
   constructor(props) {
     super(props);
 
-    this.defaultState = {
-      palette: [
-        { pos: 0.00, color: '#f1b50b' },
-        { pos: 0.36, color: '#d78025' },
-        { pos: 0.64, color: '#bd2c61' },
-        { pos: 1.00, color: '#7e20cf' }
-      ],
-      type: 'linear',
-      repeating: false,
-      shape: 'circle',
-      extendKeyword: 'none',
-      position: 'center',
-      offsetX: 0,
-      offsetY: 0,
-      angle: 90
-    };
-
-    this.stateTypes = {
-      palette: [
-        { pos: Number, color: String }
-      ],
-      type: String,
-      repeating: Boolean,
-      shape: String,
-      extendKeyword: String,
-      position: String,
-      offsetX: Number,
-      offsetY: Number,
-      angle: Number
-    };
-
-    this.state = getState(this.defaultState, this.stateTypes);
+    this.state = getState(Gradient.defaultState, Gradient.stateTypes);
 
     this.generateCSS = this.generateCSS.bind(this);
     this.renderInputs = this.renderInputs.bind(this);
@@ -99,7 +68,7 @@ class Gradient extends React.Component {
 
         // Generator state
         generatorState={generatorState}
-        generatorDefaultState={this.defaultState}
+        generatorDefaultState={Gradient.defaultState}
         globalState={this.props.globalState}
 
         // Generator methods
@@ -110,3 +79,34 @@ class Gradient extends React.Component {
 }
 
 export default Gradient;
+
+Gradient.defaultState = {
+  palette: [
+    { pos: 0.00, color: '#f1b50b' },
+    { pos: 0.36, color: '#d78025' },
+    { pos: 0.64, color: '#bd2c61' },
+    { pos: 1.00, color: '#7e20cf' }
+  ],
+  type: 'linear',
+  repeating: false,
+  shape: 'circle',
+  extendKeyword: 'none',
+  position: 'center',
+  offsetX: 0,
+  offsetY: 0,
+  angle: 90
+};
+
+Gradient.stateTypes = {
+  palette: [
+    { pos: Number, color: String }
+  ],
+  type: String,
+  repeating: Boolean,
+  shape: String,
+  extendKeyword: String,
+  position: String,
+  offsetX: Number,
+  offsetY: Number,
+  angle: Number
+};
