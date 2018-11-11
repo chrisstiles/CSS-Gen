@@ -46,11 +46,13 @@ class FlexboxPreview extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener('click', this.deselectChildElement, false);
+    document.addEventListener('click', this.deselectChildElement);
+    document.addEventListener('keyup', this.deselectChildElement);
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.deselectChildElement);
+    document.addEventListener('keyup', this.deselectChildElement);
   }
 
   deselectChildElement(event) {
@@ -58,10 +60,11 @@ class FlexboxPreview extends React.Component {
       return;
     }
     
-    const FlexItem = sameOrChild(event.target, '#flexbox-preview');
+    const isEscapeKey = event.key === 'Escape';
+    const isFlexItem = event.target.classList.contains('item');
     const isSidebar = sameOrChild(event.target, '#sidebar');
 
-    if (!FlexItem && !isSidebar) {
+    if (isEscapeKey || (!isFlexItem && !isSidebar)) {
       this.props.updateGenerator({ selectedIndex: null });
     }
   }
