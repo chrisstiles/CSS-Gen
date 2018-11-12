@@ -7,14 +7,21 @@ class FlexItem extends React.Component {
     super(props);
 
     this.handleClick = this.handleClick.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
   }
 
   handleClick() {
     this.props.onClick(this.props.id);
   }
 
+  handleMouseDown() {
+    if (this.props.onMouseDown) {
+      this.props.onMouseDown();
+    }
+  }
+
   render() {
-    const { className, selected, style } = this.props;
+    const { className, selected, style, text } = this.props;
     const classes = ['item'];
 
     if (className) {
@@ -30,8 +37,9 @@ class FlexItem extends React.Component {
         className={classes.join(' ')}
         style={style}
         onClick={this.handleClick}
+        onMouseDown={this.handleMouseDown}
       >
-        {this.props.text}
+        {text}
       </div>
     );
   }
@@ -41,22 +49,53 @@ class FlexboxPreview extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleClick = this.handleClick.bind(this);
+    if (props.selectedIndexes.length) {
+      if (props.selectedIndexes[props.mostRecentIndex] === undefined) {
+        this.mostRecentIndex = Math.max.apply(null, props.selectedIndexes);
+      } else {
+        this.mostRecentIndex = props.mostRecentIndex;
+      }
+    }
+
+    this.selectChildElements = this.selectChildElements.bind(this);
     this.deselectChildElement = this.deselectChildElement.bind(this);
+    this.preventDeselect = this.preventDeselect.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
   componentDidMount() {
     document.addEventListener('click', this.deselectChildElement);
-    document.addEventListener('keyup', this.deselectChildElement);
+    document.addEventListener('keydown', this.handleKeyDown);
+    document.addEventListener('keyup', this.handleKeyUp);
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.deselectChildElement);
-    document.addEventListener('keyup', this.deselectChildElement);
+    document.removeEventListener('keydown', this.handleKeyDown);
+    document.removeEventListener('keyup', this.handleKeyUp);
+  }
+
+  handleKeyDown(event) {
+    if (event.metaKey || event.ctrlKey) {
+      this.key = 'meta';
+    } else if (event.shiftKey) {
+      this.key = 'shift';
+    }
+  }
+
+  handleKeyUp(event) {
+    this.deselectChildElement(event);
+    this.key = null;
+  }
+
+  preventDeselect() {
+    this.canDeselect = false;
   }
 
   deselectChildElement(event) {
-    if (this.props.selectedIndex === null) {
+    if (!this.props.selectedIndexes.length || !this.canDeselect) {
+      this.canDeselect = true;
       return;
     }
     
@@ -66,15 +105,64 @@ class FlexboxPreview extends React.Component {
     const isSidebar = sameOrChild(event.target, '#sidebar');
 
     if (isEscapeKey || (isClick && !isFlexItem && !isSidebar)) {
-      this.props.updateGenerator({ selectedIndex: null });
+      this.props.updateGenerator({ selectedIndexes: [] });
     }
   }
 
-  handleClick(id) {
-    const { childElements } = this.props;
-    const selectedIndex = _.findIndex(childElements, { id });
-    
-    this.props.updateGenerator({ selectedIndex });
+  selectChildElements(id) {
+    const { childElements, selectedIndexes: _selectedIndexes } = this.props;
+    const newIndex = _.findIndex(childElements, { id });
+    var selectedIndexes;
+
+    if (typeof this.mostRecentIndex !== 'number' || childElements[this.mostRecentIndex] === undefined) {
+      this.mostRecentIndex = childElements[childElements.length - 1];
+    }
+
+    // Select multiple values
+    if (_selectedIndexes.length && (this.key === 'meta' || this.key === 'shift')) {
+      selectedIndexes = _selectedIndexes.slice();
+      const alreadySelected = _.contains(selectedIndexes, newIndex);
+
+      if (this.key === 'meta') {
+        if (alreadySelected) {
+          // Deselect item if meta key is pressed and 
+          // previously selected item is clicked
+          const i = selectedIndexes.indexOf(newIndex);
+          selectedIndexes.splice(i, 1);
+        } else {
+          selectedIndexes.push(newIndex);
+          this.mostRecentIndex = newIndex;
+        }
+      } else if (this.key === 'shift') {
+        var startIndex, endIndex, minIndex, maxIndex;
+        if (newIndex > this.mostRecentIndex) {
+          startIndex = this.mostRecentIndex;
+          endIndex = newIndex;
+        } else if (newIndex < this.mostRecentIndex) {
+          startIndex = newIndex;
+          endIndex = this.mostRecentIndex;
+        } else {
+          if (newIndex > selectedIndexes[0]) {
+            startIndex = selectedIndexes[0];
+            endIndex = newIndex;
+          } else {
+            startIndex = newIndex;
+            endIndex = selectedIndexes[0];
+          }
+        }
+
+        selectedIndexes = [];
+        for (var i = startIndex; i <= endIndex; i++) {
+          selectedIndexes.push(i);
+        }
+      }
+      
+    } else {
+      this.mostRecentIndex = newIndex;
+      selectedIndexes = [newIndex];
+    }
+
+    this.props.updateGenerator({ selectedIndexes, mostRecentIndex: this.mostRecentIndex });
   }
 
   render() {
@@ -84,11 +172,12 @@ class FlexboxPreview extends React.Component {
       containerStyles, 
       containerBackgroundColor: backgroundColor,
       itemStyles: _itemStyles,
-      childElements: _childElements
+      childElements: _childElements,
+      selectedIndexes
     } = this.props;
 
     const childElements = _.map(_childElements, ({ id, ...props }, index) => {
-      const selected = this.props.selectedIndex === index ? true : false;
+      const selected = _.contains(selectedIndexes, index);
       const itemStyles = _.extend({}, _itemStyles, props);
 
       return (
@@ -97,7 +186,9 @@ class FlexboxPreview extends React.Component {
           id={id}
           selected={selected}
           style={itemStyles}
-          onClick={this.handleClick}
+          text={<div style={{ color: '#fff', padding: '8px' }}>{index}</div>}
+          onClick={this.selectChildElements}
+          onMouseDown={this.preventDeselect}
         />
       );
     });

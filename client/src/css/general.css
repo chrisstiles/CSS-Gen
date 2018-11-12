@@ -1277,7 +1277,12 @@ textarea {
   cursor: pointer;
   border-radius: 3px;
   display: inline-block;
-  text-align: center; }
+  text-align: center;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
   .button:hover {
     background-color: #5b49d8; }
   .button.full {
@@ -2250,21 +2255,32 @@ input.angle-input {
     width: calc(100% + 4px);
     height: 100%;
     margin-left: -2px;
-    margin-top: -2px;
+    margin-top: -4px;
     padding: 4px; }
   #flexbox-preview .item {
-    background-color: #4834d4;
-    margin: 0 2px 4px 2px;
-    border-radius: 2px;
     cursor: pointer;
     min-width: 120px;
-    min-height: 120px; }
+    min-height: 120px;
+    position: relative;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
     #flexbox-preview .item:hover {
       opacity: .8; }
-    #flexbox-preview .item.selected {
+    #flexbox-preview .item:after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      bottom: 2px;
+      left: 2px;
+      background-color: #4834d4;
+      border-radius: 2px; }
+    #flexbox-preview .item.selected:after {
       background-color: green; }
     #flexbox-preview .item.new-item {
-      background-color: #e7e7e7;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -2272,6 +2288,12 @@ input.angle-input {
       font-size: 13px;
       color: #6f6f6f;
       font-weight: 600; }
+      #flexbox-preview .item.new-item:after {
+        background-color: #e7e7e7; }
+      #flexbox-preview .item.new-item:hover {
+        opacity: 1; }
+        #flexbox-preview .item.new-item:hover:after {
+          background-color: #e2e2e2; }
       #flexbox-preview .item.new-item .plus {
         width: 15px;
         height: 15px;
@@ -2295,6 +2317,6 @@ input.angle-input {
           margin-top: -1px;
           left: 0;
           right: 0; }
-      #flexbox-preview .item.new-item:hover {
-        opacity: 1;
-        background-color: #e2e2e2; }
+    #flexbox-preview .item > div {
+      position: relative;
+      z-index: 200; }

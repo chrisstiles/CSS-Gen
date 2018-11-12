@@ -25,11 +25,6 @@ class Flexbox extends React.Component {
       child.id = _.uniqueId('child-');
     });
 
-    console.log(this.state)
-
-    // The index of the selected child element
-    this.state.selectedIndex = null;
-
     this.updateGenerator = this.updateGenerator.bind(this);
     this.addChildElement = this.addChildElement.bind(this);
     this.generateCSS = this.generateCSS.bind(this);
@@ -62,14 +57,10 @@ class Flexbox extends React.Component {
   }
 
   renderInputs() {
-    const { childElements, selectedIndex } = this.state;
-    const currentChild = selectedIndex === null ? null : childElements[selectedIndex];
-
     return (
       <FlexboxInputs
         updateGenerator={this.updateGenerator}
         addChildElement={this.addChildElement}
-        currentChild={currentChild}
         {...this.state}
       />
     );
@@ -103,16 +94,17 @@ class Flexbox extends React.Component {
   renderPreview(style) {
     const containerStyles = _.extend({}, style, this.state.containerStyles);
     const itemStyles = _.extend({}, style, this.state.itemStyles);
-    const { childElements, selectedIndex, showAddItemButton, containerBackgroundColor } = this.state;
+    const { childElements, selectedIndexes, showAddItemButton, containerBackgroundColor, mostRecentIndex} = this.state;
 
     return (
       <FlexboxPreview
         containerStyles={containerStyles}
         itemStyles={itemStyles}
         childElements={childElements}
-        selectedIndex={selectedIndex}
+        selectedIndexes={selectedIndexes}
         showAddItemButton={showAddItemButton}
         containerBackgroundColor={containerBackgroundColor}
+        mostRecentIndex={mostRecentIndex}
         updateGenerator={this.updateGenerator}
         addChildElement={this.addChildElement}
       />
@@ -120,6 +112,7 @@ class Flexbox extends React.Component {
   }
 
   render() {
+    // const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
     const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
 
     return (
@@ -149,7 +142,7 @@ class Flexbox extends React.Component {
 export default Flexbox;
 
 Flexbox.defaultState = {
-  childElements: [{}, {}, {}],
+  childElements: [{ id: 'child-1' }, { id: 'child-2' }, { id: 'child-3' }],
   containerStyles: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -161,12 +154,14 @@ Flexbox.defaultState = {
     flexGrow: 0,
     flexShrink: 1
   },
+  selectedIndexes: [],
+  mostRecentIndex: 0,
   showAddItemButton: true,
   containerBackgroundColor: 'transparent'
 };
 
 Flexbox.stateTypes = {
-  childElements: [{ text: String }],
+  childElements: [{ id: String }],
   containerStyles: {
     flexDirection: String,
     flexWrap: String,
@@ -178,6 +173,8 @@ Flexbox.stateTypes = {
     flexGrow: Number,
     flexShrink: Number
   },
+  selectedIndexes: [Number],
+  mostRecentIndex: Number,
   showAddItemButton: Boolean,
   containerBackgroundColor: String
 };

@@ -30,37 +30,68 @@ class FlexboxInputs extends React.Component {
   }
 
   handleSingleItemChange(value, name) {
-    const { childElements: _childElements, itemStyles, selectedIndex, updateGenerator } = this.props;
+    const { childElements: _childElements, itemStyles, selectedIndexes, updateGenerator } = this.props;
 
-    if (selectedIndex === null || 
-        itemStyles[name] === undefined || 
-        !_childElements[selectedIndex] ||
-        typeof itemStyles[name] !== typeof value) {
+    if (!selectedIndexes.length
+        || itemStyles[name] === undefined
+        || !_childElements[Math.max.apply(null, selectedIndexes)]
+        || typeof itemStyles[name] !== typeof value) {
       return;
     }
 
     const childElements = _childElements.slice();
-    childElements[selectedIndex][name] = value;
+
+    _.each(selectedIndexes, index => {
+      childElements[index][name] = value;
+    });
     
     updateGenerator({ childElements });
   }
 
   removeChild() {
-    const { childElements: _childElements, selectedIndex, updateGenerator } = this.props;
-    var childElements = _childElements.slice();
-
-    if (childElements.length > 1) {
-      childElements.splice(selectedIndex, 1);
-      updateGenerator({ childElements, selectedIndex: null });
+    const { childElements: _childElements, selectedIndexes, updateGenerator } = this.props;
+    
+    if (!selectedIndexes.length) {
+      return;
     }
+
+    var childElements = [];
+
+    _.each(_childElements, (element, index) => {
+      if (!_.contains(selectedIndexes, index)) {
+        childElements.push(element);
+      }
+    });
+
+    updateGenerator({ childElements, selectedIndexes: [] });
   }
 
   render() {
-    const { currentChild, containerStyles, itemStyles: _itemStyles, childElements } = this.props;
+    const { selectedIndexes, containerStyles, itemStyles: _itemStyles, childElements } = this.props;
 
-    var itemStyles;
-    if (currentChild) {
-      itemStyles = _.extend({}, _itemStyles, currentChild);
+    const numSelected = selectedIndexes.length;
+    var itemStyles, selectedText, removeText;
+    if (numSelected) {
+      itemStyles = _.extend({}, _itemStyles, childElements[selectedIndexes[numSelected - 1]]);
+
+      if (numSelected === 1) {
+        selectedText = (
+          <p>
+            <strong>{numSelected} item selected:</strong> Changes only affect this child element. Press escape to deselect
+          </p>
+        );
+
+        removeText = 'Remove element';
+      } else {
+        selectedText = (
+          <p>
+            <strong>{numSelected} items selected:</strong> Changes only affect these child elements. Press escape to deselect
+          </p>
+        );
+
+        removeText = `Remove ${numSelected} elements`;
+      }
+
     } else {
       itemStyles = _itemStyles;
     }
@@ -68,14 +99,8 @@ class FlexboxInputs extends React.Component {
     const addButtonClassNames = ['button', 'w100', 'small'];
     const removeButtonClassNames = addButtonClassNames.slice();
 
-    if (childElements.length > 1) {
-      removeButtonClassNames.push('red');
-    } else {
-      removeButtonClassNames.push('disabled');
-    }
-
     addButtonClassNames.push('add-item');
-    removeButtonClassNames.push('remove-item');
+    removeButtonClassNames.push('red', 'remove-item');
 
     return (
       <div>
@@ -94,11 +119,11 @@ class FlexboxInputs extends React.Component {
           >
             Add flex item
           </div>
-          {currentChild ?
+          {selectedIndexes.length ?
             <div>
               <div className="section-title">Selected Item Settings</div>
               <div className="section-info">
-                <p>Affects only the selected child element. Press escape to deselect.</p>
+                {selectedText}
               </div>
               <ItemInputs
                 onChange={this.handleSingleItemChange}
@@ -108,7 +133,7 @@ class FlexboxInputs extends React.Component {
                 className={removeButtonClassNames.join(' ')}
                 onClick={this.removeChild}
               >
-                Remove Child
+                {removeText}
             </div>
             </div>
             :

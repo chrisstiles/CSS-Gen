@@ -84,6 +84,14 @@ p:last-child {
   position:relative;
 }
 
+@mixin no-select {
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none; 
+        -ms-user-select: none;
+            user-select: none;
+}
+
 
 /* ------------------------- */
 /* Media Queries */

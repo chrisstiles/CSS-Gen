@@ -269,6 +269,7 @@ textarea {
   border-radius: 3px;
   display:inline-block;
   text-align:center;
+  @include no-select;
 
   &:hover {
     background-color: $accent-color-hover;

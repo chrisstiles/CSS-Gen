@@ -51,7 +51,7 @@ export function setLoading(loading) {
 }
 
 export function extendSameTypes(object1, object2) {
-  const newObject = _.extend({}, object1, object2);
+	const newObject = _.extend({}, object1, object2);
 
   _.each(newObject, (value, key) => {
     const defaultValue = object1[key];
@@ -61,7 +61,7 @@ export function extendSameTypes(object1, object2) {
       return;
     }
     
-  });
+	});
 
   return newObject;
 }
@@ -77,6 +77,10 @@ export function getType(a) {
 
 	if (a === undefined) {
 		return 'undefined';
+	}
+
+	if (_.isArray(a)) {
+		return 'array';
 	}
 
 	const type = typeof a;
@@ -122,8 +126,8 @@ export function isArrayOfType(array, correct) {
 	} else if (type === 'array') {
 		var isValid = true;
 
-		_.each(correct, (element, index) => {
-			if (!areSameType(element, value[index])) {
+		_.each(array, element => {
+			if (!areSameType(element, correct[0])) {
 				isValid = false;
 				return;
 			}
@@ -205,27 +209,21 @@ export function getPersistedState(defaultState, isPreview) {
 
     try {
     	if (isPreview) {
-    		previousState = JSON.parse(previousState).previewState;
+				previousState = JSON.parse(previousState).previewState;
     	} else {
-    		previousState = JSON.parse(previousState).generatorState;
+				previousState = JSON.parse(previousState).generatorState;
     	}
 
       if (previousState) {
         // Loop through previous state and only add ones 
-        // of the values of same type as default state
-        state = extendSameTypes(state, previousState);
-
+				// of the values of same type as default state
+				state = extendSameTypes(state, previousState);
       }
     } catch(e) {
       console.log(e);
     }
-  }
-
-  // Make sure we don't return any tinycolor objects
-  // state = replaceTinyColors(state);
-
-  // state = replaceTinyColors(state)
-
+	}
+	
   return state;
 }
 
@@ -270,11 +268,12 @@ export function replaceTinyColors(obj) {
 	return returnObject;
 }
 
-export function getState(defaultState, stateTypes, isPreview) {
+export function getState(_defaultState, stateTypes, isPreview) {
+	const defaultState = JSON.parse(JSON.stringify(_defaultState));
 	const state = getPersistedState(defaultState, isPreview);
 
 	if (isValidState(state, stateTypes)) {
-		return state;
+		return JSON.parse(JSON.stringify(state));
 	} else {
 		return defaultState;
 	}
