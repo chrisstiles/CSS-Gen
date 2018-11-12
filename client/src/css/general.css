@@ -233,7 +233,7 @@ p:last-child {
   top: 0;
   right: 0;
   left: 0;
-  z-index: 200; }
+  z-index: 300; }
 
 #header,
 #toolbar {
@@ -2319,4 +2319,4 @@ input.angle-input {
           right: 0; }
     #flexbox-preview .item > div {
       position: relative;
-      z-index: 200; }
+      z-index: 10; }
