@@ -84,6 +84,7 @@ class Flexbox extends React.Component {
             label="Background"
             name="containerBackgroundColor"
             color={containerBackgroundColor}
+            isFixed={true}
             onChange={this.handlePreviewUpdate}
           />
         </div>	

@@ -84,7 +84,7 @@ class FlexboxPreview extends React.Component {
       if (event.key === 'a') {
         if (this.props.childElements.length) {
           event.preventDefault();
-          console.log('here')
+
           const selectedIndexes = [];
           _.each(this.props.childElements, (element, index) => {
             selectedIndexes.push(index);

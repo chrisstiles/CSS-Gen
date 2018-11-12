@@ -20,7 +20,6 @@ class ColorPicker extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.setTransparent = this.setTransparent.bind(this);
     this.keyEvent = this.keyEvent.bind(this);
-
   }
 
   componentDidMount() {
@@ -41,7 +40,11 @@ class ColorPicker extends React.Component {
     this.previewWidth = el.offsetWidth;
 
     const previewRect = el.getBoundingClientRect();
-    const topOffset = previewRect.top + window.scrollY + previewRect.height;
+    var topOffset = previewRect.top + previewRect.height;
+
+    if (!this.props.isFixed) {
+      topOffset += window.scrollY;
+    }
 
     this.previewTop = topOffset;
     this.previewLeft = includeLeftOffset ? previewRect.left : 'auto';

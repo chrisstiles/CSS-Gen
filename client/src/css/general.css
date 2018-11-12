@@ -2249,7 +2249,7 @@ input.angle-input {
 /* ------------------------- */
 /* Preview */
 #flexbox-preview {
-  height: 100%; }
+  min-height: 100%; }
   #flexbox-preview .container {
     display: flex;
     width: calc(100% + 4px);
