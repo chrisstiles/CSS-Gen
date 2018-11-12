@@ -148,7 +148,7 @@ class FlexboxPreview extends React.Component {
           this.mostRecentIndex = newIndex;
         }
       } else if (this.key === 'shift') {
-        var startIndex, endIndex, minIndex, maxIndex;
+        var startIndex, endIndex;
         if (newIndex > this.mostRecentIndex) {
           startIndex = this.mostRecentIndex;
           endIndex = newIndex;

@@ -3,7 +3,11 @@ import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import prettify from 'postcss-prettify';
 import Toggle from './input/Toggle';
-import { addNotification, getNotificationTypes, updateGlobalState, getGlobalState } from '../util/helpers';
+import { addNotification, getNotificationTypes, updateGlobalState, getGlobalState, selectText } from '../util/helpers';
+import { default as SyntaxHighlighter, registerLanguage } from 'react-syntax-highlighter/dist/light';
+import cssHighlighter from 'react-syntax-highlighter/dist/languages/hljs/css';
+
+registerLanguage('css', cssHighlighter);
 
 class CodeOutput extends React.Component {
   constructor(props) {
@@ -39,6 +43,12 @@ class CodeOutput extends React.Component {
     if (newProps.outputPreviewStyles && newProps.previewCSS) {
       css += newProps.previewCSS;
     }
+
+    css = `
+      .selector-name {
+        ${css}
+      }
+    `.trim();
 
     // Add plugins to format code and add prefixes if necessary
     const plugins = [prettify];
@@ -120,25 +130,18 @@ class CodeOutput extends React.Component {
 
   render() {
     var buttonClassName = 'button';
-    var textAreaClassName = 'output-text';
+    var outputclassName = 'output-text';
 
     if (!this.state.css) {
       buttonClassName += ' disabled';
-      textAreaClassName += ' disabled';
+      outputclassName += ' disabled';
     }
 
     return (
       <div id="output-wrapper">
         <div className="sidebar-title">Code Output</div>
         <div id="output-code-wrapper">
-          <textarea
-            id="output-code"
-            autoCorrect="off"
-            spellCheck="false"
-            value={this.state.css}
-            className={textAreaClassName}
-            readOnly
-          />
+          <CodeViewer language="css" code={this.state.css} />
         </div>
         {this.renderPrefixesToggle()}
         <button 
@@ -152,4 +155,74 @@ class CodeOutput extends React.Component {
   }
 }
 
+class CodeViewer extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    window.selectText = selectText;
+
+    this.state = { selecting: false };
+
+    this.disableOtherSelect = this.disableOtherSelect.bind(this);
+    this.enableOtherSelect = this.enableOtherSelect.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('mouseup', this.enableOtherSelect);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mouseup', this.enableOtherSelect);
+  }
+
+  disableOtherSelect() {
+    this.setState({ selecting: true });
+    document.body.classList.add('no-select');
+  }
+
+  enableOtherSelect() {
+    this.setState({ selecting: false });
+    document.body.classList.remove('no-select');
+  }
+
+  handleKeyDown(event) {
+    if ((event.metaKey || event.ctrlKey) && event.key === 'a') {
+      const code = event.target.querySelector('.output-code');
+
+      if (code) {
+        event.preventDefault();
+        selectText(code);
+      }
+    }
+  }
+
+  render() {
+    const className = ['output-code'];
+
+    if (this.state.selecting) {
+      className.push('selecting-code');
+    }
+
+    return (
+      <div
+        className="language-wrapper"
+        onMouseDown={this.disableOtherSelect}
+        onKeyDown={this.handleKeyDown}
+        tabIndex="0"
+      >
+        <SyntaxHighlighter
+          language={this.props.language}
+          showLineNumbers={true}
+          useInlineStyles={false}
+          codeTagProps={{ className: className.join(' ') }}
+        >
+          {this.props.code}
+        </SyntaxHighlighter>
+      </div>
+    );
+  }
+}
+
 export default CodeOutput;
+

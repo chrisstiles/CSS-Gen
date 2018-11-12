@@ -84,12 +84,19 @@ p:last-child {
   position:relative;
 }
 
-@mixin no-select {
-    -webkit-user-select: none;
-     -khtml-user-select: none;
-       -moz-user-select: none; 
-        -ms-user-select: none;
-            user-select: none;
+@mixin no-select() {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none; 
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin allow-select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text; 
 }
 
 
@@ -112,6 +119,7 @@ p:last-child {
 @import './_single-window-preview.scss';
 @import './_static-window-preview.scss';
 @import './_sidebar.scss';
+@import './_code-output.scss';
 @import './_presets.scss';
 @import './_file-drop.scss';
 @import './_loading-spinner.scss';
