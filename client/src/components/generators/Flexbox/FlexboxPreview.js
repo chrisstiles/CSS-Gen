@@ -79,6 +79,20 @@ class FlexboxPreview extends React.Component {
   handleKeyDown(event) {
     if (event.metaKey || event.ctrlKey) {
       this.key = 'meta';
+
+      // Select all boxes
+      if (event.key === 'a') {
+        if (this.props.childElements.length) {
+          event.preventDefault();
+          console.log('here')
+          const selectedIndexes = [];
+          _.each(this.props.childElements, (element, index) => {
+            selectedIndexes.push(index);
+          });
+
+          this.props.updateGenerator({ selectedIndexes });
+        }
+      }
     } else if (event.shiftKey) {
       this.key = 'shift';
     }

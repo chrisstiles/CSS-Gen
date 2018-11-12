@@ -168,6 +168,9 @@ class Select extends React.Component {
 
 		if (props.searchable === undefined) {
 			props.searchable = false;
+			props.backspaceRemoves = false;
+			props.deleteRemoves = false;
+			props.clearable = false;
 		}
 
 		const optionHeight = this.units ? 25 : 31;
