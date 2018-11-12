@@ -57,7 +57,7 @@ var VirtualizedSelect = function (_Component) {
       var options = _extends({}, this.props, {
         ref: this._setSelectRef,
         menuRenderer: this._renderMenu,
-        clearable: false,
+        clearable: this.props.clearable,
         onChange: this.props.onChange,
         menuStyle: { overflow: 'hidden' }
       });
