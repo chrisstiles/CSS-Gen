@@ -158,7 +158,7 @@ class Gradient {
 		// Add fallback for old versions of IE
 		const startColor = tinycolor(this.palette[0].color).toHexString();
 		const endColor = tinycolor(this.palette[this.palette.length - 1].color).toHexString();
-		styles.filter = `progid:DXImageTransform.Microsoft.gradient( startColorstr='${startColor}', endColorstr='${endColor}',GradientType=1 )`;
+		styles.filter = `progid:DXImageTransform.Microsoft.gradient(startColorstr='${startColor}', endColorstr='${endColor}', GradientType=1)`;
 
 		// Save styles object
 		this.styles = styles;
