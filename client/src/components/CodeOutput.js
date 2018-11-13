@@ -3,7 +3,7 @@ import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import prettify from 'postcss-prettify';
 import Toggle from './input/Toggle';
-import { addNotification, getNotificationTypes, updateGlobalState, getGlobalState, selectText } from '../util/helpers';
+import { addNotification, getNotificationTypes, updateGlobalState, getGlobalState, selectText, setGlobalVariable } from '../util/helpers';
 import { default as SyntaxHighlighter, registerLanguage } from 'react-syntax-highlighter/dist/light';
 import cssHighlighter from 'react-syntax-highlighter/dist/languages/hljs/css';
 
@@ -166,6 +166,8 @@ class CodeViewer extends React.Component {
     this.disableOtherSelect = this.disableOtherSelect.bind(this);
     this.enableOtherSelect = this.enableOtherSelect.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   }
 
   componentDidMount() {
@@ -196,6 +198,14 @@ class CodeViewer extends React.Component {
       }
     }
   }
+  
+  handleFocus() {
+    setGlobalVariable(true, 'outputIsFocused');
+  }
+
+  handleBlur() {
+    setGlobalVariable(false, 'outputIsFocused');
+  }
 
   render() {
     const className = ['output-code'];
@@ -209,6 +219,8 @@ class CodeViewer extends React.Component {
         className="language-wrapper"
         onMouseDown={this.disableOtherSelect}
         onKeyDown={this.handleKeyDown}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
         tabIndex="0"
       >
         <SyntaxHighlighter

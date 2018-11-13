@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'underscore';
-import { sameOrChild } from '../../../util/helpers';
+import { sameOrChild, getGlobalVariable } from '../../../util/helpers';
 
 class FlexItem extends React.Component {
   constructor(props) {
@@ -81,7 +81,7 @@ class FlexboxPreview extends React.Component {
       this.key = 'meta';
 
       // Select all boxes
-      if (event.key === 'a') {
+      if (event.key === 'a' && !getGlobalVariable('outputIsFocused')) {
         if (this.props.childElements.length) {
           event.preventDefault();
 
