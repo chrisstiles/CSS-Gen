@@ -2,6 +2,7 @@ import React from 'react';
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import prettify from 'postcss-prettify';
+import * as clipboard from 'clipboard-polyfill/build/clipboard-polyfill.promise'
 import Toggle from './input/Toggle';
 import { addNotification, getNotificationTypes, updateGlobalState, getGlobalState, selectText, setGlobalVariable } from '../util/helpers';
 import { default as SyntaxHighlighter, registerLanguage } from 'react-syntax-highlighter/dist/light';
@@ -77,37 +78,43 @@ class CodeOutput extends React.Component {
       return;
     }
 
-    const hiddenField = document.createElement('textarea');
-
-    hiddenField.style.position = 'fixed';
-    hiddenField.style.opacity = 0;
-    hiddenField.style.top = -500;
-    hiddenField.value = this.state.css;
-
-    document.body.appendChild(hiddenField);
-
-    hiddenField.select();
-
-    try {
-      document.execCommand('copy');
-
-      if (this.canShowCopyNotification) {
-        this.canShowCopyNotification = false;
-
+    clipboard.writeText(this.state.css).then((text, error) => {
+      if (!error) {
         addNotification(getNotificationTypes().success, 'Copied!');
-
-        var _this = this;
-
-        setTimeout(function() {
-          _this.canShowCopyNotification = true;
-        }, 400);
       }
-      
-    } catch (err) {
-      console.log('Unable to copy', err);
-    }
+    });
 
-    document.body.removeChild(hiddenField);
+    // const hiddenField = document.createElement('textarea');
+
+    // hiddenField.style.position = 'fixed';
+    // hiddenField.style.opacity = 0;
+    // hiddenField.style.top = -500;
+    // hiddenField.value = this.state.css;
+
+    // document.body.appendChild(hiddenField);
+
+    // hiddenField.select();
+
+    // try {
+    //   document.execCommand('copy');
+
+    //   if (this.canShowCopyNotification) {
+    //     this.canShowCopyNotification = false;
+
+    //     addNotification(getNotificationTypes().success, 'Copied!');
+
+    //     var _this = this;
+
+    //     setTimeout(function() {
+    //       _this.canShowCopyNotification = true;
+    //     }, 400);
+    //   }
+      
+    // } catch (err) {
+    //   console.log('Unable to copy', err);
+    // }
+
+    // document.body.removeChild(hiddenField);
   }
 
   handleToggleChange(value) {
