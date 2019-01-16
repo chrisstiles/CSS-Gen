@@ -153,7 +153,8 @@ Flexbox.defaultState = {
   },
   itemStyles: {
     flexGrow: 0,
-    flexShrink: 1
+    flexShrink: 1,
+    alignSelf: 'auto'
   },
   selectedIndexes: [],
   mostRecentIndex: 0,
@@ -172,7 +173,8 @@ Flexbox.stateTypes = {
   },
   itemStyles: {
     flexGrow: Number,
-    flexShrink: Number
+    flexShrink: Number,
+    alignSelf: String
   },
   selectedIndexes: [Number],
   mostRecentIndex: Number,

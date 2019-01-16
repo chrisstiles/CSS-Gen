@@ -1,7 +1,33 @@
 import React from 'react';
+import Select from '../../input/Select';
 import Sliders from '../../input/Sliders';
+import _ from 'underscore';
+import { valueToLabel } from '../../../util/helpers';
 
 const ItemInputs = props => {
+  const inputComponents = _.map(flexInputs, ({ name, label, options }) => {
+    // Set options object
+    options = _.map(options, value => {
+      if (_.isObject(value)) {
+        return value;
+      }
+
+      return { value, label: valueToLabel(value) }
+    });
+
+    return (
+      <Select
+        label={label}
+        name={name}
+        key={name}
+        value={props[name]}
+        className="half small"
+        options={options}
+        onChange={props.onChange}
+      />
+    );
+  });
+
   return (
     <div>
       <Sliders
@@ -9,6 +35,7 @@ const ItemInputs = props => {
         onChange={props.onChange}
         {...props}
       />
+      {inputComponents}
     </div>
   );
 }
@@ -23,7 +50,17 @@ export default ItemInputs;
 
 const flexSliders = [
   { title: 'Flex Grow', name: 'flexGrow', min: 0, max: 20 },
-  { title: 'Flex Shrink', name: 'flexShrink', min: 0, max: 20 },
+  { title: 'Flex Shrink', name: 'flexShrink', min: 0, max: 20 }
+];
+
+const flexInputs = [
+  {
+    name: 'alignSelf',
+    label: 'Align Self',
+    options: [
+     'auto', 'stretch', 'center', 'flex-start', 'flex-end', 'baseline'
+    ]
+  }
 ];
 
 // const inputs = [
