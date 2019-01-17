@@ -12,7 +12,7 @@ const ItemInputs = props => {
         return value;
       }
 
-      return { value, label: valueToLabel(value) }
+      return { value, label: valueToLabel(value) };
     });
 
     return (

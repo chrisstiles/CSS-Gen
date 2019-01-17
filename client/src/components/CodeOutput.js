@@ -5,6 +5,7 @@ import prettify from 'postcss-prettify';
 import * as clipboard from 'clipboard-polyfill/build/clipboard-polyfill.promise'
 import Toggle from './input/Toggle';
 import { addNotification, getNotificationTypes, updateGlobalState, getGlobalState, selectText, setGlobalVariable } from '../util/helpers';
+import { createElement } from 'react-syntax-highlighter/dist/light';
 import { default as SyntaxHighlighter, registerLanguage } from 'react-syntax-highlighter/dist/light';
 import cssHighlighter from 'react-syntax-highlighter/dist/languages/hljs/css';
 
@@ -62,11 +63,25 @@ class CodeOutput extends React.Component {
     const _this = this;
 
     postcss(plugins)
-      .process(css, { from: undefined })
+      .process(css.trim(), { from: undefined })
       .then(function (result) {
         result.warnings().forEach(function (warn) {
             console.warn(warn.toString());
         });
+
+        // let { css: outputCSS } = result;
+        // let copyCSS = outputCSS;
+
+        // if (outputCSS.indexOf('{') === -1) {
+        //   _this.hideSelector = true;
+        //   outputCSS = `
+        //     .selector-name {
+        //       ${css}
+        //     }
+        //   `.trim();
+        // } else {
+        //   _this.hideSelector = false;
+        // }
 
         _this.setState({ css: result.css });
         
@@ -78,7 +93,7 @@ class CodeOutput extends React.Component {
       return;
     }
 
-    clipboard.writeText(this.state.css).then((text, error) => {
+    clipboard.writeText(this.state.copyCSS).then((text, error) => {
       if (!error) {
         addNotification(getNotificationTypes().success, 'Copied!');
       }
@@ -136,9 +151,10 @@ class CodeOutput extends React.Component {
   }
 
   render() {
-    var buttonClassName = 'button';
-    var outputclassName = 'output-text';
+    let buttonClassName = 'button';
+    let outputclassName = 'output-text';
 
+    // let startingLine = 
     if (!this.state.css) {
       buttonClassName += ' disabled';
       outputclassName += ' disabled';
@@ -148,7 +164,11 @@ class CodeOutput extends React.Component {
       <div id="output-wrapper">
         <div className="sidebar-title">Code Output</div>
         <div id="output-code-wrapper">
-          <CodeViewer language="css" code={this.state.css} />
+          <CodeViewer 
+            language="css" 
+            code={this.state.css} 
+            hideSelector={this.hideSelector} 
+          />
         </div>
         {this.renderPrefixesToggle()}
         <button 
@@ -175,6 +195,7 @@ class CodeViewer extends React.Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+    this.renderCSS = this.renderCSS.bind(this);
   }
 
   componentDidMount() {
@@ -214,16 +235,38 @@ class CodeViewer extends React.Component {
     setGlobalVariable(false, 'outputIsFocused');
   }
 
+  renderCSS({ rows, stylesheet, useInlineStyles }) {
+    return rows.map((node, i) =>
+      createElement({
+        node,
+        stylesheet,
+        useInlineStyles,
+        key: `code-segement${i}`
+      })
+    );
+  }
+
   render() {
+    const wrapperClassName = ['language-wrapper'];
     const className = ['output-code'];
 
     if (this.state.selecting) {
       className.push('selecting-code');
     }
 
+    const { hideSelector, code } = this.props;
+    const startingLineNumber = hideSelector ? 0 : 1;
+
+    if (hideSelector) {
+      wrapperClassName.push('hide-selector');
+    }
+
+    // let startingLineNumber = 1;
+
+
     return (
       <div
-        className="language-wrapper"
+        className={wrapperClassName.join(' ')}
         onMouseDown={this.disableOtherSelect}
         onKeyDown={this.handleKeyDown}
         onFocus={this.handleFocus}
@@ -234,13 +277,26 @@ class CodeViewer extends React.Component {
           language={this.props.language}
           showLineNumbers={true}
           useInlineStyles={false}
+          startingLineNumber={startingLineNumber}
+          wrapLines={true}
           codeTagProps={{ className: className.join(' ') }}
+          renderer={this.renderCSS}
         >
-          {this.props.code}
+          {code}
         </SyntaxHighlighter>
       </div>
     );
   }
+}
+
+function rowRenderer({ rows, stylesheet, useInlineStyles }, { index, key, style }) {
+  return createElement({
+    node: rows[index],
+    stylesheet,
+    style,
+    useInlineStyles,
+    key
+  });
 }
 
 export default CodeOutput;
