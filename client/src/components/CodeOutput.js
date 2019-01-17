@@ -5,7 +5,7 @@ import prettify from 'postcss-prettify';
 import * as clipboard from 'clipboard-polyfill/build/clipboard-polyfill.promise'
 import Toggle from './input/Toggle';
 import { addNotification, getNotificationTypes, updateGlobalState, getGlobalState, selectText, setGlobalVariable } from '../util/helpers';
-import { createElement } from 'react-syntax-highlighter/dist/light';
+import createElement from 'react-syntax-highlighter/dist/create-element';
 import { default as SyntaxHighlighter, registerLanguage } from 'react-syntax-highlighter/dist/light';
 import cssHighlighter from 'react-syntax-highlighter/dist/languages/hljs/css';
 
@@ -19,7 +19,8 @@ class CodeOutput extends React.Component {
     this.copyCSS = this.copyCSS.bind(this);
 
     this.state = { 
-      css: ''
+      outputCSS: '',
+      copyCSS: ''
     };
 
     this.canShowCopyNotification = true;
@@ -46,12 +47,6 @@ class CodeOutput extends React.Component {
       css += newProps.previewCSS;
     }
 
-    css = `
-      .selector-name {
-        ${css}
-      }
-    `.trim();
-
     // Add plugins to format code and add prefixes if necessary
     const plugins = [prettify];
     const showPrefixes = getGlobalState().showBrowserPrefixes;
@@ -69,27 +64,25 @@ class CodeOutput extends React.Component {
             console.warn(warn.toString());
         });
 
-        // let { css: outputCSS } = result;
-        // let copyCSS = outputCSS;
+        let { css: outputCSS } = result;
+        const copyCSS = outputCSS;
 
-        // if (outputCSS.indexOf('{') === -1) {
-        //   _this.hideSelector = true;
-        //   outputCSS = `
-        //     .selector-name {
-        //       ${css}
-        //     }
-        //   `.trim();
-        // } else {
-        //   _this.hideSelector = false;
-        // }
+        // Use correct syntax highlighting even if we don't have 
+        // a CSS selector present in output string
+        if (css.indexOf('{') === -1) {
+          _this.hideSelector = true;
+          outputCSS = `.selector {\n${outputCSS}\n}`;
+        } else {
+          _this.hideSelector = false;
+        }
 
-        _this.setState({ css: result.css });
+        _this.setState({ outputCSS, copyCSS });
         
     });
   }
 
   copyCSS() {
-    if (!this.state.css) {
+    if (!this.state.copyCSS) {
       return;
     }
 
@@ -98,38 +91,6 @@ class CodeOutput extends React.Component {
         addNotification(getNotificationTypes().success, 'Copied!');
       }
     });
-
-    // const hiddenField = document.createElement('textarea');
-
-    // hiddenField.style.position = 'fixed';
-    // hiddenField.style.opacity = 0;
-    // hiddenField.style.top = -500;
-    // hiddenField.value = this.state.css;
-
-    // document.body.appendChild(hiddenField);
-
-    // hiddenField.select();
-
-    // try {
-    //   document.execCommand('copy');
-
-    //   if (this.canShowCopyNotification) {
-    //     this.canShowCopyNotification = false;
-
-    //     addNotification(getNotificationTypes().success, 'Copied!');
-
-    //     var _this = this;
-
-    //     setTimeout(function() {
-    //       _this.canShowCopyNotification = true;
-    //     }, 400);
-    //   }
-      
-    // } catch (err) {
-    //   console.log('Unable to copy', err);
-    // }
-
-    // document.body.removeChild(hiddenField);
   }
 
   handleToggleChange(value) {
@@ -152,12 +113,10 @@ class CodeOutput extends React.Component {
 
   render() {
     let buttonClassName = 'button';
-    let outputclassName = 'output-text';
 
     // let startingLine = 
-    if (!this.state.css) {
+    if (!this.state.outputCSS) {
       buttonClassName += ' disabled';
-      outputclassName += ' disabled';
     }
 
     return (
@@ -166,7 +125,7 @@ class CodeOutput extends React.Component {
         <div id="output-code-wrapper">
           <CodeViewer 
             language="css" 
-            code={this.state.css} 
+            code={this.state.outputCSS} 
             hideSelector={this.hideSelector} 
           />
         </div>
@@ -196,6 +155,15 @@ class CodeViewer extends React.Component {
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.renderCSS = this.renderCSS.bind(this);
+
+    // Prevent syntax highlighter from cluttering console log
+    const log = console.log;
+    console.log = function() {
+      const args = Array.prototype.slice.call(arguments);
+      if (args[1] !== 'conor') {
+        log.apply(this, args);
+      }
+    }
   }
 
   componentDidMount() {
@@ -236,14 +204,18 @@ class CodeViewer extends React.Component {
   }
 
   renderCSS({ rows, stylesheet, useInlineStyles }) {
-    return rows.map((node, i) =>
-      createElement({
+    if (this.props.hideSelector) {
+      rows = rows.slice(1, -1);
+    }
+
+    return rows.map((node, i) => {
+      return createElement({
         node,
         stylesheet,
         useInlineStyles,
         key: `code-segement${i}`
-      })
-    );
+      });
+    });
   }
 
   render() {
@@ -255,7 +227,6 @@ class CodeViewer extends React.Component {
     }
 
     const { hideSelector, code } = this.props;
-    const startingLineNumber = hideSelector ? 0 : 1;
 
     if (hideSelector) {
       wrapperClassName.push('hide-selector');
@@ -277,8 +248,8 @@ class CodeViewer extends React.Component {
           language={this.props.language}
           showLineNumbers={true}
           useInlineStyles={false}
-          startingLineNumber={startingLineNumber}
-          wrapLines={true}
+          // startingLineNumber={startingLineNumber}
+          // wrapLines={true}
           codeTagProps={{ className: className.join(' ') }}
           renderer={this.renderCSS}
         >

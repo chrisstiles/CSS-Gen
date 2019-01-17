@@ -39,18 +39,12 @@ body.no-select {
   }
 }
 
-// .hide-selector {
-//   code > span {
-//     &:first-child,
-//     &:last-child {
-//       display:none;
-//     }
-
-//     > span:first-child {
-//       display:none;
-//     }
-//   }
-// }
+.hide-selector .react-syntax-highlighter-line-number {
+  &:last-child,
+  &:nth-last-child(2) {
+    display:none;
+  }
+}
 
 
 /* ------------------------- */

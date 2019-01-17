@@ -689,6 +689,9 @@ body.no-select .selecting-code code {
     -ms-user-select: text;
     user-select: text; }
 
+.hide-selector .react-syntax-highlighter-line-number:last-child, .hide-selector .react-syntax-highlighter-line-number:nth-last-child(2) {
+  display: none; }
+
 /* ------------------------- */
 /* Code Theme */
 .language-wrapper {

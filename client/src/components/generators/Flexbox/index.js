@@ -47,7 +47,12 @@ class Flexbox extends React.Component {
   }
 
   generateCSS(styles = {}) {
-    return { styles: {}, output: '' };
+    const output = `
+      .flex-container {
+        background-color:red;
+      }
+    `
+    return { styles: {}, output };
   }
 
   handlePreviewUpdate(value, name) {
