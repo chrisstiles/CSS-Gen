@@ -232,9 +232,6 @@ class CodeViewer extends React.Component {
       wrapperClassName.push('hide-selector');
     }
 
-    // let startingLineNumber = 1;
-
-
     return (
       <div
         className={wrapperClassName.join(' ')}
@@ -248,8 +245,6 @@ class CodeViewer extends React.Component {
           language={this.props.language}
           showLineNumbers={true}
           useInlineStyles={false}
-          // startingLineNumber={startingLineNumber}
-          // wrapLines={true}
           codeTagProps={{ className: className.join(' ') }}
           renderer={this.renderCSS}
         >
@@ -258,16 +253,6 @@ class CodeViewer extends React.Component {
       </div>
     );
   }
-}
-
-function rowRenderer({ rows, stylesheet, useInlineStyles }, { index, key, style }) {
-  return createElement({
-    node: rows[index],
-    stylesheet,
-    style,
-    useInlineStyles,
-    key
-  });
 }
 
 export default CodeOutput;

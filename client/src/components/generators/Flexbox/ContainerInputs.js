@@ -60,7 +60,7 @@ const flexInputs = [
     label: 'Align Items',
     options: [
       'normal', 'stretch', 'center', 'end', 'flex-start', 'flex-end', 
-      'flex-start', 'self-start', 'self-end', 'baseline'
+      'self-start', 'self-end', 'baseline'
     ]
   },
   {
