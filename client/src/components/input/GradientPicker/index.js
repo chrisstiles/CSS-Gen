@@ -47,7 +47,7 @@ class GradientPicker extends React.Component {
   componentWillReceiveProps({ palette: next }) {
     const { palette: current } = this.props;
     const length = Math.min(next.length, current.length);
-    const activeId = this.state.activeId <= next.length ? this.state.activeId : 1;
+    const activeId = this.state.activeId <= next.length ? this.state.activeId : this.state.palette[0].id;
 
     for (let i = 0; i < length; i++) {
       if (next[i].pos !== current[i].pos || next[i].color !== current[i].color) {
@@ -71,7 +71,13 @@ class GradientPicker extends React.Component {
   }
 
   get activeStop() {
-    return this.state.palette.find(s => s.id === this.state.activeId);
+    let stop = this.state.palette.find(s => s.id === this.state.activeId);
+
+    if (!stop) {
+      stop = this.state.palette[0];
+    }
+
+    return stop;
   }
 
   get mapStateToStops() {
@@ -186,6 +192,7 @@ class GradientPicker extends React.Component {
     const height = 40;
     const min = -HALF_STOP_WIDTH;
     const max = this.width1 - HALF_STOP_WIDTH;
+
     const opacity = Math.round(Number(tinycolor(this.activeStop.color).getAlpha().toFixed(2)) * 100);
 
     return (
