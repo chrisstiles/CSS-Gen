@@ -18,6 +18,7 @@ class ColorPicker extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeComplete = this.handleChangeComplete.bind(this);
     this.setTransparent = this.setTransparent.bind(this);
     this.keyEvent = this.keyEvent.bind(this);
   }
@@ -77,6 +78,7 @@ class ColorPicker extends React.Component {
 
   handleChange(color) {
     color = tinycolor(color.rgb);
+    this.changingColor = true;
 
     if (this.props.onChange) {
       // Reset alpha if switching from transparent to regular color
@@ -96,6 +98,10 @@ class ColorPicker extends React.Component {
 
     this.setState({ color, transparent: false });
   };
+
+  handleChangeComplete() {
+    this.changingColor = false;
+  }
 
   setTransparent() {
     this.setState({ transparent: true });
@@ -117,7 +123,7 @@ class ColorPicker extends React.Component {
   }
 
   keyEvent(event) {
-    if (event.keyCode === 27 || event.keyCode === 13) {
+    if (!this.changingColor && (event.keyCode === 27 || event.keyCode === 13)) {
       this.handleClose();
     }
   }
@@ -225,6 +231,7 @@ class ColorPicker extends React.Component {
               <ChromePicker
                 color={color.toRgbString()}
                 onChange={this.handleChange}
+                onChangeComplete={this.handleChangeComplete}
                 disableAlpha={this.props.disableAlpha}
                 style={{ opacity: .4 }}
               />
