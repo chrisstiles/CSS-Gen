@@ -67,7 +67,7 @@ class FlexboxInputs extends React.Component {
   }
 
   render() {
-    const { selectedIndexes, containerStyles, itemStyles: _itemStyles, childElements } = this.props;
+    const { selectedIndexes, containerStyles, itemStyles: _itemStyles, childElements, canAddChildElement } = this.props;
 
     const numSelected = selectedIndexes.length;
     var itemStyles, selectedText, removeText;
@@ -98,6 +98,10 @@ class FlexboxInputs extends React.Component {
 
     const addButtonClassNames = ['button', 'w100', 'small'];
     const removeButtonClassNames = addButtonClassNames.slice();
+
+    if (!canAddChildElement) {
+      addButtonClassNames.push('disabled');
+    }
 
     addButtonClassNames.push('add-item');
     removeButtonClassNames.push('red', 'remove-item');

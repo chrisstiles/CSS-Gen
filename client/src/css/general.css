@@ -2436,6 +2436,11 @@ input.angle-input {
         opacity: 1; }
         #flexbox-preview .item.new-item:hover:after {
           background-color: #e2e2e2; }
+      #flexbox-preview .item.new-item.disabled {
+        pointer-events: none;
+        color: #b9b9b9; }
+        #flexbox-preview .item.new-item.disabled .plus:before, #flexbox-preview .item.new-item.disabled .plus:after {
+          background-color: #b9b9b9; }
       #flexbox-preview .item.new-item .plus {
         width: 15px;
         height: 15px;

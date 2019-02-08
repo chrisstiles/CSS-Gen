@@ -25,6 +25,15 @@ class Flexbox extends React.Component {
       child.id = _.uniqueId('child-');
     });
 
+    // Restrict number of child elements
+    this.maxChildElements = 50;
+
+    if (this.state.childElements.length > this.maxChildElements) {
+      this.state.childElements = Flexbox.defaultState.childElements.slice();
+    }
+
+    this.state.canAddChildElement = this.state.childElements.length < this.maxChildElements;
+    
     this.updateGenerator = this.updateGenerator.bind(this);
     this.addChildElement = this.addChildElement.bind(this);
     this.generateCSS = this.generateCSS.bind(this);
@@ -35,15 +44,22 @@ class Flexbox extends React.Component {
   }
 
   updateGenerator(state) {
+    const childElements = state.childElements !== undefined ? state.childElements : this.state.childElements;
+    state.canAddChildElement = childElements.length < this.maxChildElements;
+
     this.setState(state);
   }
 
   addChildElement() {
-    const child = { id: _.uniqueId('child-') };
-    const childElements = this.state.childElements.slice();
-    childElements.push(child);
+    // const currentChildCount = this.state.childElements.length;
+    if (this.state.canAddChildElement) {
+      const canAddChildElement = this.state.childElements.length + 1 < this.maxChildElements;
+      const child = { id: _.uniqueId('child-') };
+      const childElements = this.state.childElements.slice();
+      childElements.push(child);
 
-    this.setState({ childElements });
+      this.setState({ childElements, canAddChildElement });
+    }
   }
 
   generateCSS(styles = {}) {
@@ -100,7 +116,13 @@ class Flexbox extends React.Component {
   renderPreview(style) {
     const containerStyles = _.extend({}, style, this.state.containerStyles);
     const itemStyles = _.extend({}, style, this.state.itemStyles);
-    const { childElements, selectedIndexes, showAddItemButton, containerBackgroundColor, mostRecentIndex} = this.state;
+    const { 
+      childElements, 
+      selectedIndexes, 
+      showAddItemButton, 
+      containerBackgroundColor, 
+      mostRecentIndex, 
+      canAddChildElement} = this.state;
 
     return (
       <FlexboxPreview
@@ -111,6 +133,7 @@ class Flexbox extends React.Component {
         showAddItemButton={showAddItemButton}
         containerBackgroundColor={containerBackgroundColor}
         mostRecentIndex={mostRecentIndex}
+        canAddChildElement={canAddChildElement}
         updateGenerator={this.updateGenerator}
         addChildElement={this.addChildElement}
       />

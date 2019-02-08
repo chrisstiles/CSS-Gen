@@ -78,6 +78,18 @@
         }
       }
 
+      &.disabled {
+        pointer-events:none;
+        color:#b9b9b9;
+
+        .plus {
+          &:before,
+          &:after {
+            background-color:#b9b9b9;
+          }
+        }
+      }
+
       .plus {
         width:15px;
         height:15px;

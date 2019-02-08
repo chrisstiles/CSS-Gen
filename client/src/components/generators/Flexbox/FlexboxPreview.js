@@ -184,6 +184,7 @@ class FlexboxPreview extends React.Component {
       showAddItemButton, 
       addChildElement, 
       containerStyles, 
+      canAddChildElement,
       containerBackgroundColor: backgroundColor,
       itemStyles: _itemStyles,
       childElements: _childElements,
@@ -216,10 +217,16 @@ class FlexboxPreview extends React.Component {
         </div>
       );
 
+      const addButtonClasses = ['new-item'];
+
+      if (!canAddChildElement) {
+        addButtonClasses.push('disabled');
+      }
+
       childElements.push(
         <FlexItem
           key="add-item"
-          className="new-item"
+          className={addButtonClasses.join(' ')}
           text={newItemText}
           style={_itemStyles}
           onClick={addChildElement}
