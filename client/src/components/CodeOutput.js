@@ -20,7 +20,8 @@ class CodeOutput extends React.Component {
 
     this.state = { 
       outputCSS: '',
-      copyCSS: ''
+      copyCSS: '',
+      disableEditor: false
     };
 
     this.canShowCopyNotification = true;
@@ -47,6 +48,10 @@ class CodeOutput extends React.Component {
       css += newProps.previewCSS;
     }
 
+    // Disable editor if no CSS is passed
+    css = css.trim();
+    const disableEditor = !css;
+
     // Add plugins to format code and add prefixes if necessary
     const plugins = [prettify];
     const showPrefixes = getGlobalState().showBrowserPrefixes;
@@ -58,7 +63,7 @@ class CodeOutput extends React.Component {
     const _this = this;
 
     postcss(plugins)
-      .process(css.trim(), { from: undefined })
+      .process(css, { from: undefined })
       .then(function (result) {
         result.warnings().forEach(function (warn) {
             console.warn(warn.toString());
@@ -76,7 +81,7 @@ class CodeOutput extends React.Component {
           _this.hideSelector = false;
         }
 
-        _this.setState({ outputCSS, copyCSS });
+        _this.setState({ outputCSS, copyCSS, disableEditor });
         
     });
   }
@@ -112,11 +117,10 @@ class CodeOutput extends React.Component {
   }
 
   render() {
-    let buttonClassName = 'button';
+    const buttonClassName = ['button'];
 
-    // let startingLine = 
-    if (!this.state.outputCSS) {
-      buttonClassName += ' disabled';
+    if (this.state.disableEditor) {
+      buttonClassName.push('disabled');
     }
 
     return (
@@ -125,14 +129,15 @@ class CodeOutput extends React.Component {
         <div id="output-code-wrapper">
           <CodeViewer 
             language="css" 
-            code={this.state.outputCSS} 
+            code={this.state.outputCSS}
             hideSelector={this.hideSelector} 
+            disableEditor={this.state.disableEditor}
           />
         </div>
         {this.renderPrefixesToggle()}
         <button 
           onClick={this.copyCSS}
-          className={buttonClassName}
+          className={buttonClassName.join(' ')}
         >
           Copy
         </button>
@@ -226,7 +231,11 @@ class CodeViewer extends React.Component {
       className.push('selecting-code');
     }
 
-    const { hideSelector, code } = this.props;
+    const { disableEditor, hideSelector, code } = this.props;
+
+    if (disableEditor) {
+      wrapperClassName.push('disabled');
+    }
 
     if (hideSelector) {
       wrapperClassName.push('hide-selector');

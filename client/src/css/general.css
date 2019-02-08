@@ -710,6 +710,10 @@ body.no-select .selecting-code code {
       bottom: -1px;
       width: 2px;
       background-color: rgba(72, 52, 212, 0.4); }
+  .language-wrapper.disabled {
+    opacity: 1 !important; }
+    .language-wrapper.disabled pre {
+      visibility: hidden; }
 
 .hljs {
   font-size: 13px;

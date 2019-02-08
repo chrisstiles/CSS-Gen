@@ -70,6 +70,14 @@ body.no-select {
       background-color:rgba($accent-color, .4);
     }
   }
+
+  &.disabled {
+    opacity:1 !important;
+
+    pre {
+      visibility: hidden;
+    }
+  }
 }
 
 .hljs {
