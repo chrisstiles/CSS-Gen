@@ -133,11 +133,10 @@ class Flexbox extends React.Component {
       canAddChildElement
     } = this.state;
 
-    containerStyles.backgroundColor = containerBackgroundColor;
-
     return (
       <FlexboxPreview
         containerStyles={containerStyles}
+        containerBackgroundColor={containerBackgroundColor}
         itemStyles={itemStyles}
         childElements={childElements}
         selectedIndexes={selectedIndexes}

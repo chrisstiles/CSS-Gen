@@ -23,7 +23,7 @@
   .container {
     display:flex;
     border:2px dashed $accent-color;
-    padding:10px;
+    padding:15px;
     position:relative;
 
     &.full-height {
@@ -34,20 +34,29 @@
       right:0;
     }
 
+    &.has-background {
+      border-color:transparent;
+
+      &:before {
+        border-color:$accent-color;
+      }
+    }
+
     &:before {
       position: absolute;
       content: "Flex Container";
       line-height: 18px;
-      padding: 0 7px 0 6px;
+      padding: 0 7px;
       border-bottom: none;
       color: #4834d4;
-      top: -10px;
-      left: 23px;
+      top: -12px;
+      left: 17px;
       z-index: 900;
       background-color: #fdfdfd;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
+      border:2px dashed transparent;
     }
   }
 
