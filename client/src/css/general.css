@@ -2414,7 +2414,7 @@ input.angle-input {
       color: #4834d4;
       top: -12px;
       left: 17px;
-      z-index: 900;
+      z-index: 100;
       background-color: #fdfdfd;
       font-size: 11px;
       font-weight: 800;
@@ -2422,9 +2422,9 @@ input.angle-input {
       border: 2px dashed transparent; }
   #flexbox-preview .item {
     cursor: pointer;
-    min-width: 120px;
-    flex-basis: auto;
-    min-height: 120px;
+    flex-basis: 100px;
+    min-width: 100px;
+    min-height: 100px;
     position: relative;
     -webkit-user-select: none;
     -khtml-user-select: none;

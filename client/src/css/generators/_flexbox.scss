@@ -43,7 +43,7 @@
       color: #4834d4;
       top: -12px;
       left: 17px;
-      z-index: 900;
+      z-index: 100;
       background-color: #fdfdfd;
       font-size: 11px;
       font-weight: 800;
@@ -54,9 +54,9 @@
 
   .item {
     cursor:pointer;
-    min-width:120px;
-    flex-basis:auto;
-    min-height:120px;
+    flex-basis:100px;
+    min-width:100px;
+    min-height:100px;
     position:relative;
     @include no-select;
 
