@@ -183,6 +183,7 @@ export default Flexbox;
 Flexbox.defaultState = {
   childElements: [{ id: 'child-1' }, { id: 'child-2' }, { id: 'child-3' }],
   containerStyles: {
+    display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
@@ -204,6 +205,7 @@ Flexbox.defaultState = {
 Flexbox.stateTypes = {
   childElements: [{ id: String }],
   containerStyles: {
+    display: String,
     flexDirection: String,
     flexWrap: String,
     justifyContent: String,

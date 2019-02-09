@@ -38,6 +38,11 @@ export default ContainerInputs;
 
 const flexInputs = [
   {
+    name: 'display',
+    label: 'Display',
+    options: ['flex', 'inline-flex']
+  },
+  {
     name: 'flexDirection',
     label: 'Flex Direction',
     options: ['row', 'column', 'row-reverse', 'column-reverse']

@@ -2405,8 +2405,7 @@ input.angle-input {
       position: absolute;
       top: 0;
       left: 0;
-      bottom: 0;
-      right: 0; }
+      bottom: 0; }
     #flexbox-preview .container.has-background {
       border-color: transparent; }
       #flexbox-preview .container.has-background:before {
