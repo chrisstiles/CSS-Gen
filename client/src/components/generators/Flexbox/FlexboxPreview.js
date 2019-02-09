@@ -262,7 +262,7 @@ class FlexboxPreview extends React.Component {
       containerClassName.push('has-background');
     }
 
-    containerStyles.height = this.state.containerHeight;
+    containerStyles.minHeight = this.state.containerHeight;
 
     return (
       <div 
