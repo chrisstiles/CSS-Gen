@@ -22,11 +22,33 @@
 
   .container {
     display:flex;
-    width:calc(100% + 4px);
-    height:100%;
-    margin-left:-2px;
-    margin-top:-4px;
-    padding:4px;
+    border:2px dashed $accent-color;
+    padding:10px;
+    position:relative;
+
+    &.full-height {
+      position:absolute;
+      top:0;
+      left:0;
+      bottom:0;
+      right:0;
+    }
+
+    &:before {
+      position: absolute;
+      content: "Flex Container";
+      line-height: 18px;
+      padding: 0 7px 0 6px;
+      border-bottom: none;
+      color: #4834d4;
+      top: -10px;
+      left: 23px;
+      z-index: 900;
+      background-color: #fdfdfd;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
   }
 
   .item {

@@ -51,7 +51,6 @@ class Flexbox extends React.Component {
   }
 
   addChildElement() {
-    // const currentChildCount = this.state.childElements.length;
     if (this.state.canAddChildElement) {
       const canAddChildElement = this.state.childElements.length + 1 < this.maxChildElements;
       const child = { id: _.uniqueId('child-') };
@@ -88,7 +87,7 @@ class Flexbox extends React.Component {
   }
 
   renderToolbarItems() {
-    const { showAddItemButton, containerBackgroundColor } = this.state;
+    const { showAddItemButton, fullHeightContainer, containerBackgroundColor } = this.state;
 
     return (
       <div>
@@ -96,8 +95,16 @@ class Flexbox extends React.Component {
           <Toggle
             name="showAddItemButton"
             onChange={this.handlePreviewUpdate}
-            label="Show Button"
+            label="Add Button"
             checked={showAddItemButton}
+          />
+        </div>
+        <div className="item input border">
+          <Toggle
+            name="fullHeightContainer"
+            onChange={this.handlePreviewUpdate}
+            label="Full Height"
+            checked={fullHeightContainer}
           />
         </div>
         <div className="item input">
@@ -119,10 +126,14 @@ class Flexbox extends React.Component {
     const { 
       childElements, 
       selectedIndexes, 
-      showAddItemButton, 
+      showAddItemButton,
+      fullHeightContainer,
       containerBackgroundColor, 
       mostRecentIndex, 
-      canAddChildElement} = this.state;
+      canAddChildElement
+    } = this.state;
+
+    containerStyles.backgroundColor = containerBackgroundColor;
 
     return (
       <FlexboxPreview
@@ -131,7 +142,7 @@ class Flexbox extends React.Component {
         childElements={childElements}
         selectedIndexes={selectedIndexes}
         showAddItemButton={showAddItemButton}
-        containerBackgroundColor={containerBackgroundColor}
+        fullHeightContainer={fullHeightContainer}
         mostRecentIndex={mostRecentIndex}
         canAddChildElement={canAddChildElement}
         updateGenerator={this.updateGenerator}
@@ -180,13 +191,14 @@ Flexbox.defaultState = {
     alignContent: 'flex-start'
   },
   itemStyles: {
-    flexGrow: 0,
-    flexShrink: 1,
+    flexGrow: 1,
+    flexShrink: 0,
     alignSelf: 'auto'
   },
   selectedIndexes: [],
   mostRecentIndex: 0,
   showAddItemButton: true,
+  fullHeightContainer: true,
   containerBackgroundColor: 'transparent'
 };
 
@@ -207,5 +219,6 @@ Flexbox.stateTypes = {
   selectedIndexes: [Number],
   mostRecentIndex: Number,
   showAddItemButton: Boolean,
+  fullHeightContainer: Boolean,
   containerBackgroundColor: String
 };

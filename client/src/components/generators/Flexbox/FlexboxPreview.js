@@ -182,10 +182,10 @@ class FlexboxPreview extends React.Component {
   render() {
     const { 
       showAddItemButton, 
+      fullHeightContainer,
       addChildElement, 
       containerStyles, 
       canAddChildElement,
-      containerBackgroundColor: backgroundColor,
       itemStyles: _itemStyles,
       childElements: _childElements,
       selectedIndexes
@@ -234,13 +234,18 @@ class FlexboxPreview extends React.Component {
       );
     }
 
+    const containerClassName = ['container'];
+
+    if (fullHeightContainer) {
+      containerClassName.push('full-height');
+    }
+
     return (
       <div 
         id="flexbox-preview"
-        style={{ backgroundColor }}
       >
         <div 
-          className="container"
+          className={containerClassName.join(' ')}
           style={containerStyles}
         >
           {childElements}
