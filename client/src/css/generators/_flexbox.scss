@@ -26,14 +26,6 @@
     padding:15px;
     position:relative;
 
-    &.full-height {
-      position:absolute;
-      top:0;
-      left:0;
-      bottom:0;
-      // right:0;
-    }
-
     &.has-background {
       border-color:transparent;
 
@@ -63,6 +55,7 @@
   .item {
     cursor:pointer;
     min-width:120px;
+    flex-basis:auto;
     min-height:120px;
     position:relative;
     @include no-select;

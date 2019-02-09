@@ -2401,11 +2401,6 @@ input.angle-input {
     border: 2px dashed #4834d4;
     padding: 15px;
     position: relative; }
-    #flexbox-preview .container.full-height {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0; }
     #flexbox-preview .container.has-background {
       border-color: transparent; }
       #flexbox-preview .container.has-background:before {
@@ -2428,6 +2423,7 @@ input.angle-input {
   #flexbox-preview .item {
     cursor: pointer;
     min-width: 120px;
+    flex-basis: auto;
     min-height: 120px;
     position: relative;
     -webkit-user-select: none;
