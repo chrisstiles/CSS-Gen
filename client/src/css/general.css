@@ -2400,7 +2400,8 @@ input.angle-input {
     display: flex;
     border: 2px dashed #4834d4;
     padding: 15px;
-    position: relative; }
+    position: relative;
+    margin-bottom: 30px; }
     #flexbox-preview .container.has-background {
       border-color: transparent; }
       #flexbox-preview .container.has-background:before {
