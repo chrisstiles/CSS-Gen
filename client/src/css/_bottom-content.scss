@@ -5,7 +5,6 @@
   bottom:0;
   background-color: rgba(247, 247, 247, 0.95);
   border-top: 2px solid #dedede;
-  z-index: 3000;
   height:210px;
   display:flex;
   justify-content: space-between;
@@ -38,7 +37,7 @@
   display:flex;
   flex-grow:0;
   align-items: flex-end;
-  padding: 12px 12px 13px 12px;
+  padding: 11px 11px 12px 11px;
   background-color: #ececec;
   border-left: 2px solid #dedede;
   z-index: 200;
@@ -50,7 +49,7 @@
   display:flex;
   flex-direction:column;
   margin-right:10px;
-  box-shadow: 0px 9px 25px 0px rgba(184, 185, 218, 0.48);
+  box-shadow: 0px 6px 20px 0px rgba(184, 185, 218, 0.52);
   z-index: 99999;
   max-width:50vw;
   border-radius: 0px 0px 3px 3px;
@@ -65,11 +64,11 @@
 
   .bottom-title {
     border-radius: 3px 3px 0px 0px;
-    padding:13px 15px 12px 15px !important;
+    padding:11px 15px 10px 15px !important;
     display:flex;
     justify-content: space-between;
     align-items:flex-start;
-    min-height:40px;
+    min-height:36px;
     border:none !important;
     background: $accent-color;
     background: linear-gradient(to right, lighten($accent-color, 8%) 0%, $accent-color 100%);
@@ -80,8 +79,8 @@
       line-height: 22px;
       padding: 0px 11px;
       position: absolute;
-      top: 9px;
-      right: 9px;
+      top: 7px;
+      right: 7px;
     }
   }
 

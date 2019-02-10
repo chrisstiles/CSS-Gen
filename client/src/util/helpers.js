@@ -360,9 +360,9 @@ export function sidebarControlsWidth() {
     const windowWidth = window.innerWidth;
 
     if (windowWidth <= 1250) {
-      return 244;
+      return 204;
     } else {
-      return 284;
+      return 244;
     }
   }
 }
