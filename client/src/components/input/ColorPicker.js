@@ -15,8 +15,8 @@ class ColorPicker extends React.Component {
     this.state.transparent = this.props.color === 'transparent';
 
     this.setPosition = this.setPosition.bind(this);
+    this.close = this.close.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeComplete = this.handleChangeComplete.bind(this);
     this.setTransparent = this.setTransparent.bind(this);
@@ -63,7 +63,7 @@ class ColorPicker extends React.Component {
     this.setPosition(e.target);
 
     if (currentPicker) {
-      currentPicker.handleClose();
+      currentPicker.close();
     }
 
     currentPicker = this;
@@ -71,7 +71,7 @@ class ColorPicker extends React.Component {
     this.setState({ displayColorPicker: !this.state.displayColorPicker });
   };
 
-  handleClose() {
+  close() {
     currentPicker = null;
     this.setState({ displayColorPicker: false });
   };
@@ -124,7 +124,7 @@ class ColorPicker extends React.Component {
 
   keyEvent(event) {
     if (!this.changingColor && (event.keyCode === 27 || event.keyCode === 13)) {
-      this.handleClose();
+      this.close();
     }
   }
   
@@ -222,7 +222,7 @@ class ColorPicker extends React.Component {
         : null}
         {this.renderPreview(previewStyle)}
         <div style={style}>
-          <div style={cover} onClick={this.handleClose} />
+          <div style={cover} onClick={this.close} />
           <div 
             className="color-picker-wrapper"
             style={wrapperStyles}
