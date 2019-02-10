@@ -507,7 +507,7 @@ export function getFullHeight() {
 
 	var height = window.innerHeight - headerHeight;
 
-	const bottomContent = document.querySelector('#bottom-content');
+	const bottomContent = document.querySelector('#bottom-content-wrapper');
 	if (bottomContent) {
 		height -= bottomContent.offsetHeight;
 	}
@@ -548,7 +548,7 @@ export function getImageSize(width, height, wrapper) {
 	var maxHeight = window.innerHeight - rect.top - 30;
   const minWidth = 80;
   const minHeight = 80;
-	const bottomContent = document.querySelector('#bottom-content');
+	const bottomContent = document.querySelector('#bottom-content-wrapper');
 
 	// Prevent image from going behind bottom content
 	if (bottomContent) {
