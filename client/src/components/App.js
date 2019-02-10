@@ -65,6 +65,18 @@ class PrimaryLayout extends React.Component {
       loading: Boolean
     };
 
+    this.state.loading = false;
+
+    addNotification = this.createNotification.bind(this);
+    getGlobalState = this.getGlobalState.bind(this);
+    updateGlobalState = this.updateGlobalState.bind(this);
+    getGlobalDefaults = this.getGlobalDefaults.bind(this);
+    getGlobalVariable = this.getGlobalVariable.bind(this);
+    setGlobalVariable = this.setGlobalVariable.bind(this);
+    setLoading = this.setLoading.bind(this);
+  }
+
+  componentDidMount() {
     // Add persisted global state
     const key = 'globalState';
 
@@ -76,23 +88,13 @@ class PrimaryLayout extends React.Component {
 
         if (previousState) {
           if (isObjectOfShape(previousState, this.stateTypes)) {
-            this.state = _.extend(this.state, previousState);
+            this.setState(_.extend({}, this.state, previousState));
           }
         }
-      } catch(e) {
+      } catch (e) {
         console.log(e);
       }
     }
-
-    this.state.loading = false;
-
-    addNotification = this.createNotification.bind(this);
-    getGlobalState = this.getGlobalState.bind(this);
-    updateGlobalState = this.updateGlobalState.bind(this);
-    getGlobalDefaults = this.getGlobalDefaults.bind(this);
-    getGlobalVariable = this.getGlobalVariable.bind(this);
-    setGlobalVariable = this.setGlobalVariable.bind(this);
-    setLoading = this.setLoading.bind(this);
   }
 
   createNotification(type, message) {
@@ -169,12 +171,12 @@ class App extends React.Component {
 export { 
   addNotification, 
   notificationTypes,
-   getGlobalState, 
-   updateGlobalState, 
-   getGlobalDefaults ,
-   getGlobalVariable,
-   setGlobalVariable,
-   setLoading
+  getGlobalState, 
+  updateGlobalState, 
+  getGlobalDefaults ,
+  getGlobalVariable,
+  setGlobalVariable,
+  setLoading
  };
 
 export default App;
