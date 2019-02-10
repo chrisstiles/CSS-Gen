@@ -4,7 +4,7 @@ import tinycolor from 'tinycolor2';
 import { hexOrRgba } from '../../util/helpers';
 
 // Only one picker should be open at a time
-var currentPicker = null;
+let currentPicker = null;
 
 class ColorPicker extends React.Component {
   constructor(props) {
@@ -41,7 +41,7 @@ class ColorPicker extends React.Component {
     this.previewWidth = el.offsetWidth;
 
     const previewRect = el.getBoundingClientRect();
-    var topOffset = previewRect.top + previewRect.height;
+    let topOffset = previewRect.top + previewRect.height;
 
     if (!this.props.isFixed) {
       topOffset += window.scrollY;
@@ -86,7 +86,7 @@ class ColorPicker extends React.Component {
         color.setAlpha(1);
       }
 
-      var returnColor;
+      let returnColor;
       if (this.props.returnColorObject) {
         returnColor = color;
       } else {
@@ -161,7 +161,7 @@ class ColorPicker extends React.Component {
       color.setAlpha(1);
     }
 
-    var margin;
+    let margin;
     if (this.shiftLeft) {
       margin = -113 + this.previewWidth;
     } else {
