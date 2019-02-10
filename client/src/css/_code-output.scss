@@ -1,3 +1,131 @@
+#generator-output {
+  display:flex;
+  flex-grow:0;
+  align-items: flex-end;
+  padding: 11px 11px 12px 11px;
+  background-color: #ececec;
+  border-left: 2px solid #dedede;
+  z-index: 200;
+}
+
+.output-wrapper {
+  width:260px;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  margin-right:10px;
+  box-shadow: 0px 6px 20px 0px rgba(184, 185, 218, 0.52);
+  z-index: 9998;
+  border-radius: 0px 0px 3px 3px;
+
+  &:only-child {
+    width:330px;
+  }
+
+  &:last-child {
+    margin-right:0;
+  }
+
+  .bottom-title {
+    border-radius: 3px 3px 0px 0px;
+    padding:4px 6px 5px 15px !important;
+    display:flex;
+    justify-content: flex-end;
+    align-items:center;
+    min-height:36px;
+    border:none !important;
+    background: $accent-color;
+    background: linear-gradient(to right, lighten($accent-color, 8%) 0%, $accent-color 100%);
+
+    &:after {
+      font-size:11px;
+      border-radius: 2px;
+      line-height: 22px;
+      padding: 0px 11px;
+      // position: absolute;
+      // top: 7px;
+      // right: 7px;
+    }
+  }
+
+  &.css .bottom-title:after {
+    content:"CSS";
+    background-color:#1ca8e0;
+  }
+
+  &.html .bottom-title:after {
+    content: "HTML";
+    padding-right:10px;
+    background-color:#e34c26;
+  }
+
+  span {
+    flex-grow:1;
+  }
+
+  .expand-toggle {
+    width:20px;
+    height:20px;
+    display:inline-block;
+    background-color:red;
+    order:3;
+    margin-left:6px;
+    cursor: pointer;
+  }
+
+  .bottom {
+    padding:8px;
+    display:flex;
+    justify-content: flex-end;
+    align-items:center;
+    background-color:#fdfdfd;
+    flex-shrink:0;
+    border-radius: 0px 0px 3px 3px;
+
+    .field-wrapper {
+      margin:0;
+      padding-left:2px;
+      flex-grow:1;
+
+      .title {
+        max-width:80px;
+        margin-top:0;
+        font-size:12px;
+      }
+    }
+
+    .button {
+      flex-grow:0;
+      padding:8px 20px 9px 20px;
+    }
+  }
+}
+
+
+.expanded-code-wrapper {
+  position:fixed;
+  top:0;
+  right:0;
+  left:0;
+  bottom:0;
+  z-index: 99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background-color:rgba(#fff, .95);
+  padding:30px;
+
+  .output-wrapper {
+    width:100%;
+    max-height:580px;
+    max-width:600px;
+  }
+
+  .hljs {
+    font-size:14px;
+  }
+}
+
 .react-syntax-highlighter-line-number {
   @include no-select;
   pointer-events:none;
@@ -118,6 +246,7 @@ body.no-select {
   overflow-x: auto;
   cursor:text;
   line-height:1.3em;
+  min-width:100%;
 
   code {
     padding-top:6px !important;

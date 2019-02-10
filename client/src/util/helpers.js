@@ -661,5 +661,13 @@ export function cloneObject(obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
+export function clearSelection() {
+	if (window.getSelection) { 
+		window.getSelection().removeAllRanges(); 
+	} else if (document.selection) { 
+		document.selection.empty(); 
+	}
+}
+
 
 

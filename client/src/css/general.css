@@ -643,6 +643,7 @@ p:last-child {
   border-top: 2px solid #dedede;
   height: 210px;
   display: flex;
+  z-index: 9999;
   justify-content: space-between; }
   #bottom-content-wrapper .bottom-title {
     font-size: 14px;
@@ -663,6 +664,16 @@ p:last-child {
   justify-content: flex-end;
   flex-grow: 1; }
 
+#main-footer {
+  background-color: #d4d4d4;
+  position: relative;
+  padding: 12px;
+  font-size: 12px;
+  height: 40px;
+  width: 100%;
+  flex-shrink: 0;
+  align-self: flex-end; }
+
 #generator-output {
   display: flex;
   flex-grow: 0;
@@ -679,8 +690,7 @@ p:last-child {
   flex-direction: column;
   margin-right: 10px;
   box-shadow: 0px 6px 20px 0px rgba(184, 185, 218, 0.52);
-  z-index: 99999;
-  max-width: 50vw;
+  z-index: 9998;
   border-radius: 0px 0px 3px 3px; }
   .output-wrapper:only-child {
     width: 330px; }
@@ -688,10 +698,10 @@ p:last-child {
     margin-right: 0; }
   .output-wrapper .bottom-title {
     border-radius: 3px 3px 0px 0px;
-    padding: 11px 15px 10px 15px !important;
+    padding: 4px 6px 5px 15px !important;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: flex-end;
+    align-items: center;
     min-height: 36px;
     border: none !important;
     background: #4834d4;
@@ -700,10 +710,7 @@ p:last-child {
       font-size: 11px;
       border-radius: 2px;
       line-height: 22px;
-      padding: 0px 11px;
-      position: absolute;
-      top: 7px;
-      right: 7px; }
+      padding: 0px 11px; }
   .output-wrapper.css .bottom-title:after {
     content: "CSS";
     background-color: #1ca8e0; }
@@ -711,6 +718,16 @@ p:last-child {
     content: "HTML";
     padding-right: 10px;
     background-color: #e34c26; }
+  .output-wrapper span {
+    flex-grow: 1; }
+  .output-wrapper .expand-toggle {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-color: red;
+    order: 3;
+    margin-left: 6px;
+    cursor: pointer; }
   .output-wrapper .bottom {
     padding: 8px;
     display: flex;
@@ -731,15 +748,24 @@ p:last-child {
       flex-grow: 0;
       padding: 8px 20px 9px 20px; }
 
-#main-footer {
-  background-color: #d4d4d4;
-  position: relative;
-  padding: 12px;
-  font-size: 12px;
-  height: 40px;
-  width: 100%;
-  flex-shrink: 0;
-  align-self: flex-end; }
+.expanded-code-wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 30px; }
+  .expanded-code-wrapper .output-wrapper {
+    width: 100%;
+    max-height: 580px;
+    max-width: 600px; }
+  .expanded-code-wrapper .hljs {
+    font-size: 14px; }
 
 .react-syntax-highlighter-line-number {
   -webkit-user-select: none;
@@ -852,7 +878,8 @@ body.no-select .selecting-code code {
   color: #383838;
   overflow-x: auto;
   cursor: text;
-  line-height: 1.3em; }
+  line-height: 1.3em;
+  min-width: 100%; }
   .hljs code {
     padding-top: 6px !important;
     padding-bottom: 6px !important; }

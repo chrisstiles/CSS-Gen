@@ -5,12 +5,13 @@ import prettify from 'postcss-prettify';
 import prettyHTML from 'pretty';
 import * as clipboard from 'clipboard-polyfill/build/clipboard-polyfill.promise'
 import Toggle from './input/Toggle';
-import { addNotification, getNotificationTypes, updateGlobalState, getGlobalState, selectText, setGlobalVariable } from '../util/helpers';
+import { addNotification, getNotificationTypes, updateGlobalState, cloneObject, selectText, setGlobalVariable } from '../util/helpers';
 import createElement from 'react-syntax-highlighter/dist/create-element';
 import { registerLanguage } from 'react-syntax-highlighter/dist/light';
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light';
 import cssHighlighter from 'react-syntax-highlighter/dist/languages/hljs/css';
 import htmlHighlighter from 'react-syntax-highlighter/dist/languages/hljs/xml';
+import _ from 'underscore';
 
 registerLanguage('css', cssHighlighter);
 registerLanguage('html', htmlHighlighter);
@@ -34,25 +35,38 @@ class CodeOutput extends React.Component {
     this.getCode = this.getCode.bind(this);
     this.getCSS = this.getCSS.bind(this);
     this.copyCode = this.copyCode.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+    this.handleToggleChange = this.handleToggleChange.bind(this);
 
     this.canShowCopyNotification = true;
-    this.handleToggleChange = this.handleToggleChange.bind(this);
   }
 
   componentWillMount() {
-    const code = { outputCode: this.props.outputCode }
-
-    code.previewCSS = this.props.previewCSS;
-    code.outputPreviewStyles = this.props.outputPreviewStyles;
-
-
-    this.getCode(code);
+    this.getCode(this.props);
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.outputCode !== this.props.outputCode) {
+    if (
+      prevProps.outputCode !== this.props.outputCode || 
+      prevProps.showBrowserPrefixes !== this.props.showBrowserPrefixes
+    ) {
       this.getCode(this.props);
     }
+  }
+  
+  shouldComponentUpdate() {
+    return !this.hasFocus;
+  }
+
+  handleFocus() {
+    this.hasFocus = true;
+    setGlobalVariable(true, 'outputIsFocused');
+  }
+
+  handleBlur() {
+    this.hasFocus = false;
+    setGlobalVariable(false, 'outputIsFocused');
   }
 
   expand() {
@@ -70,7 +84,9 @@ class CodeOutput extends React.Component {
     this.setState({ expanded: false });
   }
 
-  getCode(props) {
+  getCode(newProps) {
+    const props = cloneObject(newProps);
+
     if (this.props.language.toLowerCase() === 'css') {
       this.getCSS(props);
     } else {
@@ -92,10 +108,10 @@ class CodeOutput extends React.Component {
     const disableEditor = !css;
 
     // Add plugins to format code and add prefixes if necessary
+    const { showBrowserPrefixes, hasBrowserPrefixes } = props;
     const plugins = [prettify];
-    const showPrefixes = getGlobalState().showBrowserPrefixes;
-
-    if (showPrefixes && this.props.hasBrowserPrefixes) {
+    
+    if (showBrowserPrefixes && hasBrowserPrefixes) {
       plugins.unshift(autoprefixer({ browsers: ['ie >= 8', '> 4%'] }));
     }
 
@@ -159,7 +175,8 @@ class CodeOutput extends React.Component {
 
   render() {
     const { disableEditor, outputCode, expanded } = this.state;
-    const wrapperClassName = ['output-wrapper', this.props.language.toLowerCase()];
+    const { language } = this.props;
+    const wrapperClassName = ['output-wrapper', language.toLowerCase()];
     const buttonClassName = ['button', 'small'];
 
     if (disableEditor) {
@@ -170,39 +187,57 @@ class CodeOutput extends React.Component {
       wrapperClassName.push('expanded');
     }
 
-    const viewer = (
-      <CodeViewer
-        language={this.props.language}
-        code={outputCode}
-        hideSelector={this.hideSelector}
-        disableEditor={disableEditor}
-      />
-    );
+    const createViewer = isExpanded => {
+      const handleClick = isExpanded ? this.close : this.expand;
+      const key = isExpanded ? `${language}-expanded` : `${language}-collapsed`;
 
-    return (
-      <div className={wrapperClassName.join(' ')}>
-        <div className="bottom-title color">
-          <span>Code Output</span>
-          <div className="expand-toggle"></div>
-        </div>
-        {viewer}
-        <div className="bottom">
-          {this.renderPrefixesToggle()}
-          <button
-            onClick={this.copyCode}
-            className={buttonClassName.join(' ')}
-          >
-            Copy
-          </button>
-        </div>
-
-        {expanded ? 
-          <div className="expanded-code-wrapper">
-            {viewer}
+      return (
+        <div
+          className={wrapperClassName.join(' ')}
+          key={key}
+        >
+          <div className="bottom-title color">
+            <span>Code Output</span>
+            <div
+              className="expand-toggle"
+              onClick={handleClick}
+            ></div>
           </div>
-        : null}
-      </div>
-    );
+          <CodeViewer
+            language={language}
+            code={outputCode}
+            hideSelector={this.hideSelector}
+            disableEditor={disableEditor}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+          />
+          <div className="bottom">
+            {this.renderPrefixesToggle()}
+            <button
+              onClick={this.copyCode}
+              className={buttonClassName.join(' ')}
+            >
+              Copy
+          </button>
+          </div>
+        </div>
+      );
+    }
+
+    const viewers = [createViewer()];
+
+    if (expanded) {
+      viewers.unshift(
+        <div
+          key={_.uniqueId('output-')}
+          className="expanded-code-wrapper"
+        >
+          {createViewer(true)}
+        </div>
+      );
+    }
+
+    return viewers;
   }
 }
 
@@ -210,15 +245,13 @@ class CodeViewer extends React.Component {
   constructor(props) {
     super(props);
     
-    window.selectText = selectText;
+    // window.selectText = selectText;
 
     this.state = { selecting: false };
 
     this.disableOtherSelect = this.disableOtherSelect.bind(this);
     this.enableOtherSelect = this.enableOtherSelect.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleFocus = this.handleFocus.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
     this.renderCSS = this.renderCSS.bind(this);
   }
 
@@ -231,16 +264,18 @@ class CodeViewer extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return nextProps.code !== this.props.code;
+    return nextProps.code !== this.props.code || nextProps.showBrowserPrefixes !== this.props.showBrowserPrefixes;
   }
 
   disableOtherSelect() {
-    this.setState({ selecting: true });
+    // this.setState({ selecting: true });
+    // this.selecting = true;
     document.body.classList.add('no-select');
   }
 
   enableOtherSelect() {
-    this.setState({ selecting: false });
+    // this.setState({ selecting: false });
+    // this.selecting = false;
     document.body.classList.remove('no-select');
   }
 
@@ -253,14 +288,6 @@ class CodeViewer extends React.Component {
         selectText(code);
       }
     }
-  }
-  
-  handleFocus() {
-    setGlobalVariable(true, 'outputIsFocused');
-  }
-
-  handleBlur() {
-    setGlobalVariable(false, 'outputIsFocused');
   }
 
   renderCSS({ rows, stylesheet, useInlineStyles }) {
@@ -288,7 +315,7 @@ class CodeViewer extends React.Component {
       className.push('selecting-code');
     }
 
-    const { disableEditor, hideSelector, code } = this.props;
+    const { language, disableEditor, hideSelector, code, onFocus, onBlur } = this.props;
 
     if (disableEditor) {
       wrapperClassName.push('disabled');
@@ -298,19 +325,19 @@ class CodeViewer extends React.Component {
       wrapperClassName.push('hide-selector');
     }
 
-    const renderer = this.props.language.toLowerCase() === 'css' ? this.renderCSS : null;
+    const renderer = language.toLowerCase() === 'css' ? this.renderCSS : null;
 
     return (
       <div
         className={wrapperClassName.join(' ')}
         onMouseDown={this.disableOtherSelect}
         onKeyDown={this.handleKeyDown}
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
+        onFocus={onFocus}
+        onBlur={onBlur}
         tabIndex="0"
       >
         <SyntaxHighlighter
-          language={this.props.language}
+          language={language}
           showLineNumbers={true}
           useInlineStyles={false}
           codeTagProps={{ className: className.join(' ') }}

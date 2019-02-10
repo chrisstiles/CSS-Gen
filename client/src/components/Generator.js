@@ -43,10 +43,10 @@ class Generator extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.handleKeydown, false);
-    document.addEventListener('keyup', this.handleKeyup, false);
-    document.addEventListener('keydown', this.props.handleKeydown, false);
-    document.addEventListener('keyup', this.props.handleKeyup, false);
+    // document.addEventListener('keydown', this.handleKeydown, false);
+    // document.addEventListener('keyup', this.handleKeyup, false);
+    // document.addEventListener('keydown', this.props.handleKeydown, false);
+    // document.addEventListener('keyup', this.props.handleKeyup, false);
 
     if (this.props.onWrapperMount) {
       this.props.onWrapperMount(this.generatorWrapper);
@@ -56,10 +56,10 @@ class Generator extends React.Component {
   }
 
   componentWillUnmount(){
-    document.removeEventListener('keydown', this.handleKeydown, false);
-    document.removeEventListener('keyup', this.handleKeyup, false);
-    document.removeEventListener('keydown', this.props.handleKeydown, false);
-    document.removeEventListener('keyup', this.props.handleKeyup, false);
+    // document.removeEventListener('keydown', this.handleKeydown, false);
+    // document.removeEventListener('keyup', this.handleKeyup, false);
+    // document.removeEventListener('keydown', this.props.handleKeydown, false);
+    // document.removeEventListener('keyup', this.props.handleKeyup, false);
   }
 
   componentWillReceiveProps(newProps) {
@@ -107,8 +107,8 @@ class Generator extends React.Component {
   }
 
   render() {
-    const cssClasses = `${this.props.className}${this.state.keys}`;
     const { 
+      className = '',
       title, 
       heading, 
       intro, 
@@ -132,7 +132,7 @@ class Generator extends React.Component {
       >
         <div 
           id="generator-wrapper"
-          className={cssClasses}
+          className={className}
         >
           <div 
             id="generator" 
