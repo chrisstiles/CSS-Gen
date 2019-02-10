@@ -5,7 +5,8 @@
   
   .presets {
     display:flex;
-    padding:15px;
+    padding:12px 0 0 12px;
+    flex-wrap:wrap;
   }
 
   .preset {
@@ -20,7 +21,8 @@
     align-items: center;
     justify-content: center;
     transition:all .1s;
-    margin-right:15px;
+    margin-right:12px;
+    margin-bottom:12px;
 
     &:hover {
       transform:scale(1.05);

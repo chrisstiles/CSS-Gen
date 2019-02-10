@@ -7,10 +7,14 @@
 	background-color: #fff;
 	border-radius: 7px;
 	z-index: 4000;
-	min-height: 485px;
+	height:calc(100vh - 260px);
+	max-height:600px;
 	width: 260px;
 	box-shadow: 0px 9px 29px 0px rgba(184, 185, 218, 0.36);
 	border:1px solid rgba($accent-color, .23);
+	display:flex;
+	flex-direction: column;
+	overflow:hidden;
 
 	.logo {
 		margin:20px 30px 15px 30px;
@@ -48,8 +52,8 @@
 }
 
 #page-links {
-	background-color:#fcfcfc;
-	padding:30px 0;
+	background-color:#fbfbfb;
+	padding:20px 15px;
 
 	h2 {
 		text-align:center;
@@ -57,33 +61,35 @@
     font-weight: 600;
     text-transform: uppercase;
     margin-bottom:15px;
-    color:#a4a4a4;
+    color:#9c9c9c;
 	}
 
 	a {
 		text-decoration:none;
 		color:$dark-grey;
 		display:block;
-		line-height:1.2em;
-		padding:7px 30px 8px 58px;
+		line-height:1;
+		padding:8px 15px 8px 43px;
+		margin-bottom:2px;
 		position:relative;
-		font-size:17px;
-		font-weight:500;
+		font-size:15px;
+		font-weight:600;
+		border-radius:2px;
+
+		&:hover {
+			background-color:#f3f3f3;
+		}
 
 		&:before {
 			content:"";
 			position:absolute;
 			width: 15px;
 			height: 15px;
-			left:31px;
-			top:9px;
+			left:16px;
+			top:8px;
 			background-size:contain;
 			background-repeat:no-repeat;
 			filter:grayscale(1);
-		}
-
-		&:hover {
-			opacity:.6;
 		}
 
 		&.current {
@@ -98,15 +104,15 @@
 		&.box-shadow:before {
 			width: 17px;
 			height: 17px;
-			top:8px;
-			left:30px;
+			top:7px;
+			left:15px;
 			background-image:url('../images/nav-icons/box-shadow.svg');
 		}
 
 		&.border-radius:before {
 			width: 14px;
 			height: 14px;
-			top:10px;
+			top:8px;
 			background-image:url('../images/nav-icons/border-radius.svg');
 		}
 
@@ -116,9 +122,9 @@
 
 		&.text-shadow:before {
 			background-image:url('../images/nav-icons/text-shadow.svg');
-			width: 17px;
-			height: 17px;
-			left:32px;
+			width: 16px;
+			height: 16px;
+			left:18px;
 		}
 	}
 }
