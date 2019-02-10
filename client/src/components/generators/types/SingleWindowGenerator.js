@@ -233,6 +233,7 @@ class SingleWindowGenerator extends React.Component {
       heading, 
       intro, 
       className, 
+      multipleOutputs,
       globalState, 
       hasBrowserPrefixes 
     } = this.props;
@@ -246,6 +247,7 @@ class SingleWindowGenerator extends React.Component {
       heading, 
       intro, 
       className, 
+      multipleOutputs,
       globalState, 
       hasBrowserPrefixes 
     };

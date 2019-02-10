@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'underscore';
-import { sameOrChild, getGlobalVariable, getFullHeight } from '../../../util/helpers';
+import { sameOrChild, getGlobalVariable, getFullHeight, clearSelection } from '../../../util/helpers';
 
 class FlexItem extends React.Component {
   constructor(props) {
@@ -76,14 +76,14 @@ class FlexboxPreview extends React.Component {
   componentDidMount() {
     this.setContainerHeight();
 
-    document.addEventListener('click', this.deselectChildElement);
+    document.addEventListener('mousedown', this.deselectChildElement);
     document.addEventListener('keydown', this.handleKeyDown);
     document.addEventListener('keyup', this.handleKeyUp);
     window.addEventListener('resize', this.setContainerHeight);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.deselectChildElement);
+    document.removeEventListener('mousedown', this.deselectChildElement);
     document.removeEventListener('keydown', this.handleKeyDown);
     document.removeEventListener('keyup', this.handleKeyUp);
     window.removeEventListener('resize', this.setContainerHeight);
@@ -133,11 +133,11 @@ class FlexboxPreview extends React.Component {
     }
     
     const isEscapeKey = event.key === 'Escape';
-    const isClick = event.type === 'click';
+    const isMouseEvent = event.type === 'click' || event.type === 'mousedown';
     const isFlexItem = event.target.classList.contains('item');
     const isSidebar = sameOrChild(event.target, '#sidebar');
 
-    if (isEscapeKey || (isClick && !isFlexItem && !isSidebar)) {
+    if (isEscapeKey || (isMouseEvent && !isFlexItem && !isSidebar)) {
       this.props.updateGenerator({ selectedIndexes: [] });
     }
   }
@@ -196,6 +196,9 @@ class FlexboxPreview extends React.Component {
     }
 
     this.props.updateGenerator({ selectedIndexes, mostRecentIndex: this.mostRecentIndex });
+
+    // Clear any previously selected text
+    clearSelection();
   }
 
   render() {

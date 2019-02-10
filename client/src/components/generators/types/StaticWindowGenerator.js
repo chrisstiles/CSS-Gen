@@ -127,6 +127,7 @@ class StaticWindowGenerator extends React.Component {
 			heading, 
 			intro, 
 			className, 
+			multipleOutputs,
 			globalState 
 		} = this.props;
 
@@ -139,6 +140,7 @@ class StaticWindowGenerator extends React.Component {
 			heading, 
 			intro, 
 			className, 
+			multipleOutputs,
 			globalState 
 		};
 

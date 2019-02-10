@@ -115,6 +115,7 @@ class Generator extends React.Component {
       generatorState, 
       hasBrowserPrefixes, 
       previewState = '', 
+      multipleOutputs,
       renderOutput 
     } = this.props;
     const { 
@@ -156,6 +157,7 @@ class Generator extends React.Component {
               showBrowserPrefixes={showBrowserPrefixes}
               previewCSS={previewState.previewCSS}
               hasBrowserPrefixes={hasBrowserPrefixes}
+              multipleOutputs={multipleOutputs}
             />
           </div>
         </div>

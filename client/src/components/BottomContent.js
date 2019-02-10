@@ -10,8 +10,28 @@ class BottomContent extends React.Component {
       hasBrowserPrefixes, 
       showBrowserPrefixes,
       renderOutput,
+      multipleOutputs,
       renderPresets
     } = this.props;
+
+    const outputWrapperProps = {
+      id: 'generator-output'
+    };
+
+    if (multipleOutputs) {
+      outputWrapperProps.className = 'multiple';
+    }
+
+    const output = renderOutput ? renderOutput(previewCSS) : (
+      <CodeOutput
+        language="css"
+        outputCode={outputCode}
+        outputPreviewStyles={outputPreviewStyles}
+        previewCSS={previewCSS}
+        hasBrowserPrefixes={hasBrowserPrefixes}
+        showBrowserPrefixes={showBrowserPrefixes}
+      />
+    );
 
     return (
       <div id="bottom-content-wrapper">
@@ -22,19 +42,8 @@ class BottomContent extends React.Component {
             Footer content goes here
           </footer>
         </div>
-        <div id="generator-output">
-          {renderOutput ?
-            renderOutput(previewCSS)
-            :
-            <CodeOutput
-              language="css"
-              outputCode={outputCode}
-              outputPreviewStyles={outputPreviewStyles}
-              previewCSS={previewCSS}
-              hasBrowserPrefixes={hasBrowserPrefixes}
-              showBrowserPrefixes={showBrowserPrefixes}
-            />
-          }
+        <div {...outputWrapperProps}>
+          {output}
         </div>
       </div>
     );

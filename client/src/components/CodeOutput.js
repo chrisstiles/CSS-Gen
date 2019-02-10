@@ -11,7 +11,6 @@ import { registerLanguage } from 'react-syntax-highlighter/dist/light';
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light';
 import cssHighlighter from 'react-syntax-highlighter/dist/languages/hljs/css';
 import htmlHighlighter from 'react-syntax-highlighter/dist/languages/hljs/xml';
-import _ from 'underscore';
 
 registerLanguage('css', cssHighlighter);
 registerLanguage('html', htmlHighlighter);
@@ -19,7 +18,7 @@ registerLanguage('html', htmlHighlighter);
 // Only one code viewer can be expanded at a time
 let currentExpandedOutput = null;
 
-class CodeOutput extends React.Component {
+class CodeOutput extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -54,12 +53,8 @@ class CodeOutput extends React.Component {
       this.getCode(this.props);
     }
   }
-  
-  shouldComponentUpdate() {
-    return !this.hasFocus;
-  }
 
-  handleFocus() {
+  handleFocus(event) {
     this.hasFocus = true;
     setGlobalVariable(true, 'outputIsFocused');
   }
@@ -76,12 +71,16 @@ class CodeOutput extends React.Component {
 
     currentExpandedOutput = this;
 
-    this.setState({ expanded: true });
+    this.setState({ expanded: true, selecting: false });
+
+    document.body.classList.remove('no-select');
   }
 
   close() {
     currentExpandedOutput = null;
-    this.setState({ expanded: false });
+    this.setState({ expanded: false, selecting: false });
+
+    document.body.classList.remove('no-select');
   }
 
   getCode(newProps) {
@@ -189,13 +188,16 @@ class CodeOutput extends React.Component {
 
     const createViewer = isExpanded => {
       const handleClick = isExpanded ? this.close : this.expand;
-      const key = isExpanded ? `${language}-expanded` : `${language}-collapsed`;
+      const outputWrapperProps = {
+        className: wrapperClassName.join(' ')
+      };
 
-      return (
-        <div
-          className={wrapperClassName.join(' ')}
-          key={key}
-        >
+      if (!isExpanded) {
+        outputWrapperProps.key = `${language}-collapsed`;
+      }
+
+      const output = (
+        <div {...outputWrapperProps}>
           <div className="bottom-title color">
             <span>Code Output</span>
             <div
@@ -208,6 +210,7 @@ class CodeOutput extends React.Component {
             code={outputCode}
             hideSelector={this.hideSelector}
             disableEditor={disableEditor}
+            isExpanded={expanded}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
           />
@@ -222,19 +225,25 @@ class CodeOutput extends React.Component {
           </div>
         </div>
       );
+
+      if (!isExpanded) {
+        return output;
+      }
+
+      return (
+        <div
+          className="expanded-code-wrapper"
+          key={`${language}-expanded`}
+        >
+          {output}
+        </div>
+      );
     }
 
     const viewers = [createViewer()];
 
     if (expanded) {
-      viewers.unshift(
-        <div
-          key={_.uniqueId('output-')}
-          className="expanded-code-wrapper"
-        >
-          {createViewer(true)}
-        </div>
-      );
+      viewers.unshift(createViewer(true));
     }
 
     return viewers;
@@ -245,8 +254,6 @@ class CodeViewer extends React.Component {
   constructor(props) {
     super(props);
     
-    // window.selectText = selectText;
-
     this.state = { selecting: false };
 
     this.disableOtherSelect = this.disableOtherSelect.bind(this);
@@ -263,19 +270,13 @@ class CodeViewer extends React.Component {
     document.removeEventListener('mouseup', this.enableOtherSelect);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.code !== this.props.code || nextProps.showBrowserPrefixes !== this.props.showBrowserPrefixes;
-  }
-
   disableOtherSelect() {
-    // this.setState({ selecting: true });
-    // this.selecting = true;
+    this.setState({ selecting: true });
     document.body.classList.add('no-select');
   }
 
   enableOtherSelect() {
-    // this.setState({ selecting: false });
-    // this.selecting = false;
+    this.setState({ selecting: false });
     document.body.classList.remove('no-select');
   }
 
@@ -310,12 +311,12 @@ class CodeViewer extends React.Component {
   render() {
     const wrapperClassName = ['language-wrapper'];
     const className = ['output-code'];
+    const { language, disableEditor, hideSelector, code, isExpanded, onFocus, onBlur } = this.props;
 
-    if (this.state.selecting) {
+    if (this.state.selecting || isExpanded) {
+      wrapperClassName.push('selecting-code');
       className.push('selecting-code');
     }
-
-    const { language, disableEditor, hideSelector, code, onFocus, onBlur } = this.props;
 
     if (disableEditor) {
       wrapperClassName.push('disabled');

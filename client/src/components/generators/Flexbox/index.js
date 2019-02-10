@@ -173,6 +173,9 @@ class Flexbox extends React.Component {
         className="flexbox"
         heading="CSS Flexbox Generator"
 
+        // Generator settings
+        multipleOutputs={true}
+
         // Generator state
         generatorState={this.generatorState}
         generatorDefaultState={Flexbox.defaultState}
