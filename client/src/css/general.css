@@ -671,9 +671,10 @@ p:last-child {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    min-height: 40px; }
+    min-height: 40px;
+    background: #4834d4;
+    background: linear-gradient(to right, #4834d4 0%, #5b49d8 100%); }
     .output-wrapper .bottom-title:after {
-      background-color: #3bb74e;
       font-size: 11px;
       border-radius: 2px;
       line-height: 22px;
@@ -682,10 +683,12 @@ p:last-child {
       top: 9px;
       right: 9px; }
   .output-wrapper.css .bottom-title:after {
-    content: "CSS"; }
+    content: "CSS";
+    background-color: #1ca8e0; }
   .output-wrapper.html .bottom-title:after {
     content: "HTML";
-    padding-right: 10px; }
+    padding-right: 10px;
+    background-color: #e34c26; }
   .output-wrapper .bottom {
     padding: 12px;
     display: flex;
