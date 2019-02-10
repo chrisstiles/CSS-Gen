@@ -14,22 +14,27 @@ class BottomContent extends React.Component {
     } = this.props;
 
     return (
-      <div id="bottom-content">
-        {renderPresets()}
-        <div id="generator-output">
-          {renderOutput ? 
-            renderOutput(previewCSS)
-          : 
-            <CodeOutput
-              language="css"
-              outputCode={outputCode}
-              outputPreviewStyles={outputPreviewStyles}
-              previewCSS={previewCSS}
-              hasBrowserPrefixes={hasBrowserPrefixes}
-              showBrowserPrefixes={showBrowserPrefixes}
-            />
-          }
+      <div id="bottom-content-wrapper">
+        <div id="bottom-content">
+          {renderPresets()}
+          <div id="generator-output">
+            {renderOutput ?
+              renderOutput(previewCSS)
+              :
+              <CodeOutput
+                language="css"
+                outputCode={outputCode}
+                outputPreviewStyles={outputPreviewStyles}
+                previewCSS={previewCSS}
+                hasBrowserPrefixes={hasBrowserPrefixes}
+                showBrowserPrefixes={showBrowserPrefixes}
+              />
+            }
+          </div>
         </div>
+        <footer id="main-footer">
+          Footer content goes here
+        </footer>
       </div>
     );
   }

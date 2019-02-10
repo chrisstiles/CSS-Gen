@@ -52,7 +52,7 @@ class BoxShadow extends React.Component {
 
   render() {
     const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
-
+    
     return (
       <SingleWindowGenerator
         // Text content

@@ -6,11 +6,13 @@
     .title {
       margin-left:8px;
       margin-top:-1px;
+      line-height:1;
       order:2;
     }
 
     .switch-wrapper {
       margin-top:0;
+      flex-shrink:0;
     }
   }
 
