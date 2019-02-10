@@ -7,12 +7,16 @@ import * as clipboard from 'clipboard-polyfill/build/clipboard-polyfill.promise'
 import Toggle from './input/Toggle';
 import { addNotification, getNotificationTypes, updateGlobalState, getGlobalState, selectText, setGlobalVariable } from '../util/helpers';
 import createElement from 'react-syntax-highlighter/dist/create-element';
-import { default as SyntaxHighlighter, registerLanguage } from 'react-syntax-highlighter/dist/light';
+import { registerLanguage } from 'react-syntax-highlighter/dist/light';
+import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light';
 import cssHighlighter from 'react-syntax-highlighter/dist/languages/hljs/css';
 import htmlHighlighter from 'react-syntax-highlighter/dist/languages/hljs/xml';
 
 registerLanguage('css', cssHighlighter);
 registerLanguage('html', htmlHighlighter);
+
+// Only one code viewer can be expanded at a time
+let currentExpandedOutput = null;
 
 class CodeOutput extends React.Component {
   constructor(props) {
@@ -21,9 +25,12 @@ class CodeOutput extends React.Component {
     this.state = {
       outputCode: '',
       copyCode: '',
-      disableEditor: false
+      disableEditor: false,
+      expanded: false
     };
 
+    this.expand = this.expand.bind(this);
+    this.close = this.close.bind(this);
     this.getCode = this.getCode.bind(this);
     this.getCSS = this.getCSS.bind(this);
     this.copyCode = this.copyCode.bind(this);
@@ -42,8 +49,25 @@ class CodeOutput extends React.Component {
     this.getCode(code);
   }
 
-  componentWillReceiveProps(newProps) {
-    this.getCode(newProps);
+  componentDidUpdate(prevProps) {
+    if (prevProps.outputCode !== this.props.outputCode) {
+      this.getCode(this.props);
+    }
+  }
+
+  expand() {
+    if (currentExpandedOutput) {
+      currentExpandedOutput.close();
+    }
+
+    currentExpandedOutput = this;
+
+    this.setState({ expanded: true });
+  }
+
+  close() {
+    currentExpandedOutput = null;
+    this.setState({ expanded: false });
   }
 
   getCode(props) {
@@ -134,22 +158,34 @@ class CodeOutput extends React.Component {
   }
 
   render() {
+    const { disableEditor, outputCode, expanded } = this.state;
     const wrapperClassName = ['output-wrapper', this.props.language.toLowerCase()];
     const buttonClassName = ['button', 'small'];
 
-    if (this.state.disableEditor) {
+    if (disableEditor) {
       buttonClassName.push('disabled');
     }
 
+    if (expanded) {
+      wrapperClassName.push('expanded');
+    }
+
+    const viewer = (
+      <CodeViewer
+        language={this.props.language}
+        code={outputCode}
+        hideSelector={this.hideSelector}
+        disableEditor={disableEditor}
+      />
+    );
+
     return (
       <div className={wrapperClassName.join(' ')}>
-        <div className="bottom-title color">Code Output</div>
-        <CodeViewer
-          language={this.props.language}
-          code={this.state.outputCode}
-          hideSelector={this.hideSelector}
-          disableEditor={this.state.disableEditor}
-        />
+        <div className="bottom-title color">
+          <span>Code Output</span>
+          <div className="expand-toggle"></div>
+        </div>
+        {viewer}
         <div className="bottom">
           {this.renderPrefixesToggle()}
           <button
@@ -159,6 +195,12 @@ class CodeOutput extends React.Component {
             Copy
           </button>
         </div>
+
+        {expanded ? 
+          <div className="expanded-code-wrapper">
+            {viewer}
+          </div>
+        : null}
       </div>
     );
   }
@@ -178,15 +220,6 @@ class CodeViewer extends React.Component {
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.renderCSS = this.renderCSS.bind(this);
-
-    // Prevent syntax highlighter from cluttering console log
-    const log = console.log;
-    console.log = function() {
-      const args = Array.prototype.slice.call(arguments);
-      if (args[1] !== 'conor') {
-        log.apply(this, args);
-      }
-    }
   }
 
   componentDidMount() {
@@ -195,6 +228,10 @@ class CodeViewer extends React.Component {
 
   componentWillUnmount() {
     document.removeEventListener('mouseup', this.enableOtherSelect);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return nextProps.code !== this.props.code;
   }
 
   disableOtherSelect() {
@@ -231,7 +268,7 @@ class CodeViewer extends React.Component {
       rows = rows.slice(1, -1);
     }
 
-    return rows.map((node, i) => {
+    const code = rows.map((node, i) => {
       return createElement({
         node,
         stylesheet,
@@ -239,6 +276,8 @@ class CodeViewer extends React.Component {
         key: `code-segement${i}`
       });
     });
+
+    return code;
   }
 
   render() {
