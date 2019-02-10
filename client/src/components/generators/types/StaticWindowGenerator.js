@@ -65,7 +65,6 @@ class StaticWindowGenerator extends React.Component {
 		}
 
 		const { editorBackgroundColor: backgroundColor, wrapperHeight} = this.state;
-		// const backgroundColor = showEditorBackgroundColor ? editorBackgroundColor : 'transparent';
 
 		return (
 			<StaticWindowPreview 
@@ -118,13 +117,35 @@ class StaticWindowGenerator extends React.Component {
 	}
 
 	render() {
-		const { generatorState, renderInputs, renderPresets, title, heading, intro, className, globalState } = this.props;
-		const props = { generatorState, renderInputs, renderPresets, title, heading, intro, className, globalState };
+		const { 
+			generatorState, 
+			renderInputs, 
+			renderPresets, 
+			renderOutput,
+			title, 
+			heading, 
+			intro, 
+			className, 
+			globalState 
+		} = this.props;
+
+		const props = { 
+			generatorState, 
+			renderInputs, 
+			renderPresets, 
+			renderOutput,
+			title, 
+			heading, 
+			intro, 
+			className, 
+			globalState 
+		};
 
 		return (
 			<Generator
 				renderPreview={this.renderPreview}
 				renderToolbar={this.renderToolbar}
+				renderOutput={this.renderOutput}
 				previewState={this.state}
 				{...props}
 			/>

@@ -1,6 +1,7 @@
 import React from 'react';
 import Page from './Page';
 import Sidebar from './Sidebar';
+import BottomContent from './BottomContent';
 import LoadingSpinner from './LoadingSpinner';
 import _ from 'underscore';
 
@@ -9,8 +10,7 @@ class Generator extends React.Component {
     super(props);
 
     this.state = { 
-      keys: '',
-      outputCSS: ''
+      keys: ''
     };
 
     this.handleKeydown = this.handleKeydown.bind(this);
@@ -105,8 +105,20 @@ class Generator extends React.Component {
 
   render() {
     const cssClasses = `${this.props.className}${this.state.keys}`;
-    const { title, heading, intro, generatorState, hasBrowserPrefixes, previewState = '' } = this.props;
-    const { outputPreviewStyles, showBrowserPrefixes, loading } = this.props.globalState;
+    const { 
+      title, 
+      heading, 
+      intro, 
+      generatorState, 
+      hasBrowserPrefixes, 
+      previewState = '', 
+      renderOutput 
+    } = this.props;
+    const { 
+      outputPreviewStyles, 
+      showBrowserPrefixes, 
+      loading 
+    } = this.props.globalState;
 
     return (
       <Page
@@ -130,16 +142,18 @@ class Generator extends React.Component {
               </div>
             : null}
             {this.props.renderPreview()}
-            <Sidebar
-              outputCSS={generatorState.css.output}
+            <Sidebar>
+              {this.props.renderInputs()}
+            </Sidebar>
+            <BottomContent 
+              renderOutput={renderOutput}
+              renderPresets={this.renderPresets} 
+              outputCode={generatorState.css.output}
               outputPreviewStyles={outputPreviewStyles}
               showBrowserPrefixes={showBrowserPrefixes}
               previewCSS={previewState.previewCSS}
               hasBrowserPrefixes={hasBrowserPrefixes}
-            >
-              {this.props.renderInputs()}
-            </Sidebar>
-            {this.renderPresets()}
+            />
           </div>
         </div>
       </Page>

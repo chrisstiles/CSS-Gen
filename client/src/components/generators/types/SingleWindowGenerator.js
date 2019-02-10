@@ -224,8 +224,32 @@ class SingleWindowGenerator extends React.Component {
   }
 
   render() {
-    const { generatorState, renderInputs, renderPresets, title, heading, intro, className, globalState, hasBrowserPrefixes } = this.props;
-    const props = { generatorState, renderInputs, renderPresets, title, heading, intro, className, globalState, hasBrowserPrefixes };
+    const { 
+      generatorState, 
+      renderInputs, 
+      renderPresets, 
+      renderOutput,
+      title, 
+      heading, 
+      intro, 
+      className, 
+      globalState, 
+      hasBrowserPrefixes 
+    } = this.props;
+
+    const props = { 
+      generatorState, 
+      renderInputs, 
+      renderPresets, 
+      renderOutput,
+      title, 
+      heading, 
+      intro, 
+      className, 
+      globalState, 
+      hasBrowserPrefixes 
+    };
+
     const previewState = _.extend({}, this.state, { previewCSS: this.generatePreviewCSS() });
     
     return (

@@ -1,22 +1,7 @@
 @import './_variables.scss';
 
-#preset-bar {
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  background-color: rgba(247, 247, 247, 0.8);
-  border-top: 1px solid #dedede;
-
-  .title {
-    font-size: 14px;
-    line-height: 1;
-    font-weight: 600;
-    padding: 6px 15px;
-    color: #828282;
-    background-color: rgba(229, 229, 229, 0.24);
-    border-bottom: 1px solid #e7e7e7;
-  }
+#presets-wrapper {
+  flex-grow:1;
   
   .presets {
     display:flex;

@@ -2,6 +2,7 @@ import React from 'react';
 import StaticWindowGenerator from '../types/StaticWindowGenerator';
 import FlexboxPreview from './FlexboxPreview';
 import FlexboxInputs from './FlexboxInputs';
+import FlexboxOutput from './FlexboxOutput';
 import { getState } from '../../../util/helpers';
 import Toggle from '../../input/Toggle';
 import ColorPicker from '../../input/ColorPicker';
@@ -41,6 +42,7 @@ class Flexbox extends React.Component {
     this.renderInputs = this.renderInputs.bind(this);
     this.renderToolbarItems = this.renderToolbarItems.bind(this);
     this.renderPreview = this.renderPreview.bind(this);
+    this.renderOutput = this.renderOutput.bind(this);
   }
 
   updateGenerator(state) {
@@ -82,6 +84,16 @@ class Flexbox extends React.Component {
         updateGenerator={this.updateGenerator}
         addChildElement={this.addChildElement}
         {...this.state}
+      />
+    );
+  }
+
+  renderOutput(previewCSS) {
+    return (
+      <FlexboxOutput
+        outputCSS={this.generatorState.css.output}
+        globalState={this.props.globalState}
+        previewCSS={previewCSS}
       />
     );
   }
@@ -152,7 +164,7 @@ class Flexbox extends React.Component {
 
   render() {
     // const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
-    const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
+    this.generatorState = _.extend({}, this.state, { css: this.generateCSS() });
 
     return (
       <StaticWindowGenerator
@@ -162,7 +174,7 @@ class Flexbox extends React.Component {
         heading="CSS Flexbox Generator"
 
         // Generator state
-        generatorState={generatorState}
+        generatorState={this.generatorState}
         generatorDefaultState={Flexbox.defaultState}
         globalState={this.props.globalState}
 
@@ -170,6 +182,7 @@ class Flexbox extends React.Component {
         renderInputs={this.renderInputs}
         renderToolbarItems={this.renderToolbarItems}
         renderPreview={this.renderPreview}
+        renderOutput={this.renderOutput}
 
         // Generator methods
         updateGenerator={this.updateGenerator}

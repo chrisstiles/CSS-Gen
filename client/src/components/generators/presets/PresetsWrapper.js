@@ -2,7 +2,7 @@ import React from 'react';
 import Preset from './Preset';
 import _ from 'underscore';
 
-class PresetBar extends React.Component {
+class PresetsWrapper extends React.Component {
   render() {
     const presetComponents = _.map(this.props.presets, ({ ...props }, index) => {
       // Using the index as the key doesn't matter in this case 
@@ -18,8 +18,8 @@ class PresetBar extends React.Component {
     });
 
     return (
-      <div id="preset-bar" className="subheader">
-        <div className="title">Presets</div>
+      <div id="presets-wrapper">
+        <div className="bottom-title">Presets</div>
         <div className="presets">
           {presetComponents}
         </div>
@@ -28,4 +28,4 @@ class PresetBar extends React.Component {
   }
 }
 
-export default PresetBar;
+export default PresetsWrapper;

@@ -2,50 +2,65 @@ import React from 'react';
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import prettify from 'postcss-prettify';
+import prettyHTML from 'pretty';
 import * as clipboard from 'clipboard-polyfill/build/clipboard-polyfill.promise'
 import Toggle from './input/Toggle';
 import { addNotification, getNotificationTypes, updateGlobalState, getGlobalState, selectText, setGlobalVariable } from '../util/helpers';
 import createElement from 'react-syntax-highlighter/dist/create-element';
 import { default as SyntaxHighlighter, registerLanguage } from 'react-syntax-highlighter/dist/light';
 import cssHighlighter from 'react-syntax-highlighter/dist/languages/hljs/css';
+import htmlHighlighter from 'react-syntax-highlighter/dist/languages/hljs/xml';
 
 registerLanguage('css', cssHighlighter);
+registerLanguage('html', htmlHighlighter);
 
 class CodeOutput extends React.Component {
   constructor(props) {
     super(props);
 
-    this.getCSS = this.getCSS.bind(this);
-    this.copyCSS = this.copyCSS.bind(this);
-
-    this.state = { 
-      outputCSS: '',
-      copyCSS: '',
+    this.state = {
+      outputCode: '',
+      copyCode: '',
       disableEditor: false
     };
+
+    this.getCode = this.getCode.bind(this);
+    this.getCSS = this.getCSS.bind(this);
+    this.copyCode = this.copyCode.bind(this);
 
     this.canShowCopyNotification = true;
     this.handleToggleChange = this.handleToggleChange.bind(this);
   }
 
   componentWillMount() {
-    const css = { outputCSS: this.props.outputCSS }
+    const code = { outputCode: this.props.outputCode }
 
-    css.previewCSS = this.props.previewCSS;
-    css.outputPreviewStyles = this.props.outputPreviewStyles;
+    code.previewCSS = this.props.previewCSS;
+    code.outputPreviewStyles = this.props.outputPreviewStyles;
 
-    this.getCSS(css);
+
+    this.getCode(code);
   }
 
   componentWillReceiveProps(newProps) {
-    this.getCSS(newProps);
+    this.getCode(newProps);
   }
 
-  getCSS(newProps) {
-    var css = newProps.outputCSS;
+  getCode(props) {
+    if (this.props.language.toLowerCase() === 'css') {
+      this.getCSS(props);
+    } else {
+      const outputCode = prettyHTML(props.outputCode);
 
-    if (newProps.outputPreviewStyles && newProps.previewCSS) {
-      css += newProps.previewCSS;
+      this.setState({ outputCode, copyCode: outputCode, disableEditor: !outputCode });
+    }
+  }
+
+  getCSS(props) {
+    let css = props.outputCode;
+
+    if (props.outputPreviewStyles && props.previewCSS) {
+      css += props.previewCSS;
     }
 
     // Disable editor if no CSS is passed
@@ -60,38 +75,36 @@ class CodeOutput extends React.Component {
       plugins.unshift(autoprefixer({ browsers: ['ie >= 8', '> 4%'] }));
     }
 
-    const _this = this;
 
     postcss(plugins)
       .process(css, { from: undefined })
-      .then(function (result) {
-        result.warnings().forEach(function (warn) {
-            console.warn(warn.toString());
+      .then(result => {
+        result.warnings().forEach(warn => {
+          console.warn(warn.toString());
         });
 
-        let { css: outputCSS } = result;
-        const copyCSS = outputCSS;
+        let { css: outputCode } = result;
+        const copyCode = outputCode;
 
         // Use correct syntax highlighting even if we don't have 
         // a CSS selector present in output string
         if (css.indexOf('{') === -1) {
-          _this.hideSelector = true;
-          outputCSS = `.selector {\n${outputCSS}\n}`;
+          this.hideSelector = true;
+          outputCode = `.selector {\n${outputCode}\n}`;
         } else {
-          _this.hideSelector = false;
+          this.hideSelector = false;
         }
 
-        _this.setState({ outputCSS, copyCSS, disableEditor });
-        
-    });
+        this.setState({ outputCode, copyCode, disableEditor });
+      });
   }
 
-  copyCSS() {
-    if (!this.state.copyCSS) {
+  copyCode() {
+    if (!this.state.copyCode) {
       return;
     }
 
-    clipboard.writeText(this.state.copyCSS).then((text, error) => {
+    clipboard.writeText(this.state.copyCode).then((text, error) => {
       if (!error) {
         addNotification(getNotificationTypes().success, 'Copied!');
       }
@@ -103,44 +116,49 @@ class CodeOutput extends React.Component {
   }
 
   renderPrefixesToggle() {
-    if (this.props.hasBrowserPrefixes) {
-      return (
-        <div className="field-wrapper left small">
-          <Toggle
-            onChange={this.handleToggleChange}
-            label="Browser Prefixes"
-            checked={this.props.showBrowserPrefixes}
-          />
-        </div>
-      );
+    if (this.props.language.toLowerCase() !== 'css' || !this.props.hasBrowserPrefixes) {
+      return '';
     }
+
+    return (
+      <div className="field-wrapper small">
+        <Toggle
+          onChange={this.handleToggleChange}
+          label="Browser Prefixes"
+          inline={true}
+          disabled={!this.props.hasBrowserPrefixes}
+          checked={this.props.showBrowserPrefixes && this.props.hasBrowserPrefixes}
+        />
+      </div>
+    );
   }
 
   render() {
-    const buttonClassName = ['button'];
+    const wrapperClassName = ['output-wrapper', this.props.language.toLowerCase()];
+    const buttonClassName = ['button', 'small'];
 
     if (this.state.disableEditor) {
       buttonClassName.push('disabled');
     }
 
     return (
-      <div id="output-wrapper">
-        <div className="sidebar-title">Code Output</div>
-        <div id="output-code-wrapper">
-          <CodeViewer 
-            language="css" 
-            code={this.state.outputCSS}
-            hideSelector={this.hideSelector} 
-            disableEditor={this.state.disableEditor}
-          />
+      <div className={wrapperClassName.join(' ')}>
+        <div className="bottom-title color">Code Output</div>
+        <CodeViewer
+          language={this.props.language}
+          code={this.state.outputCode}
+          hideSelector={this.hideSelector}
+          disableEditor={this.state.disableEditor}
+        />
+        <div className="bottom">
+          {this.renderPrefixesToggle()}
+          <button
+            onClick={this.copyCode}
+            className={buttonClassName.join(' ')}
+          >
+            Copy
+          </button>
         </div>
-        {this.renderPrefixesToggle()}
-        <button 
-          onClick={this.copyCSS}
-          className={buttonClassName.join(' ')}
-        >
-          Copy
-        </button>
       </div>
     );
   }
@@ -241,6 +259,8 @@ class CodeViewer extends React.Component {
       wrapperClassName.push('hide-selector');
     }
 
+    const renderer = this.props.language.toLowerCase() === 'css' ? this.renderCSS : null;
+
     return (
       <div
         className={wrapperClassName.join(' ')}
@@ -255,7 +275,7 @@ class CodeViewer extends React.Component {
           showLineNumbers={true}
           useInlineStyles={false}
           codeTagProps={{ className: className.join(' ') }}
-          renderer={this.renderCSS}
+          renderer={renderer}
         >
           {code}
         </SyntaxHighlighter>

@@ -499,7 +499,6 @@ export function getHeaderHeight() {
 }
 
 export function getFullHeight() {
-	// const wrapper = document.querySelector('#generator-wrapper');
 	const headerHeight = getHeaderHeight();
 
 	if (!headerHeight) {
@@ -508,9 +507,9 @@ export function getFullHeight() {
 
 	var height = window.innerHeight - headerHeight;
 
-	const presetBar = document.querySelector('#preset-bar');
-	if (presetBar) {
-		height -= presetBar.offsetHeight;
+	const bottomContent = document.querySelector('#bottom-content');
+	if (bottomContent) {
+		height -= bottomContent.offsetHeight;
 	}
 
 	// Adjust height based on main content padding
@@ -549,11 +548,11 @@ export function getImageSize(width, height, wrapper) {
 	var maxHeight = window.innerHeight - rect.top - 30;
   const minWidth = 80;
   const minHeight = 80;
-	const presetBar = document.querySelector('#preset-bar');
+	const bottomContent = document.querySelector('#bottom-content');
 
-	// Prevent image from going behind preset bar
-	if (presetBar) {
-	  maxHeight -= presetBar.offsetHeight;
+	// Prevent image from going behind bottom content
+	if (bottomContent) {
+		maxHeight -= bottomContent.offsetHeight;
 	}
 
   // Image already fits within space without resizing

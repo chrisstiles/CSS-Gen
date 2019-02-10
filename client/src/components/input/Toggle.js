@@ -23,23 +23,31 @@ class Toggle extends React.Component {
 	}
 
 	render() {
-		var className = this.props.className || '';
+		const className = ['toggle-wrapper'];
+		
+		if (this.props.className) {
+			className.push(this.props.className);
+		}
 
 		if (this.props.disabled) {
-			className += ' disabled';
+			className.push('disabled');
+		}
+
+		if (this.props.inline) {
+			className.push('inline');
 		}
 
 		return (
-			<div className={className}>
+			<div className={className.join(' ')}>
 				{this.renderLabel()}
-				<label className="toggle-wrapper">
+				<label className="switch-wrapper">
 					<input
 						name={this.props.name}
 						type="checkbox"
 						onChange={this.handleChange}
 						checked={this.props.checked}
 					/>
-					<span className="toggle"></span>
+					<span className="switch"></span>
 				</label>
 				{this.props.children ?
 					<div className="toggle-content">{this.props.children}</div>

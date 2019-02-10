@@ -103,7 +103,7 @@
   }
 
   .active-toggle {
-    width: 67px;
+    width: 60px;
     padding-top: 6px;
 
     .toggle-wrapper {
@@ -259,7 +259,7 @@ textarea {
   background-color:$accent-color;
   font-weight:600;
   font-size: 14px;
-  padding: 12px 15px;
+  padding: 11px 25px 12px 25px;
   letter-spacing: .05em;
   line-height:1em;
   outline: none;
@@ -281,7 +281,6 @@ textarea {
 
   &.small {
     font-size:12px;
-    padding:11px 15px;
   }
 
   &.disabled {

@@ -1,46 +1,74 @@
 .toggle-wrapper {
+  &.inline {
+    display:flex;
+    align-items:center;
+
+    .title {
+      margin-left:8px;
+      margin-top:-1px;
+      order:2;
+    }
+
+    .switch-wrapper {
+      margin-top:0;
+    }
+  }
+
+  &.disabled {
+    pointer-events:none;
+
+    .title {
+      opacity:.5;
+    }
+
+    .switch-wrapper {
+      opacity:.35;
+    }
+  }
+}
+
+.switch-wrapper {
   position:relative;
   display: inline-block;
-  width: 50px;
-  height: 28px;
+  width: 44px;
+  height: 26px;
   margin-top:3px;
 
   input {
     display: none;
 
-    &:checked + .toggle {
+    &:checked + .switch {
       background-color: $accent-color;
 
       &:before {
-        transform: translateX(22px);
+        transform: translateX(18px);
       }
 
-      &:hover:before {
-        transform:translateX(22px) scale(1.08);
+      &:hover {
+        background-color:darken($accent-color, 8%);
       }
     }
 
-    &:focus + .toggle {
+    &:focus + .switch {
       box-shadow: 0 0 1px $accent-color;
     }
   }
 
-  .toggle {
+  .switch {
     position: absolute;
     cursor: pointer;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #bbbbbb;
-    transition: .15s;
+    background-color: #adadad;
     border-radius:34px;
 
     &:before {
       position: absolute;
       content: "";
-      height: 20px;
-      width: 20px;
+      height: 18px;
+      width: 18px;
       left: 4px;
       bottom: 4px;
       background-color: #fff;
@@ -48,8 +76,8 @@
       border-radius:50%;
     }
 
-    &:hover:before {
-      transform:scale(1.08);
+    &:hover {
+      background-color: #929292;
     }
   }
 

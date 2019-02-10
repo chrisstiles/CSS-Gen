@@ -1,5 +1,5 @@
 import React from 'react';
-import PresetBar from '../presets/PresetBar';
+import PresetsWrapper from '../presets/PresetsWrapper';
 
 const presets = [
 	{
@@ -53,7 +53,7 @@ const presets = [
 
 const GradientPresets = ({ setPreset }) => {
 	return (
-		<PresetBar
+		<PresetsWrapper
 		  presets={presets}
 		  setPreset={setPreset}
 		/>
