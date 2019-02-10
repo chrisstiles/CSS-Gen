@@ -3,17 +3,10 @@ import CodeOutput from '../../CodeOutput';
 
 class FlexboxOutput extends React.Component {
   render() {
-    // const {
-    //   outputCSS,
-    //   outputPreviewStyles,
-    //   previewCSS,
-    //   hasBrowserPrefixes,
-    //   showBrowserPrefixes
-    // } = this.props;
-
     const { outputCSS, previewCSS } = this.props;
     const { outputPreviewStyles, showBrowserPrefixes } = this.props.globalState;
     const codeOutputs = [];
+    
     codeOutputs.push(
       <CodeOutput
         language="css"
@@ -27,6 +20,21 @@ class FlexboxOutput extends React.Component {
     );
 
     const html = `
+      <div class="flex-container">
+        Testing
+      </div>
+      <div class="flex-container">
+        Testing
+      </div>
+      <div class="flex-container">
+        Testing
+      </div>
+      <div class="flex-container">
+        Testing
+      </div>
+      <div class="flex-container">
+        Testing
+      </div>
       <div class="flex-container">
         Testing
       </div>
