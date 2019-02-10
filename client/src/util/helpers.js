@@ -657,5 +657,9 @@ export function selectText(node) {
 	}
 }
 
+export function cloneObject(obj) {
+	return JSON.parse(JSON.stringify(obj));
+}
+
 
 
