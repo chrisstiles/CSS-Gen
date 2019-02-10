@@ -5,6 +5,7 @@ import Toggle from '../../input/Toggle';
 import Select from '../../input/Select';
 import ColorPicker from '../../input/ColorPicker';
 import { jsToCss } from '../../../util/helpers';
+import _ from 'underscore';
 
 const minRadius = 0;
 const maxRadius = 200;
@@ -12,8 +13,6 @@ const maxRadius = 200;
 class BorderRadiusInputs extends React.Component {
   constructor(props) {
     super(props);
-
-    this.handleChange = this.handleChange.bind(this);
 
     this.radiusSlider = [
       { title: 'All Corners', name: 'radius', min: minRadius, max: maxRadius, divider: true, units: props.units }
@@ -36,16 +35,9 @@ class BorderRadiusInputs extends React.Component {
         </div>
       );
 
+      this.handleChange = this.handleChange.bind(this);
+
       slider.title = title;
-    });
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.radiusSlider[0].units = newProps.units;
-
-    this.cornerSliders.forEach(slider => {
-      const key = slider.name + 'Units';
-      slider.units = newProps[key];
     });
   }
 
@@ -81,6 +73,13 @@ class BorderRadiusInputs extends React.Component {
     const styles = this.props;
     const noBorder = styles.borderStyle === 'none';
     const disabledClassName = noBorder ? ' disabled' : '';
+
+    this.radiusSlider[0].units = styles.units;
+
+    this.cornerSliders.forEach(slider => {
+      const key = slider.name + 'Units';
+      slider.units = this.props[key];
+    });
 
     return (
       <div>
