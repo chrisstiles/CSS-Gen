@@ -662,7 +662,8 @@ p:last-child {
 #bottom-content {
   display: flex;
   justify-content: flex-end;
-  flex-grow: 1; }
+  flex-grow: 1;
+  flex-direction: column; }
 
 #main-footer {
   background-color: #d4d4d4;
@@ -987,7 +988,8 @@ body.no-select .language-wrapper .selecting-code code, body.no-select .language-
   #presets-wrapper .presets {
     display: flex;
     padding: 12px 0 0 12px;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+    flex-grow: 1; }
   #presets-wrapper .preset {
     width: 60px;
     height: 60px;

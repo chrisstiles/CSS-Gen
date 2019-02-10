@@ -48,7 +48,8 @@ class CodeOutput extends React.PureComponent {
   componentDidUpdate(prevProps) {
     if (
       prevProps.outputCode !== this.props.outputCode || 
-      prevProps.showBrowserPrefixes !== this.props.showBrowserPrefixes
+      prevProps.showBrowserPrefixes !== this.props.showBrowserPrefixes ||
+      prevProps.outputPreviewStyles !== this.props.outputPreviewStyles
     ) {
       this.getCode(this.props);
     }

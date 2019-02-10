@@ -9,9 +9,10 @@ class BottomContent extends React.Component {
       previewCSS, 
       hasBrowserPrefixes, 
       showBrowserPrefixes,
-      renderOutput,
       multipleOutputs,
-      renderPresets
+      renderPreviewSettings,
+      renderPresets,
+      renderOutput
     } = this.props;
 
     const outputWrapperProps = {
@@ -21,7 +22,7 @@ class BottomContent extends React.Component {
     if (multipleOutputs) {
       outputWrapperProps.className = 'multiple';
     }
-
+    
     const output = renderOutput ? renderOutput(previewCSS) : (
       <CodeOutput
         language="css"
@@ -36,6 +37,7 @@ class BottomContent extends React.Component {
     return (
       <div id="bottom-content-wrapper">
         <div id="bottom-content">
+          {renderPreviewSettings()}
           {renderPresets()}
           
           <footer id="main-footer">
