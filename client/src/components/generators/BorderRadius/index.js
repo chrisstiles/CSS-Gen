@@ -109,15 +109,15 @@ class BorderRadius extends React.Component {
         heading="CSS Border Radius Generator"
         intro={intro}
 
+        // Render generator components
+        renderInputs={this.renderInputs}
+        renderPresets={this.renderPresets}
+
         // Generator state
         generatorState={generatorState}
         previewStyles={this.previewStyles}
         generatorDefaultState={BorderRadius.defaultState}
         globalState={this.props.globalState}
-
-        // Render generator components
-        renderInputs={this.renderInputs}
-        renderPresets={this.renderPresets}
 
         // Generator methods
         updateGenerator={this.updateGenerator}        
