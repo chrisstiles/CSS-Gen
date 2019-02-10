@@ -10,9 +10,33 @@ class SingleWindowGenerator extends React.Component {
   constructor(props) {
     super(props);
 
-    _.extend(SingleWindowGenerator.defaultState, props.previewStyles);
+    this.defaultState = {
+      width: 300,
+      height: 300,
+      dragX: 0,
+      dragY: 0,
+      backgroundColor: '#ffffff',
+      hasResized: false,
+      resizePosition: { x: 0, y: 0 },
+      image: null,
+      resizeMarginAdjustment: 0
+    };
 
-    this.state = getState(SingleWindowGenerator.defaultState, SingleWindowGenerator.stateTypes, true);
+    _.extend(this.defaultState, props.previewStyles);
+
+    this.stateTypes = {
+      width: Number,
+      height: Number,
+      dragX: Number,
+      dragY: Number,
+      backgroundColor: String,
+      hasResized: Boolean,
+      resizePosition: { x: Number, y: Number },
+      image: null,
+      resizeMarginAdjustment: Number
+    };
+
+    this.state = getState(this.defaultState, this.stateTypes, true);
 
     this.state.previewContentLoaded = this.state.image ? false : true;
     setLoading(!this.state.previewContentLoaded);
@@ -57,8 +81,8 @@ class SingleWindowGenerator extends React.Component {
     const { showPreviewText, outputPreviewStyles } = getGlobalDefaults();
     updateGlobalState({ showPreviewText, outputPreviewStyles });
 
-    this.setState(SingleWindowGenerator.defaultState);
-    this.preview.reset(SingleWindowGenerator.defaultState.width);
+    this.setState(this.defaultState);
+    this.preview.reset(this.defaultState.width);
 
     // Reset the generator styles
     this.props.updateGenerator(this.props.generatorDefaultState);
@@ -68,7 +92,7 @@ class SingleWindowGenerator extends React.Component {
     const generatorState = _.extend({}, this.props.generatorDefaultState, generatorStyles);
     this.props.updateGenerator(generatorState);
 
-    const previewState = _.extend({}, SingleWindowGenerator.defaultState, previewStyles);
+    const previewState = _.extend({}, this.defaultState, previewStyles);
     this.setState(previewState);
 
     this.preview.reset(previewState.width);
@@ -85,14 +109,14 @@ class SingleWindowGenerator extends React.Component {
       this.setState({ wrapperWidth: width });
 
       // Reset to full width rather than initial value
-      if (this.props.fullWidthPreview || SingleWindowGenerator.defaultState.image) {
-        const { width: defaultWidth, height: defaultHeight, image } = SingleWindowGenerator.defaultState;
+      if (this.props.fullWidthPreview || this.defaultState.image) {
+        const { width: defaultWidth, height: defaultHeight, image } = this.defaultState;
 
         if (image) {
           // Largest proportional dimensions that fit inside wrapper
-          _.extend(SingleWindowGenerator.defaultState, getImageSize(defaultWidth, defaultHeight, this.generatorWrapper));
+          _.extend(this.defaultState, getImageSize(defaultWidth, defaultHeight, this.generatorWrapper));
         } else {
-          _.extend(SingleWindowGenerator.defaultState, { width });
+          _.extend(this.defaultState, { width });
         }
       }
     }
@@ -106,7 +130,7 @@ class SingleWindowGenerator extends React.Component {
     window.addEventListener('resize', this.handleWrapperResize, false);
 
     const { fullWidthPreview } = this.props;
-    const { image: defaultImage } = SingleWindowGenerator.defaultState;
+    const { image: defaultImage } = this.defaultState;
     const { image: currentImage, hasResized } = this.state;
 
     if (defaultImage || currentImage) {
@@ -115,12 +139,12 @@ class SingleWindowGenerator extends React.Component {
         getNativeImageSize(defaultImage)
           .then(({ width, height }) => {
             const size = getImageSize(width, height, wrapper);
-            _.extend(SingleWindowGenerator.defaultState, size);        
+            _.extend(this.defaultState, size);        
           })
           .catch(error => console.log(error));
       }
     } else if (fullWidthPreview && !hasResized) {
-      const { width, height } = SingleWindowGenerator.defaultState;
+      const { width, height } = this.defaultState;
       this.setState({ width, height });
     }
   }
@@ -182,7 +206,7 @@ class SingleWindowGenerator extends React.Component {
         onUpdate={this.handlePreviewUpdate}
         position={{ x, y }}
         resizePosition={this.state.resizePosition}
-        defaultWidth={SingleWindowGenerator.defaultState.width}
+        defaultWidth={this.defaultState.width}
         reset={this.reset}
         {...settings}
       >
@@ -248,27 +272,3 @@ class SingleWindowGenerator extends React.Component {
 }
 
 export default SingleWindowGenerator;
-
-SingleWindowGenerator.defaultState = {
-  width: 300,
-  height: 300,
-  dragX: 0,
-  dragY: 0,
-  backgroundColor: '#ffffff',
-  hasResized: false,
-  resizePosition: { x: 0, y: 0 },
-  image: null,
-  resizeMarginAdjustment: 0
-};
-
-SingleWindowGenerator.stateTypes = {
-  width: Number,
-  height: Number,
-  dragX: Number,
-  dragY: Number,
-  backgroundColor: String,
-  hasResized: Boolean,
-  resizePosition: { x: Number, y: Number },
-  image: null,
-  resizeMarginAdjustment: Number
-};
