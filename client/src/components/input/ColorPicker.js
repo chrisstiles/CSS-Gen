@@ -6,7 +6,7 @@ import { hexOrRgba } from '../../util/helpers';
 // Only one picker should be open at a time
 let currentPicker = null;
 
-class ColorPicker extends React.Component {
+class ColorPicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -32,7 +32,8 @@ class ColorPicker extends React.Component {
     document.removeEventListener('keydown', this.keyEvent);
   }
 
-  componentWillReceiveProps({ color }) {
+  componentDidUpdate() {
+    const color = this.props.color;
     const transparent = (typeof color === 'string' && color.toLowerCase() === 'transparent') || color._originalInput === 'transparent';
     this.setState({ transparent });
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Slider from './Slider';
 
-class Position extends React.Component {
+class Position extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -32,7 +32,7 @@ class Position extends React.Component {
 
 const locations = ['center', 'top left', 'top', 'top right', 'right', 'bottom right', 'bottom', 'bottom left', 'left'];
 
-class PositionSelect extends React.Component {
+class PositionSelect extends React.PureComponent {
   constructor(props) {
     super(props);
 

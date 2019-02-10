@@ -1,7 +1,7 @@
 import React from 'react';
 import { numberInConstraints, createSelection } from '../../util/helpers';
 
-class NumberInput extends React.Component {
+class NumberInput extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -16,11 +16,11 @@ class NumberInput extends React.Component {
     this.setRefs = this.setRefs.bind(this);
   }
 
-  componentWillReceiveProps(newProps) {
-    if ((!this.hasFocus || this.didTick || newProps.forceUpdate) && newProps.value !== undefined) {
+  componentDidUpdate() {
+    if ((!this.hasFocus || this.didTick || this.props.forceUpdate) && this.props.value !== undefined) {
       this.didTick = false;
 
-      var value = newProps.value;
+      let value = this.props.value;
 
       if (this.props.appendString) {
         value += this.props.appendString;

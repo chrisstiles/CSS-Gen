@@ -1,15 +1,21 @@
 import React from 'react';
+import _ from 'underscore';
 
-const Sidebar = ({ children }) => {
-  return (
-    <div id="sidebar">
-    <div className="sidebar-title">Controls</div>
-    	<div id="sidebar-controls">
-      	{children}
+class Sidebar extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return !_.isEqual(nextProps.generatorState, this.props.generatorState);
+  }
+
+  render() {
+    return (
+      <div id="sidebar">
+        <div className="sidebar-title">Controls</div>
+        <div id="sidebar-controls">
+          {this.props.children}
+        </div>
       </div>
-      
-    </div>
-  );
+    );
+  }
 }
 
 export default Sidebar;

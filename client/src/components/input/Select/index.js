@@ -39,6 +39,13 @@ class Select extends React.Component {
 		window.removeEventListener('resize', this.scrollMenu, true);
 	}
 
+	shouldComponentUpdate({ value, options}) {
+		return (
+			value !== this.props.value ||
+			!_.isEqual(options, this.props.options)
+		);
+	}
+
 	scrollMenu(event) {
 		if (!this.wrapper) {
 			return;
@@ -158,10 +165,10 @@ class Select extends React.Component {
 	}
 
 	render() {
-		var className = 'field-wrapper select-wrapper';
+		const className = ['field-wrapper', 'select-wrapper'];
 
 		if (this.props.className) {
-			className += ` ${this.props.className}`;
+			className.push(this.props.className);
 		}
 
 		const props = _.extend({}, this.props, { onChange: this.handleChange, className: '' });
@@ -176,7 +183,7 @@ class Select extends React.Component {
 		const optionHeight = this.units ? 25 : 31;
 
 		return(
-			<div className={className}>
+			<div className={className.join(' ')}>
 				{this.props.label ? <label className="title">{this.props.label}</label> : null}
 				
 				<VirtualizedSelect

@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'underscore';
 
-class ButtonOption extends React.Component {
+class ButtonOption extends React.PureComponent {
 	constructor(props) {
 		super(props);
 
@@ -16,28 +16,30 @@ class ButtonOption extends React.Component {
 
 	render() {
 		const { active, name, className, disabled } = this.props;
-		var { label } = this.props;
-		var optionClass = 'option';
-
-		if (active) {
-		  optionClass += ' active';
-		}
+		
+		let { label } = this.props;
 
 		if (!label) {
 			label = name.charAt(0).toUpperCase() + name.slice(1);
 		}
 
+		let optionClassName = ['option'];
+
+		if (active) {
+			optionClassName.push('active');
+		}
+
 		if (className) {
-			optionClass += ` ${className}`;
+			optionClassName.push(className);
 		}
 
 		if (disabled) {
-			optionClass += ' disabled';
+			optionClassName.push('disabled');
 		}
 
 		return (
 		  <div 
-		    className={optionClass}
+				className={optionClassName.join(' ')}
 		    onClick={this.handleClick}
 		  >
 		  	{label}
@@ -46,7 +48,7 @@ class ButtonOption extends React.Component {
 	}
 }
 
-class ButtonSelect extends React.Component {
+class ButtonSelect extends React.PureComponent {
 	constructor(props) {
 		super(props);
 

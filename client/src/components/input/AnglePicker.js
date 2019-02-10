@@ -3,7 +3,7 @@ import NumberInput from './NumberInput';
 import Toggle from './Toggle';
 import { radToDeg } from '../../util/helpers';
 
-class AnglePicker extends React.Component {
+class AnglePicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -29,10 +29,6 @@ class AnglePicker extends React.Component {
     window.removeEventListener('blur', this.endTracking, false);
     window.removeEventListener('focus', this.endTracking, false);
     document.removeEventListener('visibilitychange', this.endTracking, false);
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.checkActive(newProps);
   }
 
   checkActive(props = this.props) {
@@ -116,6 +112,8 @@ class AnglePicker extends React.Component {
   }
 
   render() {
+    this.checkActive(this.props);
+
     const style = {
       transform: `rotate(${this.props.angle}deg)`
     };

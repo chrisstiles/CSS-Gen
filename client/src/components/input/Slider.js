@@ -4,7 +4,7 @@ import NumberInput from './NumberInput';
 import Toggle from './Toggle';
 import Select from './Select';
 
-class Slider extends React.Component {
+class Slider extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -17,11 +17,7 @@ class Slider extends React.Component {
     this.handleUnitChange = this.handleUnitChange.bind(this);
     this.handleActiveToggle = this.handleActiveToggle.bind(this);
   }
-
-  componentWillReceiveProps(newProps) {
-    this.checkActive(newProps);
-  }
-
+  
   checkActive(props = this.props) {
     const { isActive = true } = props;
     this.isActive = isActive;
@@ -81,6 +77,8 @@ class Slider extends React.Component {
   }
 
   render() {
+    this.checkActive(this.props);
+
     const { value, optional } = this.props;
     const min = this.props.units === '%' ? 0 : this.min;
     const max = this.props.units === '%' ? 100 : this.max;

@@ -111,7 +111,7 @@ class Generator extends React.Component {
               </div>
             : null}
             {this.props.renderPreview()}
-            <Sidebar>
+            <Sidebar generatorState={generatorState}>
               {this.props.renderInputs()}
             </Sidebar>
             <BottomContent 
