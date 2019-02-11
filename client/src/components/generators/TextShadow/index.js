@@ -4,7 +4,6 @@ import TextShadowInputs from './TextShadowInputs';
 import TextShadowPreview from './TextShadowPreview';
 import { getState, generateCSSString, hexOrRgba } from '../../../util/helpers';
 import _ from 'underscore';
-import WebFont from 'webfontloader';
 const defaultFont = 'Montserrat';
 
 class TextShadow extends React.Component {
@@ -23,24 +22,6 @@ class TextShadow extends React.Component {
 		this.updateGenerator = this.updateGenerator.bind(this);
 		this.renderInputs = this.renderInputs.bind(this);
 		this.renderPreview = this.renderPreview.bind(this);
-	}
-
-	componentDidMount() {
-		const { fontLoaded, googleFont } = this.state;
-		if (!fontLoaded) {
-			WebFont.load({
-				google: {
-					families: [googleFont]
-				},
-				fontactive: () => {
-					this.setState({ fontLoaded: true });
-				},
-				fontinactive: () => {
-					this.setState(this.defaultState);
-				},
-				classes: false
-			})
-		}
 	}
 
 	updateGenerator(state) {

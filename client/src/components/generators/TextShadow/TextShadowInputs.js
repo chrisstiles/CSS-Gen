@@ -23,6 +23,10 @@ const fontSliders = [
 class TextShadowInputs extends React.Component {
 	constructor(props) {
 	  super(props);
+
+		// Queue a font to load in case loadFont is
+		// called before the list is downloaded
+		this.queuedFont = null;
 	  
 	  this.loadFont = this.loadFont.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -33,8 +37,7 @@ class TextShadowInputs extends React.Component {
 	}
 
 	componentDidMount() {
-		const { googleFont, variantOptions } = this.props;
-		this.loadFont(googleFont, variantOptions, true);
+		this.loadFont(this.props.googleFont, true);
 	}
 
 	handleChange(value, name) {
@@ -84,16 +87,24 @@ class TextShadowInputs extends React.Component {
 		this.props.updateGenerator({ variant });
 	}
 
-	loadFont(googleFont = this.props.googleFont, variantOptions = this.props.variantOptions, forceLoad) {
-		if (forceLoad || this.fontList[googleFont]) {
-			setLoading(true);
+	// loadFont(font = this.props.googleFont, variantOptions = this.props.variantOptions, forceLoad) {
+	loadFont(font, forceLoad) {
+		setLoading(true);
 
-			const family = `${googleFont}:${variantOptions.join(',')}`;
+		if (forceLoad || this.fontList[font]) {
+			const list = this.fontList;
+			const variantOptions = list && list[font].variantOptions ? list[font].variantOptions : this.props.variantOptions;
 
+			const variants = variantOptions.map(variant => {
+				return variant.replace(/bolditalic/g, 'bi').replace(/italic/g, 'i')
+			});
+
+			const query = `${font.replace(/ /g, '+')}:${variants.join(',')}`;
+			
 			try {
 				WebFont.load({
 					google: {
-						families: [family]
+						families: [query]
 					},
 					fontactive: this.handleFontLoaded,
 					classes: false
@@ -102,20 +113,36 @@ class TextShadowInputs extends React.Component {
 				console.log('Font load error');
 			}
 			
+		} else {
+			this.queuedFont = font;
 		}
 	}
 
 	handleFontSelect(googleFont) {
-		// Montserrat is the default application font
-		// and therefor does not need to be loaded
-		this.loadFont(googleFont);
-		this.props.updateGenerator({ googleFont });
+		if (this.fontList) {
+			this.loadFont(googleFont)
+		} else {
+			this.queuedFont = googleFont;
+		}
 	}
 
 	handleFontLoaded(googleFont) {
 		if (this.fontList) {
 			const { fontFamily, variantOptions } = this.fontList[googleFont];
-			this.props.updateGenerator({ fontFamily, variantOptions, variant: 'regular' });
+			let variant = variantOptions[0];
+
+			if (variantOptions.includes('regular')) {
+				variant = 'regular';
+			} else {
+				['400', '300', '500', 'normal'].forEach(option => {
+					if (variantOptions.includes(option)) {
+						variant = option;
+						return;
+					}
+				});
+			}
+
+			this.props.updateGenerator({ googleFont, fontFamily, variantOptions, variant });
 		}
 
 		setLoading(false);
@@ -130,7 +157,7 @@ class TextShadowInputs extends React.Component {
 			
 			// Loop through API data to format object with fonts
 			// and array with select options
-			_.each(fontData, ({ family: font, variants: variantOptions, category }) => {
+			_.each(fontData, ({ family: font, variants, category, ...restprops }) => {
 				this.allFontOptions.push({
 					value: font,
 					label: font
@@ -138,7 +165,7 @@ class TextShadowInputs extends React.Component {
 
 				this.fontList[font] = {
 					fontFamily: `"${font}", ${category}`,
-					variantOptions
+					variantOptions: variants
 				};
 			});
 		} else if (_.isObject(fontData)) {
@@ -152,6 +179,11 @@ class TextShadowInputs extends React.Component {
 					label: font
 				});
 			});
+		}
+
+		if (this.queuedFont) {
+			this.loadFont(this.queuedFont)
+			this.queuedFont = null;
 		}
 	}
 
@@ -214,12 +246,13 @@ class TextShadowInputs extends React.Component {
 
 		const { googleFont, variantOptions, variant } = this.props;
 		const weights = [];
-		var hasItalicVariant = false;
-		var italicActive = false;
-		var weightValue = variant.replace('italic', '');
+		let hasItalicVariant = false;
+		let italicActive = false;
+		let weightValue = variant.replace('italic', '');
 
 		if (variantOptions) {
 			_.each(variantOptions, element => {
+
 				if (element.toLowerCase().indexOf('italic') === -1) {
 					weights.push({
 						value: element,
