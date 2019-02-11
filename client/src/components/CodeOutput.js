@@ -75,6 +75,7 @@ class CodeOutput extends React.PureComponent {
     this.setState({ expanded: true, selecting: false });
 
     document.body.classList.remove('no-select');
+    document.body.classList.add('code-expanded');
   }
 
   close() {
@@ -82,6 +83,7 @@ class CodeOutput extends React.PureComponent {
     this.setState({ expanded: false, selecting: false });
 
     document.body.classList.remove('no-select');
+    document.body.classList.remove('code-expanded');
   }
 
   getCode(newProps) {

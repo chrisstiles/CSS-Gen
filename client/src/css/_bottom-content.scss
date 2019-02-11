@@ -7,7 +7,6 @@
   border-top: 2px solid #dedede;
   height:210px;
   display:flex;
-  z-index: 9999;
   justify-content: space-between;
 
   .bottom-title {
@@ -44,4 +43,10 @@
   width:100%;
   flex-shrink:0;
   align-self:flex-end;
+}
+
+body.code-expanded {
+  #bottom-content-wrapper {
+    z-index: 9999;
+  }
 }
