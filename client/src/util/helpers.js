@@ -195,36 +195,53 @@ export function isValidState(state, types) {
 }
 
 export function getPersistedState(defaultState, isPreview) {
-  var state = _.extend({}, defaultState);
-
   if (!window.localStorage) {
-    return state;
+    return defaultState;
   }
 
   // Generator specific state
-  var path = window.location.pathname;
+  const path = window.location.pathname;
 
   if (window.localStorage.hasOwnProperty(path)) {
-    var previousState = window.localStorage.getItem(path);
+    let previousState = window.localStorage.getItem(path);
 
     try {
-    	if (isPreview) {
-				previousState = JSON.parse(previousState).previewState;
-    	} else {
-				previousState = JSON.parse(previousState).generatorState;
-    	}
+			previousState = JSON.parse(previousState);
+			
+			// Only use a persisted state if it is recent
+			const timestamp = previousState.timestamp;
+			const daysLimit = 14;
+
+			if (timestamp) {
+				// const previousDate = new Date(timestamp);
+				const today = new Date();
+				const timeDifference = Math.abs(today.getTime() - timestamp);
+				const dayDifference = Math.ceil(timeDifference / (1000 * 3600 * 25));
+
+				if (dayDifference > daysLimit) {
+					console.log('TOO OLD')
+					return defaultState;
+				}
+			}
+
+    	// if (isPreview) {
+			// 	previousState = JSON.parse(previousState).previewState;
+    	// } else {
+			// 	previousState = JSON.parse(previousState).generatorState;
+    	// }
 
       if (previousState) {
+				previousState = isPreview ? previousState.previewState : previousState.generatorState;
         // Loop through previous state and only add ones 
 				// of the values of same type as default state
-				state = extendSameTypes(state, previousState);
+				return extendSameTypes(_.extend({}, defaultState), previousState);
       }
     } catch(e) {
       console.log(e);
     }
 	}
 	
-  return state;
+  return defaultState;
 }
 
 export function replaceTinyColors(obj) {

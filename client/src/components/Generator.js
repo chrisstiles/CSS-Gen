@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import BottomContent from './BottomContent';
 import LoadingSpinner from './LoadingSpinner';
 import { setLoading } from '../util/helpers';
+import _ from 'underscore';
 
 class Generator extends React.Component {
   constructor(props) {
@@ -22,22 +23,35 @@ class Generator extends React.Component {
       clearTimeout(persistStateTimer);
       persistStateTimer = setTimeout(() => {
         if (window.localStorage) {
-          const path = window.location.pathname;
-          const { generatorState, previewState } = this.props;
-          const state = { generatorState, previewState }
+          if (
+            !_.isEqual(this.prevGeneratorState, this.props.generatorState) ||
+            !_.isEqual(this.prevPreviewState, this.props.previewState)
+          ) {
+            this.prevGeneratorState = this.props.generatorState;
+            this.prevPreviewState = this.props.previewState;
 
-          // Store in localStorage if there is enough space
-          try {
-            window.localStorage.setItem(path, JSON.stringify(state));
-            loggedLocalStorageError = false;
-          } catch (e) {
-            if (e.code === 22 && !loggedLocalStorageError) {
-              loggedLocalStorageError = true;
-              console.log('Data not persisted, exceeds localStorage quota');
+            const path = window.location.pathname;
+            const state = { 
+              generatorState: this.prevGeneratorState, 
+              previewState: this.prevPreviewState 
+            };
+
+            state.timestamp = new Date().getTime();
+
+            // Store in localStorage if there is enough space
+            try {
+              window.localStorage.setItem(path, JSON.stringify(state));
+              loggedLocalStorageError = false;
+            } catch (e) {
+              if (e.code === 22 && !loggedLocalStorageError) {
+                loggedLocalStorageError = true;
+                localStorage.clear();
+                console.log('Data not persisted, exceeds localStorage quota. Clearing...');
+              }
             }
           }
         }
-      }, 500);
+      }, 600);
     }
   }
 
