@@ -69,8 +69,10 @@ class FlexboxPreview extends React.Component {
     this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
-  componentWillReceiveProps(newProps) {
-    this.setContainerHeight(newProps);
+  componentDidUpdate(prevProps) {
+    if (prevProps.fullHeightContainer !== this.props.fullHeightContainer) {
+      this.setContainerHeight();
+    }
   }
 
   componentDidMount() {

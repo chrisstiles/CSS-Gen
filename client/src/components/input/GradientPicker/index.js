@@ -5,6 +5,7 @@ import tinycolor from 'tinycolor2';
 import ColorPicker from '../ColorPicker';
 import Slider from '../Slider';
 import { sidebarControlsWidth, hexOrRgba } from '../../../util/helpers';
+import _ from 'underscore';
 
 const HALF_STOP_WIDTH = 5;
 
@@ -44,17 +45,29 @@ class GradientPicker extends React.Component {
     window.removeEventListener('resize', this.setWidth, false);
   }
 
-  componentWillReceiveProps({ palette: next }) {
-    const { palette: current } = this.props;
-    const length = Math.min(next.length, current.length);
-    const activeId = this.state.activeId <= next.length ? this.state.activeId : this.state.palette[0].id;
+  static getDerivedStateFromProps(newProps, state) {
+    if (!_.isEqual(newProps.palette, state.prevPalette)) {
+      const next = newProps.palette;
+      const current = state.prevPalette || state.palette;
+      const length = Math.min(next.length, current.length);
+      const activeId = state.activeId <= next.length ? state.activeId : state.palette[0].id;
 
-    for (let i = 0; i < length; i++) {
-      if (next[i].pos !== current[i].pos || next[i].color !== current[i].color) {
-        this.setState({ ...toState(next, activeId) });
-        return;
+      let newState = next;
+
+      for (let i = 0; i < length; i++) {
+        if (next[i].pos !== current[i].pos || next[i].color !== current[i].color) {
+          newState = { ...toState(next, activeId) };
+          break;
+        }
       }
+
+      const prevPalette = newState.palette;
+      newState.prevPalette = prevPalette;
+
+      return newState;
     }
+
+    return state.palette;
   }
 
   setWidth() {

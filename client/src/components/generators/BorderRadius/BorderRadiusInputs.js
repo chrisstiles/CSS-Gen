@@ -5,7 +5,6 @@ import Toggle from '../../input/Toggle';
 import Select from '../../input/Select';
 import ColorPicker from '../../input/ColorPicker';
 import { jsToCss } from '../../../util/helpers';
-import _ from 'underscore';
 
 const minRadius = 0;
 const maxRadius = 200;
