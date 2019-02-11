@@ -8,7 +8,9 @@ import {
 	updateGlobalState as _updateGlobalState,
 	getGlobalVariable as _getGlobalVariable,
 	setGlobalVariable as _setGlobalVariable,
-	setLoading as _setLoading
+	setLoading as _setLoading,
+	startLoading as _startLoading,
+	finishLoading as _finishLoading
 } from '../components/App';
 
 export function addNotification(type, message) {
@@ -48,6 +50,14 @@ export function setGlobalVariable(value, name) {
 
 export function setLoading(loading) {
 	return _setLoading(loading);
+}
+
+export function startLoading(name) {
+	return _startLoading(name);
+}
+
+export function finishLoading(name) {
+	return _finishLoading(name);
 }
 
 export function extendSameTypes(object1, object2) {
@@ -219,16 +229,9 @@ export function getPersistedState(defaultState, isPreview) {
 				const dayDifference = Math.ceil(timeDifference / (1000 * 3600 * 25));
 
 				if (dayDifference > daysLimit) {
-					console.log('TOO OLD')
 					return defaultState;
 				}
 			}
-
-    	// if (isPreview) {
-			// 	previousState = JSON.parse(previousState).previewState;
-    	// } else {
-			// 	previousState = JSON.parse(previousState).generatorState;
-    	// }
 
       if (previousState) {
 				previousState = isPreview ? previousState.previewState : previousState.generatorState;

@@ -3,7 +3,7 @@ import Generator from '../../Generator';
 import SingleWindowToolbar from '../toolbars/SingleWindowToolbar';
 import SingleWindowPreview from '../previews/SingleWindowPreview';
 import FileDrop from '../../FileDrop';
-import { getGlobalDefaults, updateGlobalState, getImageSize, getNativeImageSize, getState, setLoading } from '../../../util/helpers';
+import { getGlobalDefaults, updateGlobalState, getImageSize, getNativeImageSize, getState, startLoading } from '../../../util/helpers';
 import _ from 'underscore';
 
 class SingleWindowGenerator extends React.Component {
@@ -39,7 +39,10 @@ class SingleWindowGenerator extends React.Component {
     this.state = getState(this.defaultState, this.stateTypes, true);
 
     this.state.previewContentLoaded = this.state.image ? false : true;
-    setLoading(!this.state.previewContentLoaded);
+    
+    if (!this.state.previewContentLoaded) {
+      startLoading('preview-content');
+    }
 
     // Preview window size constrains
     this.previewConstraints = props.previewConstraints || {

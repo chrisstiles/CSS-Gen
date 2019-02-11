@@ -3,7 +3,6 @@ import Page from './Page';
 import Sidebar from './Sidebar';
 import BottomContent from './BottomContent';
 import LoadingSpinner from './LoadingSpinner';
-import { setLoading } from '../util/helpers';
 import _ from 'underscore';
 
 class Generator extends React.Component {
@@ -59,8 +58,6 @@ class Generator extends React.Component {
     if (this.props.onWrapperMount) {
       this.props.onWrapperMount(this.generatorWrapper);
     }
-
-    setLoading(false);
   }
 
   componentDidUpdate() {

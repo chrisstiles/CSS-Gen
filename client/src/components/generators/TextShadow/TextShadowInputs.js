@@ -4,7 +4,7 @@ import Select from '../../input/Select';
 import AjaxSelect from '../../input/AjaxSelect';
 import ColorPicker from '../../input/ColorPicker';
 import Toggle from '../../input/Toggle';
-import { getGlobalVariable, setGlobalVariable, hexOrRgba, setLoading } from '../../../util/helpers';
+import { getGlobalVariable, setGlobalVariable, hexOrRgba, startLoading, finishLoading } from '../../../util/helpers';
 import _ from 'underscore';
 import tinycolor from 'tinycolor2';
 import WebFont from 'webfontloader';
@@ -89,7 +89,7 @@ class TextShadowInputs extends React.Component {
 
 	// loadFont(font = this.props.googleFont, variantOptions = this.props.variantOptions, forceLoad) {
 	loadFont(font, forceLoad) {
-		setLoading(true);
+		startLoading('load-font');
 
 		if (forceLoad || this.fontList[font]) {
 			const list = this.fontList;
@@ -110,6 +110,7 @@ class TextShadowInputs extends React.Component {
 					classes: false
 				});
 			} catch(error) {
+				finishLoading('load-font');
 				console.log('Font load error');
 			}
 			
@@ -145,7 +146,7 @@ class TextShadowInputs extends React.Component {
 			this.props.updateGenerator({ googleFont, fontFamily, variantOptions, variant });
 		}
 
-		setLoading(false);
+		finishLoading('load-font');
 	}
 
 	setFontOptions(fontData) {

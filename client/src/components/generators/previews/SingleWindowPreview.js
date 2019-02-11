@@ -2,7 +2,7 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import Resizable from 're-resizable';
 import _ from 'underscore';
-import { addNotification, getNotificationTypes, getImageSize, setLoading } from '../../../util/helpers';
+import { addNotification, getNotificationTypes, getImageSize, finishLoading } from '../../../util/helpers';
 
 class SingleWindowPreview extends React.Component {
   constructor(props) {
@@ -219,7 +219,7 @@ class SingleWindowPreview extends React.Component {
       this.props.onUpdate({ previewContentLoaded: true });
     }
 
-    setLoading(false);
+    finishLoading('preview-content');
 
     e.target.style.opacity = 1;
   }

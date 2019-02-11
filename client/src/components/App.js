@@ -42,7 +42,14 @@ var notificationTypes = {
 }
 
 // Global State
-var getGlobalState, getGlobalDefaults, updateGlobalState, getGlobalVariable, setGlobalVariable, setLoading;
+let getGlobalState;
+let getGlobalDefaults;
+let updateGlobalState; 
+let getGlobalVariable;
+let setGlobalVariable;
+let setLoading;
+let startLoading;
+let finishLoading;
 
 class PrimaryLayout extends React.Component {
   constructor() {
@@ -66,6 +73,7 @@ class PrimaryLayout extends React.Component {
     };
 
     this.state.loading = false;
+    this.state.loadingItems = [];
 
     addNotification = this.createNotification.bind(this);
     getGlobalState = this.getGlobalState.bind(this);
@@ -74,6 +82,8 @@ class PrimaryLayout extends React.Component {
     getGlobalVariable = this.getGlobalVariable.bind(this);
     setGlobalVariable = this.setGlobalVariable.bind(this);
     setLoading = this.setLoading.bind(this);
+    startLoading = this.startLoading.bind(this);
+    finishLoading = this.finishLoading.bind(this);
   }
 
   componentDidMount() {
@@ -134,6 +144,37 @@ class PrimaryLayout extends React.Component {
     this.setState({ loading });
   }
 
+  startLoading(name) {
+    const { loadingItems: currentLoadingItems } = this.state;
+    
+    if (!currentLoadingItems.includes(name)) {
+      const loadingItems = currentLoadingItems.slice();
+      loadingItems.push(name);
+
+      this.setState({ loadingItems, loading: true });
+    }
+  }
+
+  finishLoading(name) {
+    const { loadingItems: currentLoadingItems } = this.state;
+  
+    if (currentLoadingItems.includes(name)) {
+
+      const loadingItems = _.filter(currentLoadingItems, item => {
+        return item !== name;
+      });
+
+      // Stop loading if everything has finished
+      const loading = loadingItems.length >= 1;
+
+      this.setState({ loadingItems, loading });
+    } else {
+      if (!currentLoadingItems.length) {
+        this.setState({ loading: false });
+      }
+    }
+  }
+
   render() {
     const routeComponents = routes.map(({ path, component: Component }) => {
       return (
@@ -176,7 +217,9 @@ export {
   getGlobalDefaults ,
   getGlobalVariable,
   setGlobalVariable,
-  setLoading
+  setLoading,
+  startLoading,
+  finishLoading
  };
 
 export default App;
