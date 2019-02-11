@@ -5,7 +5,6 @@ import AjaxSelect from '../../input/AjaxSelect';
 import ColorPicker from '../../input/ColorPicker';
 import Toggle from '../../input/Toggle';
 import { getGlobalVariable, setGlobalVariable, hexOrRgba, setLoading } from '../../../util/helpers';
-import axios from 'axios';
 import _ from 'underscore';
 import tinycolor from 'tinycolor2';
 import WebFont from 'webfontloader';
@@ -178,13 +177,14 @@ class TextShadowInputs extends React.Component {
 			apiUrl.push('?key=AIzaSyBAeBGJ5r_JdheXlg46qkgsiFemJ7zfuek');
 			const url = apiUrl.join('');
 
-			return axios.get(url).then(response => {
-				const fontData = response.data.items || [];
-				this.setFontOptions(fontData);
-				setGlobalVariable(this.fontList, 'googleFontList');
-				return { options: this.allFontOptions, complete: true };
-			});
-
+			return fetch(url)
+				.then(response => response.json())
+				.then(data => {
+					const fontData = data.items || [];
+					this.setFontOptions(fontData);
+					setGlobalVariable(this.fontList, 'googleFontList');
+					return { options: this.allFontOptions, complete: true };
+				});
 		}
 	}
 
