@@ -50,7 +50,7 @@ class Generator extends React.Component {
             }
           }
         }
-      }, 600);
+      }, 500);
     }
   }
 
@@ -97,6 +97,7 @@ class Generator extends React.Component {
     const { 
       outputPreviewStyles, 
       showBrowserPrefixes, 
+      persistGeneratorState,
       loading 
     } = this.props.globalState;
 
@@ -131,6 +132,7 @@ class Generator extends React.Component {
               renderOutput={renderOutput}
               outputCode={generatorState.css.output}
               outputPreviewStyles={outputPreviewStyles}
+              persistGeneratorState={persistGeneratorState}
               showBrowserPrefixes={showBrowserPrefixes}
               previewCSS={previewState.previewCSS}
               hasBrowserPrefixes={hasBrowserPrefixes}

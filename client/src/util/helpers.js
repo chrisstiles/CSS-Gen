@@ -205,14 +205,14 @@ export function isValidState(state, types) {
 }
 
 export function getPersistedState(defaultState, isPreview) {
-  if (!window.localStorage) {
+	if (!window.localStorage || !getGlobalState().persistGeneratorState) {
     return defaultState;
   }
 
   // Generator specific state
-  const path = window.location.pathname;
-
-  if (window.localStorage.hasOwnProperty(path)) {
+	const path = window.location.pathname;
+	
+	if (window.localStorage.hasOwnProperty(path)) {
     let previousState = window.localStorage.getItem(path);
 
     try {

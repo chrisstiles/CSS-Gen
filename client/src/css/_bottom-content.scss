@@ -34,6 +34,11 @@
   flex-direction:column;
 }
 
+#options {
+  display:flex;
+  flex-grow:1;
+}
+
 #main-footer {
   background-color: #d4d4d4;
   position: relative;

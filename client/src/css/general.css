@@ -664,6 +664,10 @@ p:last-child {
   flex-grow: 1;
   flex-direction: column; }
 
+#options {
+  display: flex;
+  flex-grow: 1; }
+
 #main-footer {
   background-color: #d4d4d4;
   position: relative;
@@ -676,6 +680,12 @@ p:last-child {
 
 body.code-expanded #bottom-content-wrapper {
   z-index: 9999; }
+
+#settings-wrapper {
+  border-right: 1px solid #dedede;
+  min-width: 200px; }
+  #settings-wrapper .content {
+    padding: 12px; }
 
 #generator-output {
   display: flex;

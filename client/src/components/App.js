@@ -58,6 +58,7 @@ class PrimaryLayout extends React.Component {
     // Global state
     this.state = {
       showPreviewText: true,
+      persistGeneratorState: true,
       outputPreviewStyles: false,
       showBrowserPrefixes: false,
       loading: false
@@ -67,6 +68,7 @@ class PrimaryLayout extends React.Component {
 
     this.stateTypes = {
       showPreviewText: Boolean,
+      persistGeneratorState: Boolean,
       outputPreviewStyles: Boolean,
       showBrowserPrefixes: Boolean,
       loading: Boolean
@@ -74,6 +76,27 @@ class PrimaryLayout extends React.Component {
 
     this.state.loading = false;
     this.state.loadingItems = [];
+
+    // Add persisted global state
+    if (window.localStorage) {
+      const key = 'globalState';
+
+      if (window.localStorage.hasOwnProperty(key)) {
+        var previousState = window.localStorage.getItem(key);
+
+        try {
+          previousState = JSON.parse(previousState);
+
+          if (previousState) {
+            if (isObjectOfShape(previousState, this.stateTypes)) {
+              _.extend(this.state, previousState);
+            }
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    }
 
     addNotification = this.createNotification.bind(this);
     getGlobalState = this.getGlobalState.bind(this);
@@ -84,27 +107,6 @@ class PrimaryLayout extends React.Component {
     setLoading = this.setLoading.bind(this);
     startLoading = this.startLoading.bind(this);
     finishLoading = this.finishLoading.bind(this);
-  }
-
-  componentDidMount() {
-    // Add persisted global state
-    const key = 'globalState';
-
-    if (window.localStorage.hasOwnProperty(key)) {
-      var previousState = window.localStorage.getItem(key);
-
-      try {
-        previousState = JSON.parse(previousState);
-
-        if (previousState) {
-          if (isObjectOfShape(previousState, this.stateTypes)) {
-            this.setState(_.extend({}, this.state, previousState));
-          }
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    }
   }
 
   createNotification(type, message) {
@@ -127,8 +129,16 @@ class PrimaryLayout extends React.Component {
     if (window.localStorage) {
       const key = 'globalState';
 
-      // Save generator styles
+      // Save global state
       window.localStorage.setItem(key, JSON.stringify(state));
+
+      // If persistGeneratorState key is false and not undefined
+      // we clear all persisted generator state, but keep global state
+      if (newState.persistGeneratorState === false) {
+        const globalState = window.localStorage.getItem(key);
+        window.localStorage.clear();
+        window.localStorage.setItem(key, globalState);
+      }
     }
   }
 

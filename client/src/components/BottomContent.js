@@ -1,4 +1,5 @@
 import React from 'react';
+import Settings from './Settings';
 import CodeOutput from './CodeOutput';
 
 class BottomContent extends React.Component {
@@ -11,6 +12,7 @@ class BottomContent extends React.Component {
       showBrowserPrefixes,
       multipleOutputs,
       renderPreviewSettings,
+      persistGeneratorState,
       renderPresets,
       renderOutput
     } = this.props;
@@ -37,9 +39,12 @@ class BottomContent extends React.Component {
     return (
       <div id="bottom-content-wrapper">
         <div id="bottom-content">
-          {renderPreviewSettings()}
-          {renderPresets()}
-          
+          <div id="options">
+            <Settings persistGeneratorState={persistGeneratorState}>
+              {renderPreviewSettings()}
+            </Settings>
+            {renderPresets()}
+          </div>
           <footer id="main-footer">
             Footer content goes here
           </footer>
