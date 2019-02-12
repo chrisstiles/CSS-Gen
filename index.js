@@ -5,7 +5,7 @@ const app = express();
 require('./routes/')(app);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+  app.use(express.static('client/build/static'));
 
   const path = require('path');
 
