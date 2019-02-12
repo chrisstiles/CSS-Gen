@@ -5,8 +5,8 @@ const app = express();
 require('./routes/')(app);
 
 if (process.env.NODE_ENV === 'production') {
-  console.log('This is a production build'):
-  
+  console.log('This is a production build');
+
   const path = require('path');
   
   app.use(express.static(path.join(__dirname, 'client/build')));
