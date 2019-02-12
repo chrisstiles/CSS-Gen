@@ -1,5 +1,5 @@
 import React from 'react';
-import ChromePicker from 'react-color';
+import ChromePicker from 'react-color/lib/Chrome';
 import tinycolor from 'tinycolor2';
 import { hexOrRgba } from '../../util/helpers';
 
