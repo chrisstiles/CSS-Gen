@@ -5,17 +5,15 @@ const app = express();
 require('./routes/')(app);
 
 if (process.env.NODE_ENV === 'production') {
-  console.log('PRODUCTION BUILD');
-
   const path = require('path');
+  const compression = require('compression');
   
+  app.use(compression());
   app.use(express.static(path.join(__dirname, 'client/build')));
 
   app.get('/*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
-} else {
-  console.log('DEVELOPMENT BUILD');
 }
 
 const PORT = process.env.PORT || 5000;
