@@ -1,6 +1,6 @@
 import React from 'react';
 import postcss from 'postcss';
-import autoprefixer from 'autoprefixer';
+// import autoprefixer from 'autoprefixer';
 import prettify from 'postcss-prettify';
 import prettyHTML from 'pretty';
 import * as clipboard from 'clipboard-polyfill/build/clipboard-polyfill.promise'
@@ -110,12 +110,12 @@ class CodeOutput extends React.PureComponent {
     const disableEditor = !css;
 
     // Add plugins to format code and add prefixes if necessary
-    const { showBrowserPrefixes, hasBrowserPrefixes } = props;
+    // const { showBrowserPrefixes, hasBrowserPrefixes } = props;
     const plugins = [prettify];
     
-    if (showBrowserPrefixes && hasBrowserPrefixes) {
-      plugins.unshift(autoprefixer({ browsers: ['ie >= 8', '> 4%'] }));
-    }
+    // if (showBrowserPrefixes && hasBrowserPrefixes) {
+    //   plugins.unshift(autoprefixer({ browsers: ['ie >= 8', '> 4%'] }));
+    // }
 
 
     postcss(plugins)
