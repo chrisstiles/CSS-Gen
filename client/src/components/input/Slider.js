@@ -1,5 +1,6 @@
 import React from 'react';
-import RCSlider, { Handle as RCHandle } from 'rc-slider';
+import RCSlider from 'rc-slider/lib/Slider';
+import RCHandle from 'rc-slider/lib/Handle';
 import NumberInput from './NumberInput';
 import Toggle from './Toggle';
 import Select from './Select';
