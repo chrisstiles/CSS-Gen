@@ -166,16 +166,12 @@ class Gradient {
 
 	generateCSS() {
 		const { background, filter } = this.styles;
-		// Flat background as fallback
-		var css = `background: ${this.palette[0].color};`;
 
-		// Add gradient CSS
-		css += ` background: ${background};`
-
-		// Add fallback for old versions of IE
-		css += ` filter: ${filter};`;
-
-		this.css = css;
+		this.css = `
+			background: ${this.palette[0].color};
+			background: ${background};
+			filter: ${filter};
+		`;
 	}
 }
 
