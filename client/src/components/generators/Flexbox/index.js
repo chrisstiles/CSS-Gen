@@ -68,7 +68,7 @@ class Flexbox extends React.Component {
       .flex-container {
         background-color:red;
       }
-    `
+    `;
     return { styles: {}, output };
   }
 

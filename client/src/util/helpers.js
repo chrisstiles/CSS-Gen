@@ -355,16 +355,69 @@ export function numberInConstraints(num, min = null, max = null) {
 }
 
 export function generateCSSString(css) {
-	var cssString = '';
+	let cssString = '';
 
 	_.each(css, (value, key) => {
 		if (value) {
 			key = jsToCss(key);
-			cssString += ` ${key}: ${value};`;
+			cssString += ` ${key}: ${value};\n`;
 		}
 	});
 
-	return cssString.trim();
+	return cssString;
+}
+
+export function formatCode(code, language = 'css') {
+	code = code.trim();
+	const isCSS = language.toLowerCase() === 'css';
+
+	if (isCSS) {
+		// CSS does not contain any selectors
+		// so we can left justify everything
+		if (!code.includes('{')) {
+			return code.replace(/^\s+/mg, '');
+		}
+	}
+
+	// Shift each line over to normalize indentation
+	let lines = code.split('\n');
+
+	// Find the number of indents lines are shifted by
+	const closingTag = isCSS ? '}' : '</';
+	const closingTagTest = new RegExp(`\\s+${closingTag}`)
+	let tabShift = 0;
+
+	for (let i = 1; i < lines.length; i++) {
+		if (lines[i].match(closingTagTest)) {
+			tabShift = lines[i].match(/\s/g).length;
+			break;
+		}
+	}
+
+	if (!tabShift) {
+		return code;
+	}
+
+	lines = lines.map(line => {
+		const tabs = line.match(/^(\s)+/);
+
+		if (!tabs) {
+			return line;
+		}
+
+		line = line.trim();
+
+		const newTabCount = tabs[0].length - tabShift;
+		if (newTabCount <= 0) {
+			return line;
+		}
+
+		const tabString = new Array(newTabCount + 1).join(' ');
+
+		return tabString + line;
+	});
+
+	return lines.join('\n');
 }
 
 export function sidebarControlsWidth() {

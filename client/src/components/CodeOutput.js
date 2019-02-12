@@ -1,16 +1,24 @@
 import React from 'react';
-import postcss from 'postcss';
+// import postcss from 'postcss';
 // import autoprefixer from 'autoprefixer';
-import prettify from 'postcss-prettify';
-import prettyHTML from 'pretty';
+// import prettify from 'postcss-prettify';
+// import prettyHTML from 'pretty';
 import * as clipboard from 'clipboard-polyfill/build/clipboard-polyfill.promise'
 import Toggle from './input/Toggle';
-import { addNotification, getNotificationTypes, updateGlobalState, cloneObject, selectText, setGlobalVariable } from '../util/helpers';
 import createElement from 'react-syntax-highlighter/dist/create-element';
 import { registerLanguage } from 'react-syntax-highlighter/dist/light';
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/light';
 import cssHighlighter from 'react-syntax-highlighter/dist/languages/hljs/css';
 import htmlHighlighter from 'react-syntax-highlighter/dist/languages/hljs/xml';
+import { 
+  addNotification, 
+  getNotificationTypes, 
+  updateGlobalState, 
+  formatCode,
+  cloneObject, 
+  selectText, 
+  setGlobalVariable 
+} from '../util/helpers';
 
 registerLanguage('css', cssHighlighter);
 registerLanguage('html', htmlHighlighter);
@@ -92,7 +100,8 @@ class CodeOutput extends React.PureComponent {
     if (this.props.language.toLowerCase() === 'css') {
       this.getCSS(props);
     } else {
-      const outputCode = prettyHTML(props.outputCode);
+      // const outputCode = prettyHTML(props.outputCode);
+      const outputCode = formatCode(props.outputCode, props.language);
 
       this.setState({ outputCode, copyCode: outputCode, disableEditor: !outputCode });
     }
@@ -102,43 +111,55 @@ class CodeOutput extends React.PureComponent {
     let css = props.outputCode;
 
     if (props.outputPreviewStyles && props.previewCSS) {
-      css += props.previewCSS;
+      css += `\n${formatCode(props.previewCSS)}`;
     }
 
     // Disable editor if no CSS is passed
-    css = css.trim();
+    // css = css.trim();
     const disableEditor = !css;
 
     // Add plugins to format code and add prefixes if necessary
     // const { showBrowserPrefixes, hasBrowserPrefixes } = props;
-    const plugins = [prettify];
+    // const plugins = [prettify];
     
     // if (showBrowserPrefixes && hasBrowserPrefixes) {
     //   plugins.unshift(autoprefixer({ browsers: ['ie >= 8', '> 4%'] }));
     // }
 
+    let outputCode = formatCode(css, props.language);
+    let copyCode = outputCode;
 
-    postcss(plugins)
-      .process(css, { from: undefined })
-      .then(result => {
-        result.warnings().forEach(warn => {
-          console.warn(warn.toString());
-        });
+    if (css.indexOf('{') === -1) {
+      this.hideSelector = true;
+      outputCode = `.selector {\n${outputCode}\n}`;
+    } else {
+      this.hideSelector = false;
+    }
 
-        let { css: outputCode } = result;
-        const copyCode = outputCode;
+    this.setState({ outputCode, copyCode, disableEditor });
 
-        // Use correct syntax highlighting even if we don't have 
-        // a CSS selector present in output string
-        if (css.indexOf('{') === -1) {
-          this.hideSelector = true;
-          outputCode = `.selector {\n${outputCode}\n}`;
-        } else {
-          this.hideSelector = false;
-        }
 
-        this.setState({ outputCode, copyCode, disableEditor });
-      });
+    // postcss(plugins)
+    //   .process(css, { from: undefined })
+    //   .then(result => {
+    //     result.warnings().forEach(warn => {
+    //       console.warn(warn.toString());
+    //     });
+
+    //     let { css: outputCode } = result;
+    //     const copyCode = outputCode;
+
+    //     // Use correct syntax highlighting even if we don't have 
+    //     // a CSS selector present in output string
+    //     if (css.indexOf('{') === -1) {
+    //       this.hideSelector = true;
+    //       outputCode = `.selector {\n${outputCode}\n}`;
+    //     } else {
+    //       this.hideSelector = false;
+    //     }
+
+    //     this.setState({ outputCode, copyCode, disableEditor });
+    //   });
   }
 
   copyCode() {
