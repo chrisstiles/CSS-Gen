@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { isObjectOfShape } from '../util/helpers';
 import _ from 'underscore';
+import WebFont from 'webfontloader';
 
 // CSS Styles
 import '../css/general.css';
@@ -76,6 +77,14 @@ class PrimaryLayout extends React.Component {
 
     this.state.loading = false;
     this.state.loadingItems = [];
+
+    // Load main web font asynchronously
+    WebFont.load({
+      google: {
+        families: ['Montserrat:400,500,600,700']
+      },
+      classes: false
+    });
 
     // Add persisted global state
     if (window.localStorage) {
