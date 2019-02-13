@@ -10,20 +10,8 @@ class StaticWindowGenerator extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.defaultState = {
-			showEditorBackgroundColor: false,
-			editorBackgroundColor: 'transparent'
-		};
-
-		_.extend(this.defaultState, props.previewStyles);
-
-		this.stateTypes = {
-			showEditorBackgroundColor: Boolean,
-			editorBackgroundColor: String
-		};
-
+		this.defaultState = _.extend({}, this.StaticWindowGenerator, props.previewStyles);
 		this.state = getState(this.defaultState, this.stateTypes, true);
-
 		this.state.wrapperHeight = 400;
 
 		this.handleWindowResize = this.handleWindowResize.bind(this);
@@ -65,7 +53,6 @@ class StaticWindowGenerator extends React.Component {
 		}
 
 		const { editorBackgroundColor: backgroundColor, wrapperHeight} = this.state;
-		// const backgroundColor = showEditorBackgroundColor ? editorBackgroundColor : 'transparent';
 
 		return (
 			<StaticWindowPreview 
@@ -156,3 +143,13 @@ class StaticWindowGenerator extends React.Component {
 }
 
 export default StaticWindowGenerator;
+
+StaticWindowGenerator.defaultState = {
+	showEditorBackgroundColor: false,
+	editorBackgroundColor: 'transparent'
+};
+
+StaticWindowGenerator.stateTypes = {
+	showEditorBackgroundColor: Boolean,
+	editorBackgroundColor: String
+};

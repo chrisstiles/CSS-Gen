@@ -10,35 +10,9 @@ class SingleWindowGenerator extends React.Component {
   constructor(props) {
     super(props);
 
-    this.defaultState = {
-      width: 300,
-      height: 300,
-      dragX: 0,
-      dragY: 0,
-      backgroundColor: '#ffffff',
-      hasResized: false,
-      resizePosition: { x: 0, y: 0 },
-      image: null,
-      resizeMarginAdjustment: 0
-    };
-
-    _.extend(this.defaultState, props.previewStyles);
-
-    this.stateTypes = {
-      width: Number,
-      height: Number,
-      dragX: Number,
-      dragY: Number,
-      backgroundColor: String,
-      hasResized: Boolean,
-      resizePosition: { x: Number, y: Number },
-      image: null,
-      resizeMarginAdjustment: Number
-    };
-
+    this.defaultState = _.extend({}, SingleWindowGenerator.defaultState, props.previewStyles);
     this.state = getState(this.defaultState, this.stateTypes, true);
-
-    this.state.previewContentLoaded = this.state.image ? false : true;
+    this.state.previewContentLoaded = !!this.state.image;
     
     if (!this.state.previewContentLoaded) {
       startLoading('preview-content');
@@ -277,3 +251,27 @@ class SingleWindowGenerator extends React.Component {
 }
 
 export default SingleWindowGenerator;
+
+SingleWindowGenerator.defaultState = {
+  width: 300,
+  height: 300,
+  dragX: 0,
+  dragY: 0,
+  backgroundColor: '#ffffff',
+  hasResized: false,
+  resizePosition: { x: 0, y: 0 },
+  image: null,
+  resizeMarginAdjustment: 0
+};
+
+SingleWindowGenerator.stateTypes = {
+  width: Number,
+  height: Number,
+  dragX: Number,
+  dragY: Number,
+  backgroundColor: String,
+  hasResized: Boolean,
+  resizePosition: { x: Number, y: Number },
+  image: null,
+  resizeMarginAdjustment: Number
+};
