@@ -367,11 +367,17 @@ export function generateCSSString(css) {
 	return cssString;
 }
 
+export function stripZeroUnits(str) {
+	return str.replace(/\b0px/g, '0');
+}
+
 export function formatCode(code, language = 'css') {
 	code = code.trim();
 	const isCSS = language.toLowerCase() === 'css';
 
 	if (isCSS) {
+		code = stripZeroUnits(code);
+
 		// CSS does not contain any selectors
 		// so we can left justify everything
 		if (!code.includes('{')) {
