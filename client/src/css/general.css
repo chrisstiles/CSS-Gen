@@ -689,10 +689,14 @@ body.code-expanded #bottom-content-wrapper {
   z-index: 9999; }
 
 #settings-wrapper {
-  border-right: 1px solid #dedede;
-  min-width: 300px; }
+  display: flex; }
+  #settings-wrapper > div {
+    border-right: 1px solid #dedede;
+    min-width: 300px; }
   #settings-wrapper .content {
     padding: 15px 18px; }
+  #settings-wrapper .field-wrapper {
+    margin-bottom: 0; }
 
 #generator-output {
   display: flex;

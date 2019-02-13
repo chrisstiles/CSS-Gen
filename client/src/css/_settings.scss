@@ -1,8 +1,22 @@
 #settings-wrapper {
-  border-right:1px solid #dedede;
-  min-width:300px;
+  display:flex;
+
+  > div {
+    border-right:1px solid #dedede;
+    min-width:300px;
+  }
 
   .content {
     padding:15px 18px;
   }
+
+  .field-wrapper {
+    margin-bottom:0;
+  }
+}
+
+#preview-settings {
+  // .bottom-title {
+  //   border-top: 1px solid #e7e7e7;
+  // }
 }

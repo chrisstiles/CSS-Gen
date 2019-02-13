@@ -7,7 +7,7 @@ class Settings extends React.Component {
     return (
       <div id="settings-wrapper">
         <div id="generator-settings">
-          <div className="bottom-title">Settings</div>
+          <div className="bottom-title">Generator Settings</div>
           <div className="content">
             <div className="field-wrapper">
                 <Toggle
@@ -22,7 +22,12 @@ class Settings extends React.Component {
             </div>
           </div>
         </div>
-        {this.children}
+        <div id="preview-settings">
+          <div className="bottom-title">Preview Settings</div>
+          <div className="content">
+            {this.children}
+          </div>
+        </div>
       </div>
     );
   }
