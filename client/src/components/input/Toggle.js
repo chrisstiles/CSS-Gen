@@ -23,31 +23,40 @@ class Toggle extends React.PureComponent {
 	}
 
 	render() {
-		const className = ['toggle-wrapper'];
+		const { className, disabled, inline, label } = this.props;
+		const wrapperClassName = ['toggle-wrapper'];
 		
-		if (this.props.className) {
-			className.push(this.props.className);
+		if (className) {
+			wrapperClassName.push(className);
 		}
 
-		if (this.props.disabled) {
-			className.push('disabled');
+		if (disabled) {
+			wrapperClassName.push('disabled');
 		}
 
-		if (this.props.inline) {
-			className.push('inline');
+		const labelClassName = ['toggle-label'];
+
+		if (label) {
+			labelClassName.push('title');
+		}
+
+		if (inline) {
+			labelClassName.push('inline');
 		}
 
 		return (
-			<div className={className.join(' ')}>
-				{this.renderLabel()}
-				<label className="switch-wrapper">
-					<input
-						name={this.props.name}
-						type="checkbox"
-						onChange={this.handleChange}
-						checked={this.props.checked}
-					/>
-					<span className="switch"></span>
+			<div className={wrapperClassName.join(' ')}>
+				<label className={labelClassName.join(' ')}>
+					{label ? <span>{label}</span> : null}
+					<div className="switch-wrapper">
+						<input
+							name={this.props.name}
+							type="checkbox"
+							onChange={this.handleChange}
+							checked={this.props.checked}
+						/>
+						<span className="switch"></span>
+					</div>
 				</label>
 				{this.props.children ?
 					<div className="toggle-content">{this.props.children}</div>

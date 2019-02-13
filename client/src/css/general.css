@@ -50,8 +50,10 @@ body {
 .right {
   float: right; }
 
-p:last-child {
-  margin-bottom: 0 !important; }
+p {
+  font-size: 1em; }
+  p:last-child {
+    margin-bottom: 0 !important; }
 
 .clear:after {
   clear: both;
@@ -2038,24 +2040,26 @@ textarea {
     position: absolute;
     top: 7px; }
 
-.toggle-wrapper.inline {
-  display: flex;
-  align-items: center; }
-  .toggle-wrapper.inline .title {
-    margin-left: 8px;
-    margin-top: -1px;
-    line-height: 1;
-    order: 2; }
-  .toggle-wrapper.inline .switch-wrapper {
-    margin-top: 0;
-    flex-shrink: 0; }
-
 .toggle-wrapper.disabled {
   pointer-events: none; }
   .toggle-wrapper.disabled .title {
     opacity: .5; }
   .toggle-wrapper.disabled .switch-wrapper {
     opacity: .35; }
+
+.toggle-label.inline {
+  display: flex;
+  align-items: center; }
+  .toggle-label.inline > span {
+    margin-right: 15px;
+    margin-top: -1px;
+    line-height: 1; }
+  .toggle-label.inline .switch-wrapper {
+    margin-top: 0;
+    flex-shrink: 0; }
+
+.toggle-label > span {
+  display: block; }
 
 .switch-wrapper {
   position: relative;
@@ -2107,8 +2111,12 @@ textarea {
     background-color: #929292; }
     .switch-wrapper:hover .switch:before {
       box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.12), 0 0 0 10px rgba(0, 0, 0, 0.04); }
-  .switch-wrapper .toggle-content {
-    float: left; }
+
+.toggle-content {
+  font-size: 12px;
+  margin-top: 7px;
+  font-weight: 500;
+  max-width: 200px; }
 
 .select-wrapper {
   margin-bottom: 15px; }
