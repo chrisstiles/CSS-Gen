@@ -34,7 +34,7 @@ class ColorPicker extends React.PureComponent {
 
   componentDidUpdate() {
     const color = this.props.color;
-    const transparent = (typeof color === 'string' && color.toLowerCase() === 'transparent') || color._originalInput === 'transparent';
+    const transparent = color && ((typeof color === 'string' && color.toLowerCase() === 'transparent') || color._originalInput === 'transparent');
     this.setState({ transparent });
   }
 
