@@ -4,7 +4,6 @@
   align-items: flex-end;
   padding: 11px 11px 12px 11px;
   background-color: #ececec;
-  border-left: 2px solid #dedede;
   // z-index: 200;
   width:360px;
 
@@ -109,7 +108,8 @@
   display:flex;
   align-items:center;
   justify-content:center;
-  background-color:rgba(#fff, .95);
+  // background-color:rgba($accent-color, .87);
+  background-color:rgba(#fff, .4);
   padding:30px;
 
   .output-wrapper {
@@ -128,34 +128,58 @@
   pointer-events:none;
 }
 
-body.no-select {
-  #header-wrapper,
-  #sidebar-controls,
-  .resize-wrapper,
-  #nav-window
-  #bottom-content {
-    @include no-select;
-
-    * {
+body {
+  &.no-select {
+    #header-wrapper,
+    #sidebar-controls,
+    .resize-wrapper,
+    #nav-window
+    #bottom-content {
       @include no-select;
-      pointer-events:none;
+
+      * {
+        @include no-select;
+        pointer-events:none;
+      }
+    }
+
+    .language-wrapper {
+      .selecting-code,
+      &:focus {
+        .hljs {
+          @include allow-select;
+        }
+
+        code {
+          @include no-select;
+
+          &.output-code,
+          &.output-code * {
+            @include allow-select;
+          }
+        }
+      }
     }
   }
 
-  .language-wrapper {
-    .selecting-code,
-    &:focus {
-      .hljs {
-        @include allow-select;
-      }
+  &.code-expanded {
+    @mixin blur {
+      filter: blur(30px);
+    }
 
-      code {
-        @include no-select;
+    #nav-window,
+    #sidebar,
+    #header-wrapper,
+    #static-preview,
+    .generator-preview,
+    #bottom-content,
+    .output-wrapper {
+      @include blur;
+    }
 
-        &.output-code,
-        &.output-code * {
-          @include allow-select;
-        }
+    .expanded-code-wrapper {
+      .output-wrapper {
+        filter:none;
       }
     }
   }
