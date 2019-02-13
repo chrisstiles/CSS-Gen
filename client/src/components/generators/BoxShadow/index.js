@@ -24,10 +24,10 @@ class BoxShadow extends React.Component {
     const rules = _.extend({}, this.state, styles);
 
     // Create tiny color with correct alpha
-    var color = rules.color === undefined ? this.state.shadowColor : rules.color;
+    let color = rules.color === undefined ? this.state.shadowColor : rules.color;
     color = tinycolor(color).setAlpha(rules.shadowOpacity / 100);
 
-    var boxShadow = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${rules.spreadRadius}px ${hexOrRgba(color)}`;
+    let boxShadow = `${rules.horizontalShift}px ${rules.verticalShift}px ${rules.blurRadius}px ${rules.spreadRadius}px ${hexOrRgba(color)}`;
 
     if ((rules.inset !== undefined && rules.inset) || (rules.inset === undefined && this.state.inset)) {
       boxShadow = `inset ${boxShadow}`;
