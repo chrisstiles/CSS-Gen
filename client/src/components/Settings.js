@@ -7,15 +7,18 @@ class Settings extends React.Component {
     return (
       <div id="settings-wrapper">
         <div id="generator-settings">
-          <div className="bottom-title">Generator Settings</div>
+          <div className="bottom-title">Settings</div>
           <div className="content">
-            <div className="field-wrapper small">
+            <div className="field-wrapper">
                 <Toggle
                   name="persistGeneratorState"
                   onChange={updateGlobalState}
-                  label="Persist Generator"
+                  label="Save generator state"
+                  inline={true}
                   checked={this.props.persistGeneratorState}
-                />
+                >
+                  <p>Generator settings can be saved after you leave this page</p>
+                </Toggle>
             </div>
           </div>
         </div>
