@@ -12,7 +12,7 @@ class SingleWindowGenerator extends React.Component {
 
     this.defaultState = _.extend({}, SingleWindowGenerator.defaultState, props.previewStyles);
     this.state = getState(this.defaultState, this.stateTypes, true);
-    this.state.previewContentLoaded = !!this.state.image;
+    this.state.previewContentLoaded = !this.state.image;
     
     if (!this.state.previewContentLoaded) {
       startLoading('preview-content');
@@ -201,49 +201,19 @@ class SingleWindowGenerator extends React.Component {
   }
 
   render() {
-    const { 
-      generatorState, 
-      renderInputs, 
-      renderPresets, 
-      renderOutput,
-      title, 
-      heading, 
-      intro, 
-      className, 
-      multipleOutputs,
-      globalState, 
-      hasBrowserPrefixes 
-    } = this.props;
-
-    const props = { 
-      generatorState, 
-      renderInputs, 
-      renderPresets, 
-      renderOutput,
-      title, 
-      heading, 
-      intro, 
-      className, 
-      multipleOutputs,
-      globalState, 
-      hasBrowserPrefixes 
-    };
-
     const previewState = _.extend({}, this.state, { previewCSS: this.generatePreviewCSS() });
+    const props = _.extend({}, this.props, {
+      previewState,
+      renderPreview: this.renderPreview,
+      renderToolbar: this.renderToolbar,
+      setPreset: this.setPreset,
+      onWrapperMount: this.handleWrapperMount
+    });
     
     return (
       <div>
         <FileDrop onFileDrop={this.handleFileDrop} />
-        <Generator
-          renderToolbar={this.renderToolbar}
-          renderPreview={this.renderPreview}
-          setPreset={this.setPreset}
-          reset={this.reset}
-          onWrapperMount={this.handleWrapperMount}
-          preview={this}
-          previewState={previewState}
-          {...props}
-        />
+        <Generator {...props} />
       </div>
     );
   }

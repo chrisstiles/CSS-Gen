@@ -10,7 +10,7 @@ class StaticWindowGenerator extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.defaultState = _.extend({}, this.StaticWindowGenerator, props.previewStyles);
+		this.defaultState = _.extend({}, StaticWindowGenerator.defaultState, props.previewStyles);
 		this.state = getState(this.defaultState, this.stateTypes, true);
 		this.state.wrapperHeight = 400;
 
@@ -105,40 +105,13 @@ class StaticWindowGenerator extends React.Component {
 	}
 
 	render() {
-		const { 
-			generatorState, 
-			renderInputs, 
-			renderPresets, 
-			renderOutput,
-			title, 
-			heading, 
-			intro, 
-			className, 
-			multipleOutputs,
-			globalState 
-		} = this.props;
+		const props = _.extend({}, this.props, {
+			renderPreview: this.renderPreview,
+			renderToolbar: this.renderToolbar,
+			previewState: this.state
+		});
 
-		const props = { 
-			generatorState, 
-			renderInputs, 
-			renderPresets, 
-			renderOutput,
-			title, 
-			heading, 
-			intro, 
-			className, 
-			multipleOutputs,
-			globalState 
-		};
-
-		return (
-			<Generator
-				renderPreview={this.renderPreview}
-				renderToolbar={this.renderToolbar}
-				previewState={this.state}
-				{...props}
-			/>
-		);
+		return <Generator {...props} />;
 	}
 }
 

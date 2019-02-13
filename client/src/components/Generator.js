@@ -102,6 +102,7 @@ class Generator extends React.Component {
       persistGeneratorState,
       loading 
     } = this.props.globalState;
+    
 
     return (
       <Page
