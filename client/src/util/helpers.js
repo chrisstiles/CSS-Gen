@@ -220,7 +220,7 @@ export function getPersistedState(defaultState, isPreview) {
 			
 			// Only use a persisted state if it is recent
 			const timestamp = previousState.timestamp;
-			const daysLimit = 14;
+			const daysLimit = 365;
 
 			if (timestamp) {
 				// const previousDate = new Date(timestamp);
