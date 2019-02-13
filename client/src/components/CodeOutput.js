@@ -225,11 +225,11 @@ class CodeOutput extends React.PureComponent {
       const output = (
         <div {...outputWrapperProps}>
           <div className="bottom-title color">
+            <span>Generater Output</span>
             <div
               className="expand-toggle"
               onClick={handleClick}
             ></div>
-            <span>Code Output</span>
           </div>
           <CodeViewer
             language={language}
