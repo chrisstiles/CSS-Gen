@@ -234,7 +234,7 @@ class CodeOutput extends React.PureComponent {
             code={outputCode}
             hideSelector={this.hideSelector}
             disableEditor={disableEditor}
-            isExpanded={expanded}
+            isExpanded={isExpanded}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
           />
@@ -288,6 +288,11 @@ class CodeViewer extends React.Component {
 
   componentDidMount() {
     document.addEventListener('mouseup', this.enableOtherSelect);
+
+    if (this.wrapper && this.props.isExpanded) {
+      this.wrapper.scrollIntoView();
+      selectText(this.wrapper.querySelector('.output-code'));
+    }
   }
 
   componentWillUnmount() {
@@ -357,6 +362,7 @@ class CodeViewer extends React.Component {
         className={wrapperClassName.join(' ')}
         onMouseDown={this.disableOtherSelect}
         onKeyDown={this.handleKeyDown}
+        ref={wrapper => { this.wrapper = wrapper }}
         onFocus={onFocus}
         onBlur={onBlur}
         tabIndex="0"
