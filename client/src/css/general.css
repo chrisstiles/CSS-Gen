@@ -724,7 +724,7 @@ body.code-expanded #bottom-content-wrapper {
     margin-right: 0; }
   .output-wrapper .bottom-title {
     border-radius: 3px 3px 0px 0px;
-    padding: 4px 6px 5px 15px !important;
+    padding: 4px 6px 5px 7px !important;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -749,10 +749,8 @@ body.code-expanded #bottom-content-wrapper {
   .output-wrapper .expand-toggle {
     width: 20px;
     height: 20px;
-    display: inline-block;
     background-color: red;
-    order: 3;
-    margin-left: 6px;
+    margin-right: 8px;
     cursor: pointer; }
   .output-wrapper .bottom {
     padding: 8px;
@@ -1643,7 +1641,8 @@ textarea {
   .button.disabled {
     opacity: 1 !important;
     background-color: #d8d8d8;
-    color: #a1a1a1; }
+    color: #a1a1a1;
+    cursor: default; }
   .button.red {
     background-color: #ec6c6c; }
     .button.red:hover {
