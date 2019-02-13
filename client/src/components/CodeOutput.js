@@ -64,6 +64,8 @@ class CodeOutput extends React.PureComponent {
   }
 
   handleFocus(event) {
+    const selection = window.getSelection();
+    selection.removeAllRanges();
     this.hasFocus = true;
     setGlobalVariable(true, 'outputIsFocused');
   }
