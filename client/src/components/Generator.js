@@ -24,10 +24,12 @@ class Generator extends React.Component {
         if (window.localStorage) {
           if (
             !_.isEqual(this.prevGeneratorState, this.props.generatorState) ||
-            !_.isEqual(this.prevPreviewState, this.props.previewState)
+            !_.isEqual(this.prevPreviewState, this.props.previewState) ||
+            !_.isEqual(this.prevGlobalState, this.props.globalState)
           ) {
             this.prevGeneratorState = this.props.generatorState;
             this.prevPreviewState = this.props.previewState;
+            this.prevGlobalState = this.props.globalState;
 
             const path = window.location.pathname;
             const state = { 
@@ -50,7 +52,7 @@ class Generator extends React.Component {
             }
           }
         }
-      }, 500);
+      }, 400);
     }
   }
 
