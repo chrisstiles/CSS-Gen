@@ -66,11 +66,11 @@ class SingleWindowPreview extends React.Component {
       const rect = this.previewContent.getBoundingClientRect();
       const windowWidth = window.innerWidth;
       var windowHeight = window.innerHeight;
-      const presetBar = document.querySelector('#preset-bar');
+      const bottomContent = document.querySelector('#bottom-content');
 
       // Prevent getting stuck behind preset bar
-      if (presetBar) {
-        windowHeight -= presetBar.offsetHeight;
+      if (bottomContent) {
+        windowHeight -= bottomContent.offsetHeight;
       }
       
       const { x, y } = rect;
