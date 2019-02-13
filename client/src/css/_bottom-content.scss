@@ -9,6 +9,10 @@
   display:flex;
   justify-content: space-between;
 
+  @media (min-height: 920px) {
+    height:250px;
+  }
+
   .bottom-title {
     font-size: 14px;
     line-height: 1;

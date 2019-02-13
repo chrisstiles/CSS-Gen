@@ -8,6 +8,10 @@
   z-index: 500;
   border-left: 2px solid #dadada;
 
+  @media (min-height: 920px) {
+    bottom:250px;
+  }
+
   .sidebar-title {
     width: calc(100% + 54px);
     margin-left: -27px;
