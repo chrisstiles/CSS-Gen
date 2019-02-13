@@ -697,6 +697,8 @@ body.code-expanded #bottom-content-wrapper {
     padding: 15px 18px; }
   #settings-wrapper .field-wrapper {
     margin-bottom: 0; }
+  #settings-wrapper .toggle-label {
+    justify-content: space-between; }
 
 #generator-output {
   display: flex;
