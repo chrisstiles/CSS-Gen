@@ -41,7 +41,7 @@ class StaticWindowGenerator extends React.Component {
 	}
 
 	renderPreview() {
-		var preview, isDefault;
+		let preview, isDefault;
 		const style = this.props.generatorState.css.styles;
 
 		if (this.props.renderPreview) {

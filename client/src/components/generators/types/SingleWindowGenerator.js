@@ -41,7 +41,7 @@ class SingleWindowGenerator extends React.Component {
   generatePreviewCSS(styles = {}) {
     const rules = _.extend({}, this.state, styles);
 
-    var css = `
+    let css = `
       width: ${rules.width}px;
       height: ${rules.height}px;
     `;
