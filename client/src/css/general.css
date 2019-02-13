@@ -513,6 +513,9 @@ p:last-child {
   background-color: #ececec;
   z-index: 500;
   border-left: 2px solid #dadada; }
+  @media (min-height: 920px) {
+    #sidebar {
+      bottom: 250px; } }
   #sidebar .sidebar-title {
     width: calc(100% + 54px);
     margin-left: -27px;
@@ -643,6 +646,9 @@ p:last-child {
   height: 210px;
   display: flex;
   justify-content: space-between; }
+  @media (min-height: 920px) {
+    #bottom-content-wrapper {
+      height: 250px; } }
   #bottom-content-wrapper .bottom-title {
     font-size: 14px;
     line-height: 1;
@@ -682,9 +688,9 @@ body.code-expanded #bottom-content-wrapper {
 
 #settings-wrapper {
   border-right: 1px solid #dedede;
-  min-width: 200px; }
+  min-width: 300px; }
   #settings-wrapper .content {
-    padding: 12px; }
+    padding: 15px 18px; }
 
 #generator-output {
   display: flex;
@@ -2055,14 +2061,22 @@ textarea {
   position: relative;
   display: inline-block;
   width: 44px;
-  height: 26px;
-  margin-top: 3px; }
+  height: 8px;
+  margin-top: 3px;
+  cursor: pointer; }
+  .switch-wrapper:before {
+    content: "";
+    position: absolute;
+    top: -12px;
+    bottom: -12px;
+    left: -6px;
+    right: -6px; }
   .switch-wrapper input {
     display: none; }
     .switch-wrapper input:checked + .switch {
       background-color: #4834d4; }
       .switch-wrapper input:checked + .switch:before {
-        transform: translateX(18px); }
+        transform: translateX(28px); }
       .switch-wrapper input:checked + .switch:hover {
         background-color: #3927b8; }
     .switch-wrapper input:focus + .switch {
@@ -2075,19 +2089,24 @@ textarea {
     right: 0;
     bottom: 0;
     background-color: #adadad;
-    border-radius: 34px; }
+    border-radius: 10px; }
     .switch-wrapper .switch:before {
-      position: absolute;
       content: "";
+      position: absolute;
       height: 18px;
       width: 18px;
-      left: 4px;
-      bottom: 4px;
+      left: -1px;
+      top: 50%;
+      margin-top: -9px;
       background-color: #fff;
-      transition: .15s;
-      border-radius: 50%; }
-    .switch-wrapper .switch:hover {
-      background-color: #929292; }
+      transition: transform .15s;
+      border-radius: 50%;
+      box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.12);
+      pointer-events: none; }
+  .switch-wrapper:hover .switch {
+    background-color: #929292; }
+    .switch-wrapper:hover .switch:before {
+      box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.12), 0 0 0 10px rgba(0, 0, 0, 0.04); }
   .switch-wrapper .toggle-content {
     float: left; }
 

@@ -33,8 +33,18 @@
   position:relative;
   display: inline-block;
   width: 44px;
-  height: 26px;
+  height: 8px;
   margin-top:3px;
+  cursor: pointer;
+
+  &:before {
+    content:"";
+    position:absolute;
+    top:-12px;
+    bottom:-12px;
+    left:-6px;
+    right:-6px;
+  }
 
   input {
     display: none;
@@ -43,7 +53,7 @@
       background-color: $accent-color;
 
       &:before {
-        transform: translateX(18px);
+        transform: translateX(28px);
       }
 
       &:hover {
@@ -64,22 +74,31 @@
     right: 0;
     bottom: 0;
     background-color: #adadad;
-    border-radius:34px;
+    border-radius:10px;
 
     &:before {
-      position: absolute;
       content: "";
+      position: absolute;
       height: 18px;
       width: 18px;
-      left: 4px;
-      bottom: 4px;
+      left: -1px;
+      top:50%;
+      margin-top:-9px;
       background-color: #fff;
-      transition: .15s;
+      transition: transform .15s;
       border-radius:50%;
+      box-shadow:0 1px 4px 1px rgba(#000, 0.12);
+      pointer-events:none;
     }
+  }
 
-    &:hover {
+  &:hover {
+    .switch {
       background-color: #929292;
+
+      &:before {
+        box-shadow:0 1px 4px 1px rgba(#000, 0.12), 0 0 0 10px rgba(0, 0, 0, 0.04);
+      }
     }
   }
 
