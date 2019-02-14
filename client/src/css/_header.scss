@@ -1,12 +1,12 @@
 @import './_variables.scss';
 
-#header-wrapper {
-  position:fixed;
-  top:0;
-  right:0;
-  left:0;
-  z-index: 300;
-}
+// #header-wrapper {
+//   position:fixed;
+//   top:0;
+//   right:0;
+//   left:0;
+//   z-index: 300;
+// }
 
 #header,
 #toolbar {
@@ -16,27 +16,25 @@
 }
 
 #header {
-  padding: 45px 310px 18px 315px;
   background-color: rgba(247, 247, 247, 0.8);
+  color: #6b6b6b;
+  font-size: 13px;
+
+  .content {
+    padding:45px 30px 25px 30px;
+  }
 
   h1 {
     color:$accent-color;
     font-weight:600;
     font-size:28px;
+    margin-bottom:5px;
   }
 
-  .intro {
-    margin-top: 5px;
-    margin-bottom:3px;
-    font-weight: 400;
-    color: #6b6b6b;
-    font-size: 13px;
+  p {
+    max-width:750px;
     line-height: 1.4em;
-    max-width:550px;
-
-    p {
-      margin-bottom:8px;
-    }
+    margin-bottom:8px;
   }
 }
 

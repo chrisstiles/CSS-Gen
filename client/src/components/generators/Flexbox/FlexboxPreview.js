@@ -1,4 +1,5 @@
 import React from 'react';
+import Preview from '../../Preview';
 import _ from 'underscore';
 import { sameOrChild, getGlobalVariable, getFullHeight, clearSelection } from '../../../util/helpers';
 
@@ -270,18 +271,17 @@ class FlexboxPreview extends React.Component {
     containerStyles.minHeight = this.state.containerHeight;
 
     return (
-      <div 
-        id="flexbox-preview"
-        ref={wrapper => { this.wrapper = wrapper; }}
-      >
-        <div 
-          className={containerClassName.join(' ')}
-          style={containerStyles}
-          ref={container => { this.container = container; }}
-        >
-          {childElements}
+      <Preview>
+        <div id="flexbox-preview">
+          <div
+            className={containerClassName.join(' ')}
+            style={containerStyles}
+            ref={container => { this.container = container; }}
+          >
+            {childElements}
+          </div>
         </div>
-      </div>
+      </Preview>
     );
   }
 }

@@ -34,11 +34,6 @@ body {
 .dragging #app {
   overflow: hidden; }
 
-#main {
-  margin: 0 50px 0 315px;
-  padding: 30px 0;
-  position: relative; }
-
 .page-content {
   color: #4e4e4e;
   font-weight: 300;
@@ -137,16 +132,48 @@ p {
 .notification-error {
   background-color: #bd362f; }
 
+/*
+
+Editing the positions of all these fixed 
+elements is easier in one separate file
+
+*/
 #nav-window {
-  position: fixed;
   top: 25px;
   left: 25px;
+  height: calc(100vh - 260px);
+  max-height: 500px;
+  width: 260px; }
+
+#page-wrapper {
+  padding-left: 285px;
+  padding-right: 320px; }
+
+#header {
+  width: calc(100% + 285px);
+  margin-left: -285px;
+  padding-left: 285px; }
+
+#main {
+  margin: 0 50px 0 315px;
+  padding: 30px 0;
+  position: relative; }
+
+#sidebar {
+  bottom: 210px;
+  width: 320px; }
+  @media (min-height: 920px) {
+    #sidebar {
+      bottom: 250px; } }
+
+#generator-preview {
+  padding: 30px; }
+
+#nav-window {
+  position: fixed;
   background-color: #fff;
   border-radius: 7px;
   z-index: 4000;
-  height: calc(100vh - 260px);
-  max-height: 500px;
-  width: 260px;
   box-shadow: 0px 9px 29px 0px rgba(184, 185, 218, 0.36);
   border: 1px solid rgba(72, 52, 212, 0.23);
   display: flex;
@@ -231,13 +258,6 @@ p {
       left: 18px; }
 
 /* Media Queries */
-#header-wrapper {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 300; }
-
 #header,
 #toolbar {
   border-bottom: 1px solid #dedede;
@@ -245,22 +265,20 @@ p {
   z-index: 500; }
 
 #header {
-  padding: 45px 310px 18px 315px;
-  background-color: rgba(247, 247, 247, 0.8); }
+  background-color: rgba(247, 247, 247, 0.8);
+  color: #6b6b6b;
+  font-size: 13px; }
+  #header .content {
+    padding: 45px 30px 25px 30px; }
   #header h1 {
     color: #4834d4;
     font-weight: 600;
-    font-size: 28px; }
-  #header .intro {
-    margin-top: 5px;
-    margin-bottom: 3px;
-    font-weight: 400;
-    color: #6b6b6b;
-    font-size: 13px;
+    font-size: 28px;
+    margin-bottom: 5px; }
+  #header p {
+    max-width: 750px;
     line-height: 1.4em;
-    max-width: 550px; }
-    #header .intro p {
-      margin-bottom: 8px; }
+    margin-bottom: 8px; }
 
 #toolbar {
   height: 69px;
@@ -510,14 +528,9 @@ p {
   position: fixed;
   top: 0;
   right: 0;
-  bottom: 210px;
-  width: 300px;
   background-color: #ececec;
   z-index: 500;
   border-left: 2px solid #dadada; }
-  @media (min-height: 920px) {
-    #sidebar {
-      bottom: 250px; } }
   #sidebar .sidebar-title {
     width: calc(100% + 54px);
     margin-left: -27px;
@@ -2630,11 +2643,11 @@ input.angle-input {
 
 /* ------------------------- */
 /* Controls */
-.flexbox .item-settings .add-item {
+.flexbox-generator .item-settings .add-item {
   margin-bottom: 12px;
   padding-top: 10px; }
 
-.flexbox .item-settings .remove-item {
+.flexbox-generator .item-settings .remove-item {
   margin-top: 10px; }
 
 /* ------------------------- */

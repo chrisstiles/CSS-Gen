@@ -2,15 +2,9 @@
   position:fixed;
   top:0;
   right:0;
-  bottom:210px;
-  width:300px;
   background-color:#ececec;
   z-index: 500;
   border-left: 2px solid #dadada;
-
-  @media (min-height: 920px) {
-    bottom:250px;
-  }
 
   .sidebar-title {
     width: calc(100% + 54px);

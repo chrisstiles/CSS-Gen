@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+// import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { isObjectOfShape } from '../util/helpers';
 import _ from 'underscore';
 import WebFont from 'webfontloader';
@@ -9,7 +9,7 @@ import WebFont from 'webfontloader';
 import '../css/general.css';
 
 // Layout Components
-import NavWindow from './NavWindow';
+// import NavWindow from './NavWindow';
 
 // Generator Pages
 import Home from './Home';
@@ -34,13 +34,13 @@ const routes = [
 ];
 
 // Notifications
-var addNotification;
-var notificationTypes = {
-  info: 'info',
-  warning: 'warning',
-  success: 'success',
-  error: 'error'
-}
+// var addNotification;
+// var notificationTypes = {
+//   info: 'info',
+//   warning: 'warning',
+//   success: 'success',
+//   error: 'error'
+// }
 
 // Global State
 let getGlobalState;
@@ -107,7 +107,7 @@ class PrimaryLayout extends React.Component {
       }
     }
 
-    addNotification = this.createNotification.bind(this);
+    // addNotification = this.createNotification.bind(this);
     getGlobalState = this.getGlobalState.bind(this);
     updateGlobalState = this.updateGlobalState.bind(this);
     getGlobalDefaults = this.getGlobalDefaults.bind(this);
@@ -118,9 +118,9 @@ class PrimaryLayout extends React.Component {
     finishLoading = this.finishLoading.bind(this);
   }
 
-  createNotification(type, message) {
-    NotificationManager[type](message, null, 4500);
-  }
+  // createNotification(type, message) {
+  //   NotificationManager[type](message, null, 4500);
+  // }
 
   getGlobalState() {
     return this.state;
@@ -210,8 +210,6 @@ class PrimaryLayout extends React.Component {
 
     return (
       <div className={className}>
-        <NotificationContainer />
-        <NavWindow />
         {routeComponents}
       </div>
     );
@@ -229,8 +227,8 @@ class App extends React.Component {
 }
 
 export { 
-  addNotification, 
-  notificationTypes,
+  // addNotification, 
+  // notificationTypes,
   getGlobalState, 
   updateGlobalState, 
   getGlobalDefaults ,

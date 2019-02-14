@@ -1,4 +1,5 @@
 import React from 'react';
+import Sidebar from '../../Sidebar';
 import ContainerInputs from './ContainerInputs';
 import ItemInputs from './ItemInputs';
 import _ from 'underscore';
@@ -107,7 +108,7 @@ class FlexboxInputs extends React.Component {
     removeButtonClassNames.push('red', 'remove-item');
 
     return (
-      <div>
+      <Sidebar>
         <div className="container-settings">
           <div className="section-title">Container Settings</div>
           <ContainerInputs
@@ -153,7 +154,7 @@ class FlexboxInputs extends React.Component {
             </div>
           }
         </div>
-      </div>
+      </Sidebar>
     );
   }
 }

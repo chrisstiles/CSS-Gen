@@ -1,8 +1,7 @@
 import _ from 'underscore';
 import tinycolor from 'tinycolor2';
+import { NotificationManager } from 'react-notifications';
 import { 
-	addNotification as _addNotification, 
-	notificationTypes,
 	getGlobalState as _getGlobalState,
 	getGlobalDefaults as _getGlobalDefaults,
 	updateGlobalState as _updateGlobalState,
@@ -14,11 +13,16 @@ import {
 } from '../components/App';
 
 export function addNotification(type, message) {
-	_addNotification(type, message);
+	NotificationManager[type](message, null, 4500);
 }
 
 export function getNotificationTypes() {
-	return notificationTypes;
+	return {
+		info: 'info',
+		warning: 'warning',
+		success: 'success',
+		error: 'error'
+	};
 }
 
 export function getGlobalState() {

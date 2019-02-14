@@ -3,10 +3,15 @@ import StaticWindowGenerator from '../types/StaticWindowGenerator';
 import FlexboxPreview from './FlexboxPreview';
 import FlexboxInputs from './FlexboxInputs';
 import FlexboxOutput from './FlexboxOutput';
-import { getState } from '../../../util/helpers';
+// import { getState } from '../../../util/helpers';
 import Toggle from '../../input/Toggle';
 import ColorPicker from '../../input/ColorPicker';
 import _ from 'underscore';
+
+import Generator from './Generator';
+import Header from '../../Header';
+
+import { getState } from '../../../util/helpers';
 
 // **order
 // flex-grow
@@ -69,15 +74,15 @@ class Flexbox extends React.Component {
     this.setState(state);
   }
 
-  renderInputs = () => {
-    return (
-      <FlexboxInputs
-        updateGenerator={this.updateGenerator}
-        addChildElement={this.addChildElement}
-        {...this.state}
-      />
-    );
-  }
+  // renderInputs = () => {
+  //   return (
+  //     <FlexboxInputs
+  //       updateGenerator={this.updateGenerator}
+  //       addChildElement={this.addChildElement}
+  //       {...this.state}
+  //     />
+  //   );
+  // }
 
   renderOutput = (previewCSS) => {
     return (
@@ -123,65 +128,92 @@ class Flexbox extends React.Component {
     );
   }
 
-  renderPreview = (style) => {
-    const containerStyles = _.extend({}, style, this.state.containerStyles);
-    const itemStyles = _.extend({}, style, this.state.itemStyles);
-    const { 
-      childElements, 
-      selectedIndexes, 
-      showAddItemButton,
-      fullHeightContainer,
-      containerBackgroundColor, 
-      mostRecentIndex, 
-      canAddChildElement
-    } = this.state;
+  // renderPreview = () => {
+  //   const containerStyles = _.extend({}, style, this.state.containerStyles);
+  //   const itemStyles = _.extend({}, style, this.state.itemStyles);
+  //   const { 
+  //     childElements, 
+  //     selectedIndexes, 
+  //     showAddItemButton,
+  //     fullHeightContainer,
+  //     containerBackgroundColor, 
+  //     mostRecentIndex, 
+  //     canAddChildElement
+  //   } = this.state;
 
-    return (
-      <FlexboxPreview
-        containerStyles={containerStyles}
-        containerBackgroundColor={containerBackgroundColor}
-        itemStyles={itemStyles}
-        childElements={childElements}
-        selectedIndexes={selectedIndexes}
-        showAddItemButton={showAddItemButton}
-        fullHeightContainer={fullHeightContainer}
-        mostRecentIndex={mostRecentIndex}
-        canAddChildElement={canAddChildElement}
-        updateGenerator={this.updateGenerator}
-        addChildElement={this.addChildElement}
-      />
-    );
-  }
+  //   return (
+  //     <FlexboxPreview
+  //       containerStyles={containerStyles}
+  //       containerBackgroundColor={containerBackgroundColor}
+  //       itemStyles={itemStyles}
+  //       childElements={childElements}
+  //       selectedIndexes={selectedIndexes}
+  //       showAddItemButton={showAddItemButton}
+  //       fullHeightContainer={fullHeightContainer}
+  //       mostRecentIndex={mostRecentIndex}
+  //       canAddChildElement={canAddChildElement}
+  //       updateGenerator={this.updateGenerator}
+  //       addChildElement={this.addChildElement}
+  //     />
+  //   );
+  // }
 
   render() {
     // const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
     this.generatorState = _.extend({}, this.state, { css: this.generateCSS() });
+    // const containerStyles = _.extend({}, style, this.state.containerStyles);
+    // const itemStyles = _.extend({}, style, this.state.itemStyles);
+    // const {
+    //   childElements,
+    //   selectedIndexes,
+    //   showAddItemButton,
+    //   fullHeightContainer,
+    //   containerBackgroundColor,
+    //   mostRecentIndex,
+    //   canAddChildElement
+    // } = this.state;
+
+    const props = _.extend({}, this.state, {
+      updateGenerator: this.updateGenerator,
+      addChildElement: this.addChildElement
+    })
 
     return (
-      <StaticWindowGenerator
-        // Text Content
-        title="CSS Flexbox Generator | CSS-GEN"
-        className="flexbox"
-        heading="CSS Flexbox Generator"
-
-        // Generator settings
-        multipleOutputs={true}
-
-        // Generator state
-        generatorState={this.generatorState}
-        generatorDefaultState={Flexbox.defaultState}
-        globalState={this.props.globalState}
-
-        // Render generator components
-        renderInputs={this.renderInputs}
-        renderToolbarItems={this.renderToolbarItems}
-        renderPreview={this.renderPreview}
-        renderOutput={this.renderOutput}
-
-        // Generator methods
-        updateGenerator={this.updateGenerator}
-      />
+      <Generator title="CSS Flexbox Generator" className="flexbox-generator">
+        <Header>
+          <h1>CSS Flexbox Generator</h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
+        </Header>
+        <FlexboxInputs {...props} />
+        <FlexboxPreview {...props} />
+      </Generator>
     );
+
+    // return (
+      // <StaticWindowGenerator
+      //   // Text Content
+      //   title="CSS Flexbox Generator | CSS-GEN"
+      //   className="flexbox"
+      //   heading="CSS Flexbox Generator"
+
+      //   // Generator settings
+      //   multipleOutputs={true}
+
+      //   // Generator state
+      //   generatorState={this.generatorState}
+      //   generatorDefaultState={Flexbox.defaultState}
+      //   globalState={this.props.globalState}
+
+      //   // Render generator components
+      //   renderInputs={this.renderInputs}
+      //   renderToolbarItems={this.renderToolbarItems}
+      //   renderPreview={this.renderPreview}
+      //   renderOutput={this.renderOutput}
+
+      //   // Generator methods
+      //   updateGenerator={this.updateGenerator}
+      // />
+    // );
   }
 }
 

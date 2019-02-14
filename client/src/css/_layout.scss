@@ -1,0 +1,44 @@
+/*
+
+Editing the positions of all these fixed 
+elements is easier in one separate file
+
+*/
+
+#nav-window {
+  top: 25px;
+	left: 25px;
+  height:calc(100vh - 260px);
+	max-height:500px;
+	width: 260px;
+}
+
+#page-wrapper {
+  padding-left:285px;
+  padding-right:320px;
+}
+
+#header {
+  width:calc(100% + 285px);
+  margin-left:-285px;
+  padding-left:285px;
+}
+
+#main {
+  margin:0 50px 0 315px;
+  padding:30px 0;
+  position:relative;
+}
+
+#sidebar {
+  bottom:210px;
+  width:320px;
+
+  @media (min-height: 920px) {
+    bottom:250px;
+  }
+}
+
+#generator-preview {
+  padding:30px;
+}

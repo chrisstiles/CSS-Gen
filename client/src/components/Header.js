@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Header = ({ title, intro, children }) => {
-	const introText = intro ? <div className="intro">{intro}</div> : null;
+const Header = ({ children }) => {
+  const headerProps = { id: 'header' };
 
   return (
-    <header id="header">
-      <h1>{title}</h1>
-      {introText}
-      {children}
+    <header {...headerProps}>
+      <div className="content">
+        {children}
+      </div>
     </header>
   );
 }
