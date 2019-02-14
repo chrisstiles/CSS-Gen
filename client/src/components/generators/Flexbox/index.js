@@ -160,7 +160,7 @@ class Flexbox extends React.Component {
 
   render() {
     // const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
-    this.generatorState = _.extend({}, this.state, { css: this.generateCSS() });
+    // this.generatorState = _.extend({}, this.state, { css: this.generateCSS() });
     // const containerStyles = _.extend({}, style, this.state.containerStyles);
     // const itemStyles = _.extend({}, style, this.state.itemStyles);
     // const {
@@ -176,10 +176,38 @@ class Flexbox extends React.Component {
     const props = _.extend({}, this.state, {
       updateGenerator: this.updateGenerator,
       addChildElement: this.addChildElement
-    })
+    });
+
+    const html = `
+      <div class="flex-container">
+        Testing
+      </div>
+      <div class="flex-container">
+        Testing
+      </div>
+      <div class="flex-container">
+        Testing
+      </div>
+      <div class="flex-container">
+        Testing
+      </div>
+      <div class="flex-container">
+        Testing
+      </div>
+      <div class="flex-container">
+        Testing
+      </div>
+    `;
+    const output = [
+      { language: 'css', code: this.generateCSS() },
+      { language: 'html', code: html }
+    ];
 
     return (
-      <Generator title="CSS Flexbox Generator" className="flexbox-generator">
+      <Generator 
+        title="CSS Flexbox Generator" 
+        className="flexbox-generator"
+      >
         <Header>
           <h1>CSS Flexbox Generator</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
