@@ -91,7 +91,7 @@ class PrimaryLayout extends React.Component {
       const key = 'globalState';
 
       if (window.localStorage.hasOwnProperty(key)) {
-        var previousState = window.localStorage.getItem(key);
+        let previousState = window.localStorage.getItem(key);
 
         try {
           previousState = JSON.parse(previousState);
@@ -133,6 +133,7 @@ class PrimaryLayout extends React.Component {
   updateGlobalState(newState) {
     const state = _.extend({}, this.state, newState);
     this.setState(state);
+    console.log(newState)
 
     // Persist global state
     if (window.localStorage) {

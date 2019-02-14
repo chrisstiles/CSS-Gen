@@ -175,6 +175,7 @@ class Flexbox extends React.Component {
     //   canAddChildElement
     // } = this.state;
 
+    const { globalState } = this.props;
     const props = _.extend({}, this.state, {
       updateGenerator: this.updateGenerator,
       addChildElement: this.addChildElement
@@ -212,6 +213,7 @@ class Flexbox extends React.Component {
       <Generator 
         title="CSS Flexbox Generator" 
         className="flexbox-generator"
+        generatorState={this.state}
       >
         <Header>
           <h1>CSS Flexbox Generator</h1>
@@ -219,7 +221,10 @@ class Flexbox extends React.Component {
         </Header>
         <FlexboxInputs {...props} />
         <FlexboxPreview {...props} />
-        <BottomContent output={output}>
+        <BottomContent 
+          output={output}
+          globalState={globalState}
+        >
           <FlexBoxPresets />
         </BottomContent>
       </Generator>
