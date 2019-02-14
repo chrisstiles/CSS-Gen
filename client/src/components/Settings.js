@@ -25,7 +25,7 @@ class Settings extends React.Component {
         <div id="preview-settings">
           <div className="bottom-title">Preview Settings</div>
           <div className="content">
-            {this.children}
+            {this.props.children}
           </div>
         </div>
       </div>

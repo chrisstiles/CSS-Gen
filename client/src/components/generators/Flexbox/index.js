@@ -34,15 +34,6 @@ class Flexbox extends React.Component {
     }
 
     this.state.canAddChildElement = this.state.childElements.length < this.maxChildElements;
-    
-    // this.updateGenerator = this.updateGenerator.bind(this);
-    // this.addChildElement = this.addChildElement.bind(this);
-    // this.generateCSS = this.generateCSS.bind(this);
-    // this.handlePreviewUpdate = this.handlePreviewUpdate.bind(this);
-    // this.renderInputs = this.renderInputs.bind(this);
-    // this.renderToolbarItems = this.renderToolbarItems.bind(this);
-    // this.renderPreview = this.renderPreview.bind(this);
-    // this.renderOutput = this.renderOutput.bind(this);
   }
 
   updateGenerator = (state) => {

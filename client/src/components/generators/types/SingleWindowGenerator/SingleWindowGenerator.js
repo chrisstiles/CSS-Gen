@@ -1,9 +1,10 @@
 import React from 'react';
-import Generator from '../../Generator';
-import SingleWindowToolbar from '../toolbars/SingleWindowToolbar';
-import SingleWindowPreview from '../previews/SingleWindowPreview';
-import FileDrop from '../../FileDrop';
-import { getGlobalDefaults, updateGlobalState, getImageSize, getNativeImageSize, getState, startLoading } from '../../../util/helpers';
+import Generator from '../../../Generator';
+import SingleWindowToolbar from '../../toolbars/SingleWindowToolbar';
+import Settings from './SingleWindowSettings';
+import SingleWindowPreview from '../../previews/SingleWindowPreview';
+import FileDrop from '../../../FileDrop';
+import { getGlobalDefaults, updateGlobalState, getImageSize, getNativeImageSize, getState, startLoading } from '../../../../util/helpers';
 import _ from 'underscore';
 
 class SingleWindowGenerator extends React.Component {
@@ -143,6 +144,12 @@ class SingleWindowGenerator extends React.Component {
     );
   }
 
+  renderPreviewSettings = () => {
+    return (
+      <Settings />
+    );
+  }
+
   renderPreview = () => {
     const styles = _.extend({}, this.props.generatorState.css.styles);
     const { image, backgroundImage, backgroundColor, width, height, hasResized, previewContentLoaded, resizeMarginAdjustment } = this.state;
@@ -197,6 +204,7 @@ class SingleWindowGenerator extends React.Component {
       previewState,
       renderPreview: this.renderPreview,
       renderToolbar: this.renderToolbar,
+      renderPreviewSettings: this.renderPreviewSettings,
       setPreset: this.setPreset,
       onWrapperMount: this.handleWrapperMount
     });
