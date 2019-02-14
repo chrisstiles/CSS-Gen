@@ -53,12 +53,18 @@ class CodeOutput extends React.PureComponent {
     this.getCode(this.props);
   }
 
+  // componentDidUpdate(prevProps) {
+  //   if (
+  //     prevProps.outputCode !== this.props.outputCode || 
+  //     prevProps.showBrowserPrefixes !== this.props.showBrowserPrefixes ||
+  //     prevProps.outputPreviewStyles !== this.props.outputPreviewStyles
+  //   ) {
+  //     this.getCode(this.props);
+  //   }
+  // }
+
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.outputCode !== this.props.outputCode || 
-      prevProps.showBrowserPrefixes !== this.props.showBrowserPrefixes ||
-      prevProps.outputPreviewStyles !== this.props.outputPreviewStyles
-    ) {
+    if (prevProps.code !== this.props.code) {
       this.getCode(this.props);
     }
   }
@@ -103,14 +109,14 @@ class CodeOutput extends React.PureComponent {
       this.getCSS(props);
     } else {
       // const outputCode = prettyHTML(props.outputCode);
-      const outputCode = formatCode(props.outputCode, props.language);
+      const outputCode = formatCode(props.code, props.language);
 
       this.setState({ outputCode, copyCode: outputCode, disableEditor: !outputCode });
     }
   }
 
   getCSS(props) {
-    let css = props.outputCode;
+    let css = props.code;
 
     if (props.outputPreviewStyles && props.previewCSS) {
       css += `\n${formatCode(props.previewCSS)}`;
@@ -203,6 +209,7 @@ class CodeOutput extends React.PureComponent {
     const { language } = this.props;
     const wrapperClassName = ['output-wrapper', language.toLowerCase()];
     const buttonClassName = ['button', 'small'];
+    console.log(outputCode)
 
     if (disableEditor) {
       buttonClassName.push('disabled');

@@ -3,6 +3,7 @@ import StaticWindowGenerator from '../types/StaticWindowGenerator';
 import FlexboxPreview from './FlexboxPreview';
 import FlexboxInputs from './FlexboxInputs';
 import FlexboxOutput from './FlexboxOutput';
+import FlexBoxPresets from './FlexBoxPresets';
 // import { getState } from '../../../util/helpers';
 import Toggle from '../../input/Toggle';
 import ColorPicker from '../../input/ColorPicker';
@@ -10,6 +11,7 @@ import _ from 'underscore';
 
 import Generator from './Generator';
 import Header from '../../Header';
+import BottomContent from '../../BottomContent';
 
 import { getState } from '../../../util/helpers';
 
@@ -198,8 +200,11 @@ class Flexbox extends React.Component {
         Testing
       </div>
     `;
+
+    const css = this.generateCSS();
+
     const output = [
-      { language: 'css', code: this.generateCSS() },
+      { language: 'css', code: css.output },
       { language: 'html', code: html }
     ];
 
@@ -214,6 +219,9 @@ class Flexbox extends React.Component {
         </Header>
         <FlexboxInputs {...props} />
         <FlexboxPreview {...props} />
+        <BottomContent output={output}>
+          <FlexBoxPresets />
+        </BottomContent>
       </Generator>
     );
 
