@@ -29,7 +29,7 @@ class SingleWindowGenerator extends React.Component {
     window.removeEventListener('resize', this.handleWrapperResize);
   }
 
-  generatePreviewCSS(styles = {}) {
+  generatePreviewCSS = (styles = {}) => {
     const rules = _.extend({}, this.state, styles);
 
     let css = `
