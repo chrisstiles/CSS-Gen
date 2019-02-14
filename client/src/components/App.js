@@ -133,7 +133,6 @@ class PrimaryLayout extends React.Component {
   updateGlobalState(newState) {
     const state = _.extend({}, this.state, newState);
     this.setState(state);
-    console.log(newState)
 
     // Persist global state
     if (window.localStorage) {

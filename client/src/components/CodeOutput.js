@@ -209,7 +209,6 @@ class CodeOutput extends React.PureComponent {
     const { language } = this.props;
     const wrapperClassName = ['output-wrapper', language.toLowerCase()];
     const buttonClassName = ['button', 'small'];
-    console.log(outputCode)
 
     if (disableEditor) {
       buttonClassName.push('disabled');
