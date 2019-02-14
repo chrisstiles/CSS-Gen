@@ -35,24 +35,24 @@ class Flexbox extends React.Component {
 
     this.state.canAddChildElement = this.state.childElements.length < this.maxChildElements;
     
-    this.updateGenerator = this.updateGenerator.bind(this);
-    this.addChildElement = this.addChildElement.bind(this);
-    this.generateCSS = this.generateCSS.bind(this);
-    this.handlePreviewUpdate = this.handlePreviewUpdate.bind(this);
-    this.renderInputs = this.renderInputs.bind(this);
-    this.renderToolbarItems = this.renderToolbarItems.bind(this);
-    this.renderPreview = this.renderPreview.bind(this);
-    this.renderOutput = this.renderOutput.bind(this);
+    // this.updateGenerator = this.updateGenerator.bind(this);
+    // this.addChildElement = this.addChildElement.bind(this);
+    // this.generateCSS = this.generateCSS.bind(this);
+    // this.handlePreviewUpdate = this.handlePreviewUpdate.bind(this);
+    // this.renderInputs = this.renderInputs.bind(this);
+    // this.renderToolbarItems = this.renderToolbarItems.bind(this);
+    // this.renderPreview = this.renderPreview.bind(this);
+    // this.renderOutput = this.renderOutput.bind(this);
   }
 
-  updateGenerator(state) {
+  updateGenerator = (state) => {
     const childElements = state.childElements !== undefined ? state.childElements : this.state.childElements;
     state.canAddChildElement = childElements.length < this.maxChildElements;
 
     this.setState(state);
   }
 
-  addChildElement() {
+  addChildElement = () => {
     if (this.state.canAddChildElement) {
       const canAddChildElement = this.state.childElements.length + 1 < this.maxChildElements;
       const child = { id: _.uniqueId('child-') };
@@ -63,7 +63,7 @@ class Flexbox extends React.Component {
     }
   }
 
-  generateCSS(styles = {}) {
+  generateCSS = (styles = {}) => {
     const output = `
       .flex-container {
         background-color:red;
@@ -72,13 +72,13 @@ class Flexbox extends React.Component {
     return { styles: {}, output };
   }
 
-  handlePreviewUpdate(value, name) {
+  handlePreviewUpdate = (value, name) => {
     const state = {};
     state[name] = value
     this.setState(state);
   }
 
-  renderInputs() {
+  renderInputs = () => {
     return (
       <FlexboxInputs
         updateGenerator={this.updateGenerator}
@@ -88,7 +88,7 @@ class Flexbox extends React.Component {
     );
   }
 
-  renderOutput(previewCSS) {
+  renderOutput = (previewCSS) => {
     return (
       <FlexboxOutput
         outputCSS={this.generatorState.css.output}
@@ -98,7 +98,7 @@ class Flexbox extends React.Component {
     );
   }
 
-  renderToolbarItems() {
+  renderToolbarItems = () => {
     const { showAddItemButton, fullHeightContainer, containerBackgroundColor } = this.state;
 
     return (
@@ -132,7 +132,7 @@ class Flexbox extends React.Component {
     );
   }
 
-  renderPreview(style) {
+  renderPreview = (style) => {
     const containerStyles = _.extend({}, style, this.state.containerStyles);
     const itemStyles = _.extend({}, style, this.state.itemStyles);
     const { 

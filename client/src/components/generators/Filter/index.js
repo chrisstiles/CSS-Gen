@@ -19,17 +19,13 @@ class Filter extends React.Component {
 		// Make sure shadow alpha is correct
 		const { shadowColor, shadowOpacity } = this.state.dropShadow;
 		this.state.dropShadow.shadowColor = tinycolor(shadowColor).setAlpha(shadowOpacity / 100);
-
-		this.generateCSS = this.generateCSS.bind(this);
-		this.renderInputs = this.renderInputs.bind(this);
-		this.updateGenerator = this.updateGenerator.bind(this);
 	}
 
-	updateGenerator(state) {
+	updateGenerator = (state) => {
 	  this.setState(state);
 	}
 
-	generateCSS(styles = {}) {
+	generateCSS = (styles = {}) => {
 		const rules = _.extend({}, this.state, styles);
 		const css = {};
 
@@ -63,7 +59,7 @@ class Filter extends React.Component {
 		}
 	}
 
-	renderInputs() {
+	renderInputs = () => {
 		return (
 			<FilterInputs
 				updateGenerator={this.updateGenerator}

@@ -11,17 +11,13 @@ class Gradient extends React.Component {
     super(props);
 
     this.state = getState(Gradient.defaultState, Gradient.stateTypes);
-
-    this.generateCSS = this.generateCSS.bind(this);
-    this.renderInputs = this.renderInputs.bind(this);
-    this.updateGenerator = this.updateGenerator.bind(this);
   }
 
-  updateGenerator(state) {
+  updateGenerator = (state) => {
     this.setState(state);
   }
 
-  generateCSS(styles = {}) {
+  generateCSS = (styles = {}) => {
     const rules = _.extend({}, this.state, styles);
     const gradient = generateGradient(rules);
 
@@ -31,7 +27,7 @@ class Gradient extends React.Component {
     };
   }
 
-  renderInputs() {
+  renderInputs = () => {
     return (
       <GradientInputs
         updateGenerator={this.updateGenerator}
@@ -40,7 +36,7 @@ class Gradient extends React.Component {
     );
   }
 
-  renderPresets(setPreset) {
+  renderPresets = (setPreset) => {
     return <GradientPresets setPreset={setPreset} />; 
   }
 

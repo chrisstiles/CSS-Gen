@@ -10,22 +10,16 @@ class BorderRadius extends React.Component {
     super(props);
 
     this.state = getState(BorderRadius.defaultState, BorderRadius.stateTypes);
-
     this.previewStyles = {
       backgroundColor: '#4834D4'
     }
-
-    this.generateCSS = this.generateCSS.bind(this);
-    this.renderInputs = this.renderInputs.bind(this);
-    this.renderPresets = this.renderPresets.bind(this);
-    this.updateGenerator = this.updateGenerator.bind(this);
   }
 
-  updateGenerator(state) {
+  updateGenerator = (state) => {
     this.setState(state);
   }
 
-  generateCSS(styles = {}) {
+  generateCSS = (styles = {}) => {
     const css = {}; // The object we will return
     const rules = _.extend({}, this.state, styles);
     
@@ -82,7 +76,7 @@ class BorderRadius extends React.Component {
     };
   }
 
-  renderInputs() {
+  renderInputs = () => {
     return (
       <BorderRadiusInputs
         updateGenerator={this.updateGenerator}
@@ -91,7 +85,7 @@ class BorderRadius extends React.Component {
     );
   }
 
-  renderPresets(setPreset) {
+  renderPresets = (setPreset) => {
     return <BorderRadiusPresets setPreset={setPreset} />;
   }
 

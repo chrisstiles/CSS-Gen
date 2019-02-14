@@ -9,16 +9,13 @@ class Triangle extends React.Component {
 		super(props);
 
 		this.state = getState(Triangle.defaultState, Triangle.stateTypes);
-
-		this.renderInputs = this.renderInputs.bind(this);
-		this.updateGenerator = this.updateGenerator.bind(this);
 	}
 
-	updateGenerator(state) {
+	updateGenerator = (state) => {
 	  this.setState(state);
 	}
 
-	generateCSS(styles = {}) {
+	generateCSS = (styles = {}) => {
 	  const rules = _.extend({}, this.state, styles);
 	  const { direction, width, left, right, height, top, bottom } = rules;
 	  const color = hexOrRgba(rules.color);
@@ -152,7 +149,7 @@ class Triangle extends React.Component {
 	  };
 	}
 
-	renderInputs() {
+	renderInputs = () => {
 	  return (
 	    <TriangleInputs
 	      updateGenerator={this.updateGenerator}

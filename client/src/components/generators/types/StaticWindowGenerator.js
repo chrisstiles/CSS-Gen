@@ -13,12 +13,6 @@ class StaticWindowGenerator extends React.Component {
 		this.defaultState = _.extend({}, StaticWindowGenerator.defaultState, props.previewStyles);
 		this.state = getState(this.defaultState, this.stateTypes, true);
 		this.state.wrapperHeight = 400;
-
-		this.handleWindowResize = this.handleWindowResize.bind(this);
-		this.reset = this.reset.bind(this);
-		this.handlePreviewUpdate = this.handlePreviewUpdate.bind(this);
-		this.renderPreview = this.renderPreview.bind(this);
-		this.renderToolbar = this.renderToolbar.bind(this);
 	}
 
 	componentDidMount() {
@@ -31,16 +25,16 @@ class StaticWindowGenerator extends React.Component {
 		window.removeEventListener('resize', this.handleWindowResize);
 	}
 
-	handleWindowResize() {
+	handleWindowResize = () => {
 		this.setState({ wrapperHeight: getFullHeight() });
 	}
 
-	reset() {
+	reset = () => {
 		this.setState(this.defaultState);
 		this.props.updateGenerator(this.props.generatorDefaultState);
 	}
 
-	renderPreview() {
+	renderPreview = () => {
 		let preview, isDefault;
 		const style = this.props.generatorState.css.styles;
 
@@ -65,13 +59,13 @@ class StaticWindowGenerator extends React.Component {
 		);
 	}
 
-	handlePreviewUpdate(value, name) {
+	handlePreviewUpdate = (value, name) => {
 		const state = {};
 		state[name] = value
 	  this.setState(state);
 	}
 
-	renderToolbar() {
+	renderToolbar = () => {
 		const { editorBackgroundColor } = this.state;
 		const { renderToolbarItems } = this.props;
 

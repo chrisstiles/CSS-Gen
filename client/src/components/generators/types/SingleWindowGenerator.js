@@ -23,15 +23,6 @@ class SingleWindowGenerator extends React.Component {
       width: { min: 80, max: 3000 },
       height: { min: 80, max: 3000 }
     };
-
-    this.reset = this.reset.bind(this);
-    this.renderToolbar = this.renderToolbar.bind(this);
-    this.renderPreview = this.renderPreview.bind(this);
-    this.setPreset = this.setPreset.bind(this);
-    this.handleFileDrop = this.handleFileDrop.bind(this);
-    this.handleWrapperMount = this.handleWrapperMount.bind(this);
-    this.handleWrapperResize = this.handleWrapperResize.bind(this);
-    this.handlePreviewUpdate = this.handlePreviewUpdate.bind(this);
   }
 
   componentWillUnmount() {
@@ -53,7 +44,7 @@ class SingleWindowGenerator extends React.Component {
     return css.trim();
   }
 
-  reset() {
+  reset = () => {
     // Revert global defaults
     const { showPreviewText, outputPreviewStyles } = getGlobalDefaults();
     updateGlobalState({ showPreviewText, outputPreviewStyles });
@@ -65,7 +56,7 @@ class SingleWindowGenerator extends React.Component {
     this.props.updateGenerator(this.props.generatorDefaultState);
   }
 
-  setPreset(generatorStyles, previewStyles) {
+  setPreset = (generatorStyles, previewStyles) => {
     const generatorState = _.extend({}, this.props.generatorDefaultState, generatorStyles);
     this.props.updateGenerator(generatorState);
 
@@ -75,12 +66,12 @@ class SingleWindowGenerator extends React.Component {
     this.preview.reset(previewState.width);
   }
 
-  handleFileDrop(data) {
+  handleFileDrop = (data) => {
     this.setState(data);
     this.preview.reset(data.width);
   }
 
-  handleWrapperResize() {
+  handleWrapperResize = () => {
     if (this.generatorWrapper) {
       const width = this.generatorWrapper.offsetWidth;
       this.setState({ wrapperWidth: width });
@@ -99,7 +90,7 @@ class SingleWindowGenerator extends React.Component {
     }
   }
 
-  handleWrapperMount(wrapper) {
+  handleWrapperMount = (wrapper) => {
     this.generatorWrapper = wrapper;
 
     // Save wrapper dimensions whenever it resizes
@@ -126,11 +117,11 @@ class SingleWindowGenerator extends React.Component {
     }
   }
 
-  handlePreviewUpdate(data) {
+  handlePreviewUpdate = (data) => {
     this.setState(data);
   }
 
-  renderToolbar() {
+  renderToolbar = () => {
     const { width, height, backgroundColor } = this.state;
     const { outputPreviewStyles, showPreviewText } = this.props.globalState;
 
@@ -152,7 +143,7 @@ class SingleWindowGenerator extends React.Component {
     );
   }
 
-  renderPreview() {
+  renderPreview = () => {
     const styles = _.extend({}, this.props.generatorState.css.styles);
     const { image, backgroundImage, backgroundColor, width, height, hasResized, previewContentLoaded, resizeMarginAdjustment } = this.state;
     const { dragX: x, dragY: y } = this.state;

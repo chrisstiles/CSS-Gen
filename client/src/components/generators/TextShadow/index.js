@@ -18,17 +18,13 @@ class TextShadow extends React.Component {
 		} else {
 			this.state.fontLoaded = true;
 		}
-
-		this.updateGenerator = this.updateGenerator.bind(this);
-		this.renderInputs = this.renderInputs.bind(this);
-		this.renderPreview = this.renderPreview.bind(this);
 	}
 
-	updateGenerator(state) {
+	updateGenerator = (state) => {
 		this.setState(state);
 	}
 
-	generateCSS(styles = {}) {
+	generateCSS = (styles = {}) => {
 		const rules = _.extend({}, this.state, styles);
 		const css = {};
 
@@ -65,7 +61,7 @@ class TextShadow extends React.Component {
 		};
 	}
 
-	renderInputs() {
+	renderInputs = () => {
 		return (
 			<TextShadowInputs
 	      updateGenerator={this.updateGenerator}
@@ -74,7 +70,7 @@ class TextShadow extends React.Component {
 	  );
 	}
 
-	renderPreview(style) {
+	renderPreview = (style) => {
 		return (
 			<TextShadowPreview
 				value={this.state.text}

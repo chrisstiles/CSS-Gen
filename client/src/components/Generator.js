@@ -9,10 +9,6 @@ class Generator extends React.Component {
   constructor(props) {
     super(props);
 
-    this.renderPresets = this.renderPresets.bind(this);
-    this.renderToolbar = this.renderToolbar.bind(this);
-    this.renderPreviewSettings = this.renderPreviewSettings.bind(this);
-
     // Persist generator state to local storage
     let loggedLocalStorageError = false;
     let persistStateTimer;
@@ -66,19 +62,19 @@ class Generator extends React.Component {
     this.persistState();
   }
 
-  renderPreviewSettings () {
+  renderPreviewSettings = () => {
     if (this.props.renderPreviewSettings) {
       return this.props.renderPreviewSettings();
     }
   }
 
-  renderPresets() {
+  renderPresets = () => {
     if (this.props.renderPresets) {
       return this.props.renderPresets(this.props.setPreset);
     }
   }
 
-  renderToolbar() {
+  renderToolbar = () => {
     if (this.props.renderToolbar) {
       return this.props.renderToolbar();
     }

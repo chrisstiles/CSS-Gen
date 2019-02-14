@@ -8,19 +8,15 @@ import tinycolor from 'tinycolor2';
 class BoxShadow extends React.Component {
   constructor(props) {
     super(props);
-
+    
     this.state = getState(BoxShadow.defaultState, BoxShadow.stateTypes);
-
-    this.generateCSS = this.generateCSS.bind(this);
-    this.renderInputs = this.renderInputs.bind(this);
-    this.updateGenerator = this.updateGenerator.bind(this);
   }
 
-  updateGenerator(state) {
+  updateGenerator = (state) => {
     this.setState(state);
   }
 
-  generateCSS(styles = {}) {
+  generateCSS = (styles = {}) => {
     const rules = _.extend({}, this.state, styles);
 
     // Create tiny color with correct alpha
@@ -41,7 +37,7 @@ class BoxShadow extends React.Component {
     };
   }
 
-  renderInputs() {
+  renderInputs = () => {
     return (
       <BoxShadowInputs
         updateGenerator={this.updateGenerator}
