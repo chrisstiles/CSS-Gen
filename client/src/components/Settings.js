@@ -1,11 +1,10 @@
 import React from 'react';
 import Toggle from './input/Toggle';
-import { updateGlobalState } from '../util/helpers';
+import { getGlobalState, updateGlobalState } from '../util/helpers';
 
 class Settings extends React.Component {
   render() {
-    const { globalState, children } = this.props;
-    const { persistGeneratorState } = globalState;
+    const { persistGeneratorState } = getGlobalState();
 
     return (
       <div id="settings-wrapper">
@@ -28,7 +27,7 @@ class Settings extends React.Component {
         <div id="preview-settings">
           <div className="bottom-title">Preview Settings</div>
           <div className="content">
-            {children}
+            {this.props.children}
           </div>
         </div>
       </div>

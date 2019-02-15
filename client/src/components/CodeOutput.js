@@ -104,6 +104,7 @@ class CodeOutput extends React.PureComponent {
 
   getCode(newProps) {
     const props = cloneObject(newProps);
+    console.log(props)
 
     if (this.props.language.toLowerCase() === 'css') {
       this.getCSS(props);

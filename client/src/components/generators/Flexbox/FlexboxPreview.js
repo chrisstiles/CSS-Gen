@@ -207,24 +207,24 @@ class FlexboxPreview extends React.Component {
   render() {
     const { 
       showAddItemButton, 
-      containerBackgroundColor,
+      canvasBackgroundColor,
       addChildElement, 
       canAddChildElement,
-      itemStyles: _itemStyles,
-      childElements: _childElements,
+      itemStyles,
+      childElements,
       selectedIndexes
     } = this.props;
 
-    const childElements = _.map(_childElements, ({ id, ...props }, index) => {
+    const items = _.map(childElements, ({ id, ...props }, index) => {
       const selected = _.contains(selectedIndexes, index);
-      const itemStyles = _.extend({}, _itemStyles, props);
+      const style = _.extend({}, itemStyles, props);
 
       return (
         <FlexItem
           key={id}
           id={id}
           selected={selected}
-          style={itemStyles}
+          style={style}
           text={<div style={{ color: '#fff', padding: '8px' }}>{index}</div>}
           onClick={this.selectChildElements}
           onMouseDown={this.preventDeselect}
@@ -247,38 +247,30 @@ class FlexboxPreview extends React.Component {
         addButtonClasses.push('disabled');
       }
 
-      childElements.push(
+      items.push(
         <FlexItem
           key="add-item"
           className={addButtonClasses.join(' ')}
           text={newItemText}
-          style={_itemStyles}
+          style={itemStyles}
           onClick={addChildElement}
         />
       );
     }
 
     // Container Styles
-    const containerStyles = _.extend({}, this.props.containerStyles);
-    const containerClassName = ['container'];
-
-    containerStyles.backgroundColor = containerBackgroundColor;
-
-    if (containerBackgroundColor !== 'transparent') {
-      containerClassName.push('has-background');
-    }
-
-    containerStyles.minHeight = this.state.containerHeight;
+    const containerStyles = _.extend({}, this.props.containerStyles, {
+      minHeight: this.state.containerHeight
+    });
 
     return (
-      <Preview>
+      <Preview canvasBackgroundColor={canvasBackgroundColor}>
         <div id="flexbox-preview">
           <div
-            className={containerClassName.join(' ')}
+            className="container"
             style={containerStyles}
-            ref={container => { this.container = container; }}
           >
-            {childElements}
+            {items}
           </div>
         </div>
       </Preview>

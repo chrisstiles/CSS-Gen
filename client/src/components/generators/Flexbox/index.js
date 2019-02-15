@@ -2,11 +2,11 @@ import React from 'react';
 import StaticWindowGenerator from '../types/StaticWindowGenerator';
 import FlexboxPreview from './FlexboxPreview';
 import FlexboxInputs from './FlexboxInputs';
-import FlexboxOutput from './FlexboxOutput';
-import FlexBoxPresets from './FlexBoxPresets';
+// import FlexboxOutput from './FlexboxOutput';
+import FlexboxBottom from './FlexboxBottom';
 // import { getState } from '../../../util/helpers';
-import Toggle from '../../input/Toggle';
-import ColorPicker from '../../input/ColorPicker';
+// import Toggle from '../../input/Toggle';
+// import ColorPicker from '../../input/ColorPicker';
 import _ from 'underscore';
 
 import Generator from './Generator';
@@ -42,11 +42,18 @@ class Flexbox extends React.Component {
     this.state.canAddChildElement = this.state.childElements.length < this.maxChildElements;
   }
 
-  updateGenerator = (state) => {
-    const childElements = state.childElements !== undefined ? state.childElements : this.state.childElements;
-    state.canAddChildElement = childElements.length < this.maxChildElements;
+  updateGenerator = (state, name) => {
+    if (name) {
+      const newState = {};
+      newState[name] = state;
 
-    this.setState(state);
+      this.setState(newState);
+    } else {
+      const childElements = state.childElements !== undefined ? state.childElements : this.state.childElements;
+      state.canAddChildElement = childElements.length < this.maxChildElements;
+
+      this.setState(state);
+    }
   }
 
   addChildElement = () => {
@@ -60,124 +67,12 @@ class Flexbox extends React.Component {
     }
   }
 
-  generateCSS = (styles = {}) => {
-    const output = `
+  generate = () => {
+    const css = `
       .flex-container {
         background-color:red;
       }
     `;
-    return { styles: {}, output };
-  }
-
-  handlePreviewUpdate = (value, name) => {
-    const state = {};
-    state[name] = value
-    this.setState(state);
-  }
-
-  // renderInputs = () => {
-  //   return (
-  //     <FlexboxInputs
-  //       updateGenerator={this.updateGenerator}
-  //       addChildElement={this.addChildElement}
-  //       {...this.state}
-  //     />
-  //   );
-  // }
-
-  renderOutput = (previewCSS) => {
-    return (
-      <FlexboxOutput
-        outputCSS={this.generatorState.css.output}
-        globalState={this.props.globalState}
-        previewCSS={previewCSS}
-      />
-    );
-  }
-
-  renderToolbarItems = () => {
-    const { showAddItemButton, fullHeightContainer, containerBackgroundColor } = this.state;
-
-    return (
-      <div>
-        <div className="item input border">
-          <Toggle
-            name="showAddItemButton"
-            onChange={this.handlePreviewUpdate}
-            label="Add Button"
-            checked={showAddItemButton}
-          />
-        </div>
-        <div className="item input border">
-          <Toggle
-            name="fullHeightContainer"
-            onChange={this.handlePreviewUpdate}
-            label="Full Height"
-            checked={fullHeightContainer}
-          />
-        </div>
-        <div className="item input">
-          <ColorPicker
-            label="Background"
-            name="containerBackgroundColor"
-            color={containerBackgroundColor}
-            isFixed={true}
-            onChange={this.handlePreviewUpdate}
-          />
-        </div>	
-      </div>
-    );
-  }
-
-  // renderPreview = () => {
-  //   const containerStyles = _.extend({}, style, this.state.containerStyles);
-  //   const itemStyles = _.extend({}, style, this.state.itemStyles);
-  //   const { 
-  //     childElements, 
-  //     selectedIndexes, 
-  //     showAddItemButton,
-  //     fullHeightContainer,
-  //     containerBackgroundColor, 
-  //     mostRecentIndex, 
-  //     canAddChildElement
-  //   } = this.state;
-
-  //   return (
-  //     <FlexboxPreview
-  //       containerStyles={containerStyles}
-  //       containerBackgroundColor={containerBackgroundColor}
-  //       itemStyles={itemStyles}
-  //       childElements={childElements}
-  //       selectedIndexes={selectedIndexes}
-  //       showAddItemButton={showAddItemButton}
-  //       fullHeightContainer={fullHeightContainer}
-  //       mostRecentIndex={mostRecentIndex}
-  //       canAddChildElement={canAddChildElement}
-  //       updateGenerator={this.updateGenerator}
-  //       addChildElement={this.addChildElement}
-  //     />
-  //   );
-  // }
-
-  render() {
-    // const generatorState = _.extend({}, this.state, { css: this.generateCSS() });
-    // this.generatorState = _.extend({}, this.state, { css: this.generateCSS() });
-    // const containerStyles = _.extend({}, style, this.state.containerStyles);
-    // const itemStyles = _.extend({}, style, this.state.itemStyles);
-    // const {
-    //   childElements,
-    //   selectedIndexes,
-    //   showAddItemButton,
-    //   fullHeightContainer,
-    //   containerBackgroundColor,
-    //   mostRecentIndex,
-    //   canAddChildElement
-    // } = this.state;
-
-    const props = _.extend({}, this.state, {
-      updateGenerator: this.updateGenerator,
-      addChildElement: this.addChildElement
-    });
 
     const html = `
       <div class="flex-container">
@@ -200,12 +95,23 @@ class Flexbox extends React.Component {
       </div>
     `;
 
-    const css = this.generateCSS();
-
-    const output = [
-      { language: 'css', code: css.output },
+    return [
+      { language: 'css', code: css },
       { language: 'html', code: html }
     ];
+  }
+
+  render() {
+    const { 
+      showAddItemButtons,
+      fullHeightContainer,
+      canvasBackgroundColor 
+    } = this.props;
+    const output = this.generate();
+    const props = _.extend({}, this.state, {
+      updateGenerator: this.updateGenerator,
+      addChildElement: this.addChildElement
+    });
 
     return (
       <Generator 
@@ -213,43 +119,24 @@ class Flexbox extends React.Component {
         className="flexbox-generator"
         generatorState={this.state}
         globalState={this.props.globalState}
-        output={output}
       >
         <Header>
           <h1>CSS Flexbox Generator</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
         </Header>
         <FlexboxInputs {...props} />
-        <FlexboxPreview {...props} />
-        <FlexBoxPresets />
+        <FlexboxPreview 
+          canvasBackgroundColor={canvasBackgroundColor}
+          {...props}
+        />
+        <FlexboxBottom
+          output={output}
+          showAddItemButtons={showAddItemButtons}
+          fullHeightContainer={fullHeightContainer}
+          updateGenerator={this.updateGenerator}
+        />
       </Generator>
     );
-
-    // return (
-      // <StaticWindowGenerator
-      //   // Text Content
-      //   title="CSS Flexbox Generator | CSS-GEN"
-      //   className="flexbox"
-      //   heading="CSS Flexbox Generator"
-
-      //   // Generator settings
-      //   multipleOutputs={true}
-
-      //   // Generator state
-      //   generatorState={this.generatorState}
-      //   generatorDefaultState={Flexbox.defaultState}
-      //   globalState={this.props.globalState}
-
-      //   // Render generator components
-      //   renderInputs={this.renderInputs}
-      //   renderToolbarItems={this.renderToolbarItems}
-      //   renderPreview={this.renderPreview}
-      //   renderOutput={this.renderOutput}
-
-      //   // Generator methods
-      //   updateGenerator={this.updateGenerator}
-      // />
-    // );
   }
 }
 
@@ -274,7 +161,7 @@ Flexbox.defaultState = {
   mostRecentIndex: 0,
   showAddItemButton: true,
   fullHeightContainer: true,
-  containerBackgroundColor: 'transparent'
+  canvasBackgroundColor: 'transparent'
 };
 
 Flexbox.stateTypes = {
@@ -296,5 +183,5 @@ Flexbox.stateTypes = {
   mostRecentIndex: Number,
   showAddItemButton: Boolean,
   fullHeightContainer: Boolean,
-  containerBackgroundColor: String
+  canvasBackgroundColor: String
 };

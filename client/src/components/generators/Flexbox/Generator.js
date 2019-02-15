@@ -15,7 +15,7 @@ class Generator extends React.Component {
     this.persistStateTimer = setTimeout(() => {
       if (window.localStorage) {
         const { generatorState, globalState } = this.props;
-        
+
         if (
           !isEqual(this.prevGlobalState, globalState) ||
           !isEqual(this.prevGeneratorState, generatorState)
@@ -52,17 +52,13 @@ class Generator extends React.Component {
   }
 
   render() {
-    const { title, className, globalState, output, children } = this.props;
+    const { title, className, children } = this.props;
     const pageProps = { title };
     if (className) pageProps.className = className;
 
     return (
       <Page {...pageProps}>
         {children}
-        <BottomContent
-          output={output}
-          globalState={globalState}
-        />
       </Page>
     );
   }

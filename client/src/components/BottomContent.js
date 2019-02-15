@@ -1,5 +1,4 @@
 import React from 'react';
-import Settings from './Settings';
 import CodeOutput from './CodeOutput';
 import { isArray } from 'underscore';
 
@@ -27,9 +26,6 @@ class BottomContent extends React.PureComponent {
       <div id="bottom-content-wrapper">
         <div id="bottom-content">
           <div id="options">
-            <Settings globalState={globalState}>
-              Preview Settings Here
-            </Settings>
             {children}
           </div>
           <footer id="main-footer">
