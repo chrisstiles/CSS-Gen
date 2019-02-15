@@ -131,6 +131,8 @@ class ColorPicker extends React.PureComponent {
   }
 
   keyEvent = (event) => {
+    if (!this.picker) return;
+    
     if (!this.changingColor && (event.keyCode === 27 || event.keyCode === 13)) {
       this.close();
     }
