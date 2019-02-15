@@ -24,7 +24,7 @@ class Toggle extends React.PureComponent {
 
 	render() {
 		const { className, disabled, inline, label } = this.props;
-		const wrapperClassName = ['toggle-wrapper'];
+		const wrapperClassName = ['field-wrapper', 'toggle-wrapper'];
 		
 		if (className) {
 			wrapperClassName.push(className);

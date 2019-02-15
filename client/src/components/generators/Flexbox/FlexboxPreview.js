@@ -71,7 +71,7 @@ class FlexboxPreview extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.fullHeightContainer !== this.props.fullHeightContainer) {
+    if (prevProps.isFullHeight !== this.props.isFullHeight) {
       this.setContainerHeight();
     }
   }
@@ -93,8 +93,8 @@ class FlexboxPreview extends React.Component {
   }
 
   setContainerHeight(props) {
-    const fullHeightContainer = props && props.fullHeightContainer !== undefined ? props.fullHeightContainer : this.props.fullHeightContainer;
-    const containerHeight = fullHeightContainer ? `${getFullHeight()}px` : 'auto'
+    const isFullHeight = props && props.isFullHeight !== undefined ? props.isFullHeight : this.props.isFullHeight;
+    const containerHeight = isFullHeight ? `${getFullHeight()}px` : 'auto'
     this.setState({ containerHeight });
   }
 
@@ -148,7 +148,7 @@ class FlexboxPreview extends React.Component {
   selectChildElements(id) {
     const { childElements, selectedIndexes: _selectedIndexes } = this.props;
     const newIndex = _.findIndex(childElements, { id });
-    var selectedIndexes;
+    let selectedIndexes;
 
     if (typeof this.mostRecentIndex !== 'number' || childElements[this.mostRecentIndex] === undefined) {
       this.mostRecentIndex = childElements[childElements.length - 1];
@@ -170,7 +170,7 @@ class FlexboxPreview extends React.Component {
           this.mostRecentIndex = newIndex;
         }
       } else if (this.key === 'shift') {
-        var startIndex, endIndex;
+        let startIndex, endIndex;
         if (newIndex > this.mostRecentIndex) {
           startIndex = this.mostRecentIndex;
           endIndex = newIndex;
@@ -188,7 +188,7 @@ class FlexboxPreview extends React.Component {
         }
 
         selectedIndexes = [];
-        for (var i = startIndex; i <= endIndex; i++) {
+        for (let i = startIndex; i <= endIndex; i++) {
           selectedIndexes.push(i);
         }
       }
@@ -206,11 +206,12 @@ class FlexboxPreview extends React.Component {
 
   render() {
     const { 
-      showAddItemButton, 
-      canvasBackgroundColor,
+      containerStyles,
+      itemStyles,
+      showAddButton, 
+      canvasColor,
       addChildElement, 
       canAddChildElement,
-      itemStyles,
       childElements,
       selectedIndexes
     } = this.props;
@@ -233,7 +234,7 @@ class FlexboxPreview extends React.Component {
     });
 
     // Final flex item for adding new child element 
-    if (showAddItemButton) {
+    if (showAddButton) {
       const newItemText = (
         <div>
           <span className="plus"></span>
@@ -259,16 +260,16 @@ class FlexboxPreview extends React.Component {
     }
 
     // Container Styles
-    const containerStyles = _.extend({}, this.props.containerStyles, {
+    const style = _.extend({}, containerStyles, {
       minHeight: this.state.containerHeight
     });
 
     return (
-      <Preview canvasBackgroundColor={canvasBackgroundColor}>
+      <Preview canvasColor={canvasColor}>
         <div id="flexbox-preview">
           <div
             className="container"
-            style={containerStyles}
+            style={style}
           >
             {items}
           </div>

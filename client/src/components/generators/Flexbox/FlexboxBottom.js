@@ -3,31 +3,35 @@ import FlexboxPresets from './FlexboxPresets';
 import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
 import Toggle from '../../input/Toggle';
-import ColorPicker from '../../input/ColorPicker';
+// import ColorPicker from '../../input/ColorPicker';
 
 class FlexBoxBottom extends React.Component {
   render() {
     const { 
       output,
-      showAddItemButton,
-      fullHeightContainer,
+      showAddButton,
+      isFullHeight,
+      canvasColor,
       updateGenerator
     } = this.props;
 
     return (
       <BottomContent output={output}>
-        <Settings>
+        <Settings 
+          updateGenerator={updateGenerator}
+          canvasColor={canvasColor}
+        >
           <Toggle
-            name="showAddItemButton"
+            name="showAddButton"
             label="Add Button"
             onChange={updateGenerator}
-            checked={showAddItemButton}
+            checked={showAddButton}
           />
           <Toggle
-            name="fullHeightContainer"
+            name="isFullHeight"
             label="Full Height"
             onChange={updateGenerator}
-            checked={fullHeightContainer}
+            checked={isFullHeight}
           />
         </Settings>
         <FlexboxPresets />

@@ -204,6 +204,10 @@ class ColorPicker extends React.PureComponent {
       className.push(this.props.className);
     }
 
+    if (this.props.inline) {
+      className.push('inline')
+    }
+
     if (this.state.transparent) {
       className.push('transparent-active');
     }

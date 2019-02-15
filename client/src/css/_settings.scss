@@ -8,14 +8,22 @@
 
   .content {
     padding:15px 18px;
+
+    > .field-wrapper {
+      margin-bottom:8px;
+
+      &:last-child {
+        margin-bottom:0;
+      }
+    }
   }
 
-  .field-wrapper {
-    margin-bottom:0;
-  }
-
-  .toggle-label {
+  .inline {
     justify-content:space-between;
+
+    .title {
+      flex-grow:1;
+    }
   }
 }
 

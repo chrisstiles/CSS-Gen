@@ -709,10 +709,14 @@ body.code-expanded #bottom-content-wrapper {
     min-width: 300px; }
   #settings-wrapper .content {
     padding: 15px 18px; }
-  #settings-wrapper .field-wrapper {
-    margin-bottom: 0; }
-  #settings-wrapper .toggle-label {
+    #settings-wrapper .content > .field-wrapper {
+      margin-bottom: 8px; }
+      #settings-wrapper .content > .field-wrapper:last-child {
+        margin-bottom: 0; }
+  #settings-wrapper .inline {
     justify-content: space-between; }
+    #settings-wrapper .inline .title {
+      flex-grow: 1; }
 
 #generator-output {
   display: flex;
@@ -1939,6 +1943,13 @@ textarea {
   .color-wrapper.small-preview .color-preview {
     width: 40px;
     height: 40px; }
+  .color-wrapper.inline {
+    display: flex;
+    align-items: center; }
+    .color-wrapper.inline .color-preview {
+      top: 2px;
+      margin-bottom: 0;
+      margin-left: 8px; }
 
 .color-picker-wrapper {
   position: fixed;

@@ -4,7 +4,7 @@ class Preview extends React.Component {
   render() {
     return (
       <div id="generator-preview">
-        <Canvas>
+        <Canvas color={this.props.canvasColor}>
           {this.props.children}
         </Canvas>
       </div>
@@ -12,11 +12,16 @@ class Preview extends React.Component {
   }
 }
 
-class Canvas extends React.Component {
+class Canvas extends React.Component {  
   render() {
+    const { 
+      color: backgroundColor = 'transparent',
+      children
+    } = this.props;
+
     return (
-      <div id="canvas">
-        {this.props.children}
+      <div id="canvas" style={{ backgroundColor }}>
+        {children}
       </div>
     );
   }
