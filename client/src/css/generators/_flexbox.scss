@@ -25,7 +25,7 @@
   .container {
     display:flex;
     border:2px dashed $accent-color;
-    padding:10px;
+    padding:12px;
     position:relative;
 
     &.has-background {
@@ -36,24 +36,25 @@
       position: absolute;
       content: "Flex Container";
       line-height: 18px;
-      padding: 0 7px;
+      padding: 0 5px;
       border-bottom: none;
       color: #4834d4;
       top: -12px;
-      left: 17px;
+      left: 14px;
       z-index: 100;
       font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
       border:2px dashed transparent;
+      white-space: nowrap;
     }
   }
 
   .item {
     cursor:pointer;
-    flex-basis:100px;
-    min-width:100px;
-    min-height:100px;
+    flex-basis:120px;
+    min-width:120px;
+    min-height:120px;
     position:relative;
     @include no-select;
 
