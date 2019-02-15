@@ -153,7 +153,7 @@ class ColorPicker extends React.PureComponent {
       right: '0px',
       bottom: '0px',
       left: '0px',
-      zIndex: '9998'
+      zIndex: '99998'
     };
 
     const color = tinycolor(this.props.color);
