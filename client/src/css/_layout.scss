@@ -13,32 +13,62 @@ elements is easier in one separate file
 	width: 260px;
 }
 
-#page-wrapper {
-  padding-left:285px;
-  padding-right:320px;
-}
-
 #header {
   width:calc(100% + 285px);
   margin-left:-285px;
   padding-left:285px;
 }
 
-#main {
-  margin:0 50px 0 315px;
-  padding:30px 0;
-  position:relative;
-}
-
 #sidebar {
   bottom:210px;
   width:320px;
+}
 
-  @media (min-height: 920px) {
-    bottom:250px;
+#page-wrapper {
+  padding-left:285px;
+  padding-right:320px;
+
+  &.generator {
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+    padding-bottom:210px;
   }
 }
 
 #generator-preview {
-  padding:30px;
+  padding:20px;
+}
+
+#generator-preview {
+  display:flex;
+  flex-grow:1;
+}
+
+#canvas {
+  width:100%;
+  flex-grow:1;
+  padding:12px;
+  border-radius:3px;
+  display:flex;
+}
+
+#bottom-content-wrapper {
+  height:210px;
+}
+
+@media (min-height: 920px) {
+  #sidebar {
+    bottom:250px;
+  }
+
+  #page-wrapper {
+    &.generator {
+      padding-bottom:250px;
+    }
+  }
+
+  #bottom-content-wrapper {
+    height:250px;
+  }
 }

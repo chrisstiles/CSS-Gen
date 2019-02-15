@@ -5,13 +5,9 @@
   bottom:0;
   background-color: rgba(247, 247, 247, 0.95);
   border-top: 2px solid #dedede;
-  height:210px;
   display:flex;
   justify-content: space-between;
-
-  @media (min-height: 920px) {
-    height:250px;
-  }
+  z-index: 9997;
 
   .bottom-title {
     font-size: 14px;

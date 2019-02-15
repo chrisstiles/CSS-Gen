@@ -20,23 +20,19 @@
 
 #flexbox-preview {
   min-height:100%;
+  width:100%;
 
   .container {
     display:flex;
     border:2px dashed $accent-color;
-    padding:15px;
+    padding:10px;
     position:relative;
-    margin-bottom:30px;
 
     &.has-background {
       border-color:transparent;
-
-      &:before {
-        border-color:$accent-color;
-      }
     }
 
-    &:before {
+    .title {
       position: absolute;
       content: "Flex Container";
       line-height: 18px;
@@ -46,7 +42,6 @@
       top: -12px;
       left: 17px;
       z-index: 100;
-      background-color: #fdfdfd;
       font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;

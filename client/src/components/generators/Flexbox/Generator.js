@@ -53,8 +53,14 @@ class Generator extends React.Component {
 
   render() {
     const { title, className, children } = this.props;
-    const pageProps = { title };
-    if (className) pageProps.className = className;
+  
+    const pageClassName = ['generator'];
+    if (className) pageClassName.push(className);
+    
+    const pageProps = { 
+      title, 
+      className: pageClassName.join(' ')
+    };
 
     return (
       <Page {...pageProps}>

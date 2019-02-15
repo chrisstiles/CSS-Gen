@@ -145,29 +145,48 @@ elements is easier in one separate file
   max-height: 500px;
   width: 260px; }
 
-#page-wrapper {
-  padding-left: 285px;
-  padding-right: 320px; }
-
 #header {
   width: calc(100% + 285px);
   margin-left: -285px;
   padding-left: 285px; }
 
-#main {
-  margin: 0 50px 0 315px;
-  padding: 30px 0;
-  position: relative; }
-
 #sidebar {
   bottom: 210px;
   width: 320px; }
-  @media (min-height: 920px) {
-    #sidebar {
-      bottom: 250px; } }
+
+#page-wrapper {
+  padding-left: 285px;
+  padding-right: 320px; }
+  #page-wrapper.generator {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: 210px; }
 
 #generator-preview {
-  padding: 30px; }
+  padding: 20px; }
+
+#generator-preview {
+  display: flex;
+  flex-grow: 1; }
+
+#canvas {
+  width: 100%;
+  flex-grow: 1;
+  padding: 12px;
+  border-radius: 3px;
+  display: flex; }
+
+#bottom-content-wrapper {
+  height: 210px; }
+
+@media (min-height: 920px) {
+  #sidebar {
+    bottom: 250px; }
+  #page-wrapper.generator {
+    padding-bottom: 250px; }
+  #bottom-content-wrapper {
+    height: 250px; } }
 
 #nav-window {
   position: fixed;
@@ -658,12 +677,9 @@ elements is easier in one separate file
   bottom: 0;
   background-color: rgba(247, 247, 247, 0.95);
   border-top: 2px solid #dedede;
-  height: 210px;
   display: flex;
-  justify-content: space-between; }
-  @media (min-height: 920px) {
-    #bottom-content-wrapper {
-      height: 250px; } }
+  justify-content: space-between;
+  z-index: 9997; }
   #bottom-content-wrapper .bottom-title {
     font-size: 14px;
     line-height: 1;
@@ -1953,10 +1969,10 @@ textarea {
 
 .color-picker-wrapper {
   position: fixed;
-  z-index: 9999; }
+  z-index: 99999; }
   .color-picker-wrapper .content {
     position: fixed;
-    z-index: 9999;
+    z-index: 99999;
     width: 226px !important;
     height: 245px !important;
     margin-top: 5px;
@@ -2664,18 +2680,16 @@ input.angle-input {
 /* ------------------------- */
 /* Preview */
 #flexbox-preview {
-  min-height: 100%; }
+  min-height: 100%;
+  width: 100%; }
   #flexbox-preview .container {
     display: flex;
     border: 2px dashed #4834d4;
-    padding: 15px;
-    position: relative;
-    margin-bottom: 30px; }
+    padding: 10px;
+    position: relative; }
     #flexbox-preview .container.has-background {
       border-color: transparent; }
-      #flexbox-preview .container.has-background:before {
-        border-color: #4834d4; }
-    #flexbox-preview .container:before {
+    #flexbox-preview .container .title {
       position: absolute;
       content: "Flex Container";
       line-height: 18px;
@@ -2685,7 +2699,6 @@ input.angle-input {
       top: -12px;
       left: 17px;
       z-index: 100;
-      background-color: #fdfdfd;
       font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;

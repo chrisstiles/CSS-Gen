@@ -1,7 +1,7 @@
 import React from 'react';
 import Preview from '../../Preview';
 import _ from 'underscore';
-import { sameOrChild, getGlobalVariable, getFullHeight, clearSelection } from '../../../util/helpers';
+import { sameOrChild, getGlobalVariable, clearSelection } from '../../../util/helpers';
 
 class FlexItem extends React.Component {
   constructor(props) {
@@ -62,7 +62,7 @@ class FlexboxPreview extends React.Component {
       }
     }
 
-    this.setContainerHeight = this.setContainerHeight.bind(this);
+    // this.setContainerHeight = this.setContainerHeight.bind(this);
     this.selectChildElements = this.selectChildElements.bind(this);
     this.deselectChildElement = this.deselectChildElement.bind(this);
     this.preventDeselect = this.preventDeselect.bind(this);
@@ -70,33 +70,33 @@ class FlexboxPreview extends React.Component {
     this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.isFullHeight !== this.props.isFullHeight) {
-      this.setContainerHeight();
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.isFullHeight !== this.props.isFullHeight) {
+  //     this.setContainerHeight();
+  //   }
+  // }
 
   componentDidMount() {
-    this.setContainerHeight();
+    // this.setContainerHeight();
 
     document.addEventListener('mousedown', this.deselectChildElement);
     document.addEventListener('keydown', this.handleKeyDown);
     document.addEventListener('keyup', this.handleKeyUp);
-    window.addEventListener('resize', this.setContainerHeight);
+    // window.addEventListener('resize', this.setContainerHeight);
   }
 
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.deselectChildElement);
     document.removeEventListener('keydown', this.handleKeyDown);
     document.removeEventListener('keyup', this.handleKeyUp);
-    window.removeEventListener('resize', this.setContainerHeight);
+    // window.removeEventListener('resize', this.setContainerHeight);
   }
 
-  setContainerHeight(props) {
-    const isFullHeight = props && props.isFullHeight !== undefined ? props.isFullHeight : this.props.isFullHeight;
-    const containerHeight = isFullHeight ? `${getFullHeight()}px` : 'auto'
-    this.setState({ containerHeight });
-  }
+  // setContainerHeight(props) {
+  //   const isFullHeight = props && props.isFullHeight !== undefined ? props.isFullHeight : this.props.isFullHeight;
+  //   const containerHeight = isFullHeight ? `${getFullHeight()}px` : 'auto'
+  //   this.setState({ containerHeight });
+  // }
 
   handleKeyDown(event) {
     if (event.metaKey || event.ctrlKey) {
@@ -207,6 +207,7 @@ class FlexboxPreview extends React.Component {
   render() {
     const { 
       containerStyles,
+      isFullHeight,
       itemStyles,
       showAddButton, 
       canvasColor,
@@ -260,17 +261,23 @@ class FlexboxPreview extends React.Component {
     }
 
     // Container Styles
-    const style = _.extend({}, containerStyles, {
-      minHeight: this.state.containerHeight
-    });
+    const containerProps = {
+      className: 'container',
+      style: containerStyles
+    }
+    
+    if (isFullHeight) containerProps.minHeight = '100%';
+
+    const titleProps = {
+      className: 'title',
+      style: { backgroundColor: canvasColor }
+    };
 
     return (
       <Preview canvasColor={canvasColor}>
         <div id="flexbox-preview">
-          <div
-            className="container"
-            style={style}
-          >
+          <div {...containerProps}>
+            <div {...titleProps}>Flex Container</div>
             {items}
           </div>
         </div>
