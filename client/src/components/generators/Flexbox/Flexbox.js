@@ -1,13 +1,8 @@
-import React from 'react';
-import StaticWindowGenerator from '../types/StaticWindowGenerator';
+import React from 'react'
 import FlexboxPreview from './FlexboxPreview';
 import FlexboxInputs from './FlexboxInputs';
-// import FlexboxOutput from './FlexboxOutput';
 import FlexboxBottom from './FlexboxBottom';
-// import { getState } from '../../../util/helpers';
-// import Toggle from '../../input/Toggle';
-// import ColorPicker from '../../input/ColorPicker';
-import _ from 'underscore';
+import { map, uniqueId, extend } from 'underscore';
 
 import Generator from './Generator';
 import Header from '../../Header';
@@ -28,8 +23,8 @@ class Flexbox extends React.Component {
     this.state = getState(Flexbox.defaultState, Flexbox.stateTypes);
 
     // Add unique keys to each child element
-    _.map(this.state.childElements, child => {
-      child.id = _.uniqueId('child-');
+    map(this.state.childElements, child => {
+      child.id = uniqueId('child-');
     });
 
     // Restrict number of child elements
@@ -59,7 +54,7 @@ class Flexbox extends React.Component {
   addChildElement = () => {
     if (this.state.canAddChildElement) {
       const canAddChildElement = this.state.childElements.length + 1 < this.maxChildElements;
-      const child = { id: _.uniqueId('child-') };
+      const child = { id: uniqueId('child-') };
       const childElements = this.state.childElements.slice();
       childElements.push(child);
 
@@ -109,7 +104,7 @@ class Flexbox extends React.Component {
       ...restState
     } = this.state;
     const output = this.generate();
-    const props = _.extend({}, { ...restState }, {
+    const props = extend({}, { ...restState }, {
       updateGenerator: this.updateGenerator,
       addChildElement: this.addChildElement
     });

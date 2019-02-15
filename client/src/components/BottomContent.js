@@ -4,7 +4,7 @@ import { isArray } from 'underscore';
 
 class BottomContent extends React.PureComponent {
   render() {
-    const { children, globalState } = this.props;
+    const { children } = this.props;
 
     let { output } = this.props;
     if (!isArray(output)) output = [output];

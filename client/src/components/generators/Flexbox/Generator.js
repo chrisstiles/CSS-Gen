@@ -1,6 +1,5 @@
 import React from 'react';
 import Page from '../../Page';
-import BottomContent from '../../BottomContent';
 import { isEqual } from 'underscore';
 
 class Generator extends React.Component {
