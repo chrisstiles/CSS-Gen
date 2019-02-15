@@ -50,10 +50,6 @@ class FlexboxPreview extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      containerHeight: 'auto'
-    };
-
     if (props.selectedIndexes.length) {
       if (props.selectedIndexes[props.mostRecentIndex] === undefined) {
         this.mostRecentIndex = Math.max.apply(null, props.selectedIndexes);
@@ -62,7 +58,6 @@ class FlexboxPreview extends React.Component {
       }
     }
 
-    // this.setContainerHeight = this.setContainerHeight.bind(this);
     this.selectChildElements = this.selectChildElements.bind(this);
     this.deselectChildElement = this.deselectChildElement.bind(this);
     this.preventDeselect = this.preventDeselect.bind(this);
@@ -70,33 +65,17 @@ class FlexboxPreview extends React.Component {
     this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.isFullHeight !== this.props.isFullHeight) {
-  //     this.setContainerHeight();
-  //   }
-  // }
-
   componentDidMount() {
-    // this.setContainerHeight();
-
     document.addEventListener('mousedown', this.deselectChildElement);
     document.addEventListener('keydown', this.handleKeyDown);
     document.addEventListener('keyup', this.handleKeyUp);
-    // window.addEventListener('resize', this.setContainerHeight);
   }
 
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.deselectChildElement);
     document.removeEventListener('keydown', this.handleKeyDown);
     document.removeEventListener('keyup', this.handleKeyUp);
-    // window.removeEventListener('resize', this.setContainerHeight);
   }
-
-  // setContainerHeight(props) {
-  //   const isFullHeight = props && props.isFullHeight !== undefined ? props.isFullHeight : this.props.isFullHeight;
-  //   const containerHeight = isFullHeight ? `${getFullHeight()}px` : 'auto'
-  //   this.setState({ containerHeight });
-  // }
 
   handleKeyDown(event) {
     if (event.metaKey || event.ctrlKey) {
