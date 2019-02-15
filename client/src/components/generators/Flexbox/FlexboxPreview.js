@@ -263,10 +263,10 @@ class FlexboxPreview extends React.Component {
     // Container Styles
     const containerProps = {
       className: 'container',
-      style: containerStyles
+      style: _.extend({}, containerStyles)
     }
     
-    if (isFullHeight) containerProps.minHeight = '100%';
+    if (isFullHeight) containerProps.style.minHeight = '100%';
 
     const titleProps = {
       className: 'title',
