@@ -679,7 +679,7 @@ elements is easier in one separate file
   border-top: 2px solid #dedede;
   display: flex;
   justify-content: space-between;
-  z-index: 9997; }
+  z-index: 400; }
   #bottom-content-wrapper .bottom-title {
     font-size: 14px;
     line-height: 1;
