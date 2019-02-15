@@ -1,144 +1,69 @@
 import React from 'react';
 import Page from './Page';
-import Sidebar from './Sidebar';
-import BottomContent from './BottomContent';
-import LoadingSpinner from './LoadingSpinner';
-import _ from 'underscore';
+import { isEqual } from 'underscore';
 
 class Generator extends React.Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    this.loggedLocalStorageError = false;
+    this.persistStateTimer = null;
+  }
 
-    // Persist generator state to local storage
-    let loggedLocalStorageError = false;
-    let persistStateTimer;
+  persistState = () => {
+    // Use a timer to prevent this from being called too often
+    clearTimeout(this.persistStateTimer);
+    this.persistStateTimer = setTimeout(() => {
+      if (window.localStorage) {
+        const { generatorState, globalState } = this.props;
 
-    this.persistState = () => {
-      // Use a timer to prevent this from being called too often
-      clearTimeout(persistStateTimer);
-      persistStateTimer = setTimeout(() => {
-        if (window.localStorage) {
-          if (
-            !_.isEqual(this.prevGeneratorState, this.props.generatorState) ||
-            !_.isEqual(this.prevPreviewState, this.props.previewState) ||
-            !_.isEqual(this.prevGlobalState, this.props.globalState)
-          ) {
-            this.prevGeneratorState = this.props.generatorState;
-            this.prevPreviewState = this.props.previewState;
-            this.prevGlobalState = this.props.globalState;
+        if (
+          !isEqual(this.prevGlobalState, globalState) ||
+          !isEqual(this.prevGeneratorState, generatorState)
+        ) {
+          this.prevGlobalState = globalState;
+          this.prevGeneratorState = generatorState;
 
-            const path = window.location.pathname;
-            const state = { 
-              generatorState: this.prevGeneratorState, 
-              previewState: this.prevPreviewState 
-            };
+          const path = window.location.pathname;
+          const state = {
+            generatorState: this.prevGeneratorState,
+            timestamp: (new Date().getTime())
+          };
 
-            state.timestamp = new Date().getTime();
-
-            // Store in localStorage if there is enough space
-            try {
-              window.localStorage.setItem(path, JSON.stringify(state));
-              loggedLocalStorageError = false;
-            } catch (e) {
-              if (e.code === 22 && !loggedLocalStorageError) {
-                loggedLocalStorageError = true;
-                localStorage.clear();
-                console.log('Data not persisted, exceeds localStorage quota. Clearing...');
-              }
+          // Store in localStorage if there is enough space
+          try {
+            window.localStorage.setItem(path, JSON.stringify(state));
+            this.loggedLocalStorageError = false;
+          } catch (e) {
+            if (e.code === 22 && !this.loggedLocalStorageError) {
+              this.loggedLocalStorageError = true;
+              const globalState = window.localStorage.getItem('globalState');
+              window.localStorage.clear();
+              window.localStorage.setItem('globalState', globalState);
+              console.log('Data not persisted, exceeds localStorage quota. Clearing...');
             }
           }
         }
-      }, 400);
-    }
-  }
-
-  componentDidMount() {
-    if (this.props.onWrapperMount) {
-      this.props.onWrapperMount(this.generatorWrapper);
-    }
+      }
+    }, 400);
   }
 
   componentDidUpdate() {
     this.persistState();
   }
 
-  renderPreviewSettings = () => {
-    if (this.props.renderPreviewSettings) {
-      return this.props.renderPreviewSettings();
-    }
-  }
-
-  renderPresets = () => {
-    if (this.props.renderPresets) {
-      return this.props.renderPresets(this.props.setPreset);
-    }
-  }
-
-  renderToolbar = () => {
-    if (this.props.renderToolbar) {
-      return this.props.renderToolbar();
-    }
-  }
-
   render() {
-    const { 
-      className = '',
-      title, 
-      heading, 
-      intro, 
-      generatorState, 
-      hasBrowserPrefixes, 
-      previewState = '', 
-      multipleOutputs,
-      renderOutput 
-    } = this.props;
-    const { 
-      outputPreviewStyles, 
-      showBrowserPrefixes, 
-      persistGeneratorState,
-      loading 
-    } = this.props.globalState;
-    
+    const { title, className, children } = this.props;
+
+    const pageClassName = ['generator'];
+    if (className) pageClassName.push(className);
+
+    const pageProps = {
+      title,
+      className: pageClassName.join(' ')
+    };
 
     return (
-      <Page
-        title={title}
-        heading={heading}
-        intro={intro}
-        toolbar={this.renderToolbar()}
-      >
-        <div 
-          id="generator-wrapper"
-          className={className}
-        >
-          <div 
-            id="generator" 
-            className="page-content"
-            ref={generatorWrapper => { this.generatorWrapper = generatorWrapper }}
-          >
-            {loading ?
-              <div id="generator-loading">
-                <LoadingSpinner />
-              </div>
-            : null}
-            {this.props.renderPreview()}
-            <Sidebar generatorState={generatorState}>
-              {this.props.renderInputs()}
-            </Sidebar>
-            <BottomContent 
-              renderPreviewSettings={this.renderPreviewSettings}
-              renderPresets={this.renderPresets}
-              renderOutput={renderOutput}
-              outputCode={generatorState.css.output}
-              outputPreviewStyles={outputPreviewStyles}
-              persistGeneratorState={persistGeneratorState}
-              showBrowserPrefixes={showBrowserPrefixes}
-              previewCSS={previewState.previewCSS}
-              hasBrowserPrefixes={hasBrowserPrefixes}
-              multipleOutputs={multipleOutputs}
-            />
-          </div>
-        </div>
+      <Page {...pageProps}>
+        {children}
       </Page>
     );
   }

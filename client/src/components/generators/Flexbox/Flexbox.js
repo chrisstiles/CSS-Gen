@@ -2,19 +2,10 @@ import React from 'react'
 import FlexboxPreview from './FlexboxPreview';
 import FlexboxInputs from './FlexboxInputs';
 import FlexboxBottom from './FlexboxBottom';
-import { map, uniqueId, extend } from 'underscore';
-
-import Generator from './Generator';
+import Generator from '../../Generator';
 import Header from '../../Header';
-
+import { map, uniqueId, extend } from 'underscore';
 import { getState } from '../../../util/helpers';
-
-// **order
-// flex-grow
-// flex-shrink
-// flex-basis
-// **flex
-// align-self
 
 class Flexbox extends React.Component {
   constructor(props) {
