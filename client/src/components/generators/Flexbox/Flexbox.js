@@ -116,7 +116,10 @@ class Flexbox extends React.Component {
         generatorState={this.state}
         globalState={this.props.globalState}
       >
-        <Header>
+        <Header 
+          defaultState={Flexbox.defaultState}
+          updateGenerator={this.updateGenerator}
+        >
           <h1>CSS Flexbox Generator</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
         </Header>
