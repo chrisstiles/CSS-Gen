@@ -1,4 +1,5 @@
 import React from 'react';
+import Sidebar from '../../Sidebar';
 import Sliders from '../../input/Sliders';
 import Toggle from '../../input/Toggle';
 import ColorPicker from '../../input/ColorPicker';
@@ -27,7 +28,7 @@ class BoxShadowInputs extends React.Component {
 
   render() {
     return (
-      <div>
+      <Sidebar>
         <div className="row">
           <div className="field-wrapper left">
             <ColorPicker
@@ -54,7 +55,7 @@ class BoxShadowInputs extends React.Component {
           onChange={this.handleChange}
           {...this.props}
         />
-      </div>
+      </Sidebar>
     );
   }
 }
