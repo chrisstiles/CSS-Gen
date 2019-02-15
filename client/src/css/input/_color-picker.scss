@@ -44,18 +44,11 @@
   }
 }
 
-.color-picker-wrapper {
+.color-picker {
   position:fixed;
   z-index: 99999;
-
-  .content {
-    position:fixed;
-    z-index: 99999;
-    width: 226px !important;
-    height:245px !important;
-    margin-top:5px;
-    transform:translateX(-50%);
-  }
+  width: 226px !important;
+  height:245px !important;
 
   .transparent-button {
     position: absolute;
@@ -115,6 +108,7 @@
   margin-top: 2px;
   margin-bottom: 3px;
   cursor: pointer;
+  display:inline-block;
 }
 
 .chrome-picker {

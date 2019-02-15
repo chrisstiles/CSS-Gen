@@ -1,7 +1,8 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ChromePicker from 'react-color/lib/Chrome';
 import tinycolor from 'tinycolor2';
-import { hexOrRgba } from '../../util/helpers';
+import { hexOrRgba, isSameOrChild } from '../../util/helpers';
 
 // Only one picker should be open at a time
 let currentPicker = null;
@@ -10,26 +11,19 @@ class ColorPicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = { displayColorPicker: false };
-
+    this.state = { displayColorPicker: false, position: {} };
     this.state.transparent = this.props.color === 'transparent';
-
-    this.setPosition = this.setPosition.bind(this);
-    this.close = this.close.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleChangeComplete = this.handleChangeComplete.bind(this);
-    this.setTransparent = this.setTransparent.bind(this);
-    this.keyEvent = this.keyEvent.bind(this);
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.keyEvent, false);
+    document.addEventListener('keydown', this.keyEvent);
+    document.addEventListener('click', this.handleClick, false);
   }
 
   componentWillUnmount(){
     currentPicker = null;
     document.removeEventListener('keydown', this.keyEvent);
+    document.removeEventListener('click', this.handleClick);
   }
 
   componentDidUpdate() {
@@ -38,46 +32,59 @@ class ColorPicker extends React.PureComponent {
     this.setState({ transparent });
   }
 
-  setPosition(el, includeLeftOffset) {
-    this.previewWidth = el.offsetWidth;
-
-    const previewRect = el.getBoundingClientRect();
-    let topOffset = previewRect.top + previewRect.height;
-
-    if (!this.props.isFixed) {
-      topOffset += window.scrollY;
-    }
-
-    this.previewTop = topOffset;
-    this.previewLeft = includeLeftOffset ? previewRect.left : 'auto';
-
-    const leftOffset = includeLeftOffset ? this.previewLeft : 0;
-
-    if ((previewRect.left + leftOffset + 226) > window.innerWidth) {
-      this.shiftLeft = true;
-    } else {
-      this.shiftLeft = false;
+  handleClick = e => {
+    if (currentPicker === this && this.preview && this.picker) {
+      if (!isSameOrChild(e.target, this.preview) && !isSameOrChild(e.target, this.picker)) {
+        this.close();
+      }
     }
   }
 
-  handleClick(e) {
-    this.setPosition(e.target);
+  calculatePosition(el) {
+    const offset = 8;
+    const pickerWidth = 226;
+    const pickerHeight = 245;
 
-    if (currentPicker) {
-      currentPicker.close();
+    const rect = el.getBoundingClientRect();
+    const preview = {
+      width: rect.width,
+      top: rect.top + window.scrollY,
+      bottom: rect.top + rect.height + window.scrollY,
+      left: rect.left
+    };
+
+    let left = preview.left + (preview.width / 2) - (pickerWidth / 2);
+    if (left > window.innerWidth - offset) {
+      left = window.innerWidth - pickerWidth - offset;
     }
+
+    let top;
+    if (preview.bottom + pickerHeight + offset > window.innerHeight - offset) {
+      top = preview.top - pickerHeight - offset;
+    } else {
+      top = preview.bottom + offset;
+    }
+
+    return { top, left };
+  }
+
+  open = e => {
+    if (currentPicker) currentPicker.close();
 
     currentPicker = this;
 
-    this.setState({ displayColorPicker: !this.state.displayColorPicker });
+    this.setState({ 
+      displayColorPicker: !this.state.displayColorPicker,
+      position: this.calculatePosition(e.target)
+    });
   };
 
-  close() {
+  close = () => {
     currentPicker = null;
     this.setState({ displayColorPicker: false });
   };
 
-  handleChange(color) {
+  handleChange = (color) => {
     color = tinycolor(color.rgb);
     this.changingColor = true;
 
@@ -100,11 +107,11 @@ class ColorPicker extends React.PureComponent {
     this.setState({ color, transparent: false });
   };
 
-  handleChangeComplete() {
+  handleChangeComplete = () => {
     this.changingColor = false;
   }
 
-  setTransparent() {
+  setTransparent = () => {
     this.setState({ transparent: true });
 
     if (this.props.onChange) {
@@ -112,7 +119,7 @@ class ColorPicker extends React.PureComponent {
     }
   }
 
-  generateColorCSS(color = this.state.color) {
+  generateColorCSS = (color = this.state.color) => {
     if (this.state.transparent) {
       return 'transparent';
     }
@@ -123,20 +130,21 @@ class ColorPicker extends React.PureComponent {
     return colorString;
   }
 
-  keyEvent(event) {
+  keyEvent = (event) => {
     if (!this.changingColor && (event.keyCode === 27 || event.keyCode === 13)) {
       this.close();
     }
   }
   
-  renderPreview(previewStyle) {
+  renderPreview = (previewStyle) => {
     const renderPreview = this.props.renderPreview === undefined || this.props.renderPreview === true;
     if (renderPreview) {
       return (
         <div 
           className="color-preview" 
           style={previewStyle}
-          onClick={this.handleClick}
+          ref={preview => { this.preview = preview }}
+          onClick={this.open}
         />
       );
     } else {
@@ -146,40 +154,37 @@ class ColorPicker extends React.PureComponent {
     }
   }
 
-  render() {
-    const cover = {
-      position: 'fixed',
-      top: '0px',
-      right: '0px',
-      bottom: '0px',
-      left: '0px',
-      zIndex: '99998'
-    };
+  renderPicker = color => {
+    if (this.state.displayColorPicker) {
+      const picker = (
+        <div
+          className="color-picker"
+          ref={picker => { this.picker = picker }}
+          style={this.state.position}
+        >
+          <ChromePicker
+            color={color.toRgbString()}
+            onChange={this.handleChange}
+            onChangeComplete={this.handleChangeComplete}
+            disableAlpha={this.props.disableAlpha}
+            style={{ opacity: .4 }}
+          />
+          <div
+            className="transparent-button"
+            onClick={this.setTransparent}
+          />
+        </div>
+      );
 
+      return ReactDOM.createPortal(picker, document.querySelector('#app'));
+    }
+  }
+
+  render() {
     const color = tinycolor(this.props.color);
 
     if (this.props.disableAlpha) {
       color.setAlpha(1);
-    }
-
-    let margin;
-    if (this.shiftLeft) {
-      margin = -113 + this.previewWidth;
-    } else {
-      margin = this.previewWidth ? this.previewWidth / 2 : 0;
-    }
-
-    const wrapperStyles = {
-      marginLeft: margin
-    };
-
-    // Adjust top position in case user has scrolled
-    if (this.previewTop) {
-      wrapperStyles.top = this.previewTop;
-    }
-
-    if (this.previewLeft) {
-      wrapperStyles.left = this.previewLeft;
     }
 
     const previewStyle = {
@@ -212,42 +217,13 @@ class ColorPicker extends React.PureComponent {
       className.push('transparent-active');
     }
 
-    const style = {};
-
-    if (this.state.displayColorPicker) {
-      style.display = 'block';
-    } else {
-      style.display = 'none';
-    }
-
     return (
       <div className={className.join(' ')}>
         {this.props.label ? 
           <label className="title">{this.props.label}</label>
         : null}
         {this.renderPreview(previewStyle)}
-        <div style={style}>
-          <div style={cover} onClick={this.close} />
-          <div 
-            className="color-picker-wrapper"
-            style={wrapperStyles}
-          >
-            <div className="content">
-              <ChromePicker
-                color={color.toRgbString()}
-                onChange={this.handleChange}
-                onChangeComplete={this.handleChangeComplete}
-                disableAlpha={this.props.disableAlpha}
-                style={{ opacity: .4 }}
-              />
-              <div
-                className="transparent-button"
-                onClick={this.setTransparent}
-              />
-            </div>
-          </div>
-        </div>
-
+        {this.renderPicker(color)}
       </div>
     )
   }

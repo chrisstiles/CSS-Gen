@@ -1967,17 +1967,12 @@ textarea {
       margin-bottom: 0;
       margin-left: 8px; }
 
-.color-picker-wrapper {
+.color-picker {
   position: fixed;
-  z-index: 99999; }
-  .color-picker-wrapper .content {
-    position: fixed;
-    z-index: 99999;
-    width: 226px !important;
-    height: 245px !important;
-    margin-top: 5px;
-    transform: translateX(-50%); }
-  .color-picker-wrapper .transparent-button {
+  z-index: 99999;
+  width: 226px !important;
+  height: 245px !important; }
+  .color-picker .transparent-button {
     position: absolute;
     width: 29px;
     height: 29px;
@@ -1993,7 +1988,7 @@ textarea {
     background-size: 12px 12px;
     background-repeat: repeat;
     background-color: #fff !important; }
-    .color-picker-wrapper .transparent-button:before {
+    .color-picker .transparent-button:before {
       content: "";
       position: absolute;
       height: 3px;
@@ -2004,7 +1999,7 @@ textarea {
       transform-origin: center center;
       transform: translate(-50%, -50%) rotate(-45deg);
       z-index: 300; }
-    .color-picker-wrapper .transparent-button:after {
+    .color-picker .transparent-button:after {
       content: "";
       position: absolute;
       top: 0;
@@ -2013,9 +2008,9 @@ textarea {
       right: 0;
       background-color: rgba(0, 0, 0, 0.05);
       opacity: 0; }
-    .color-picker-wrapper .transparent-button:hover:before {
+    .color-picker .transparent-button:hover:before {
       opacity: .8; }
-    .color-picker-wrapper .transparent-button:hover:after {
+    .color-picker .transparent-button:hover:after {
       opacity: 1; }
 
 .transparent-active .transparent-button {
@@ -2048,7 +2043,8 @@ textarea {
   border-radius: 3px;
   margin-top: 2px;
   margin-bottom: 3px;
-  cursor: pointer; }
+  cursor: pointer;
+  display: inline-block; }
 
 .chrome-picker {
   position: relative;
