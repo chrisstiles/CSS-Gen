@@ -268,10 +268,10 @@ class FlexboxPreview extends React.Component {
     
     if (isFullHeight) containerProps.style.minHeight = '100%';
 
-    const titleProps = {
-      className: 'title',
-      style: { backgroundColor: canvasColor }
-    };
+    const titleProps = { className: 'title' };
+    const backgroundColor = canvasColor === 'transparent' ? '#fdfdfd' : canvasColor;
+    titleProps.style = { backgroundColor };
+
 
     return (
       <Preview canvasColor={canvasColor}>
