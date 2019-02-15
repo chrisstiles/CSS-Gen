@@ -752,5 +752,9 @@ export function clearSelection() {
 	}
 }
 
+export function isSameOrChild(child, parent) {
+	return child === parent || parent.contains(child);
+}
+
 
 
