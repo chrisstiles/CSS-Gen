@@ -1,30 +1,33 @@
 import React from 'react';
-// import 
 
 class Preview extends React.Component {
   render() {
+    const { canvasColor, children, ...previewProps } = this.props;
+    const preview = children ? children : (
+      <DefaultPreview {...previewProps} />
+    );
+
     return (
       <div id="generator-preview">
-        <Canvas color={this.props.canvasColor}>
-          {this.props.children}
+        <Canvas color={canvasColor}>
+          {preview}
         </Canvas>
       </div>
     );
   }
 }
 
-class Canvas extends React.Component {  
-  render() {
-    const { 
-      color: backgroundColor = 'transparent',
-      children
-    } = this.props;
+const Canvas = ({ color: backgroundColor = 'transparent', children }) => {
+  return (
+    <div id="canvas" style={{ backgroundColor }}>
+      {children}
+    </div>
+  );
+};
 
-    return (
-      <div id="canvas" style={{ backgroundColor }}>
-        {children}
-      </div>
-    );
+class DefaultPreview extends React.Component {
+  render() {
+    return 'Default preview here';
   }
 }
 

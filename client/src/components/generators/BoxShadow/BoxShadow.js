@@ -5,6 +5,7 @@ import { generateCSSString, hexOrRgba, getState } from '../../../util/helpers';
 
 import Generator from '../../Generator';
 import Header from '../../Header';
+import Preview from '../../Preview';
 import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
 import tinycolor from 'tinycolor2';
@@ -16,8 +17,15 @@ class BoxShadow extends React.Component {
     this.state = getState(BoxShadow.defaultState, BoxShadow.stateTypes);
   }
 
-  updateGenerator = (state) => {
-    this.setState(state);
+  updateGenerator = (state, name) => {
+    if (name) {
+      const newState = {};
+      newState[name] = state;
+
+      this.setState(newState);
+    } else {
+      this.setState(state);
+    }
   }
 
   generate = () => {
@@ -78,7 +86,7 @@ class BoxShadow extends React.Component {
           updateGenerator={this.updateGenerator}
           {...this.state} 
         />
-
+        <Preview canvasColor={this.state.canvasColor} />
         <BottomContent output={output}>
           <Settings
             updateGenerator={this.updateGenerator}

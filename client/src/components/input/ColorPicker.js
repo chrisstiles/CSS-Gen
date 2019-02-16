@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import ChromePicker from 'react-color/lib/Chrome';
 import tinycolor from 'tinycolor2';
 import { hexOrRgba, isSameOrChild } from '../../util/helpers';
+import { extend } from 'underscore';
 
 // Only one picker should be open at a time
 let currentPicker = null;
@@ -157,29 +158,30 @@ class ColorPicker extends React.PureComponent {
   }
 
   renderPicker = color => {
-    if (this.state.displayColorPicker) {
-      const picker = (
-        <div
-          className="color-picker"
-          ref={picker => { this.picker = picker }}
-          style={this.state.position}
-        >
-          <ChromePicker
-            color={color.toRgbString()}
-            onChange={this.handleChange}
-            onChangeComplete={this.handleChangeComplete}
-            disableAlpha={this.props.disableAlpha}
-            style={{ opacity: .4 }}
-          />
-          <div
-            className="transparent-button"
-            onClick={this.setTransparent}
-          />
-        </div>
-      );
+    const style = extend({}, this.state.position);
+    if (!this.state.displayColorPicker) style.display = 'none';
 
-      return ReactDOM.createPortal(picker, document.querySelector('#app'));
-    }
+    const picker = (
+      <div
+        className="color-picker"
+        ref={picker => { this.picker = picker }}
+        style={style}
+      >
+        <ChromePicker
+          color={color.toRgbString()}
+          onChange={this.handleChange}
+          onChangeComplete={this.handleChangeComplete}
+          disableAlpha={this.props.disableAlpha}
+          style={{ opacity: .4 }}
+        />
+        <div
+          className="transparent-button"
+          onClick={this.setTransparent}
+        />
+      </div>
+    );
+
+    return ReactDOM.createPortal(picker, document.querySelector('#app'));
   }
 
   render() {
