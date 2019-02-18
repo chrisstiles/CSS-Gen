@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ChromePicker from 'react-color/lib/Chrome';
 import tinycolor from 'tinycolor2';
-import { hexOrRgba, isSameOrChild } from '../../util/helpers';
+import { hexOrRgba, isSameOrChild, getBorderColor } from '../../util/helpers';
 import { extend } from 'underscore';
 
 // Only one picker should be open at a time
@@ -196,11 +196,12 @@ class ColorPicker extends React.PureComponent {
       color: _color, 
       className, 
       inline,
+      disableAlpha,
     } = this.props;
 
     const color = tinycolor(_color);
 
-    if (this.props.disableAlpha) {
+    if (disableAlpha) {
       color.setAlpha(1);
     }
 
@@ -209,16 +210,8 @@ class ColorPicker extends React.PureComponent {
     };
 
     // If color is dark enough, change grey border
-    const colorTest = tinycolor(color.clone());
-    
-    if (colorTest) {
-      const luminance = colorTest.getLuminance();
-      const brightness = colorTest.getBrightness();
-
-      if (luminance < .58 && brightness < 200) {
-        previewStyle.borderColor = colorTest.setAlpha(.3).toRgbString();
-      }
-    }
+    const borderColor = getBorderColor(color);
+    if (borderColor) previewStyle.borderColor = borderColor;
 
     const wrapperClassName = ['field-wrapper', 'color-wrapper'];
 
