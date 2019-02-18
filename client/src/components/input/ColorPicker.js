@@ -164,6 +164,7 @@ class ColorPicker extends React.PureComponent {
     
     const className = ['color-picker'];
     if (transparentButton) className.push('has-transparency');
+    if (this.state.transparent) className.push('transparent-active');
 
     const picker = (
       <div
@@ -191,7 +192,13 @@ class ColorPicker extends React.PureComponent {
   }
 
   render() {
-    const color = tinycolor(this.props.color);
+    const { 
+      color: _color, 
+      className, 
+      inline,
+    } = this.props;
+
+    const color = tinycolor(_color);
 
     if (this.props.disableAlpha) {
       color.setAlpha(1);
@@ -213,22 +220,14 @@ class ColorPicker extends React.PureComponent {
       }
     }
 
-    const className = ['field-wrapper', 'color-wrapper'];
+    const wrapperClassName = ['field-wrapper', 'color-wrapper'];
 
-    if (this.props.className) {
-      className.push(this.props.className);
-    }
-
-    if (this.props.inline) {
-      className.push('inline')
-    }
-
-    if (this.state.transparent) {
-      className.push('transparent-active');
-    }
-
+    if (className) wrapperClassName.push(className);
+    if (inline) wrapperClassName.push('inline');
+    if (this.state.transparent) wrapperClassName.push('transparent-active');
+    
     return (
-      <div className={className.join(' ')}>
+      <div className={wrapperClassName.join(' ')}>
         {this.props.label ? 
           <label className="title">{this.props.label}</label>
         : null}
