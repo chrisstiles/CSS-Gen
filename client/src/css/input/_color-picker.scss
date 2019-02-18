@@ -37,6 +37,10 @@
   width: 226px !important;
   height:245px !important;
 
+  &.has-transparency .chrome-picker > div > .flexbox-fix:first-child {
+    padding-right:40px;
+  }
+
   .transparent-button {
     position: absolute;
     width: 29px;
@@ -101,10 +105,6 @@
 .chrome-picker {
   position:relative;
   z-index: 200;
-
-  &.has-transparency > div > .flexbox-fix:first-child {
-    padding-right:40px;
-  }
 
   input {
     outline:none;
