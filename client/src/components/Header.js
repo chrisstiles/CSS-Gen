@@ -1,23 +1,26 @@
 import React from 'react';
 
-const Header = ({ children, defaultState, updateGenerator }) => {
-  const headerProps = { id: 'header' };
+class Header extends React.PureComponent {
+  render() {
+    const headerProps = { id: 'header' };
+    const { defaultState, updateGenerator, children } = this.props;
 
-  return (
-    <header {...headerProps}>
-      <div className="content">
-        {children}
-        { defaultState && updateGenerator ? 
-          <div 
-            className="button"
-            onClick={() => { updateGenerator(defaultState); }}
-          >
-            Reset
+    return (
+      <header {...headerProps}>
+        <div className="content">
+          {defaultState && updateGenerator ?
+            <div
+              className="button reset"
+              onClick={() => { updateGenerator(defaultState); }}
+            >
+              Reset
           </div>
-        : null}
-      </div>
-    </header>
-  );
+            : null}
+          {children}
+        </div>
+      </header>
+    );
+  }
 }
 
 export default Header;
