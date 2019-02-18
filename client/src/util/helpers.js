@@ -768,7 +768,7 @@ export function isSameOrChild(child, parent) {
 	return child === parent || parent.contains(child);
 }
 
-export function getBorderColor(backgroundColor) {
+export function getBorderColor(backgroundColor, defaultColor = null) {
 	const color = tinycolor(backgroundColor).clone();
 	
 	if (color) {
@@ -780,7 +780,7 @@ export function getBorderColor(backgroundColor) {
 		}
 	}
 
-	return 'transparent';
+	return defaultColor;
 }
 
 
