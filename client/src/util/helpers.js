@@ -1,4 +1,5 @@
 import _ from 'underscore';
+import { defaultPreviewState, defaultPreviewStateTypes } from '../components/Preview';
 import tinycolor from 'tinycolor2';
 import { NotificationManager } from 'react-notifications';
 import { 
@@ -292,9 +293,20 @@ export function replaceTinyColors(obj) {
 	return returnObject;
 }
 
-export function getState(_defaultState, stateTypes, isPreview) {
-	const defaultState = JSON.parse(JSON.stringify(_defaultState));
-	const state = getPersistedState(defaultState, isPreview);
+export function getState(_defaultState, _stateTypes, isDefaultPreview) {
+	if (isDefaultPreview) {
+		_defaultState.previewState = defaultPreviewState;
+		_stateTypes.previewState = defaultPreviewStateTypes;
+
+		if (!_defaultState.canvasColor) {
+			_defaultState.canvasColor = 'transparent';
+			_stateTypes.canvasColor = String;
+		}
+	}
+
+	const defaultState = cloneObject(_defaultState);
+	const stateTypes = cloneObject(_stateTypes);
+	const state = getPersistedState(defaultState);
 
 	if (isValidState(state, stateTypes)) {
 		return JSON.parse(JSON.stringify(state));
@@ -754,6 +766,21 @@ export function clearSelection() {
 
 export function isSameOrChild(child, parent) {
 	return child === parent || parent.contains(child);
+}
+
+export function getBorderColor(backgroundColor) {
+	const color = tinycolor(backgroundColor).clone();
+	
+	if (color) {
+		const luminance = color.getLuminance();
+		const brightness = color.getBrightness();
+
+		if (luminance < .58 && brightness < 200) {
+			return color.setAlpha(.3).toRgbString();
+		}
+	}
+
+	return 'transparent';
 }
 
 
