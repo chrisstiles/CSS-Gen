@@ -769,6 +769,7 @@ export function isSameOrChild(child, parent) {
 }
 
 export function getBorderColor(backgroundColor, defaultColor = null) {
+	if (backgroundColor === 'transparent') backgroundColor = '#fdfdfd';
 	const color = tinycolor(backgroundColor).clone();
 	
 	if (color) {
