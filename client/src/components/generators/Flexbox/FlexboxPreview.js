@@ -1,9 +1,17 @@
 import React from 'react';
 import Preview from '../../Preview';
-import _ from 'underscore';
-import { sameOrChild, getGlobalVariable, clearSelection } from '../../../util/helpers';
+import { 
+  contains, 
+  extend, 
+  findIndex 
+} from 'underscore';
+import { 
+  sameOrChild, 
+  getGlobalVariable, 
+  clearSelection 
+} from '../../../util/helpers';
 
-class FlexItem extends React.Component {
+class FlexItem extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -46,7 +54,7 @@ class FlexItem extends React.Component {
   }
 }
 
-class FlexboxPreview extends React.Component {
+class FlexboxPreviewContent extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -57,12 +65,6 @@ class FlexboxPreview extends React.Component {
         this.mostRecentIndex = props.mostRecentIndex;
       }
     }
-
-    this.selectChildElements = this.selectChildElements.bind(this);
-    this.deselectChildElement = this.deselectChildElement.bind(this);
-    this.preventDeselect = this.preventDeselect.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
   componentDidMount() {
@@ -77,21 +79,23 @@ class FlexboxPreview extends React.Component {
     document.removeEventListener('keyup', this.handleKeyUp);
   }
 
-  handleKeyDown(event) {
+  handleKeyDown = (event) => {
     if (event.metaKey || event.ctrlKey) {
       this.key = 'meta';
 
       // Select all boxes
       if (event.key === 'a' && !getGlobalVariable('outputIsFocused')) {
-        if (this.props.childElements.length) {
+        const { childElements, updateGenerator } = this.props;
+
+        if (childElements.length) {
           event.preventDefault();
 
           const selectedIndexes = [];
-          _.each(this.props.childElements, (element, index) => {
+          childElements.forEach((element, index) => {
             selectedIndexes.push(index);
           });
 
-          this.props.updateGenerator({ selectedIndexes });
+          updateGenerator({ selectedIndexes });
         }
       }
     } else if (event.shiftKey) {
@@ -99,16 +103,16 @@ class FlexboxPreview extends React.Component {
     }
   }
 
-  handleKeyUp(event) {
+  handleKeyUp = (event)  =>{
     this.deselectChildElement(event);
     this.key = null;
   }
 
-  preventDeselect() {
+  preventDeselect = () => {
     this.canDeselect = false;
   }
 
-  deselectChildElement(event) {
+  deselectChildElement = (event) => {
     if (!this.props.selectedIndexes.length || !this.canDeselect) {
       this.canDeselect = true;
       return;
@@ -124,9 +128,9 @@ class FlexboxPreview extends React.Component {
     }
   }
 
-  selectChildElements(id) {
+  selectChildElements = (id) => {
     const { childElements, selectedIndexes: _selectedIndexes } = this.props;
-    const newIndex = _.findIndex(childElements, { id });
+    const newIndex = findIndex(childElements, { id });
     let selectedIndexes;
 
     if (typeof this.mostRecentIndex !== 'number' || childElements[this.mostRecentIndex] === undefined) {
@@ -136,7 +140,7 @@ class FlexboxPreview extends React.Component {
     // Select multiple values
     if (_selectedIndexes.length && (this.key === 'meta' || this.key === 'shift')) {
       selectedIndexes = _selectedIndexes.slice();
-      const alreadySelected = _.contains(selectedIndexes, newIndex);
+      const alreadySelected = contains(selectedIndexes, newIndex);
 
       if (this.key === 'meta') {
         if (alreadySelected) {
@@ -189,16 +193,15 @@ class FlexboxPreview extends React.Component {
       isFullHeight,
       itemStyles,
       showAddButton, 
-      canvasColor,
       addChildElement, 
       canAddChildElement,
       childElements,
       selectedIndexes
     } = this.props;
 
-    const items = _.map(childElements, ({ id, ...props }, index) => {
-      const selected = _.contains(selectedIndexes, index);
-      const style = _.extend({}, itemStyles, props);
+    const items = childElements.map(({ id, ...props }, index) => {
+      const selected = contains(selectedIndexes, index);
+      const style = extend({}, itemStyles, props);
 
       return (
         <FlexItem
@@ -223,10 +226,7 @@ class FlexboxPreview extends React.Component {
       );
 
       const addButtonClasses = ['new-item'];
-
-      if (!canAddChildElement) {
-        addButtonClasses.push('disabled');
-      }
+      if (!canAddChildElement) addButtonClasses.push('disabled');
 
       items.push(
         <FlexItem
@@ -242,27 +242,30 @@ class FlexboxPreview extends React.Component {
     // Container Styles
     const containerProps = {
       className: 'container',
-      style: _.extend({}, containerStyles)
+      style: extend({}, containerStyles)
     }
     
     if (isFullHeight) containerProps.style.minHeight = '100%';
 
-    const titleProps = { className: 'title' };
-    const backgroundColor = canvasColor === 'transparent' ? '#fdfdfd' : canvasColor;
-    titleProps.style = { backgroundColor };
-
-
     return (
-      <Preview canvasColor={canvasColor}>
-        <div id="flexbox-preview">
-          <div {...containerProps}>
-            <div {...titleProps}>Flex Container</div>
-            {items}
-          </div>
+      <div id="flexbox-preview">
+        <div {...containerProps}>
+          {items}
         </div>
-      </Preview>
+      </div>
     );
   }
+}
+
+const FlexboxPreview = ({ canvasColor, ...previewProps }) => {
+  return (
+    <Preview
+      disabledCanvasPattern={true}
+      canvasColor={canvasColor}
+    >
+      <FlexboxPreviewContent {...previewProps} />
+    </Preview>
+  );
 }
 
 export default FlexboxPreview;
