@@ -115,6 +115,15 @@ class PreviewWindow extends React.Component {
       }
     }
 
+    // const { boxSizing, borderWidth } = this.props.previewState;
+
+    // let { width, height } = this.resize.state;
+    // if (boxSizing === 'content-box') {
+    //   const borderAdjustment = parseInt(borderWidth, 10) * 2;
+    //   width -= borderAdjustment;
+    //   height -= borderAdjustment;
+    // }
+
     this.props.updatePreview(this.resize.size);
     this.setState({ resizePosition: { x, y } });
   }
@@ -125,10 +134,10 @@ class PreviewWindow extends React.Component {
       return;
     }
 
-    let { width, height } = this.props.previewState;
+    // let { width, height } = this.props.previewState;
     
-    width += delta.width;
-    height += delta.height;
+    // width += delta.width;
+    // height += delta.height;
 
     const { x: left, y: top } = this.state.resizePosition;
     const { x, y } = this.props.previewState.position;
@@ -165,6 +174,9 @@ class PreviewWindow extends React.Component {
     // Add border size to preview
     if (previewStyle.boxSizing === 'content-box') {
       const borderAdjustment = parseInt(previewStyle.borderWidth, 10) * 2;
+      previewState.width = width;
+      previewState.height = height;
+
       width += borderAdjustment;
       height += borderAdjustment;
     }
