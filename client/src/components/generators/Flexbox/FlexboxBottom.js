@@ -20,6 +20,7 @@ class FlexBoxBottom extends React.Component {
         <Settings 
           updateGenerator={updateGenerator}
           canvasColor={canvasColor}
+          disabledCanvasPattern={true}
         >
           <Toggle
             name="showAddButton"

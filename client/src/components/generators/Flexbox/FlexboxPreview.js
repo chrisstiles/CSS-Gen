@@ -250,6 +250,7 @@ class FlexboxPreviewContent extends React.PureComponent {
     return (
       <div id="flexbox-preview">
         <div {...containerProps}>
+          <div className="title">Flex Container</div>
           {items}
         </div>
       </div>
@@ -260,7 +261,6 @@ class FlexboxPreviewContent extends React.PureComponent {
 const FlexboxPreview = ({ canvasColor, ...previewProps }) => {
   return (
     <Preview
-      disabledCanvasPattern={true}
       canvasColor={canvasColor}
     >
       <FlexboxPreviewContent {...previewProps} />

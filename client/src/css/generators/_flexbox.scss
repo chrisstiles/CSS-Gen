@@ -25,58 +25,81 @@
   .container {
     display:flex;
     border:2px dashed $accent-color;
-    padding:12px;
+    border-top:none;
+    padding:14px 12px 12px 12px;
     position:relative;
 
     &.has-background {
       border-color:transparent;
     }
+    
+    &:before,
+    &:after {
+      content:"";
+      position:absolute;
+      top:0;
+      height:2px;
+      pointer-events:none;
+      border-top:2px dashed $accent-color;
+      z-index: 200;
+    }
+
+    &:before {
+      left:0;
+      width:14px;
+    }
+
+    &:after {
+      left:130px;
+      right:0;
+    }
 
     .title {
-      position: absolute;
-      content: "Flex Container";
-      line-height: 18px;
-      padding: 0 5px;
+      position:absolute;
+      width:115px;
+      left: 15px;
+      padding:0 5px;
+      line-height: 1;
+      text-align:center;
       border-bottom: none;
       color: #4834d4;
-      top: -12px;
-      left: 14px;
-      z-index: 100;
+      top: -4px;
       font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
-      border:2px dashed transparent;
       white-space: nowrap;
+      z-index: 110;
     }
   }
 
   .item {
     cursor:pointer;
-    flex-basis:120px;
-    min-width:120px;
-    min-height:120px;
+    flex-basis:100px;
+    min-width:100px;
+    min-height:100px;
     position:relative;
+    background-color:$accent-color;
+    margin:2px;
+    border-radius:2px;
     @include no-select;
 
     &:hover {
       opacity:.8;
     }
 
-    &:after {
-      content:"";
-      position:absolute;
-      top:2px;
-      right:2px;
-      bottom:2px;
-      left:2px;
-      background-color:$accent-color;
-      border-radius:2px;
-    }
+    // &:after {
+    //   content:"";
+    //   position:absolute;
+    //   top:2px;
+    //   right:2px;
+    //   bottom:2px;
+    //   left:2px;
+    //   background-color:$accent-color;
+    //   border-radius:2px;
+    // }
 
     &.selected {
-      &:after {
-        background-color:green;
-      }
+      background-color:green;
     }
 
     &.new-item {
@@ -87,17 +110,11 @@
       font-size:13px;
       color:#6f6f6f;
       font-weight:600;
-
-      &:after {
-        background-color:#e7e7e7;
-      }
+      background-color:#e7e7e7 !important;
 
       &:hover {
         opacity:1;
-
-        &:after {
-          background-color:#e2e2e2;
-        }
+        background-color:#e2e2e2 !important;
       }
 
       &.disabled {

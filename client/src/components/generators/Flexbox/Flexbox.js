@@ -154,7 +154,7 @@ Flexbox.defaultState = {
   mostRecentIndex: 0,
   showAddButton: true,
   isFullHeight: true,
-  canvasColor: 'transparent'
+  canvasColor: '#fdfdfd'
 };
 
 Flexbox.stateTypes = {
