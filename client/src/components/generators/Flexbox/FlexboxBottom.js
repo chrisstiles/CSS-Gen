@@ -3,7 +3,6 @@ import FlexboxPresets from './FlexboxPresets';
 import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
 import Toggle from '../../input/Toggle';
-// import ColorPicker from '../../input/ColorPicker';
 
 class FlexBoxBottom extends React.Component {
   render() {

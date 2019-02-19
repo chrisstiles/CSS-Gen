@@ -458,26 +458,11 @@ elements is easier in one separate file
     visibility: hidden; }
 
 .preview-style {
-  z-index: -1;
-  position: relative;
-  border-radius: 5px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center; }
-  .preview-style .style,
-  .preview-style .background {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0; }
-  .preview-style .style {
-    z-index: 1; }
-  .preview-style .background {
-    z-index: -1;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center; }
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; }
 
 /* Old code */
 /* ------------------------- */
@@ -2562,34 +2547,34 @@ input.angle-input {
     .button-select.half .option:nth-child(even) {
       margin-right: 0; }
 
-#generator-wrapper.border-radius .corners-wrapper {
+.border-radius-generator .corners-wrapper {
   margin-bottom: -27px; }
-  #generator-wrapper.border-radius .corners-wrapper .section-title {
+  .border-radius-generator .corners-wrapper .section-title {
     margin-bottom: 25px; }
-  #generator-wrapper.border-radius .corners-wrapper .slider-input,
-  #generator-wrapper.border-radius .corners-wrapper .units-select {
+  .border-radius-generator .corners-wrapper .slider-input,
+  .border-radius-generator .corners-wrapper .units-select {
     top: -10px; }
-  #generator-wrapper.border-radius .corners-wrapper .half {
+  .border-radius-generator .corners-wrapper .half {
     width: calc(50% - 15px);
     margin-right: 30px; }
 
-#generator-wrapper.border-radius .slider-image {
+.border-radius-generator .slider-image {
   width: 22px;
   height: 22px;
   position: relative;
   top: -8px;
   margin-bottom: -3px;
   left: -7px; }
-  #generator-wrapper.border-radius .slider-image span {
+  .border-radius-generator .slider-image span {
     position: absolute;
     left: 0;
     right: 0;
     height: 8px; }
-    #generator-wrapper.border-radius .slider-image span:first-child {
+    .border-radius-generator .slider-image span:first-child {
       top: 0; }
-    #generator-wrapper.border-radius .slider-image span:last-child {
+    .border-radius-generator .slider-image span:last-child {
       bottom: 0; }
-    #generator-wrapper.border-radius .slider-image span:before, #generator-wrapper.border-radius .slider-image span:after {
+    .border-radius-generator .slider-image span:before, .border-radius-generator .slider-image span:after {
       content: "";
       width: 8px;
       height: 8px;
@@ -2597,14 +2582,14 @@ input.angle-input {
       background-color: #bbbbbb;
       position: absolute;
       top: 0; }
-    #generator-wrapper.border-radius .slider-image span:before {
+    .border-radius-generator .slider-image span:before {
       left: 0; }
-    #generator-wrapper.border-radius .slider-image span:after {
+    .border-radius-generator .slider-image span:after {
       right: 0; }
-  #generator-wrapper.border-radius .slider-image.top-left span:first-child:before,
-  #generator-wrapper.border-radius .slider-image.top-right span:first-child:after,
-  #generator-wrapper.border-radius .slider-image.bottom-left span:last-child:before,
-  #generator-wrapper.border-radius .slider-image.bottom-right span:last-child:after {
+  .border-radius-generator .slider-image.top-left span:first-child:before,
+  .border-radius-generator .slider-image.top-right span:first-child:after,
+  .border-radius-generator .slider-image.bottom-left span:last-child:before,
+  .border-radius-generator .slider-image.bottom-right span:last-child:after {
     background-color: #4834d4; }
 
 .triangle-direction {

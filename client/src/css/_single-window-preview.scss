@@ -127,33 +127,41 @@
 }
 
 .preview-style {
-  z-index: -1;
-  position:relative;
-  border-radius:5px;
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-position:center center;
-
-  .style,
-  .background {
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-  }
-
-  .style {
-    z-index: 1;
-  }
-
-  .background {
-    z-index: -1;
-    background-size:cover;
-    background-repeat:no-repeat;
-    background-position:center center;
-  }
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
 }
+
+// .preview-style {
+//   z-index: -1;
+//   position:relative;
+//   border-radius:5px;
+//   background-size:cover;
+//   background-repeat:no-repeat;
+//   background-position:center center;
+
+//   .style,
+//   .background {
+//     position:absolute;
+//     top:0;
+//     bottom:0;
+//     left:0;
+//     right:0;
+//   }
+
+//   .style {
+//     z-index: 1;
+//   }
+
+//   .background {
+//     z-index: -1;
+//     background-size:cover;
+//     background-repeat:no-repeat;
+//     background-position:center center;
+//   }
+// }
 
 
 

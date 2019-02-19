@@ -1,4 +1,5 @@
 import React from 'react';
+import Sidebar from '../../Sidebar';
 import Slider from '../../input/Slider';
 import Sliders from '../../input/Sliders';
 import Toggle from '../../input/Toggle';
@@ -81,74 +82,76 @@ class BorderRadiusInputs extends React.Component {
     });
 
     return (
-      <div>
-        <Sliders
-          sliders={this.radiusSlider}
-          onChange={this.handleChange}
-          {...styles}
-        />
-        <div className="corners-wrapper">
-          <div className="section-title">Individual Corners</div>
+      <Sidebar>
+        <div>
           <Sliders
-            sliders={this.cornerSliders}
+            sliders={this.radiusSlider}
             onChange={this.handleChange}
             {...styles}
           />
-        </div>
-        <div className="divider" />
-        <div className="inputs-row">
-          <Select
-            name="borderStyle"
-            value={styles.borderStyle}
-            label="Border Type"
-            onChange={this.handleChange}
-            options={[
-              { value: 'none', label: 'None' },
-              { value: 'solid', label: 'Solid' },
-              { value: 'dotted', label: 'Dotted' },
-              { value: 'dashed', label: 'Dashed' },
-              { value: 'double', label: 'Double' },
-              { value: 'groove', label: 'Groove' },
-              { value: 'ridge', label: 'Ridge' },
-              { value: 'inset', label: 'Inset' },
-              { value: 'outset', label: 'Outset' }
-            ]}
-            menuContainer="#sidebar"
-            scrollWrapper="#sidebar-controls"
-            searchable={false}
-            className="p70"
-          />
-          <div className={`field-wrapper align-right${disabledClassName}`}>
-            <ColorPicker
-              label="Color"
-              color={styles.borderColor}
+          <div className="corners-wrapper">
+            <div className="section-title">Individual Corners</div>
+            <Sliders
+              sliders={this.cornerSliders}
               onChange={this.handleChange}
-              className="small-preview"
-              name="borderColor"
+              {...styles}
             />
           </div>
-        </div>
-        <div className={`inputs-row${disabledClassName}`}>
-          <Slider
-            title="Border Width"
-            name="borderWidth"
-            className="p70"
-            onChange={this.handleChange}
-            value={styles.borderWidth}
-            min={0}
-            max={100}
-            appendString="px"
-          />
-          <div className="field-wrapper align-right">
-            <Toggle
+          <div className="divider" />
+          <div className="inputs-row">
+            <Select
+              name="borderStyle"
+              value={styles.borderStyle}
+              label="Border Type"
               onChange={this.handleChange}
-              checked={styles.inset}
-              label="Inset"
-              name="inset"
+              options={[
+                { value: 'none', label: 'None' },
+                { value: 'solid', label: 'Solid' },
+                { value: 'dotted', label: 'Dotted' },
+                { value: 'dashed', label: 'Dashed' },
+                { value: 'double', label: 'Double' },
+                { value: 'groove', label: 'Groove' },
+                { value: 'ridge', label: 'Ridge' },
+                { value: 'inset', label: 'Inset' },
+                { value: 'outset', label: 'Outset' }
+              ]}
+              menuContainer="#sidebar"
+              scrollWrapper="#sidebar-controls"
+              searchable={false}
+              className="p70"
             />
+            <div className={`field-wrapper align-right${disabledClassName}`}>
+              <ColorPicker
+                label="Color"
+                color={styles.borderColor}
+                onChange={this.handleChange}
+                className="small-preview"
+                name="borderColor"
+              />
+            </div>
+          </div>
+          <div className={`inputs-row${disabledClassName}`}>
+            <Slider
+              title="Border Width"
+              name="borderWidth"
+              className="p70"
+              onChange={this.handleChange}
+              value={styles.borderWidth}
+              min={0}
+              max={100}
+              appendString="px"
+            />
+            <div className="field-wrapper align-right">
+              <Toggle
+                onChange={this.handleChange}
+                checked={styles.inset}
+                label="Inset"
+                name="inset"
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </Sidebar>
     );
   }
 }

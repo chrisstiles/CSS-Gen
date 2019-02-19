@@ -151,7 +151,7 @@ class PreviewWindow extends React.Component {
 
   render() {
     const { previewState, style } = this.props;
-    const { width, height, position, ...restPreviewState } = previewState;
+    let { width, height, position, ...restPreviewState } = previewState;
     const { isResizing, resizePosition } = this.state;
     const { x: left, y: top } = resizePosition;
     const previewStyle = extend({}, { ...restPreviewState }, style);
@@ -160,6 +160,13 @@ class PreviewWindow extends React.Component {
 
     let { width: minWidth, height: minHeight } = this.constraints.min;
     let { width: maxWidth, height: maxHeight } = this.constraints.max;
+
+    // Add border size to preview
+    if (previewStyle.boxSizing === 'content-box') {
+      const borderAdjustment = parseInt(previewStyle.borderWidth, 10) * 2;
+      width += borderAdjustment;
+      height += borderAdjustment;
+    }
 
     return (
       <div 
@@ -185,13 +192,16 @@ class PreviewWindow extends React.Component {
               maxWidth={maxWidth}
               minHeight={minHeight}
               maxHeight={maxHeight}
-              style={previewStyle}
               onResizeStart={this.handleResizeStart}
               onResize={this.handleResize}
               onResizeStop={this.handleResizeStop}
             >
               <div className="drag-handle" />
               <div className="resize-handle" />
+              <div
+                className="preview-style"
+                style={previewStyle}
+              />
             </Resizable>
           </div>
         </Draggable>
