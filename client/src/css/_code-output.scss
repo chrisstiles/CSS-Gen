@@ -111,7 +111,7 @@
   align-items:center;
   justify-content:center;
   // background-color:rgba($accent-color, .87);
-  background-color:rgba(#fff, .4);
+  // background-color:rgba(#fff, .4);
   padding:30px;
 
   .output-wrapper {
@@ -176,7 +176,7 @@ body {
     .generator-preview,
     #bottom-content,
     .output-wrapper {
-      @include blur;
+      // @include blur;
     }
 
     .expanded-code-wrapper {

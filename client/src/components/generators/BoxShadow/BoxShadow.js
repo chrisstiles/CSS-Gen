@@ -1,7 +1,7 @@
 import React from 'react';
 // import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import BoxShadowInputs from './BoxShadowInputs';
-import { generateCSSString, hexOrRgba, getState } from '../../../util/helpers';
+import { hexOrRgba, getState } from '../../../util/helpers';
 
 import Generator from '../../Generator';
 import Header from '../../Header';
@@ -14,7 +14,7 @@ class BoxShadow extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = getState(BoxShadow.defaultState, BoxShadow.stateTypes);
+    this.state = getState(BoxShadow.defaultState, BoxShadow.stateTypes, true);
   }
 
   updateGenerator = (state, name) => {
@@ -49,9 +49,11 @@ class BoxShadow extends React.Component {
 
     if (inset) boxShadow = `inset ${boxShadow}`;
 
+    this.previewStyle = { boxShadow };
+
     return {
       language: 'css',
-      code: boxShadow
+      code: `box-shadow: ${boxShadow};`
     };
   }
 
@@ -65,9 +67,8 @@ class BoxShadow extends React.Component {
   }
 
   render() {
-    // const generatorState = extend({}, this.state, { css: this.generateCSS() });
     const output = this.generate();
-
+    // TODO better generate preview styles
     return (
       <Generator
         title="CSS Box Shadow Generator"
@@ -80,13 +81,18 @@ class BoxShadow extends React.Component {
           updateGenerator={this.updateGenerator}
         >
           <h1>CSS Box Shadow Generator</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
+          <p>Test Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
         </Header>
         <BoxShadowInputs 
           updateGenerator={this.updateGenerator}
           {...this.state} 
         />
-        <Preview canvasColor={this.state.canvasColor} />
+        <Preview 
+          canvasColor={this.state.canvasColor}
+          previewState={this.state.previewState}
+          updateGenerator={this.updateGenerator}
+          style={this.previewStyle}
+        />
         <BottomContent output={output}>
           <Settings
             updateGenerator={this.updateGenerator}
@@ -107,8 +113,7 @@ BoxShadow.defaultState = {
   spreadRadius: 0,
   shadowOpacity: 15,
   shadowColor: '#000',
-  inset: false,
-  canvasColor: 'red'
+  inset: false
 };
 
 BoxShadow.stateTypes = {
@@ -118,6 +123,5 @@ BoxShadow.stateTypes = {
   spreadRadius: Number,
   shadowOpacity: Number,
   shadowColor: String,
-  inset: Boolean,
-  canvasColor: String
+  inset: Boolean
 };

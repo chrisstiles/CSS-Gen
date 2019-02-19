@@ -37,20 +37,12 @@ elements is easier in one separate file
 }
 
 #generator-preview {
-  padding:20px;
+  padding:25px;
 }
 
 #generator-preview {
   display:flex;
   flex-grow:1;
-}
-
-#canvas {
-  width:100%;
-  flex-grow:1;
-  padding:12px;
-  border-radius:3px;
-  display:flex;
 }
 
 #bottom-content-wrapper {
