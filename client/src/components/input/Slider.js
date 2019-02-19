@@ -9,32 +9,21 @@ class Slider extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.checkActive(props);
     this.min = props.min || 0;
     this.max = props.max || 200;
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleBeforeChange = this.handleBeforeChange.bind(this);
-    this.handleUnitChange = this.handleUnitChange.bind(this);
-    this.handleActiveToggle = this.handleActiveToggle.bind(this);
-  }
-  
-  checkActive(props = this.props) {
-    const { isActive = true } = props;
-    this.isActive = isActive;
   }
 
-  handleChange(value) {
+  handleChange = (value) => {
     if (!this.props.disabled) {
       this.props.onChange(value, this.props.name, this.props.units);
     }
   }
 
-  handleBeforeChange() {
+  handleBeforeChange = () => {
     document.activeElement.blur();
   }
 
-  handleUnitChange(units) {
+  handleUnitChange = (units) => {
     if (this.props.units === units || this.props.disabled) {
       return;
     }
@@ -50,7 +39,7 @@ class Slider extends React.PureComponent {
     this.props.onChange(parseInt(value, 10), this.props.name, units);
   }
 
-  handleActiveToggle(active) {
+  handleActiveToggle = (active) => {
     if (this.props.onActiveToggle) {
       this.props.onActiveToggle(active, this.props.name);
     }
@@ -78,63 +67,63 @@ class Slider extends React.PureComponent {
   }
 
   render() {
-    this.checkActive(this.props);
+    const { 
+      isActive = true,
+      value, 
+      optional,
+      className,
+      title,
+      units,
+      disabled,
+      step = 1,
+      dragging,
+      appendString
+    } = this.props;
 
-    const { value, optional } = this.props;
-    const min = this.props.units === '%' ? 0 : this.min;
-    const max = this.props.units === '%' ? 100 : this.max;
+    const min = units === '%' ? 0 : this.min;
+    const max = units === '%' ? 100 : this.max;
 
-    var className = 'field-wrapper';
-    if (this.props.className) {
-      className += ` ${this.props.className}`;
-    }
+    // const className = ['field-wrapper'];
+    const wrapperClassName = ['field-wrapper'];
 
-    if (this.props.units) {
-      className +=  ' has-units';
-    }
+    if (className) wrapperClassName.push(className);
+    if (units) wrapperClassName.push('has-units');
+    if (disabled) wrapperClassName.push('disabled');
 
-    if (this.props.disabled) {
-      className += ' disabled';
-    }
-
-    var inputClassName = 'input';
-
-    // Disable slider if not active
-    if (!this.isActive) {
-      inputClassName += ' disabled';
-    }
+    const inputClassName = ['input'];
+    if (!isActive) inputClassName.push('disabled');
 
     return (
-      <div className={className}>
+      <div className={wrapperClassName.join(' ')}>
         <div className="table-wrapper">
           { optional ? 
             <div className="active-toggle">
               <Toggle
                 onChange={this.handleActiveToggle}
-                checked={this.isActive}
+                checked={isActive}
                 name="active"
               />
             </div>
           : null }
-          <div className={inputClassName}>
-            <label className="title">{this.props.title}</label>
+          <div className={inputClassName.join(' ')}>
+            {title ? <label className="title">{title}</label> : null}
             {this.renderUnitSelect()}          
             <NumberInput
               className="slider-input"
               value={value}
               onChange={this.handleChange}
-              step={this.props.step || 1}
+              step={step}
               min={min}
               max={max}
-              forceUpdate={this.props.dragging}
-              appendString={this.props.appendString}
+              forceUpdate={dragging}
+              appendString={appendString}
             />
             <RCSlider
               min={min}
               max={max}
               value={value}
               handle={Handle}
-              step={this.props.step || 1}
+              step={step}
               onBeforeChange={this.handleBeforeChange}
               onChange={this.handleChange}
               tabIndex={-1}

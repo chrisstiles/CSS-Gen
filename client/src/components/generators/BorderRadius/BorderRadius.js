@@ -135,7 +135,7 @@ class BorderRadius extends React.Component {
             previewState={{ width, height, background }}
             canvasColor={previewState.canvasColor}
           />
-          <BorderRadiusPresets />
+          <BorderRadiusPresets setPreset={updateGenerator} />
         </BottomContent>
       </Generator>
     );

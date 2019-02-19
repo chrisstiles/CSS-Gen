@@ -13,13 +13,7 @@ const sliders = [
 ];
 
 class BoxShadowInputs extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(value, name) {
+  handleChange = (value, name) => {
     const state = {};
     state[name] = value;
 

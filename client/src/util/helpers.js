@@ -793,5 +793,12 @@ export function getBorderColor(backgroundColor, defaultColor = null) {
 	return defaultColor;
 }
 
+// Checks any props besides children have changed
+export function propsHaveChanged(prevProps, currentProps) {
+	const { children: prevChildren, ...prev } = prevProps;
+	const { children: currentChildren, ...current } = currentProps;
+	return !_.isEqual({ ...prev }, { ...current });
+}
+
 
 

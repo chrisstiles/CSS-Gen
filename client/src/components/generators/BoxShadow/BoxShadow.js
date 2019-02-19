@@ -22,7 +22,6 @@ class BoxShadow extends React.Component {
     } = this.props.generatorState;
 
     // Create tiny color with correct alpha
-    // let color = rules.color === undefined ? this.state.shadowColor : rules.color;
     const color = tinycolor(shadowColor).setAlpha(shadowOpacity / 100);
 
     let boxShadow = `${horizontalShift}px ${verticalShift}px ${blurRadius}px ${spreadRadius}px ${hexOrRgba(color)}`;
@@ -50,7 +49,7 @@ class BoxShadow extends React.Component {
     } = this.props;
 
     const { width, height, background } = previewState;
-
+    
     return (
       <Generator
         title="CSS Box Shadow Generator"

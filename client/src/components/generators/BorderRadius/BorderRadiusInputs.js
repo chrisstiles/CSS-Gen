@@ -10,7 +10,7 @@ import { jsToCss } from '../../../util/helpers';
 const minRadius = 0;
 const maxRadius = 200;
 
-class BorderRadiusInputs extends React.Component {
+class BorderRadiusInputs extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -87,7 +87,8 @@ class BorderRadiusInputs extends React.Component {
           <Sliders
             sliders={this.radiusSlider}
             onChange={this.handleChange}
-            {...styles}
+            radius={styles.radius}
+            units={styles.units}
           />
           <div className="corners-wrapper">
             <div className="section-title">Individual Corners</div>

@@ -1,43 +1,56 @@
 import React from 'react';
 import Slider from './Slider';
 import Toggle from './Toggle';
-import _ from 'underscore';
+import { propsHaveChanged } from '../../util/helpers';
 
 class Sliders extends React.Component {
   constructor(props) {
     super(props);
 
-    this.checkActive(props);
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleActiveToggle = this.handleActiveToggle.bind(this);
+    this.state = {
+      isActive: true
+    };
   }
 
-  componentWillReceiveProps(newProps) {
-    this.checkActive(newProps);
+  shouldComponentUpdate(prevProps) {
+    return propsHaveChanged(prevProps, this.props);
   }
 
-  checkActive(props = this.props) {
-    const { isActive = true, allOptional = false } = props;
-    this.isActive = isActive || !allOptional;
+  componentDidMount() {
+    this.checkActive();
   }
 
-  handleActiveToggle(active) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.isActive !== this.props.isActive) {
+      this.checkActive();
+    }
+  }
+
+  checkActive = () => {
+    const { isActive: _isActive = true, allOptional = false } = this.props;
+    const isActive = _isActive || !allOptional;
+    this.setState({ isActive });
+  }
+
+  handleActiveToggle = (active) => {
     if (this.props.onActiveToggle) {
       this.props.onActiveToggle(active, this.props.name);
     }
   }
 
-  handleChange() {
-    if (this.isActive) {
-      this.props.onChange.apply(null, arguments);
-    }
-  }
-
   render() {
-    const { title, sliders, onChange, onActiveToggle, stateKey, allOptional, optional, ...initialState } = this.props;
-
-    const fields = _.map(sliders, input => {
+    const { 
+      title, 
+      sliders, 
+      onChange, 
+      onActiveToggle, 
+      stateKey, 
+      allOptional, 
+      optional, 
+      ...initialState 
+    } = this.props;
+    
+    const fields = sliders.map(input => {
       // Allow passing in other react components into list of sliders
       if (React.isValidElement(input)) {
         return input;
@@ -46,19 +59,20 @@ class Sliders extends React.Component {
       const { step = 1, divider = false, name, ...restProps } = input;
       const sliderOwner = stateKey ? initialState[stateKey][name] : initialState[name];
 
-      var value, isActive;
+      let value, isActive;
       if (typeof sliderOwner === 'object') {
         value = sliderOwner.value;
         isActive = sliderOwner.isActive;
       } else {
         value = sliderOwner;
+        isActive = true;
       }
 
       return (
         <div key={name}>
           <Slider
             name={name}
-            onChange={this.handleChange}
+            onChange={onChange}
             onActiveToggle={onActiveToggle}
             value={value}
             isActive={isActive}
@@ -71,15 +85,15 @@ class Sliders extends React.Component {
           {divider ? <div className="divider" /> : null}
         </div>
       );
-    });
+    })
 
-    var inputClassName = 'input';
-    var titleClassName = 'title';
+    const inputClassName = ['input'];
+    const titleClassName = ['title'];
 
     // Disable slider if not active
-    if (!this.isActive) {
-      inputClassName += ' disabled';
-      titleClassName += ' disabled';
+    if (!this.state.isActive) {
+      inputClassName.push('disabled');
+      titleClassName.push('disabled');
     }
 
     return (
@@ -90,17 +104,17 @@ class Sliders extends React.Component {
               <div className="active-toggle">
                 <Toggle
                   onChange={this.handleActiveToggle}
-                  checked={this.isActive}
+                  checked={this.state.isActive}
                   name="active"
                 />
               </div>
             : null }
             {title ? 
-              <label className={titleClassName}>{title}</label>
+              <label className={titleClassName.join(' ')}>{title}</label>
             : null}
           </div>
         : null}
-        <div className={inputClassName}>
+        <div className={inputClassName.join(' ')}>
           {fields}
         </div>
       </div>

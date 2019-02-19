@@ -115,6 +115,7 @@ class PreviewWindow extends React.Component {
       }
     }
 
+    this.props.updatePreview(this.resize.size);
     this.setState({ resizePosition: { x, y } });
   }
 
@@ -137,7 +138,7 @@ class PreviewWindow extends React.Component {
     }
 
     this.setState({ isResizing: false, resizePosition: { x: 0, y: 0 } });
-    this.props.updatePreview({ width, height, position, hasResized: true });
+    this.props.updatePreview({ position, hasResized: true });
   }
 
   handleDragStop = (event, data) => {
@@ -195,6 +196,7 @@ class PreviewWindow extends React.Component {
               onResizeStart={this.handleResizeStart}
               onResize={this.handleResize}
               onResizeStop={this.handleResizeStop}
+              ref={resize => { this.resize = resize }}
             >
               <div className="drag-handle" />
               <div className="resize-handle" />

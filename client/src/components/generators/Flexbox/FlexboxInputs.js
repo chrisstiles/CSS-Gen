@@ -4,7 +4,7 @@ import ContainerInputs from './ContainerInputs';
 import ItemInputs from './ItemInputs';
 import _ from 'underscore';
 
-class FlexboxInputs extends React.Component {
+class FlexboxInputs extends React.PureComponent {
   constructor(props) {
     super(props);
 

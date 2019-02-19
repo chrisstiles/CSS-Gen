@@ -2,7 +2,7 @@ import React from 'react';
 import Preset from './Preset';
 import _ from 'underscore';
 
-class PresetsWrapper extends React.Component {
+class PresetsWrapper extends React.PureComponent {
   render() {
     const presetComponents = _.map(this.props.presets, ({ ...props }, index) => {
       // Using the index as the key doesn't matter in this case 
