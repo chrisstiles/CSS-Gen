@@ -1,6 +1,15 @@
 import React from 'react';
 
-class Header extends React.PureComponent {
+class Header extends React.Component {
+  shouldComponentUpdate() {
+    if (!this.initialized) {
+      this.initialized = true;
+      return true;
+    }
+
+    return false;
+  }
+
   render() {
     const headerProps = { id: 'header' };
     const { defaultState, updateGenerator, children } = this.props;
@@ -11,7 +20,7 @@ class Header extends React.PureComponent {
           {defaultState && updateGenerator ?
             <div
               className="button reset"
-              onClick={() => { updateGenerator(defaultState); }}
+              onClick={() => { this.updateGenerator(defaultState) }}
             >
               Reset
           </div>
