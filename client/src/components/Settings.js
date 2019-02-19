@@ -3,10 +3,14 @@ import Toggle from './input/Toggle';
 import ColorPicker from './input/ColorPicker';
 import { getGlobalState, updateGlobalState } from '../util/helpers';
 
-class Settings extends React.Component {
+class Settings extends React.PureComponent {
   render() {
     const { persistGeneratorState } = getGlobalState();
-    const { canvasColor, updateGenerator, children } = this.props;
+    const { 
+      canvasColor, 
+      updateGenerator, 
+      children,
+    } = this.props;
 
     return (
       <div id="settings-wrapper">
@@ -24,9 +28,10 @@ class Settings extends React.Component {
             </Toggle>
             <ColorPicker
               name="canvasColor"
-              label="Canvas background color"
+              label="Canvas background"
               color={canvasColor}
               inline={true}
+              transparentButton={true}
               className="small-preview"
               onChange={updateGenerator}
             />
