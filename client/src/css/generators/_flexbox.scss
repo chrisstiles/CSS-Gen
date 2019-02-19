@@ -87,17 +87,6 @@
       opacity:.8;
     }
 
-    // &:after {
-    //   content:"";
-    //   position:absolute;
-    //   top:2px;
-    //   right:2px;
-    //   bottom:2px;
-    //   left:2px;
-    //   background-color:$accent-color;
-    //   border-radius:2px;
-    // }
-
     &.selected {
       background-color:green;
     }
