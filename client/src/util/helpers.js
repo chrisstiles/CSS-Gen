@@ -295,8 +295,11 @@ export function replaceTinyColors(obj) {
 
 export function getState(_defaultState, _stateTypes, isDefaultPreview) {
 	if (isDefaultPreview) {
-		_defaultState.previewState = defaultPreviewState;
-		_stateTypes.previewState = defaultPreviewStateTypes;
+		const previewState = _.extend({}, defaultPreviewState, _defaultState.previewState);
+		_defaultState.previewState = previewState;
+
+		const previewStateTypes = _.extend({}, defaultPreviewStateTypes, _stateTypes.previewState);
+		_stateTypes.previewState = previewStateTypes;
 
 		if (!_defaultState.canvasColor) {
 			_defaultState.canvasColor = 'transparent';
