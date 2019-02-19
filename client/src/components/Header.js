@@ -20,7 +20,7 @@ class Header extends React.Component {
           {defaultState && updateGenerator ?
             <div
               className="button reset"
-              onClick={() => { this.updateGenerator(defaultState) }}
+              onClick={() => { updateGenerator(defaultState) }}
             >
               Reset
           </div>
