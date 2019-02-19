@@ -12,7 +12,7 @@ const sliders = [
   { title: 'Shadow Opacity', name: 'shadowOpacity', min: 0, max: 100, appendString: '%' }
 ];
 
-class BoxShadowInputs extends React.Component {
+class BoxShadowInputs extends React.PureComponent {
   constructor(props) {
     super(props);
 

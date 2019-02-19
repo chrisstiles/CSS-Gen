@@ -9,9 +9,10 @@ class Settings extends React.PureComponent {
   // Default generator preview windows will have:
   // width, height and optionally background
   renderDefaultPreviewSettings = () => {
+    const { previewState, updatePreview } = this.props;
     if (!this.props.previewState) return;
 
-    const previewState = mapObject(this.props.previewState, (value, key) => {
+    const previewComponents= mapObject(previewState, (value, key) => {
       // Capitalize first letter of key for label
       const label = key.charAt(0).toUpperCase() + key.slice(1);
 
@@ -23,7 +24,7 @@ class Settings extends React.PureComponent {
             key={key}
             label={label}
             color={value}
-            onChange={this.updateDefaultPreviewSettings}
+            onChange={updatePreview}
           />
         );
       }
@@ -39,14 +40,14 @@ class Settings extends React.PureComponent {
           appendString="px"
           min={80}
           max={3000}
-          onChange={this.updateDefaultPreviewSettings}
+          onChange={updatePreview}
         />
       );
     });
 
     // Use an array to make sure components are
     // rendered in the correct order
-    const { width, height, background } = previewState;
+    const { width, height, background } = previewComponents;
     const elements = [];
 
     if (width) elements.push(width);
@@ -54,10 +55,6 @@ class Settings extends React.PureComponent {
     if (background) elements.push(background);
 
     return elements;
-  }
-
-  updateDefaultPreviewSettings = (value, name) => {
-    
   }
 
   render() {

@@ -27,6 +27,12 @@ class PreviewWindow extends React.Component {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
+  componentDidUpdate(prevProps) {
+    if (!isEqual(prevProps, this.props) && this.isOutOfBounds()) {
+      this.reset();
+    }
+  }
+
   handleWindowResize = () => {
     const { hasResized, hasDragged } = this.props.previewState;
 
@@ -57,12 +63,6 @@ class PreviewWindow extends React.Component {
 
     return false;
   }
-
-  // updatePreviewState = state => {
-  //   const previewState = extend({}, this.props.previewState, state);
-  //   console.log(state)
-  //   this.props.updatePreview(state);
-  // }
 
   reset = () => {
     const state = {
