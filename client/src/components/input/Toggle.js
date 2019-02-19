@@ -1,13 +1,12 @@
 import React from 'react';
+import { propsHaveChanged } from '../../util/helpers';
 
-class Toggle extends React.PureComponent {
-	constructor(props) {
-		super(props);
-
-		this.handleChange = this.handleChange.bind(this);
+class Toggle extends React.Component {
+	shouldComponentUpdate(prevProps) {
+		return propsHaveChanged(prevProps, this.props);
 	}
 
-	handleChange(event) {
+	handleChange = (event) => {
 		if (!this.props.disabled) {
 			const el = event.target;
 			const value = el.type === 'checkbox' ? el.checked : el.value;
@@ -16,33 +15,24 @@ class Toggle extends React.PureComponent {
 		}
 	}
 
-	renderLabel() {
-		if (this.props.label) {
-			return <label className="title">{this.props.label}</label>;
-		}
-	}
-
 	render() {
-		const { className, disabled, inline, label } = this.props;
-		const wrapperClassName = ['field-wrapper', 'toggle-wrapper'];
+		const { 
+			name,
+			checked,
+			className,
+			disabled,
+			inline,
+			label,
+			children
+		} = this.props;
 		
-		if (className) {
-			wrapperClassName.push(className);
-		}
-
-		if (disabled) {
-			wrapperClassName.push('disabled');
-		}
+		const wrapperClassName = ['field-wrapper', 'toggle-wrapper'];
+		if (className) wrapperClassName.push(className);
+		if (disabled) wrapperClassName.push('disabled');
 
 		const labelClassName = ['toggle-label'];
-
-		if (label) {
-			labelClassName.push('title');
-		}
-
-		if (inline) {
-			labelClassName.push('inline');
-		}
+		if (label) labelClassName.push('title');
+		if (inline) labelClassName.push('inline');
 
 		return (
 			<div className={wrapperClassName.join(' ')}>
@@ -50,16 +40,16 @@ class Toggle extends React.PureComponent {
 					{label ? <span>{label}</span> : null}
 					<div className="switch-wrapper">
 						<input
-							name={this.props.name}
+							name={name}
 							type="checkbox"
 							onChange={this.handleChange}
-							checked={this.props.checked}
+							checked={checked}
 						/>
 						<span className="switch"></span>
 					</div>
 				</label>
-				{this.props.children ?
-					<div className="toggle-content">{this.props.children}</div>
+				{children ?
+					<div className="toggle-content">{children}</div>
 				: null}
 			</div>
 		);
