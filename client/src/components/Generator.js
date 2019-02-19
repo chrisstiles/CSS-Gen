@@ -13,18 +13,21 @@ class Generator extends React.Component {
     clearTimeout(this.persistStateTimer);
     this.persistStateTimer = setTimeout(() => {
       if (window.localStorage) {
-        const { generatorState, globalState } = this.props;
+        const { generatorState, previewState, globalState } = this.props;
 
         if (
           !isEqual(this.prevGlobalState, globalState) ||
+          !isEqual(this.prevPreviewState, previewState) ||
           !isEqual(this.prevGeneratorState, generatorState)
         ) {
           this.prevGlobalState = globalState;
+          this.prevPreviewState = previewState;
           this.prevGeneratorState = generatorState;
 
           const path = window.location.pathname;
           const state = {
             generatorState: this.prevGeneratorState,
+            previewState: this.prevPreviewState,
             timestamp: (new Date().getTime())
           };
 

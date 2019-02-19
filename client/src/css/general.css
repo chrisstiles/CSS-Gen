@@ -1210,14 +1210,16 @@ body.code-expanded .expanded-code-wrapper .output-wrapper {
     margin-right: 0 !important; }
   .field-wrapper.wide-input input {
     width: 70px; }
-  .field-wrapper .title {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 0px;
-    color: #505050;
-    display: block; }
-  .field-wrapper.small .title {
+  .field-wrapper.small .title,
+  .field-wrapper.small label {
     font-size: 13px; }
+
+label {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 0px;
+  color: #505050;
+  display: block; }
 
 .w0 {
   width: 0% !important; }

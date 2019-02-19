@@ -209,7 +209,7 @@ export function isValidState(state, types) {
 	return isObjectOfShape(state, types);
 }
 
-export function getPersistedState(defaultState, isPreview) {
+export function getPersistedState(defaultState) {
 	if (!window.localStorage || !getGlobalState().persistGeneratorState) {
     return defaultState;
   }
@@ -239,7 +239,8 @@ export function getPersistedState(defaultState, isPreview) {
 			}
 
       if (previousState) {
-				previousState = isPreview ? previousState.previewState : previousState.generatorState;
+				const { generatorState = {}, previewState = {} } = previousState;
+				previousState = { ...generatorState, previewState: { ...previewState }  };
         // Loop through previous state and only add ones 
 				// of the values of same type as default state
 				return extendSameTypes(_.extend({}, defaultState), previousState);
@@ -294,17 +295,22 @@ export function replaceTinyColors(obj) {
 }
 
 export function getState(_defaultState, _stateTypes, isDefaultPreview) {
+	if (!_defaultState.previewState) {
+		_defaultState.previewState = {};
+		_stateTypes.previewState = {};
+	}
+
 	if (isDefaultPreview) {
 		const previewState = _.extend({}, defaultPreviewState, _defaultState.previewState);
 		_defaultState.previewState = previewState;
 
 		const previewStateTypes = _.extend({}, defaultPreviewStateTypes, _stateTypes.previewState);
 		_stateTypes.previewState = previewStateTypes;
+	}
 
-		if (!_defaultState.canvasColor) {
-			_defaultState.canvasColor = 'transparent';
-			_stateTypes.canvasColor = String;
-		}
+	if (!_defaultState.previewState.canvasColor) {
+		_defaultState.previewState.canvasColor = 'transparent';
+		_stateTypes.previewState.canvasColor = String;
 	}
 
 	const defaultState = cloneObject(_defaultState);

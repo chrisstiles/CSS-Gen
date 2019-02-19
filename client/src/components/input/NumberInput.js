@@ -31,7 +31,7 @@ class NumberInput extends React.PureComponent {
   }
 
   getValue() {
-    var value = this.element.value;
+    let value = this.element.value;
 
     if (this.props.appendString) {
       value = value.replace(this.props.appendString, '');
@@ -72,7 +72,7 @@ class NumberInput extends React.PureComponent {
   }
 
   handleTick(up, event, shiftHeld) {
-    var step = this.props.step || 1;
+    let step = this.props.step || 1;
 
     if (shiftHeld) {
       if (step === 1) {
@@ -82,7 +82,7 @@ class NumberInput extends React.PureComponent {
       }
     }
 
-    var newValue = up ? this.props.value + step : this.props.value - step;
+    let newValue = up ? this.props.value + step : this.props.value - step;
 
     const decimals = (String(newValue).split('.')[1] || []).length;
 
@@ -134,31 +134,40 @@ class NumberInput extends React.PureComponent {
   }
 
   render() {
-    const value = this.formatValue(this.props.value);
-
-    var className = this.props.className ? ` ${this.props.className}` : '';
-
-    className += ' number-input';
-
-    if (this.props.appendString) {
-      className += ' has-string';
-    }
+    const { 
+      name, 
+      value: _value, 
+      className, 
+      appendString, 
+      step, 
+      label 
+    } = this.props;
+    const value = this.formatValue(_value);
+    
+    const inputClassName = ['number-input'];
+    if (className) inputClassName.push(className);
+    if (appendString) inputClassName.push('has-string');
 
     return (
-      <input
-        type="text"
-        name={this.props.name}
-        className={className.trim()}
-        defaultValue={value}
-        onChange={this.handleChange}
-        onBlur={this.handleBlur}
-        onFocus={this.handleFocus}
-        ref={this.setRefs}
-        step={this.props.step}
-        onKeyDown={this.handleKeyDown}
-        onClick={this.handleClick}
-        autoComplete="off"
-      />
+      <div>
+        {label ?
+          <label className="title">{label}</label>
+        : null}
+        <input
+          type="text"
+          name={name}
+          className={inputClassName.join(' ')}
+          defaultValue={value}
+          onChange={this.handleChange}
+          onBlur={this.handleBlur}
+          onFocus={this.handleFocus}
+          ref={this.setRefs}
+          step={step}
+          onKeyDown={this.handleKeyDown}
+          onClick={this.handleClick}
+          autoComplete="off"
+        />
+      </div>
     );
   }
 }

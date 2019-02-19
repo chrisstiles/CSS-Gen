@@ -1,36 +1,16 @@
 import React from 'react';
-// import SingleWindowGenerator from '../types/SingleWindowGenerator';
+import createGenerator from '../create-generator';
 import BoxShadowInputs from './BoxShadowInputs';
-import { hexOrRgba, getState } from '../../../util/helpers';
-
 import Generator from '../../Generator';
 import Header from '../../Header';
 import Preview from '../../Preview';
 import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
 import tinycolor from 'tinycolor2';
+import { hexOrRgba } from '../../../util/helpers';
 
 class BoxShadow extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = getState(BoxShadow.defaultState, BoxShadow.stateTypes, true);
-  }
-
-  updateGenerator = (state, name) => {
-    if (name) {
-      const newState = {};
-      newState[name] = state;
-
-      this.setState(newState);
-    } else {
-      this.setState(state);
-    }
-  }
-
   generate = () => {
-    // const rules = extend({}, this.state);
-
     const {
       shadowColor,
       shadowOpacity,
@@ -39,7 +19,7 @@ class BoxShadow extends React.Component {
       blurRadius,
       spreadRadius,
       inset
-    } = this.state;
+    } = this.props.generatorState;
 
     // Create tiny color with correct alpha
     // let color = rules.color === undefined ? this.state.shadowColor : rules.color;
@@ -49,54 +29,58 @@ class BoxShadow extends React.Component {
 
     if (inset) boxShadow = `inset ${boxShadow}`;
 
-    this.previewStyle = { boxShadow };
-
     return {
-      language: 'css',
-      code: `box-shadow: ${boxShadow};`
-    };
-  }
-
-  renderInputs = () => {
-    return (
-      <BoxShadowInputs
-        updateGenerator={this.updateGenerator}
-        {...this.state}
-      />
-    );
+      output: {
+        language: 'css',
+        code: `box-shadow: ${boxShadow};`
+      },
+      previewStyle: { boxShadow }
+    }
   }
 
   render() {
-    const output = this.generate();
-    // TODO better generate preview styles
+    const { output, previewStyle } = this.generate();
+
+    const { 
+      globalState,
+      generatorState, 
+      previewState, 
+      updateGenerator, 
+      updatePreview
+    } = this.props;
+
+    const { width, height, background } = previewState;
+
     return (
       <Generator
         title="CSS Box Shadow Generator"
         className="box-shadow-generator"
-        generatorState={this.state}
-        globalState={this.props.globalState}
+        generatorState={generatorState}
+        previewState={previewState}
+        globalState={globalState}
       >
         <Header
-          defaultState={BoxShadow.defaultState}
-          updateGenerator={this.updateGenerator}
+          defaultState={defaultState}
+          updateGenerator={updateGenerator}
         >
           <h1>CSS Box Shadow Generator</h1>
           <p>Test Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
         </Header>
         <BoxShadowInputs 
-          updateGenerator={this.updateGenerator}
-          {...this.state} 
+          updateGenerator={updateGenerator}
+          {...generatorState} 
         />
         <Preview 
-          canvasColor={this.state.canvasColor}
-          previewState={this.state.previewState}
-          updateGenerator={this.updateGenerator}
-          style={this.previewStyle}
+          canvasColor={previewState.canvasColor}
+          previewState={previewState}
+          updatePreview={updatePreview}
+          style={previewStyle}
         />
         <BottomContent output={output}>
           <Settings
-            updateGenerator={this.updateGenerator}
-            canvasColor={this.state.canvasColor}
+            updatePreview={updatePreview}
+            previewState={{ width, height, background }}
+            canvasColor={previewState.canvasColor}
           />
         </BottomContent>
       </Generator>
@@ -104,9 +88,7 @@ class BoxShadow extends React.Component {
   }
 }
 
-export default BoxShadow;
-
-BoxShadow.defaultState = {
+const defaultState = {
   horizontalShift: 0,
   verticalShift: 12,
   blurRadius: 40,
@@ -116,7 +98,7 @@ BoxShadow.defaultState = {
   inset: false
 };
 
-BoxShadow.stateTypes = {
+const stateTypes = {
   horizontalShift: Number,
   verticalShift: Number,
   blurRadius: Number,
@@ -125,3 +107,8 @@ BoxShadow.stateTypes = {
   shadowColor: String,
   inset: Boolean
 };
+
+export default createGenerator(BoxShadow, defaultState, stateTypes, {
+  isDefaultPreview: true
+});
+

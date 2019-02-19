@@ -12,26 +12,26 @@ class FlexBoxBottom extends React.Component {
       showAddButton,
       isFullHeight,
       canvasColor,
-      updateGenerator
+      updatePreview
     } = this.props;
 
     return (
       <BottomContent output={output}>
         <Settings 
-          updateGenerator={updateGenerator}
+          updatePreview={updatePreview}
           canvasColor={canvasColor}
           disabledCanvasPattern={true}
         >
           <Toggle
             name="showAddButton"
             label="Add Button"
-            onChange={updateGenerator}
+            onChange={updatePreview}
             checked={showAddButton}
           />
           <Toggle
             name="isFullHeight"
             label="Full Height"
-            onChange={updateGenerator}
+            onChange={updatePreview}
             checked={isFullHeight}
           />
         </Settings>

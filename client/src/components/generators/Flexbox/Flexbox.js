@@ -1,55 +1,38 @@
 import React from 'react'
+import createGenerator from '../create-generator';
 import FlexboxPreview from './FlexboxPreview';
 import FlexboxInputs from './FlexboxInputs';
 import FlexboxBottom from './FlexboxBottom';
 import Generator from '../../Generator';
 import Header from '../../Header';
 import { map, uniqueId, extend } from 'underscore';
-import { getState } from '../../../util/helpers';
+
+const maxChildElements = 50;
 
 class Flexbox extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = getState(Flexbox.defaultState, Flexbox.stateTypes);
-
-    // Add unique keys to each child element
-    map(this.state.childElements, child => {
-      child.id = uniqueId('child-');
-    });
-
-    // Restrict number of child elements
-    this.maxChildElements = 50;
-
-    if (this.state.childElements.length > this.maxChildElements) {
-      this.state.childElements = Flexbox.defaultState.childElements.slice();
-    }
-
-    this.state.canAddChildElement = this.state.childElements.length < this.maxChildElements;
-  }
-
-  updateGenerator = (state, name) => {
-    if (name) {
-      const newState = {};
-      newState[name] = state;
-
-      this.setState(newState);
-    } else {
-      const childElements = state.childElements !== undefined ? state.childElements : this.state.childElements;
-      state.canAddChildElement = childElements.length < this.maxChildElements;
-
-      this.setState(state);
+  componentDidUpdate(prevProps) {
+    const { childElements: prevChildElements } = prevProps.generatorState;
+    const { childElements } = this.props.generatorState;
+    
+    if (childElements.length !== prevChildElements.length) {
+      const canAddChildElement = childElements.length <= maxChildElements;
+      this.props.updateGenerator({ canAddChildElement });
     }
   }
 
   addChildElement = () => {
-    if (this.state.canAddChildElement) {
-      const canAddChildElement = this.state.childElements.length + 1 < this.maxChildElements;
+    const { 
+      canAddChildElement: _canAddChildElement, 
+      childElements: _childElements
+    } = this.props.generatorState;
+
+    if (_canAddChildElement) {
+      const canAddChildElement = _childElements.length + 1 < maxChildElements;
       const child = { id: uniqueId('child-') };
-      const childElements = this.state.childElements.slice();
+      const childElements = _childElements.slice();
       childElements.push(child);
 
-      this.setState({ childElements, canAddChildElement });
+      this.props.updateGenerator({ childElements, canAddChildElement });
     }
   }
 
@@ -88,28 +71,37 @@ class Flexbox extends React.Component {
   }
 
   render() {
-    const { 
-      showAddButton,
-      isFullHeight,
-      canvasColor,
-      ...restState
-    } = this.state;
+    const {
+      globalState,
+      generatorState,
+      previewState,
+      updateGenerator,
+      updatePreview
+    } = this.props;
+
     const output = this.generate();
-    const props = extend({}, { ...restState }, {
-      updateGenerator: this.updateGenerator,
+    const props = extend({}, { ...generatorState }, {
+      updateGenerator,
       addChildElement: this.addChildElement
     });
+
+    const {
+      showAddButton,
+      isFullHeight,
+      canvasColor
+    } = previewState;
 
     return (
       <Generator 
         title="CSS Flexbox Generator" 
         className="flexbox-generator"
-        generatorState={this.state}
-        globalState={this.props.globalState}
+        generatorState={generatorState}
+        previewState={previewState}
+        globalState={globalState}
       >
         <Header 
-          defaultState={Flexbox.defaultState}
-          updateGenerator={this.updateGenerator}
+          defaultState={defaultState}
+          updateGenerator={updateGenerator}
         >
           <h1>CSS Flexbox Generator</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
@@ -126,16 +118,15 @@ class Flexbox extends React.Component {
           showAddButton={showAddButton}
           isFullHeight={isFullHeight}
           canvasColor={canvasColor}
-          updateGenerator={this.updateGenerator}
+          updatePreview={updatePreview}
+          updateGenerator={updateGenerator}
         />
       </Generator>
     );
   }
 }
 
-export default Flexbox;
-
-Flexbox.defaultState = {
+const defaultState = {
   childElements: [{ id: 'child-1' }, { id: 'child-2' }, { id: 'child-3' }],
   containerStyles: {
     display: 'flex',
@@ -152,12 +143,14 @@ Flexbox.defaultState = {
   },
   selectedIndexes: [],
   mostRecentIndex: 0,
-  showAddButton: true,
-  isFullHeight: true,
-  canvasColor: '#fdfdfd'
+  previewState: {
+    canvasColor: '#fdfdfd',
+    showAddButton: true,
+    isFullHeight: true
+  }
 };
 
-Flexbox.stateTypes = {
+const stateTypes = {
   childElements: [{ id: String }],
   containerStyles: {
     display: String,
@@ -174,7 +167,30 @@ Flexbox.stateTypes = {
   },
   selectedIndexes: [Number],
   mostRecentIndex: Number,
-  showAddButton: Boolean,
-  isFullHeight: Boolean,
-  canvasColor: String
+  previewState: {
+    canvasColor: String,
+    showAddButton: Boolean,
+    isFullHeight: Boolean
+  }
 };
+
+// Add unique keys to each child element
+function addUniqueIds(state) {
+  state.childElements = state.childElements || [];
+
+  map(state.childElements, child => {
+    child.id = uniqueId('child-');
+  });
+
+  if (state.childElements.length > maxChildElements) {
+    state.childElements = defaultState.childElements.slice();
+  }
+
+  state.canAddChildElement = state.childElements.length < maxChildElements;
+
+  return state;
+}
+
+export default createGenerator(Flexbox, defaultState, stateTypes, {
+  mutateInitialState: addUniqueIds
+});

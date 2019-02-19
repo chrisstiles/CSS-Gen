@@ -58,10 +58,11 @@ class PreviewWindow extends React.Component {
     return false;
   }
 
-  updatePreviewState = state => {
-    const previewState = extend({}, this.props.previewState, state);
-    this.props.updateGenerator({ previewState });
-  }
+  // updatePreviewState = state => {
+  //   const previewState = extend({}, this.props.previewState, state);
+  //   console.log(state)
+  //   this.props.updatePreview(state);
+  // }
 
   reset = () => {
     const state = {
@@ -71,7 +72,7 @@ class PreviewWindow extends React.Component {
       ...this.getDefaultSize()
     };
 
-    this.updatePreviewState(state);
+    this.props.updatePreview(state);
     this.setState({ isResizing: false, resizePosition: { x: 0, y: 0 } });
   }
 
@@ -84,7 +85,7 @@ class PreviewWindow extends React.Component {
 
   setDefaultSize = () => {
     if (!this.props.previewState.hasResized && this.wrapper) {
-      this.updatePreviewState({ ...this.getDefaultSize() });
+      this.props.updatePreview({ ...this.getDefaultSize() });
     }
   }
 
@@ -136,7 +137,7 @@ class PreviewWindow extends React.Component {
     }
 
     this.setState({ isResizing: false, resizePosition: { x: 0, y: 0 } });
-    this.updatePreviewState({ width, height, position, hasResized: true });
+    this.props.updatePreview({ width, height, position, hasResized: true });
   }
 
   handleDragStop = (event, data) => {
@@ -144,7 +145,7 @@ class PreviewWindow extends React.Component {
       this.reset();
     } else {
       const { x, y } = data;
-      this.updatePreviewState({ position: { x, y } });
+      this.props.updatePreview({ position: { x, y } });
     }
   }
 
@@ -156,7 +157,6 @@ class PreviewWindow extends React.Component {
     const previewStyle = extend({}, { ...restPreviewState }, style);
     const previewClassName = ['preview-window'];
     if (isResizing) previewClassName.push('resizing');
-
 
     let { width: minWidth, height: minHeight } = this.constraints.min;
     let { width: maxWidth, height: maxHeight } = this.constraints.max;
