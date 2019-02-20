@@ -19,7 +19,6 @@ export default function createGenerator (WrappedGenerator, state, stateTypes, op
       const { isDefaultPreview, mutateInitialState } = options;
       
       this.state = getState(state, stateTypes, isDefaultPreview);
-      console.log(this.state)
 
       if (mutateInitialState) this.state = mutateInitialState(this.state);
     }
