@@ -70,7 +70,7 @@ class Filter extends React.Component {
       updatePreview
     } = this.props;
 
-    const { width, height, background } = previewState;
+    const { width, height } = previewState;
 
     return (
       <Generator
@@ -141,7 +141,7 @@ const defaultState = _.mapObject(filters, ({ title, name, min, max, defaultValue
   return { value: defaultValue, isActive: false };
 });
 
-defaultState.previewStyles = {
+defaultState.previewState = {
   image: waterfall
 };
 

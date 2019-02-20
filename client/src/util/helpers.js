@@ -640,78 +640,142 @@ export function getNativeImageSize(src) {
   });
 }
 
-export function getImageSize(width, height, wrapper) {
-	wrapper = wrapper || document.querySelector('#generator-wrapper');
+export function getImageSize(width, height) {
+	const canvas = document.querySelector('#canvas');
+	if (!canvas) return { width, height };
 
-	if (!wrapper) {
-		return { width, height };
-	}
+	const rect = canvas.getBoundingClientRect();
+	const offset = 25;
+	const minWidth = 80;
+	const minHeight = 80;
+	const maxWidth = rect.width - (offset * 2);
+	const maxHeight = rect.height - (offset * 2);
 
-	const rect = wrapper.getBoundingClientRect();
-	const maxWidth = rect.width;
-	var maxHeight = window.innerHeight - rect.top - 30;
-  const minWidth = 80;
-  const minHeight = 80;
-	const bottomContent = document.querySelector('#bottom-content-wrapper');
-
-	// Prevent image from going behind bottom content
-	if (bottomContent) {
-		maxHeight -= bottomContent.offsetHeight;
-	}
-
-  // Image already fits within space without resizing
 	if (width <= maxWidth && width >= minWidth && height <= maxHeight && height >= maxHeight) {
 		return { width, height };
 	}
 
-  // Image is too small, enlarge
-  if (width < minWidth || height < minHeight) {
-    if (width >= height) {
-      height = Math.round(height * minWidth / width);
-      width = minWidth;
+	// Image is too small, enlarge
+	if (width < minWidth || height < minHeight) {
+		if (width >= height) {
+			height = Math.round(height * minWidth / width);
+			width = minWidth;
 
-      // If resized image is not tall enough resize again 
-      if (height < minHeight) {
-        width = Math.round(width * minHeight / height);
-        height = minHeight;
-      }
-    } else {
-      width = Math.round(width * minHeight / height);
-      height = minHeight;
+			// If resized image is not tall enough resize again 
+			if (height < minHeight) {
+				width = Math.round(width * minHeight / height);
+				height = minHeight;
+			}
+		} else {
+			width = Math.round(width * minHeight / height);
+			height = minHeight;
 
-      // Image resized image is not wide enough resize again
-      if (width < minWidth) {
-        height = Math.round(height * minWidth / width);
-        width = minWidth;
-      }
-    }
-  }
+			// Image resized image is not wide enough resize again
+			if (width < minWidth) {
+				height = Math.round(height * minWidth / width);
+				width = minWidth;
+			}
+		}
+	}
 
-  // Image is too large, shrink down
-  if (width > maxWidth || height > maxHeight) {
-    if (maxWidth >= maxHeight) {
-      height = Math.round(height * maxWidth / width);
-      width = maxWidth;
+	// Image is too large, shrink down
+	if (width > maxWidth || height > maxHeight) {
+		if (maxWidth >= maxHeight) {
+			height = Math.round(height * maxWidth / width);
+			width = maxWidth;
 
-      // If resized image is tall resize again
-      if (height > maxHeight) {
-        width = Math.round(width * maxHeight / height);
-        height = maxHeight;
-      }
-    } else {
-      width = Math.round(width * maxHeight / height);
-      height = maxHeight;
+			// If resized image is tall resize again
+			if (height > maxHeight) {
+				width = Math.round(width * maxHeight / height);
+				height = maxHeight;
+			}
+		} else {
+			width = Math.round(width * maxHeight / height);
+			height = maxHeight;
 
-      // If resized image is too wide resize again
-      if (width > maxWidth) {
-        height = Math.round(height * maxWidth / width);
-        width = maxWidth;
-      }
-    }
-  }
+			// If resized image is too wide resize again
+			if (width > maxWidth) {
+				height = Math.round(height * maxWidth / width);
+				width = maxWidth;
+			}
+		}
+	}
 
 	return { width, height };
 }
+
+// export function getImageSize(width, height, wrapper) {
+// 	wrapper = wrapper || document.querySelector('#generator-wrapper');
+
+// 	if (!wrapper) {
+// 		return { width, height };
+// 	}
+
+// 	const rect = wrapper.getBoundingClientRect();
+// 	const maxWidth = rect.width;
+// 	var maxHeight = window.innerHeight - rect.top - 30;
+  // const minWidth = 80;
+  // const minHeight = 80;
+// 	const bottomContent = document.querySelector('#bottom-content-wrapper');
+
+// 	// Prevent image from going behind bottom content
+// 	if (bottomContent) {
+// 		maxHeight -= bottomContent.offsetHeight;
+// 	}
+
+//   // Image already fits within space without resizing
+	// if (width <= maxWidth && width >= minWidth && height <= maxHeight && height >= maxHeight) {
+	// 	return { width, height };
+	// }
+
+  // // Image is too small, enlarge
+  // if (width < minWidth || height < minHeight) {
+  //   if (width >= height) {
+  //     height = Math.round(height * minWidth / width);
+  //     width = minWidth;
+
+  //     // If resized image is not tall enough resize again 
+  //     if (height < minHeight) {
+  //       width = Math.round(width * minHeight / height);
+  //       height = minHeight;
+  //     }
+  //   } else {
+  //     width = Math.round(width * minHeight / height);
+  //     height = minHeight;
+
+  //     // Image resized image is not wide enough resize again
+  //     if (width < minWidth) {
+  //       height = Math.round(height * minWidth / width);
+  //       width = minWidth;
+  //     }
+  //   }
+  // }
+
+  // // Image is too large, shrink down
+  // if (width > maxWidth || height > maxHeight) {
+  //   if (maxWidth >= maxHeight) {
+  //     height = Math.round(height * maxWidth / width);
+  //     width = maxWidth;
+
+  //     // If resized image is tall resize again
+  //     if (height > maxHeight) {
+  //       width = Math.round(width * maxHeight / height);
+  //       height = maxHeight;
+  //     }
+  //   } else {
+  //     width = Math.round(width * maxHeight / height);
+  //     height = maxHeight;
+
+  //     // If resized image is too wide resize again
+  //     if (width > maxWidth) {
+  //       height = Math.round(height * maxWidth / width);
+  //       width = maxWidth;
+  //     }
+  //   }
+  // }
+
+	// return { width, height };
+// }
 
 export function bytesToSize(bytes) {
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];

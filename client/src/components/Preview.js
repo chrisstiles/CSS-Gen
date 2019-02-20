@@ -2,10 +2,13 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import Resizable from 're-resizable';
 import { extend, isEqual } from 'underscore';
+import { getImageSize } from '../util/helpers';
 
 class PreviewWindow extends React.Component {
   constructor(props) {
     super(props);
+
+    this.loaded = !props.previewState.image;
 
     this.isResizing = false;
     this.resizePosition = extend({}, props.previewState.resizePosition);
@@ -158,6 +161,78 @@ class PreviewWindow extends React.Component {
     }
   }
 
+  setImageDimensions = (event) => {
+    const { width: naturalWidth, height: naturalHeight } = event.target;
+    const { width, height } = getImageSize(naturalWidth, naturalHeight);
+    const { hasResized } = this.props.previewState;
+    console.log(width, height)
+
+    // Set image dimensions proportionally based on width of content area
+    // if (!hasResized) {
+    //   // this.props.onUpdate({ previewContentLoaded: true, width, height });
+    //   // this.generateResizeStyles(width);
+    //   this.updatePreview({ width, height });
+    // } else {
+    //   this.props.onUpdate({ previewContentLoaded: true });
+    // }
+    this.loaded = true;
+    this.props.updatePreview({ width, height });
+
+    // finishLoading('preview-content');
+
+    // event.target.style.opacity = 1;
+  }
+
+  handleImageError = () => {
+    // addNotification(getNotificationTypes().error, 'Error adding image');
+  }
+
+  renderPreview = (previewStyle) => {
+    const { image } = previewStyle;
+
+    if (image) {
+      // Render img tag with preview styles
+      const { width, height } = previewStyle;
+
+      if (this.props.userImageAsBackground) {
+        return (
+          <div
+            className="preview-style"
+            style={{ width, height }}
+          >
+            <div
+              className="style"
+              style={previewStyle}
+            />
+            <div
+              className="background"
+              style={{ backgroundImage: `url('${image}')` }}
+            />
+          </div>
+        );
+      } else {
+        return (
+          <img
+            src={image}
+            className="preview-style"
+            style={previewStyle}
+            onLoad={this.setImageDimensions}
+            onError={this.handleImageError}
+            alt="Generator Preview"
+          />
+        );
+      }
+    }
+
+    // Default to render div with preview styles
+    return (
+      <div
+        className="preview-style"
+        style={previewStyle}
+      />
+    );
+  }
+
   render() {
     const { previewState, style } = this.props;
     const { position, width: _width, height: _height, ...restPreviewState } = previewState;
@@ -179,9 +254,22 @@ class PreviewWindow extends React.Component {
       minHeight += borderAdjustment;
     }
 
+    // const wrapperStyle = { 
+    //   width, 
+    //   height,
+    //   marginLeft: -(width / 2),
+    //   marginTop: -(height / 2)
+    // };
+
+    if (previewStyle.image && this.loaded) {
+      previewStyle.width = width;
+      previewStyle.height = height;
+    }
+
     return (
       <div 
         id="preview-wrapper" 
+        // style={wrapperStyle}
         ref={wrapper => { this.wrapper = wrapper }}
       >
         <Draggable
@@ -209,10 +297,7 @@ class PreviewWindow extends React.Component {
             >
               <div className="drag-handle" />
               <div className="resize-handle" />
-              <div
-                className="preview-style"
-                style={previewStyle}
-              />
+              {this.renderPreview(previewStyle)}
             </Resizable>
           </div>
         </Draggable>

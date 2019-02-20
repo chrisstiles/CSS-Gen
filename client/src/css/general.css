@@ -391,10 +391,7 @@ elements is easier in one separate file
 #preview-wrapper {
   position: absolute;
   top: 50%;
-  left: 50%;
-  width: 300px;
-  height: 300px;
-  transform: translate(-50%, -50%); }
+  left: 50%; }
   @media (max-height: 840px) {
     #preview-wrapper {
       width: 200px;
@@ -464,6 +461,9 @@ elements is easier in one separate file
   right: 0;
   bottom: 0;
   border-radius: 4px; }
+
+img.preview-style {
+  position: relative; }
 
 /* Old code */
 /* ------------------------- */
