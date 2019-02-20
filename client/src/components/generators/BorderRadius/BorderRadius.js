@@ -1,6 +1,5 @@
 import React from 'react';
 import createGenerator from '../create-generator';
-// import SingleWindowGenerator from '../types/SingleWindowGenerator';
 import BorderRadiusInputs from './BorderRadiusInputs';
 import BorderRadiusPresets from './BorderRadiusPresets';
 
