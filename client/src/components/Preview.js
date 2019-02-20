@@ -171,7 +171,7 @@ class PreviewWindow extends React.Component {
     };
   }
 
-  setImageDimensions = (event) => {
+  handleImageLoaded = (event) => {
     const { width: naturalWidth, height: naturalHeight } = event.target;
     let { width, height } = getImageSize(naturalWidth, naturalHeight);
     const { hasResized, width: currentWidth, height: currentHeight } = this.props.previewState;
@@ -185,6 +185,13 @@ class PreviewWindow extends React.Component {
     }
 
     this.props.updatePreview({ width, height });
+
+    const { image: currentImage } = this.props.previewState;
+    const { image: defaultImage } = this.props.defaultState.previewState;
+
+    if (currentImage === defaultImage) {
+      this.props.updateDefaultPreviewState({ width, height });
+    }
   }
 
   handleImageError = () => {
@@ -232,7 +239,7 @@ class PreviewWindow extends React.Component {
             src={image}
             className="preview-style"
             style={previewStyle}
-            onLoad={this.setImageDimensions}
+            onLoad={this.handleImageLoaded}
             onError={this.handleImageError}
             alt="Generator Preview"
           />

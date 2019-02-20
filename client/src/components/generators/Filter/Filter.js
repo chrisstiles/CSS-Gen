@@ -66,8 +66,10 @@ class Filter extends React.Component {
       globalState,
       generatorState,
       previewState,
+      defaultState,
       updateGenerator,
-      updatePreview
+      updatePreview,
+      updateDefaultPreviewState
     } = this.props;
 
     const { width, height } = previewState;
@@ -96,7 +98,9 @@ class Filter extends React.Component {
         <Preview
           canvasColor={previewState.canvasColor}
           previewState={previewState}
+          defaultState={defaultState}
           updatePreview={updatePreview}
+          updateDefaultPreviewState={updateDefaultPreviewState}
           style={previewStyle}
         />
         <BottomContent output={output}>

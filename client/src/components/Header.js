@@ -1,14 +1,9 @@
 import React from 'react';
-import { getState } from '../util/helpers';
+import { propsHaveChanged } from '../util/helpers';
 
 class Header extends React.Component {
-  shouldComponentUpdate() {
-    if (!this.initialized) {
-      this.initialized = true;
-      return true;
-    }
-
-    return false;
+  shouldComponentUpdate(prevProps) {
+    return propsHaveChanged(prevProps, this.props);
   }
 
   render() {

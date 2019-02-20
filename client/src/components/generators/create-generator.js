@@ -19,6 +19,8 @@ export default function createGenerator (WrappedGenerator, state, stateTypes, op
       const { isDefaultPreview, mutateInitialState } = options;
       
       this.state = getState(state, stateTypes, isDefaultPreview);
+      console.log(this.state)
+
       if (mutateInitialState) this.state = mutateInitialState(this.state);
     }
 
@@ -33,14 +35,25 @@ export default function createGenerator (WrappedGenerator, state, stateTypes, op
       });
     }
 
+    updateDefaultPreviewState = (stateOrValue, name) => {
+      const { defaultState } = this.state;
+      const previewState = extend({}, defaultState.previewState, createStateObject(stateOrValue, name));
+      const state = { previewState };
+      this.setState({
+        defaultState: extend({}, defaultState, state)
+      });
+    }
+
     render() {
-      const { previewState, ...generatorState } = this.state;
+      const { previewState, defaultState, ...generatorState } = this.state;
       return (
         <WrappedGenerator
           generatorState={{ ...generatorState }}
           previewState={previewState}
+          defaultState={defaultState}
           updateGenerator={this.updateGenerator}
           updatePreview={this.updatePreview}
+          updateDefaultPreviewState={this.updateDefaultPreviewState}
           {...this.props}
         />
       );
