@@ -647,7 +647,7 @@ export function getImageSize(width, height) {
 	if (!canvas) return { width, height };
 
 	const rect = canvas.getBoundingClientRect();
-	const offset = 25;
+	const offset = 30;
 	const minWidth = 80;
 	const minHeight = 80;
 	const maxWidth = rect.width - (offset * 2);
