@@ -7,15 +7,14 @@ class PreviewWindow extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isResizing: false,
-      resizePosition: extend({}, props.previewState.resizePosition)
-    };
+    this.isResizing = false;
+    this.resizePosition = extend({}, props.previewState.resizePosition);
 
     this.constraints = {
       min: { width: 80, height: 80 },
       max: { width: 3000, height: 3000 }
     };
+
   }
 
   componentDidMount() {
@@ -73,7 +72,10 @@ class PreviewWindow extends React.Component {
     };
 
     this.props.updatePreview(state);
-    this.setState({ isResizing: false, resizePosition: { x: 0, y: 0 } });
+
+    this.size = null;
+    this.isResizing = false;
+    this.resizePosition = { x: 0, y: 0 };
   }
 
   getDefaultSize = () => {
@@ -90,7 +92,9 @@ class PreviewWindow extends React.Component {
   }
 
   handleResizeStart = () => {
-    this.setState({ isResizing: true });
+    const { width, height } = this.props.previewState;
+    this.size = { width, height };
+    this.isResizing = true;
   }
 
   handleResize = (event, direction, el, delta) => {
@@ -115,17 +119,14 @@ class PreviewWindow extends React.Component {
       }
     }
 
-    // const { boxSizing, borderWidth } = this.props.previewState;
+    this.resizePosition = { x, y };
 
-    // let { width, height } = this.resize.state;
-    // if (boxSizing === 'content-box') {
-    //   const borderAdjustment = parseInt(borderWidth, 10) * 2;
-    //   width -= borderAdjustment;
-    //   height -= borderAdjustment;
-    // }
+    let { width, height } = this.size;
 
-    this.props.updatePreview(this.resize.size);
-    this.setState({ resizePosition: { x, y } });
+    width += delta.width;
+    height += delta.height;
+
+    this.props.updatePreview({ width, height });
   }
 
   handleResizeStop = (event, direction, el, delta) => {
@@ -134,19 +135,17 @@ class PreviewWindow extends React.Component {
       return;
     }
 
-    // let { width, height } = this.props.previewState;
-    
-    // width += delta.width;
-    // height += delta.height;
-
-    const { x: left, y: top } = this.state.resizePosition;
+    const { x: left, y: top } = this.resizePosition;
     const { x, y } = this.props.previewState.position;
     const position = {
       x: x + left,
       y: y + top
     }
 
-    this.setState({ isResizing: false, resizePosition: { x: 0, y: 0 } });
+    this.isResizing = false;
+    this.resizePosition = { x: 0, y: 0 };
+    this.size = null;
+    
     this.props.updatePreview({ position, hasResized: true });
   }
 
@@ -161,8 +160,8 @@ class PreviewWindow extends React.Component {
 
   render() {
     const { previewState, style } = this.props;
-    let { width, height, position, ...restPreviewState } = previewState;
-    const { isResizing, resizePosition } = this.state;
+    const { position, width: _width, height: _height, ...restPreviewState } = previewState;
+    const { isResizing, resizePosition } = this;
     const { x: left, y: top } = resizePosition;
     const previewStyle = extend({}, { ...restPreviewState }, style);
     const previewClassName = ['preview-window'];
@@ -170,15 +169,14 @@ class PreviewWindow extends React.Component {
 
     let { width: minWidth, height: minHeight } = this.constraints.min;
     let { width: maxWidth, height: maxHeight } = this.constraints.max;
+    let { width, height } = this.size ? this.size : previewState;
 
-    // Add border size to preview
     if (previewStyle.boxSizing === 'content-box') {
       const borderAdjustment = parseInt(previewStyle.borderWidth, 10) * 2;
-      previewState.width = width;
-      previewState.height = height;
-
       width += borderAdjustment;
       height += borderAdjustment;
+      minWidth += borderAdjustment;
+      minHeight += borderAdjustment;
     }
 
     return (
@@ -208,7 +206,6 @@ class PreviewWindow extends React.Component {
               onResizeStart={this.handleResizeStart}
               onResize={this.handleResize}
               onResizeStop={this.handleResizeStop}
-              ref={resize => { this.resize = resize }}
             >
               <div className="drag-handle" />
               <div className="resize-handle" />
