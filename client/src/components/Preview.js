@@ -1,4 +1,5 @@
 import React from 'react';
+import FileDrop from './FileDrop';
 import Draggable from 'react-draggable';
 import Resizable from 're-resizable';
 import { extend, isEqual } from 'underscore';
@@ -161,18 +162,22 @@ class PreviewWindow extends React.Component {
     }
   }
 
-  setImageDimensions = (event) => {
-    const { width: naturalWidth, height: naturalHeight } = event.target;
-    let { width, height } = getImageSize(naturalWidth, naturalHeight);
-    const { hasResized, width: currentWidth, height: currentHeight } = this.props.previewState;
-
-    this.hasLoaded = true;
+  setWrapperStyle = (width, height) => {
     this.wrapperStyle = {
       width,
       height,
       marginLeft: -(width / 2),
       marginTop: -(height / 2)
     };
+  }
+
+  setImageDimensions = (event) => {
+    const { width: naturalWidth, height: naturalHeight } = event.target;
+    let { width, height } = getImageSize(naturalWidth, naturalHeight);
+    const { hasResized, width: currentWidth, height: currentHeight } = this.props.previewState;
+
+    this.hasLoaded = true;
+    this.setWrapperStyle(width, height);
 
     if (hasResized) {
       width = currentWidth;
@@ -184,6 +189,18 @@ class PreviewWindow extends React.Component {
 
   handleImageError = () => {
     addNotification(getNotificationTypes().error, 'Error adding image');
+  }
+
+  handleFileDrop = data => {
+    this.hasLoaded = false;
+    this.setWrapperStyle(data.width, data.height);
+    const props = extend(data, {
+      hasDragged: false,
+      hasResized: false,
+      position: { x: 0, y: 0 },
+      resizePosition: { x: 0, y: 0 }
+    })
+    this.props.updatePreview(props);
   }
 
   renderPreview = (previewStyle) => {
@@ -267,40 +284,43 @@ class PreviewWindow extends React.Component {
     }
 
     return (
-      <div 
-        id="preview-wrapper"
-        style={wrapperStyle}
-        ref={wrapper => { this.wrapper = wrapper }}
-      >
-        <Draggable
-          handle=".drag-handle"
-          cancel=".resize-handle"
-          position={position}
-          onStop={this.handleDragStop}
+      <div>
+        <FileDrop onFileDrop={this.handleFileDrop} />
+        <div
+          id="preview-wrapper"
+          style={wrapperStyle}
+          ref={wrapper => { this.wrapper = wrapper }}
         >
-          <div
-            className="resize-wrapper"
-            style={{ left, top }}
-            ref={preview => { this.preview = preview }}
+          <Draggable
+            handle=".drag-handle"
+            cancel=".resize-handle"
+            position={position}
+            onStop={this.handleDragStop}
           >
-            <Resizable
-              className={previewClassName.join(' ')}
-              lockAspectRatio={this.lockAspectRatio}
-              size={{ width, height }}
-              minWidth={minWidth}
-              maxWidth={maxWidth}
-              minHeight={minHeight}
-              maxHeight={maxHeight}
-              onResizeStart={this.handleResizeStart}
-              onResize={this.handleResize}
-              onResizeStop={this.handleResizeStop}
+            <div
+              className="resize-wrapper"
+              style={{ left, top }}
+              ref={preview => { this.preview = preview }}
             >
-              <div className="drag-handle" />
-              <div className="resize-handle" />
-              {this.renderPreview(previewStyle)}
-            </Resizable>
-          </div>
-        </Draggable>
+              <Resizable
+                className={previewClassName.join(' ')}
+                lockAspectRatio={this.lockAspectRatio}
+                size={{ width, height }}
+                minWidth={minWidth}
+                maxWidth={maxWidth}
+                minHeight={minHeight}
+                maxHeight={maxHeight}
+                onResizeStart={this.handleResizeStart}
+                onResize={this.handleResize}
+                onResizeStop={this.handleResizeStop}
+              >
+                <div className="drag-handle" />
+                <div className="resize-handle" />
+                {this.renderPreview(previewStyle)}
+              </Resizable>
+            </div>
+          </Draggable>
+        </div>
       </div>
     );
   }
