@@ -1,25 +1,20 @@
 import React from 'react';
+import Sidebar from '../../Sidebar';
 import GradientPicker from '../../input/GradientPicker';
 import Select from '../../input/Select';
 import PositionSelect from '../../input/PositionSelect';
 import Toggle from '../../input/Toggle';
 import AnglePicker from '../../input/AnglePicker';
 
-class GradientInputs extends React.Component {
-  constructor(props) {
-    super(props);
-    
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(value, name) {
+class GradientInputs extends React.PureComponent {
+  handleChange = (value, name) => {
     var state = {};
     state[name] = value;
     
     this.props.updateGenerator(state);
   }
 
-  renderTypeSettings() {
+  renderTypeSettings = () => {
     if (this.props.type === 'linear') {
       return (
         <AnglePicker 
@@ -74,12 +69,11 @@ class GradientInputs extends React.Component {
 
   render() {
     return (
-      <div>
+      <Sidebar>
         <GradientPicker 
           name="palette"
           palette={this.props.palette}
           onChange={this.handleChange}
-          {...this.props}
         />
         <div className="divider" />
         <div className="inputs-row">
@@ -107,7 +101,7 @@ class GradientInputs extends React.Component {
           </div>
         </div>
         {this.renderTypeSettings()}
-      </div>
+      </Sidebar>
     );
   }
 }

@@ -34,7 +34,7 @@ class BoxShadow extends React.Component {
         code: `box-shadow: ${boxShadow};`
       },
       previewStyle: { boxShadow }
-    }
+    };
   }
 
   render() {

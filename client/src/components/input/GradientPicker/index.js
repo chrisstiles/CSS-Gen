@@ -19,7 +19,7 @@ const toState = (palette, activeId = 1, activeElement = null) => ({
 });
 
 
-class GradientPicker extends React.Component {
+class GradientPicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
