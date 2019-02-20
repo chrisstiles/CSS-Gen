@@ -391,11 +391,17 @@ elements is easier in one separate file
 #preview-wrapper {
   position: absolute;
   top: 50%;
-  left: 50%; }
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  margin-top: -150px;
+  margin-left: -150px; }
   @media (max-height: 840px) {
     #preview-wrapper {
       width: 200px;
-      height: 200px; } }
+      height: 200px;
+      margin-top: -100px;
+      margin-left: -100px; } }
 
 .resize-wrapper {
   will-change: left, top;
@@ -461,6 +467,9 @@ elements is easier in one separate file
   right: 0;
   bottom: 0;
   border-radius: 4px; }
+
+img.preview-style {
+  position: relative; }
 
 /* Old code */
 /* ------------------------- */

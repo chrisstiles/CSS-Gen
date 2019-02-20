@@ -2,16 +2,16 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import Resizable from 're-resizable';
 import { extend, isEqual } from 'underscore';
-import { getImageSize } from '../util/helpers';
+import { getImageSize, addNotification, getNotificationTypes } from '../util/helpers';
 
 class PreviewWindow extends React.Component {
   constructor(props) {
     super(props);
 
-    this.loaded = !props.previewState.image;
-
+    this.hasLoaded = !props.previewState.image;
     this.isResizing = false;
     this.resizePosition = extend({}, props.previewState.resizePosition);
+    this.wrapperStyle = {};
 
     this.constraints = {
       min: { width: 80, height: 80 },
@@ -163,28 +163,27 @@ class PreviewWindow extends React.Component {
 
   setImageDimensions = (event) => {
     const { width: naturalWidth, height: naturalHeight } = event.target;
-    const { width, height } = getImageSize(naturalWidth, naturalHeight);
-    const { hasResized } = this.props.previewState;
-    console.log(width, height)
+    let { width, height } = getImageSize(naturalWidth, naturalHeight);
+    const { hasResized, width: currentWidth, height: currentHeight } = this.props.previewState;
 
-    // Set image dimensions proportionally based on width of content area
-    // if (!hasResized) {
-    //   // this.props.onUpdate({ previewContentLoaded: true, width, height });
-    //   // this.generateResizeStyles(width);
-    //   this.updatePreview({ width, height });
-    // } else {
-    //   this.props.onUpdate({ previewContentLoaded: true });
-    // }
-    this.loaded = true;
+    this.hasLoaded = true;
+    this.wrapperStyle = {
+      width,
+      height,
+      marginLeft: -(width / 2),
+      marginTop: -(height / 2)
+    };
+
+    if (hasResized) {
+      width = currentWidth;
+      height = currentHeight;
+    }
+
     this.props.updatePreview({ width, height });
-
-    // finishLoading('preview-content');
-
-    // event.target.style.opacity = 1;
   }
 
   handleImageError = () => {
-    // addNotification(getNotificationTypes().error, 'Error adding image');
+    addNotification(getNotificationTypes().error, 'Error adding image');
   }
 
   renderPreview = (previewStyle) => {
@@ -254,22 +253,23 @@ class PreviewWindow extends React.Component {
       minHeight += borderAdjustment;
     }
 
-    // const wrapperStyle = { 
-    //   width, 
-    //   height,
-    //   marginLeft: -(width / 2),
-    //   marginTop: -(height / 2)
-    // };
-
-    if (previewStyle.image && this.loaded) {
-      previewStyle.width = previewState.width;
-      previewStyle.height = previewState.height;
+    const wrapperStyle = extend({}, this.wrapperStyle);
+    
+    if (previewStyle.image) {
+      if (this.hasLoaded) {
+        previewStyle.opacity = 1;
+        previewStyle.width = previewState.width;
+        previewStyle.height = previewState.height;
+      } else {
+        previewStyle.opacity = 0;
+        wrapperStyle.pointerEvents = 'none';
+      }
     }
 
     return (
       <div 
-        id="preview-wrapper" 
-        // style={wrapperStyle}
+        id="preview-wrapper"
+        style={wrapperStyle}
         ref={wrapper => { this.wrapper = wrapper }}
       >
         <Draggable

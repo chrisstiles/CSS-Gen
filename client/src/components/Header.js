@@ -1,4 +1,5 @@
 import React from 'react';
+import { getState } from '../util/helpers';
 
 class Header extends React.Component {
   shouldComponentUpdate() {
