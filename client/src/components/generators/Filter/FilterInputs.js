@@ -1,4 +1,5 @@
 import React from 'react';
+import Sidebar from '../../Sidebar';
 import Sliders from '../../input/Sliders';
 import AnglePicker from '../../input/AnglePicker';
 import ColorPicker from '../../input/ColorPicker';
@@ -68,7 +69,7 @@ class FilterInputs extends React.Component {
     );
 
 		return (
-      <div>
+      <Sidebar>
         <AnglePicker
           label="Hue Rotate"
           angle={this.props.hueRotate.value}
@@ -94,7 +95,7 @@ class FilterInputs extends React.Component {
           allOptional={true}
           {...this.props.dropShadow}
         />
-      </div>
+      </Sidebar>
 		);
 	}
 }
