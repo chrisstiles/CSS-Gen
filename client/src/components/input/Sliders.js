@@ -3,17 +3,13 @@ import Slider from './Slider';
 import Toggle from './Toggle';
 import { propsHaveChanged } from '../../util/helpers';
 
-class Sliders extends React.Component {
+class Sliders extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
       isActive: true
     };
-  }
-
-  shouldComponentUpdate(prevProps) {
-    return propsHaveChanged(prevProps, this.props);
   }
 
   componentDidMount() {

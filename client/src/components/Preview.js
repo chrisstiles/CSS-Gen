@@ -175,7 +175,7 @@ class PreviewWindow extends React.Component {
     const { width: naturalWidth, height: naturalHeight } = event.target;
     let { width, height } = getImageSize(naturalWidth, naturalHeight);
     const { hasResized, width: currentWidth, height: currentHeight } = this.props.previewState;
-
+    console.log(width, height)
     this.hasLoaded = true;
     this.setWrapperStyle(width, height);
 
