@@ -262,8 +262,8 @@ class PreviewWindow extends React.Component {
     // };
 
     if (previewStyle.image && this.loaded) {
-      previewStyle.width = width;
-      previewStyle.height = height;
+      previewStyle.width = previewState.width;
+      previewStyle.height = previewState.height;
     }
 
     return (
