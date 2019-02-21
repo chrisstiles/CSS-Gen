@@ -31,7 +31,7 @@ class PreviewWindow extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!isEqual(prevProps, this.props) && this.isOutOfBounds()) {
+    if (!this.isResizing && !isEqual(prevProps, this.props) && this.isOutOfBounds()) {
       this.reset();
     }
   }
@@ -39,7 +39,7 @@ class PreviewWindow extends React.Component {
   handleWindowResize = () => {
     const { hasResized, hasDragged } = this.props.previewState;
 
-    if ((!hasResized && !hasDragged) || this.isOutOfBounds()) {
+    if (!this.isResizing && ((!hasResized && !hasDragged) || this.isOutOfBounds())) {
       this.reset();
     } else if (!hasResized) {
       this.setDefaultSize();
@@ -134,6 +134,8 @@ class PreviewWindow extends React.Component {
   }
 
   handleResizeStop = (event, direction, el, delta) => {
+    this.isResizing = false;
+
     if (this.isOutOfBounds()) {
       this.reset();
       return;
@@ -146,7 +148,6 @@ class PreviewWindow extends React.Component {
       y: y + top
     }
 
-    this.isResizing = false;
     this.resizePosition = { x: 0, y: 0 };
     this.size = null;
     
@@ -175,7 +176,7 @@ class PreviewWindow extends React.Component {
     const { width: naturalWidth, height: naturalHeight } = event.target;
     let { width, height } = getImageSize(naturalWidth, naturalHeight);
     const { hasResized, width: currentWidth, height: currentHeight } = this.props.previewState;
-    console.log(width, height)
+    
     this.hasLoaded = true;
     this.setWrapperStyle(width, height);
 
