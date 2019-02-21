@@ -1,4 +1,5 @@
 import React from 'react';
+import Sidebar from '../../Sidebar';
 import Sliders from '../../input/Sliders';
 import ColorPicker from '../../input/ColorPicker';
 import ButtonSelect from '../../input/ButtonSelect';
@@ -178,7 +179,7 @@ class TriangleInputs extends React.Component {
 		});
 
 	  return (
-	  	<div>
+	  	<Sidebar>
 		  	<ButtonSelect
 		  		label="Triangle Type"
 		  		name="type"
@@ -216,7 +217,7 @@ class TriangleInputs extends React.Component {
 		  		sliders={sizeSliders}
 		  		onChange={this.handleSizeChange}
 		  	/>
-	  	</div>
+			</Sidebar>
 	  );
 	}
 }

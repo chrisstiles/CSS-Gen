@@ -33,6 +33,11 @@
       box-shadow:inset 0px 0 18px 0px rgba(0, 0, 0, 0.08);
     }
   }
+
+  &.center {
+    justify-content:center;
+    align-items:center;
+  }
 }
 
 #preview-wrapper {

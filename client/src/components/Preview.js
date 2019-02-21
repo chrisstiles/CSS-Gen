@@ -342,8 +342,12 @@ class Preview extends React.Component {
     const { 
       canvasColor, 
       children,
+      className,
       ...previewProps 
     } = this.props;
+
+    const canvasProps = { color: canvasColor };
+    if (className) canvasProps.className = className;
 
     const preview = children ? children : (
       <PreviewWindow {...previewProps} />
@@ -351,7 +355,7 @@ class Preview extends React.Component {
 
     return (
       <div id="generator-preview">
-        <Canvas color={canvasColor}>
+        <Canvas {...canvasProps}>
           {preview}
         </Canvas>
       </div>
@@ -359,13 +363,16 @@ class Preview extends React.Component {
   }
 }
 
-const Canvas = ({ color: backgroundColor = 'transparent', children }) => {
+const Canvas = ({ color: backgroundColor = 'transparent', className, children }) => {
   const canvasProps = {
     id: 'canvas',
     style: { backgroundColor }
   };
 
-  if (backgroundColor === 'transparent') canvasProps.className = 'default';
+  const canvasClassName = [];
+  if (className) canvasClassName.push(className);
+  if (backgroundColor === 'transparent') canvasClassName.push('default');
+  if (canvasClassName.length) canvasProps.className = canvasClassName.join(' ');
 
   return (
     <div {...canvasProps}>

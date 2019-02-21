@@ -387,6 +387,9 @@ elements is easier in one separate file
     border: 1px solid #dedede !important; }
     #canvas.default:before {
       box-shadow: inset 0px 0 18px 0px rgba(0, 0, 0, 0.08); }
+  #canvas.center {
+    justify-content: center;
+    align-items: center; }
 
 #preview-wrapper {
   position: absolute;
