@@ -313,8 +313,8 @@ export function getState(_defaultState, _stateTypes, isDefaultPreview) {
 		_stateTypes.previewState.canvasColor = String;
 	}
 
-	const defaultState = cloneObject(_defaultState);
-	const stateTypes = cloneObject(_stateTypes);
+	const defaultState = _.extend({}, _defaultState);
+	const stateTypes = _.extend({}, _stateTypes);
 	const state = getPersistedState(defaultState);
 
 	if (isValidState(state, stateTypes)) {
