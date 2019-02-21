@@ -157,7 +157,6 @@ class Triangle extends React.Component {
 
   render() {
     const { output, previewStyle } = this.generate();
-    console.log(output)
 
     const {
       globalState,
