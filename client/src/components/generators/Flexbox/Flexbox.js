@@ -31,7 +31,6 @@ class Flexbox extends React.Component {
       const child = { id: uniqueId('child-') };
       const childElements = _childElements.slice();
       childElements.push(child);
-
       this.props.updateGenerator({ childElements, canAddChildElement });
     }
   }
