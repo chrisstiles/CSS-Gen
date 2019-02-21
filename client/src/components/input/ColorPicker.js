@@ -55,7 +55,7 @@ class ColorPicker extends React.PureComponent {
     };
 
     let left = preview.left + (preview.width / 2) - (pickerWidth / 2);
-    if (left > window.innerWidth - offset) {
+    if (left + pickerWidth > window.innerWidth - offset) {
       left = window.innerWidth - pickerWidth - offset;
     }
 
