@@ -1,4 +1,5 @@
 import React from 'react';
+import Sidebar from '../../Sidebar';
 import Sliders from '../../input/Sliders';
 import Select from '../../input/Select';
 import AjaxSelect from '../../input/AjaxSelect';
@@ -274,7 +275,7 @@ class TextShadowInputs extends React.Component {
 		}
 
 		return (
-			<div>
+			<Sidebar>
 				<div className="section-title">Text Shadow Settings</div>
 				<Sliders
 					sliders={_shadowSlideres}
@@ -322,7 +323,7 @@ class TextShadowInputs extends React.Component {
 						</div>
 						: null}
 				</div>
-			</div>
+			</Sidebar>
 		);
 	}
 }

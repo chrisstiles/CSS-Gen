@@ -1,5 +1,6 @@
 import React from 'react';
-import _ from 'underscore';
+import Preview from '../../Preview';
+import { extend } from 'underscore';
 
 class TextAreaPreview extends React.Component {
 	constructor(props) {
@@ -13,20 +14,23 @@ class TextAreaPreview extends React.Component {
 	handleChange(event) {
 		const state = {};
 		state[this.props.name] = event.target.value;
-		this.props.onChange(state);
+		this.props.updateGenerator(state);
 	}
 
 	render() {
-		const props = _.extend({}, this.props, { onChange: this.handleChange.bind(this) });
+		const { canvasColor, updateGenerator, ...restProps } = this.props;
+		const textAreaProps = extend({}, { ...restProps }, { onChange: this.handleChange.bind(this) });
 
 		return (
-			<textarea
-				ref={textarea => { this.textarea = textarea }}
-				id="text-area-preview"
-				spellCheck="false"
-				rows={1}
-				{...props}
-			/>
+			<Preview canvasColor={canvasColor}>
+				<textarea
+					ref={textarea => { this.textarea = textarea }}
+					id="text-area-preview"
+					spellCheck="false"
+					rows={1}
+					{...textAreaProps}
+				/>
+			</Preview>
 		);
 	}
 }
