@@ -1,5 +1,4 @@
 import React from 'react';
-import FlexboxPresets from './FlexboxPresets';
 import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
 import Toggle from '../../input/Toggle';
@@ -34,7 +33,6 @@ class FlexboxBottom extends React.PureComponent {
             checked={isFullHeight}
           />
         </Settings>
-        <FlexboxPresets />
       </BottomContent>
     );
   }
