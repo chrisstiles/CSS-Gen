@@ -317,8 +317,6 @@ export function getState(_defaultState, _stateTypes, isDefaultPreview) {
 	const stateTypes = cloneObject(_stateTypes);
 	const state = getPersistedState(defaultState);
 
-
-
 	if (isValidState(state, stateTypes)) {
 		return { ...JSON.parse(JSON.stringify(state)), defaultState };
 	} else {

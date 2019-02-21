@@ -164,7 +164,8 @@ const defaultState = {
   shadowOpacity: 15,
   shadowColor: '#000',
   fontColor: '#000',
-  fontLoaded: true
+  fontLoaded: true,
+  previewState: { canvasColor: '#fdfdfd' }
 };
 
 const stateTypes = {
@@ -180,7 +181,8 @@ const stateTypes = {
   shadowOpacity: Number,
   shadowColor: String,
   fontColor: String,
-  fontLoaded: Boolean
+  fontLoaded: Boolean,
+  previewState: { canvasColor: String }
 };
 
 export default createGenerator(TextShadow, defaultState, stateTypes);
