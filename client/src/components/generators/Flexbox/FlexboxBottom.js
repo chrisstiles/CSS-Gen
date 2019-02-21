@@ -4,7 +4,7 @@ import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
 import Toggle from '../../input/Toggle';
 
-class FlexBoxBottom extends React.Component {
+class FlexBoxBottom extends React.PureComponent {
   render() {
     const { 
       output,
