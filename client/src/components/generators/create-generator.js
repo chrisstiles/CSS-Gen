@@ -12,7 +12,7 @@ function createStateObject(state, name) {
   return newState;
 }
 
-export default function createGenerator (WrappedGenerator, state, stateTypes, options) {
+export default function createGenerator (WrappedGenerator, state, stateTypes, options = {}) {
   return class extends React.Component {
     constructor(props) {
       super(props);
