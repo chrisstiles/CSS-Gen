@@ -5,10 +5,18 @@ import Select from '../../input/Select';
 import AjaxSelect from '../../input/AjaxSelect';
 import ColorPicker from '../../input/ColorPicker';
 import Toggle from '../../input/Toggle';
-import { getGlobalVariable, setGlobalVariable, hexOrRgba, startLoading, finishLoading } from '../../../util/helpers';
 import _ from 'underscore';
 import tinycolor from 'tinycolor2';
 import WebFont from 'webfontloader';
+import { 
+	getGlobalVariable, 
+	setGlobalVariable, 
+	hexOrRgba, 
+	startLoading, 
+	finishLoading,
+	addNotification,
+	getNotificationTypes
+} from '../../../util/helpers';
 
 const shadowSliders = [
 	{ title: 'Blur Radius', name: 'blurRadius', min: 0, max: 100, appendString: 'px', className: 'small' },
@@ -28,20 +36,13 @@ class TextShadowInputs extends React.Component {
 		// Queue a font to load in case loadFont is
 		// called before the list is downloaded
 		this.queuedFont = null;
-	  
-	  this.loadFont = this.loadFont.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.handleFontVariantChange = this.handleFontVariantChange.bind(this);
-	  this.handleFontSelect = this.handleFontSelect.bind(this);
-	  this.handleFontLoaded = this.handleFontLoaded.bind(this);
-		this.getFontOptions = this.getFontOptions.bind(this);
 	}
 
 	componentDidMount() {
 		this.loadFont(this.props.googleFont, true);
 	}
 
-	handleChange(value, name) {
+	handleChange = (value, name) => {
 		var state = {};
 		state[name] = value;
 
@@ -57,7 +58,7 @@ class TextShadowInputs extends React.Component {
 	  this.props.updateGenerator(state);
 	}
 
-	handleFontVariantChange(value, name) {
+	handleFontVariantChange = (value, name) => {
 		var { variant } = this.props;
 		variant = variant.toLowerCase();
 		if (name === 'italic') {
@@ -89,7 +90,7 @@ class TextShadowInputs extends React.Component {
 	}
 
 	// loadFont(font = this.props.googleFont, variantOptions = this.props.variantOptions, forceLoad) {
-	loadFont(font, forceLoad) {
+	loadFont = (font, forceLoad) => {
 		startLoading('load-font');
 
 		if (forceLoad || this.fontList[font]) {
@@ -108,6 +109,7 @@ class TextShadowInputs extends React.Component {
 						families: [query]
 					},
 					fontactive: this.handleFontLoaded,
+					fontinactive: this.handleFontError,
 					classes: false
 				});
 			} catch(error) {
@@ -120,7 +122,7 @@ class TextShadowInputs extends React.Component {
 		}
 	}
 
-	handleFontSelect(googleFont) {
+	handleFontSelect = googleFont => {
 		if (this.fontList) {
 			this.loadFont(googleFont)
 		} else {
@@ -128,7 +130,7 @@ class TextShadowInputs extends React.Component {
 		}
 	}
 
-	handleFontLoaded(googleFont) {
+	handleFontLoaded = googleFont => {
 		if (this.fontList) {
 			const { fontFamily, variantOptions } = this.fontList[googleFont];
 			let variant = variantOptions[0];
@@ -150,7 +152,12 @@ class TextShadowInputs extends React.Component {
 		finishLoading('load-font');
 	}
 
-	setFontOptions(fontData) {
+	handleFontError = () => {
+		const error = 'Font could not be loaded';
+		addNotification(getNotificationTypes().error, error);
+	}
+
+	setFontOptions = fontData => {
 		this.allFontOptions = [];
 
 		if (_.isArray(fontData)) {
@@ -189,7 +196,7 @@ class TextShadowInputs extends React.Component {
 		}
 	}
 
-	getFontOptions(inputValue) {
+	getFontOptions = inputValue => {
 		// No need to refetch data
 		if (this.allFontOptions && _.isArray(this.allFontOptions)) {
 			return { options: this.allFontOptions, complete: true };
