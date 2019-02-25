@@ -15,13 +15,6 @@ import waterfall from './images/waterfall.jpg';
 import { generateCSSString, jsToCss, hexOrRgba } from '../../../util/helpers';
 
 class Filter extends React.Component {
-  componentDidMount() {
-    // Make sure shadow alpha is correct
-    const { generatorState, updateGenerator } = this.props;
-    const { shadowColor, shadowOpacity } = generatorState.dropShadow;
-    updateGenerator({ shadowColor: tinycolor(shadowColor).setAlpha(shadowOpacity / 100) });
-  }
-
   generate = () => {
     const { generatorState } = this.props;
     const css = {};
@@ -182,6 +175,14 @@ const stateTypes = {
   }
 };
 
+function setDropShadowOpacity(state) {
+  const { shadowColor, shadowOpacity } = state.dropShadow;
+  state.dropShadow.shadowColor = tinycolor(shadowColor).setAlpha(shadowOpacity / 100);
+
+  return state;
+}
+
 export default createGenerator(Filter, defaultState, stateTypes, {
-  isDefaultPreview: true
+  isDefaultPreview: true,
+  mutateInitialState: setDropShadowOpacity
 });
