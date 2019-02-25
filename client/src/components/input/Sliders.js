@@ -1,7 +1,6 @@
 import React from 'react';
 import Slider from './Slider';
 import Toggle from './Toggle';
-import { propsHaveChanged } from '../../util/helpers';
 
 class Sliders extends React.PureComponent {
   constructor(props) {

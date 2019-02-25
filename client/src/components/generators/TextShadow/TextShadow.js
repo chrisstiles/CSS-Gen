@@ -9,20 +9,10 @@ import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
 
 import { generateCSSString, hexOrRgba } from '../../../util/helpers';
-import _ from 'underscore';
 
 const defaultFont = 'Montserrat';
 
 class TextShadow extends React.Component {
-  // componentDidMount() {
-  //   // Load font if default is not selected
-  //   if (this.state.googleFont !== defaultFont) {
-  //     this.state.fontLoaded = false;
-  //   } else {
-  //     this.state.fontLoaded = true;
-  //   }
-  // }
-
   generate = () => {
     const css = {};
 
@@ -61,27 +51,6 @@ class TextShadow extends React.Component {
       previewStyle: { ...css }
     };
   }
-
-  // renderInputs = () => {
-  //   return (
-  //     <TextShadowInputs
-  //       updateGenerator={this.updateGenerator}
-  //       {...this.state}
-  //     />
-  //   );
-  // }
-
-  // renderPreview = (style) => {
-  //   return (
-  //     <TextShadowPreview
-  //       value={this.state.text}
-  //       name="text"
-  //       style={style}
-  //       placeholder="Click here to enter text"
-  //       onChange={this.updateGenerator}
-  //     />
-  //   );
-  // }
 
   render() {
     const { output, previewStyle } = this.generate();

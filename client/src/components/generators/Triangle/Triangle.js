@@ -7,7 +7,6 @@ import Header from '../../Header';
 import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
 import { hexOrRgba, generateCSSString } from '../../../util/helpers';
-import _ from 'underscore';
 
 class Triangle extends React.Component {
   generate = () => {
