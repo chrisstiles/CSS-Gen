@@ -3,6 +3,7 @@ import Sidebar from '../../Sidebar';
 import Sliders from '../../input/Sliders';
 import Toggle from '../../input/Toggle';
 import ColorPicker from '../../input/ColorPicker';
+import Tooltip from '../../Tooltip';
 
 const sliders = [
   { title: 'Horizontal Shift', name: 'horizontalShift', min: -200, max: 200, appendString: 'px' },
@@ -25,6 +26,7 @@ class BoxShadowInputs extends React.PureComponent {
       <Sidebar>
         <div className="row">
           <div className="field-wrapper left">
+            <Tooltip />
             <ColorPicker
               label="Shadow Color"
               color={this.props.shadowColor}

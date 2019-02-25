@@ -1165,6 +1165,25 @@ body.code-expanded .expanded-code-wrapper .output-wrapper {
   align-items: center;
   justify-content: center; }
 
+.tooltip-icon {
+  width: 15px;
+  height: 15px;
+  background-color: red;
+  border-radius: 50%;
+  position: relative; }
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  background-color: red;
+  border-radius: 10px;
+  top: 50%;
+  left: -20px;
+  transform: translate(-100%, -50%);
+  display: none;
+  z-index: 9999; }
+
 .no-select {
   webkit-touch-callout: none;
   user-select: none; }
