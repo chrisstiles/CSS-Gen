@@ -6,10 +6,9 @@ import { propsHaveChanged } from '../../util/helpers';
 class Sliders extends React.PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isActive: true
-    };
+    
+    const { isActive = true } = props;
+    this.state = { isActive };
   }
 
   componentDidMount() {
