@@ -1,6 +1,11 @@
 import React from 'react';
 import LoadingSpinner from './LoadingSpinner';
-import { addNotification, getNotificationTypes, getNativeImageSize, getImageSize } from '../util/helpers';
+import { 
+	addNotification, 
+	getNotificationTypes, 
+	getNativeImageSize, 
+	getImageSize 
+} from '../util/helpers';
 
 class FileDrop extends React.Component {
 	constructor(props) {
@@ -18,12 +23,6 @@ class FileDrop extends React.Component {
 		// save these to a server, we prevent large images as they 
 		//impact performance and browsers have local starge limitations
 		this.maxFileSize = 2000000;
-
-		this.hideOverlay= this.hideOverlay.bind(this);
-		this.handleDragEnter= this.handleDragEnter.bind(this);
-		this.handleDragOver = this.handleDragOver.bind(this);
-		this.handleDragLeave = this.handleDragLeave.bind(this);
-		this.handleDrop = this.handleDrop.bind(this);
 	}
 
 	componentDidMount() {
@@ -40,11 +39,11 @@ class FileDrop extends React.Component {
 		window.removeEventListener('drop', this.handleDrop);
 	}
 
-	hideOverlay() {
+	hideOverlay = () => {
 		this.setState({ isLoading: false, showOverlay: false });
 	}
 
-	handleDragEnter(event) {
+	handleDragEnter = event => {
 		event.preventDefault();
 
 		const { types } = event.dataTransfer;
@@ -54,12 +53,12 @@ class FileDrop extends React.Component {
 		}
 	}
 
-	handleDragOver(event) {
+	handleDragOver = event => {
 	  event.stopPropagation();
 	  event.preventDefault();
 	}
 
-	handleDragLeave(event) {
+	handleDragLeave = event => {
 		event.stopPropagation();
 		event.preventDefault();
 		if (event.target === this.state.lastTarget) {
@@ -67,7 +66,7 @@ class FileDrop extends React.Component {
 		}
 	}
 
-	handleDrop(event) {
+	handleDrop = event => {
 		event.stopPropagation();
 		event.preventDefault();
 
@@ -79,7 +78,7 @@ class FileDrop extends React.Component {
 		const files = event.dataTransfer.files;
 		const notificationTypes = getNotificationTypes();
 		const generalError = 'Error previewing file';
-		var error = null;
+		let error = null;
 
 		if (!files) {
 			// No files present
@@ -143,7 +142,7 @@ class FileDrop extends React.Component {
 	}
 
 	render() {
-		var content;
+		let content;
 		if (this.state.isLoading) {
 			content = <LoadingSpinner color="#fff" />;
 		} else {
