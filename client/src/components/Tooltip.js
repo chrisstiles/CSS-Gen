@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { extend } from 'underscore';
+import { sameOrChild } from '../util/helpers';
+
+// Only one picker should be open at a time
+let currentTooltip = null;
 
 class Tooltip extends React.PureComponent {
   constructor(props) {
@@ -10,17 +14,40 @@ class Tooltip extends React.PureComponent {
     this.position = {};
   }
 
-  handleClick = event => {
-    if (this.state.isOpen) {
+  componentDidMount() {
+    document.addEventListener('click', this.handleDocumentClick);
+  }
+
+  componentWillUnmount() {
+    currentTooltip = null;
+    document.removeEventListener('click', this.handleDocumentClick);
+  }
+
+  handleDocumentClick = event => {
+    if (
+      this.state.isOpen && 
+      !sameOrChild(event.target, this.tooltip) &&
+      event.target !== this.icon
+    ) {
+      this.close();
+    }
+  }
+
+  handleIconClick = event => {
+    if (this.state.isOpen && event.target === this.icon) {
       this.close();
     } else {
+      event.stopPropagation();
       const { top, left } = event.target.getBoundingClientRect();
       this.position = { top, left };
       this.open();
     }
   }
 
-  open = event => {
+  open = () => {
+    if (currentTooltip) currentTooltip.close();
+    currentTooltip = this;
+    
     this.setState({ isOpen: true });
   }
 
@@ -33,7 +60,13 @@ class Tooltip extends React.PureComponent {
     if (this.state.isOpen) style.display = 'block';
 
     const tooltip = (
-      <div className="tooltip" style={style}>Hello</div>
+      <div 
+        className="tooltip" 
+        style={style}
+        ref={tooltip => { this.tooltip = tooltip }}
+      >
+        Hello
+      </div>
     );
     
     return ReactDOM.createPortal(tooltip, document.querySelector('#app'));
@@ -44,7 +77,7 @@ class Tooltip extends React.PureComponent {
       <div 
         className="tooltip-icon" 
         ref={icon => { this.icon = icon }}
-        onClick={this.handleClick}
+        onClick={this.handleIconClick}
       >
         {this.renderTooltip()}
       </div>

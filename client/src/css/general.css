@@ -1165,6 +1165,9 @@ body.code-expanded .expanded-code-wrapper .output-wrapper {
   align-items: center;
   justify-content: center; }
 
+.tooltip-wrapper {
+  display: inline-block; }
+
 .tooltip-icon {
   width: 15px;
   height: 15px;
