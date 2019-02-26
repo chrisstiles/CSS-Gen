@@ -35,7 +35,11 @@ class ColorPicker extends React.PureComponent {
 
   handleClick = e => {
     if (currentPicker === this && this.preview && this.picker) {
-      if (!isSameOrChild(e.target, this.preview) && !isSameOrChild(e.target, this.picker)) {
+      if (
+        !isSameOrChild(e.target, this.preview) 
+        && !isSameOrChild(e.target, this.picker) 
+        && !this.changingColor
+      ) {
         this.close();
       }
     }
