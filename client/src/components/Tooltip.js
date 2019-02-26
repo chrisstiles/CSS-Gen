@@ -15,12 +15,20 @@ class Tooltip extends React.PureComponent {
   }
 
   componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyDown);
     document.addEventListener('click', this.handleDocumentClick);
   }
 
   componentWillUnmount() {
     currentTooltip = null;
+    document.removeEventListener('keydown', this.handleKeyDown);
     document.removeEventListener('click', this.handleDocumentClick);
+  }
+
+  handleKeyDown = event => {
+    if (this.state.isOpen && (event.keyCode === 27 || event.keyCode === 13)) {
+      this.close();
+    }
   }
 
   handleDocumentClick = event => {
@@ -52,6 +60,7 @@ class Tooltip extends React.PureComponent {
   }
 
   close = () => {
+    currentTooltip = null;
     this.setState({ isOpen: false });
   }
 
