@@ -71,7 +71,6 @@ class ColorPicker extends React.PureComponent {
 
   open = e => {
     if (currentPicker) currentPicker.close();
-
     currentPicker = this;
 
     this.setState({ 
