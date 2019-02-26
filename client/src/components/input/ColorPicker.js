@@ -18,13 +18,13 @@ class ColorPicker extends React.PureComponent {
 
   componentDidMount() {
     document.addEventListener('keydown', this.keyEvent);
-    document.addEventListener('click', this.handleClick, false);
+    document.addEventListener('mousedown', this.handleClick, false);
   }
 
   componentWillUnmount(){
     currentPicker = null;
     document.removeEventListener('keydown', this.keyEvent);
-    document.removeEventListener('click', this.handleClick);
+    document.removeEventListener('mousedown', this.handleClick);
   }
 
   componentDidUpdate() {

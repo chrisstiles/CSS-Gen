@@ -16,13 +16,13 @@ class Tooltip extends React.PureComponent {
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
-    document.addEventListener('click', this.handleDocumentClick);
+    document.addEventListener('mousedown', this.handleDocumentClick);
   }
 
   componentWillUnmount() {
     currentTooltip = null;
     document.removeEventListener('keydown', this.handleKeyDown);
-    document.removeEventListener('click', this.handleDocumentClick);
+    document.removeEventListener('mousedown', this.handleDocumentClick);
   }
 
   handleKeyDown = event => {
