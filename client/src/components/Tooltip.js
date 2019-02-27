@@ -45,11 +45,14 @@ class Tooltip extends React.PureComponent {
     if (this.state.isOpen && event.target === this.icon) {
       this.close();
     } else {
-      event.stopPropagation();
-      const { top, left } = event.target.getBoundingClientRect();
-      this.position = { top, left };
+      this.setPosition();
       this.open();
     }
+  }
+
+  setPosition = () => {
+    const { top } = this.icon.getBoundingClientRect();
+    this.position = { top };
   }
 
   open = () => {
@@ -65,20 +68,24 @@ class Tooltip extends React.PureComponent {
   }
 
   renderTooltip = () => {
-    const style = extend({}, this.position);
-    if (this.state.isOpen) style.display = 'block';
+    const className = ['tooltip'];
+    if (this.state.isOpen) className.push('open');
 
     const tooltip = (
       <div 
-        className="tooltip" 
-        style={style}
+        className={className.join(' ')}
+        style={this.position}
         ref={tooltip => { this.tooltip = tooltip }}
       >
         Hello
       </div>
     );
-    
-    return ReactDOM.createPortal(tooltip, document.querySelector('#app'));
+
+    const wrapper = document.querySelector('#tooltip-wrapper');
+
+    if (wrapper) {
+      return ReactDOM.createPortal(tooltip, wrapper);
+    }
   }
 
   render() {

@@ -1,14 +1,19 @@
-.tooltip-wrapper {
-  display:inline-block;
+#tooltip-wrapper {
+  position:fixed;
+  top:0;
+  z-index: 500;
 }
 
 .tooltip-icon {
-  width:15px;
-  height:15px;
+  width:18px;
+  height:18px;
   background-color:red;
   border-radius:50%;
   position:relative;
-  // display: inline-block;
+  cursor: pointer;
+  float:left;
+  position: relative;
+  z-index: 200;
 }
 
 .tooltip {
@@ -17,9 +22,15 @@
   height:100px;
   background-color:red;
   border-radius:10px;
-  top:50%;
-  left:-20px;
-  transform:translate(-100%, -50%);
   display:none;
-  z-index: 9999;
+  transform:translateX(calc(-100% - 15px));
+
+  &.open {
+    display:block;
+  }
+
+  &.fixed {
+    position:fixed;
+    top:15px !important;
+  }
 }

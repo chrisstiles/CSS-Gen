@@ -154,6 +154,9 @@ elements is easier in one separate file
   bottom: 210px;
   width: 320px; }
 
+#tooltip-wrapper {
+  right: 320px; }
+
 #page-wrapper {
   padding-left: 285px;
   padding-right: 320px; }
@@ -556,7 +559,7 @@ img.preview-style {
   top: 0;
   right: 0;
   background-color: #ececec;
-  z-index: 500;
+  z-index: 501;
   border-left: 2px solid #dadada; }
   #sidebar .sidebar-title {
     width: calc(100% + 54px);
@@ -1165,15 +1168,21 @@ body.code-expanded .expanded-code-wrapper .output-wrapper {
   align-items: center;
   justify-content: center; }
 
-.tooltip-wrapper {
-  display: inline-block; }
+#tooltip-wrapper {
+  position: fixed;
+  top: 0;
+  z-index: 500; }
 
 .tooltip-icon {
-  width: 15px;
-  height: 15px;
+  width: 18px;
+  height: 18px;
   background-color: red;
   border-radius: 50%;
-  position: relative; }
+  position: relative;
+  cursor: pointer;
+  float: left;
+  position: relative;
+  z-index: 200; }
 
 .tooltip {
   position: absolute;
@@ -1181,11 +1190,13 @@ body.code-expanded .expanded-code-wrapper .output-wrapper {
   height: 100px;
   background-color: red;
   border-radius: 10px;
-  top: 50%;
-  left: -20px;
-  transform: translate(-100%, -50%);
   display: none;
-  z-index: 9999; }
+  transform: translateX(calc(-100% - 15px)); }
+  .tooltip.open {
+    display: block; }
+  .tooltip.fixed {
+    position: fixed;
+    top: 15px !important; }
 
 .no-select {
   webkit-touch-callout: none;
