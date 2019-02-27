@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { extend } from 'underscore';
 import { sameOrChild } from '../util/helpers';
 
 // Only one picker should be open at a time
