@@ -64,7 +64,6 @@ class Tooltip extends React.PureComponent {
   open = () => {
     if (currentTooltip) currentTooltip.close();
     currentTooltip = this;
-    
     this.setState({ isOpen: true });
   }
 
