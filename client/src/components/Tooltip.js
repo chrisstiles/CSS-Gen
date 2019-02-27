@@ -34,8 +34,11 @@ class Tooltip extends React.PureComponent {
   handleDocumentClick = event => {
     if (
       this.state.isOpen && 
-      !sameOrChild(event.target, this.tooltip) &&
-      event.target !== this.icon
+      (
+        (!sameOrChild(event.target, this.tooltip) &&
+        event.target !== this.icon) ||
+        event.target === this.closeIcon
+      )
     ) {
       this.close();
     }
@@ -77,6 +80,10 @@ class Tooltip extends React.PureComponent {
         style={this.position}
         ref={tooltip => { this.tooltip = tooltip }}
       >
+        <div 
+          className="close"
+          ref={closeIcon => { this.closeIcon = closeIcon }}
+        />
         Hello
       </div>
     );

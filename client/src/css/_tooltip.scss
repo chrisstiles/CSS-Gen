@@ -18,12 +18,17 @@
 
 .tooltip {
   position:absolute;
-  width:200px;
+  width:250px;
   height:100px;
-  background-color:red;
-  border-radius:10px;
+  border-radius:4px;
   display:none;
   transform:translateX(calc(-100% - 15px));
+  box-shadow: 0px 3px 12px 0px rgba(184, 185, 218, 0.36);
+  border:1px solid rgba($accent-color, .23);
+  background-color:#fff;
+  padding:9px 12px;
+  font-size:13px;
+  color:#505050;
 
   &.open {
     display:block;
@@ -32,5 +37,15 @@
   &.fixed {
     position:fixed;
     top:15px !important;
+  }
+
+  .close {
+    position:absolute;
+    width:15px;
+    height:15px;
+    top:10px;
+    right:10px;
+    background-color:#000;
+    cursor:pointer;
   }
 }
