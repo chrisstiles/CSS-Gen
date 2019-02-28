@@ -7,6 +7,7 @@ import Header from '../../Header';
 import Preview from '../../Preview';
 import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
+import Tooltip from '../../Tooltip';
 
 import tinycolor from 'tinycolor2';
 import _ from 'underscore';
@@ -132,7 +133,9 @@ const filterSliders = [];
 // Add basic filters that only require one slider
 const defaultState = _.mapObject(filters, ({ title, name, min, max, defaultValue, unit, slider }, key) => {
   if (slider || slider === undefined) {
-    filterSliders.push({ title, name, min, max, appendString: unit });
+    const tooltip = <Tooltip />;
+
+    filterSliders.push({ title, name, min, max, tooltip, appendString: unit });
   }
 
   return { value: defaultValue, isActive: false };

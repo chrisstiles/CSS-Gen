@@ -77,7 +77,8 @@ class Slider extends React.PureComponent {
       disabled,
       step = 1,
       dragging,
-      appendString
+      appendString,
+      tooltip
     } = this.props;
 
     const min = units === '%' ? 0 : this.min;
@@ -106,7 +107,12 @@ class Slider extends React.PureComponent {
             </div>
           : null }
           <div className={inputClassName.join(' ')}>
-            {title ? <label className="title">{title}</label> : null}
+            {title ? 
+              <label className="title">
+                {title}
+                {tooltip ? tooltip : null}
+              </label> 
+            : null}
             {this.renderUnitSelect()}          
             <NumberInput
               className="slider-input"
