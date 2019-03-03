@@ -16,7 +16,7 @@ class Sidebar extends React.Component {
     
     if (activeTooltip) {
       const offset = 15;
-      const top = parseInt(activeTooltip.style.top) || 0;
+      const top = parseInt(activeTooltip.style.top, 10) || 0;
 
       if (top - scrollTop <= offset) {
         activeTooltip.classList.add('fixed');

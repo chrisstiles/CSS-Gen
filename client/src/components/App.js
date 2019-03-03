@@ -1,15 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-// import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { isObjectOfShape } from '../util/helpers';
 import _ from 'underscore';
 import WebFont from 'webfontloader';
 
 // CSS Styles
 import '../css/general.css';
-
-// Layout Components
-// import NavWindow from './NavWindow';
 
 // Generator Pages
 import Home from './Home';
@@ -33,15 +29,6 @@ const routes = [
   { path: '/text-shadow', component: TextShadow }
 ];
 
-// Notifications
-// var addNotification;
-// var notificationTypes = {
-//   info: 'info',
-//   warning: 'warning',
-//   success: 'success',
-//   error: 'error'
-// }
-
 // Global State
 let getGlobalState;
 let getGlobalDefaults;
@@ -63,7 +50,7 @@ class PrimaryLayout extends React.Component {
       showTooltips: true,
       outputPreviewStyles: false,
       showBrowserPrefixes: false,
-      loading: false
+      isLoading: false
     };
 
     this.globalDefaults = _.extend({}, this.state);
@@ -73,10 +60,10 @@ class PrimaryLayout extends React.Component {
       persistGeneratorState: Boolean,
       outputPreviewStyles: Boolean,
       showBrowserPrefixes: Boolean,
-      loading: Boolean
+      isLoading: Boolean
     };
 
-    this.state.loading = false;
+    this.state.isLoading = false;
     this.state.loadingItems = [];
 
     // Load main web font asynchronously
@@ -119,10 +106,6 @@ class PrimaryLayout extends React.Component {
     finishLoading = this.finishLoading.bind(this);
   }
 
-  // createNotification(type, message) {
-  //   NotificationManager[type](message, null, 4500);
-  // }
-
   getGlobalState() {
     return this.state;
   }
@@ -160,8 +143,8 @@ class PrimaryLayout extends React.Component {
     this[name] = value;
   }
 
-  setLoading(loading) {
-    this.setState({ loading });
+  setLoading(isLoading) {
+    this.setState({ isLoading });
   }
 
   startLoading(name) {
@@ -171,7 +154,7 @@ class PrimaryLayout extends React.Component {
       const loadingItems = currentLoadingItems.slice();
       loadingItems.push(name);
 
-      this.setState({ loadingItems, loading: true });
+      this.setState({ loadingItems, isLoading: true });
     }
   }
 
@@ -185,12 +168,12 @@ class PrimaryLayout extends React.Component {
       });
 
       // Stop loading if everything has finished
-      const loading = loadingItems.length >= 1;
+      const isLoading = loadingItems.length >= 1;
 
-      this.setState({ loadingItems, loading });
+      this.setState({ loadingItems, isLoading });
     } else {
       if (!currentLoadingItems.length) {
-        this.setState({ loading: false });
+        this.setState({ isLoading: false });
       }
     }
   }
@@ -207,8 +190,8 @@ class PrimaryLayout extends React.Component {
       );
     });
 
-    const className = this.state.loading ? 'app-loading' : '';
-
+    const className = this.state.isLoading ? 'app-loading' : '';
+  
     return (
       <div className={className}>
         {routeComponents}

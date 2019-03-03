@@ -21,6 +21,7 @@ class NavWindow extends React.PureComponent {
 					to={to}
 					key={to}
 					className={className}
+					onClick={this.handleClick}
 				>
 					{title}
 				</NavLink>

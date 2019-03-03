@@ -1,9 +1,10 @@
 import React from 'react';
 import FileDrop from './FileDrop';
+import LoadingSpinner from './LoadingSpinner';
 import Draggable from 'react-draggable';
 import Resizable from 're-resizable';
 import { extend, isEqual } from 'underscore';
-import { getImageSize, addNotification, getNotificationTypes } from '../util/helpers';
+import { getImageSize, addNotification, getNotificationTypes, getGlobalState } from '../util/helpers';
 
 class PreviewWindow extends React.Component {
   constructor(props) {
@@ -355,8 +356,15 @@ class Preview extends React.Component {
       <PreviewWindow {...previewProps} />
     );
 
+    const { isLoading } = getGlobalState();
+
     return (
       <div id="generator-preview">
+        { isLoading ? 
+          <div id="generator-loading">
+            <LoadingSpinner />
+          </div>
+        : null}
         <Canvas {...canvasProps}>
           {preview}
         </Canvas>

@@ -1,24 +1,16 @@
 import React from 'react';
 import NavWindow from './NavWindow';
 import { NotificationContainer } from 'react-notifications';
-// import { getHeaderHeight } from '../util/helpers';
-
-// const addNotification;
-// let addNotification
-// const notificationTypes = {
-//   info: 'info',
-//   warning: 'warning',
-//   success: 'success',
-//   error: 'error'
-// }
-
-// createNotification(type, message) {
-//   NotificationManager[type](message, null, 4500);
-// }
+import { startLoading, finishLoading } from '../util/helpers';
 
 class Page extends React.Component {
   componentDidMount() {
     document.title = this.props.title || 'CSS-Gen';
+    finishLoading('page');
+  }
+
+  componentWillUnmount() {
+    startLoading('page');
   }
 
   render() {
@@ -40,69 +32,4 @@ class Page extends React.Component {
   }
 }
 
-// const Page = ({ className, children }) => {
-  
-// }
-
 export default Page;
-
-// class Page extends React.Component {
-//   constructor(props) {
-//     super(props);
-
-//     this.state = {
-//       headerHeight: 0
-//     };
-
-//     document.title = props.title;
-
-//     this.updateTopOffset = this.updateTopOffset.bind(this);
-//     this.renderToolbar = this.renderToolbar.bind(this);
-//   }
-
-//   componentDidMount() {
-//     this.updateTopOffset();
-//     window.addEventListener('resize', this.updateTopOffset, false);
-//   }
-
-//   componentWillUnmount() {
-//     window.removeEventListener('resize', this.updateTopOffset);
-//   }
-
-//   updateTopOffset() {
-//     const headerHeight = getHeaderHeight();
-//     this.setState({ headerHeight });
-//   }
-
-//   renderToolbar() {
-//     if (this.props.toolbar !== undefined) {
-//       return this.props.toolbar;
-//     }
-//   }
-
-//   render() {
-//     const style = {
-//       paddingTop: this.state.headerHeight
-//     };
-
-//     return (
-//       <div>
-//         <div id="header-wrapper">
-//           <Header
-//             title={this.props.heading}
-//             intro={this.props.intro}
-//           />
-//           {this.props.toolbar}
-//         </div>
-//         <div 
-//           id="main-wrapper"
-//           style={style}
-//         >
-//           <main id="main">
-//             {this.props.children}
-//           </main>
-//         </div>
-//       </div>
-//     );
-//   }
-// }

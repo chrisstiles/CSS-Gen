@@ -167,11 +167,10 @@ elements is easier in one separate file
     padding-bottom: 210px; }
 
 #generator-preview {
-  padding: 25px; }
-
-#generator-preview {
   display: flex;
-  flex-grow: 1; }
+  flex-grow: 1;
+  padding: 25px;
+  position: relative; }
 
 #bottom-content-wrapper {
   height: 210px; }
@@ -363,7 +362,7 @@ elements is easier in one separate file
     padding-right: 314px; } }
 
 /* ------------------------- */
-/* Single Window preview */
+/* Generator Preview */
 #canvas {
   width: 100%;
   flex-grow: 1;
@@ -393,6 +392,21 @@ elements is easier in one separate file
   #canvas.center {
     justify-content: center;
     align-items: center; }
+
+#generator-loading {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #fdfdfd;
+  z-index: 888;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.app-loading #generator-loading {
+  display: flex; }
 
 #preview-wrapper {
   position: absolute;
@@ -477,7 +491,6 @@ elements is easier in one separate file
 img.preview-style {
   position: relative; }
 
-/* Old code */
 /* ------------------------- */
 /* Static Window Preview */
 #static-preview {
@@ -1163,15 +1176,6 @@ body.code-expanded .expanded-code-wrapper .output-wrapper {
     transform: rotate(0deg); }
   100% {
     transform: rotate(360deg); } }
-
-#generator-loading {
-  position: absolute;
-  top: 120px;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center; }
 
 .hide-tooltips #tooltip-wrapper,
 .hide-tooltips .tooltip-icon {

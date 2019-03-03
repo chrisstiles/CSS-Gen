@@ -41,12 +41,10 @@ elements is easier in one separate file
 }
 
 #generator-preview {
-  padding:25px;
-}
-
-#generator-preview {
   display:flex;
   flex-grow:1;
+  padding:25px;
+  position:relative;
 }
 
 #bottom-content-wrapper {
