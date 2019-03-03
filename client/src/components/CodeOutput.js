@@ -53,23 +53,13 @@ class CodeOutput extends React.PureComponent {
     this.getCode(this.props);
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (
-  //     prevProps.outputCode !== this.props.outputCode || 
-  //     prevProps.showBrowserPrefixes !== this.props.showBrowserPrefixes ||
-  //     prevProps.outputPreviewStyles !== this.props.outputPreviewStyles
-  //   ) {
-  //     this.getCode(this.props);
-  //   }
-  // }
-
   componentDidUpdate(prevProps) {
     if (prevProps.code !== this.props.code) {
       this.getCode(this.props);
     }
   }
 
-  handleFocus(event) {
+  handleFocus() {
     const selection = window.getSelection();
     selection.removeAllRanges();
     this.hasFocus = true;
@@ -108,9 +98,7 @@ class CodeOutput extends React.PureComponent {
     if (this.props.language.toLowerCase() === 'css') {
       this.getCSS(props);
     } else {
-      // const outputCode = prettyHTML(props.outputCode);
       const outputCode = formatCode(props.code, props.language);
-
       this.setState({ outputCode, copyCode: outputCode, disableEditor: !outputCode });
     }
   }
@@ -123,16 +111,7 @@ class CodeOutput extends React.PureComponent {
     }
 
     // Disable editor if no CSS is passed
-    // css = css.trim();
     const disableEditor = !css;
-
-    // Add plugins to format code and add prefixes if necessary
-    // const { showBrowserPrefixes, hasBrowserPrefixes } = props;
-    // const plugins = [prettify];
-    
-    // if (showBrowserPrefixes && hasBrowserPrefixes) {
-    //   plugins.unshift(autoprefixer({ browsers: ['ie >= 8', '> 4%'] }));
-    // }
 
     let outputCode = formatCode(css, props.language);
     let copyCode = outputCode;
@@ -145,29 +124,6 @@ class CodeOutput extends React.PureComponent {
     }
 
     this.setState({ outputCode, copyCode, disableEditor });
-
-
-    // postcss(plugins)
-    //   .process(css, { from: undefined })
-    //   .then(result => {
-    //     result.warnings().forEach(warn => {
-    //       console.warn(warn.toString());
-    //     });
-
-    //     let { css: outputCode } = result;
-    //     const copyCode = outputCode;
-
-    //     // Use correct syntax highlighting even if we don't have 
-    //     // a CSS selector present in output string
-    //     if (css.indexOf('{') === -1) {
-    //       this.hideSelector = true;
-    //       outputCode = `.selector {\n${outputCode}\n}`;
-    //     } else {
-    //       this.hideSelector = false;
-    //     }
-
-    //     this.setState({ outputCode, copyCode, disableEditor });
-    //   });
   }
 
   copyCode() {
@@ -296,7 +252,8 @@ class CodeViewer extends React.Component {
 
   componentDidMount() {
     document.addEventListener('mouseup', this.enableOtherSelect);
-
+    this.wrapper.focus()
+    
     if (this.wrapper && this.props.isExpanded) {
       this.wrapper.scrollIntoView();
       selectText(this.wrapper.querySelector('.output-code'));
@@ -348,7 +305,15 @@ class CodeViewer extends React.Component {
   render() {
     const wrapperClassName = ['language-wrapper'];
     const className = ['output-code'];
-    const { language, disableEditor, hideSelector, code, isExpanded, onFocus, onBlur } = this.props;
+    const { 
+      language, 
+      disableEditor, 
+      hideSelector, 
+      code, 
+      isExpanded,
+      onFocus, 
+      onBlur 
+    } = this.props;
 
     if (this.state.selecting || isExpanded) {
       wrapperClassName.push('selecting-code');
@@ -371,9 +336,9 @@ class CodeViewer extends React.Component {
         onMouseDown={this.disableOtherSelect}
         onKeyDown={this.handleKeyDown}
         ref={wrapper => { this.wrapper = wrapper }}
+        tabIndex={0}
         onFocus={onFocus}
         onBlur={onBlur}
-        tabIndex="0"
       >
         <SyntaxHighlighter
           language={language}
