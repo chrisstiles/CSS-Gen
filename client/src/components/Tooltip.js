@@ -86,7 +86,7 @@ class Tooltip extends React.PureComponent {
           ref={closeIcon => { this.closeIcon = closeIcon }}
           onClick={this.handleCloseClick}
         />
-        Hello
+        {this.props.children}
       </div>
     );
 
