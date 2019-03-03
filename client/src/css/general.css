@@ -627,6 +627,9 @@ img.preview-style {
     margin: 7px 0 18px 0; }
   #sidebar .disabled .rc-slider,
   #sidebar .disabled .switch-wrapper,
+  #sidebar .disabled .angle-picker,
+  #sidebar .disabled .color-preview,
+  #sidebar .disabled .Select,
   #sidebar .disabled input {
     opacity: .3;
     pointer-events: none; }
