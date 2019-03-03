@@ -1,3 +1,10 @@
+.hide-tooltips {
+  #tooltip-wrapper,
+  .tooltip-icon {
+    display:none;
+  }
+}
+
 #tooltip-wrapper {
   position:fixed;
   top:0;

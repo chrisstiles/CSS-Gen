@@ -60,6 +60,7 @@ class PrimaryLayout extends React.Component {
     this.state = {
       showPreviewText: true,
       persistGeneratorState: true,
+      showTooltips: true,
       outputPreviewStyles: false,
       showBrowserPrefixes: false,
       loading: false

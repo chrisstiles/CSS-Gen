@@ -58,7 +58,7 @@ class Settings extends React.PureComponent {
   }
 
   render() {
-    const { persistGeneratorState } = getGlobalState();
+    const { persistGeneratorState, showTooltips } = getGlobalState();
     const { 
       canvasColor, 
       updatePreview, 
@@ -79,6 +79,13 @@ class Settings extends React.PureComponent {
             >
               <p>Generator settings can be saved after you leave this page</p>
             </Toggle>
+            <Toggle
+              name="showTooltips"
+              onChange={updateGlobalState}
+              label="Show control tooltips"
+              inline={true}
+              checked={showTooltips}
+            />
             <ColorPicker
               name="canvasColor"
               label="Canvas background"

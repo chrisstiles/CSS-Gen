@@ -54,10 +54,11 @@ class Generator extends React.Component {
   }
 
   render() {
-    const { title, className, children } = this.props;
+    const { title, className, children, globalState } = this.props;
 
     const pageClassName = ['generator'];
     if (className) pageClassName.push(className);
+    if (!globalState.showTooltips) pageClassName.push('hide-tooltips');
 
     const pageProps = {
       title,

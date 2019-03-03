@@ -739,7 +739,7 @@ body.code-expanded #bottom-content-wrapper {
   #settings-wrapper .content {
     padding: 15px 18px; }
     #settings-wrapper .content > .field-wrapper {
-      margin-bottom: 8px; }
+      margin-bottom: 15px; }
       #settings-wrapper .content > .field-wrapper:last-child {
         margin-bottom: 0; }
   #settings-wrapper .inline {
@@ -1169,6 +1169,10 @@ body.code-expanded .expanded-code-wrapper .output-wrapper {
   display: flex;
   align-items: center;
   justify-content: center; }
+
+.hide-tooltips #tooltip-wrapper,
+.hide-tooltips .tooltip-icon {
+  display: none; }
 
 #tooltip-wrapper {
   position: fixed;
