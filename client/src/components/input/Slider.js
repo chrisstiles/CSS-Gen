@@ -28,7 +28,7 @@ class Slider extends React.PureComponent {
       return;
     }
 
-    var { value } = this.props;
+    let { value } = this.props;
 
     if (units === '%') {
       value = value / this.max * 100;
@@ -85,7 +85,7 @@ class Slider extends React.PureComponent {
     const max = units === '%' ? 100 : this.max;
 
     // const className = ['field-wrapper'];
-    const wrapperClassName = ['field-wrapper'];
+    const wrapperClassName = ['slider-wrapper field-wrapper'];
 
     if (className) wrapperClassName.push(className);
     if (units) wrapperClassName.push('has-units');

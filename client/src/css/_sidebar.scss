@@ -97,8 +97,12 @@
   }
 
   .disabled {
-    opacity:.3;
-    pointer-events:none;
+    .rc-slider,
+    .switch-wrapper,
+    input {
+      opacity:.3;
+      pointer-events:none;
+    }
   }
 
   .shift-down {

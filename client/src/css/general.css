@@ -625,7 +625,9 @@ img.preview-style {
     height: 2px;
     background-color: #d2d2d2;
     margin: 7px 0 18px 0; }
-  #sidebar .disabled {
+  #sidebar .disabled .rc-slider,
+  #sidebar .disabled .switch-wrapper,
+  #sidebar .disabled input {
     opacity: .3;
     pointer-events: none; }
   #sidebar .shift-down {
