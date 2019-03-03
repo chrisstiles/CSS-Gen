@@ -1173,7 +1173,7 @@ body.code-expanded .expanded-code-wrapper .output-wrapper {
 #tooltip-wrapper {
   position: fixed;
   top: 0;
-  z-index: 500; }
+  z-index: 9999; }
 
 .tooltip-icon {
   width: 18px;
