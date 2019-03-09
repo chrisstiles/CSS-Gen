@@ -5,7 +5,13 @@ import Draggable from 'react-draggable';
 import Resizable from 're-resizable';
 import { extend, isEqual } from 'underscore';
 import tinycolor from 'tinycolor2';
-import { getImageSize, addNotification, getNotificationTypes } from '../util/helpers';
+import { 
+  getImageSize, 
+  addNotification, 
+  getNotificationTypes,
+  startLoading,
+  finishLoading
+} from '../util/helpers';
 
 class PreviewWindow extends React.Component {
   constructor(props) {
@@ -21,6 +27,11 @@ class PreviewWindow extends React.Component {
       max: { width: 3000, height: 3000 }
     };
 
+    if (!this.hasLoaded) {
+      startLoading('preview');
+    } else {
+      finishLoading('preview');
+    }
   }
 
   componentDidMount() {
@@ -195,10 +206,12 @@ class PreviewWindow extends React.Component {
       height = currentHeight;
     }
 
+    finishLoading('preview');
     this.props.updatePreview({ width, height });
   }
 
   handleImageError = () => {
+    finishLoading('preview');
     addNotification(getNotificationTypes().error, 'Error adding image');
   }
 
@@ -348,11 +361,15 @@ class Preview extends React.Component {
 
     const canvasProps = { color: canvasColor };
     if (className) canvasProps.className = className;
-    
-    if (canvasColor !== this.previewCanvasColor) {
-      const defaultSpinnerColor = '#4834d4';
-      this.previousCanvasColor = canvasColor;
-      this.spinnerColor = tinycolor.mostReadable(canvasColor, [defaultSpinnerColor, '#fff']);
+
+    const defaultSpinnerColor = '#4834d4';
+    if (canvasColor === 'transparent') {
+      this.spinnerColor = defaultSpinnerColor;
+    } else {
+      if (canvasColor !== this.previewCanvasColor) {
+        this.previousCanvasColor = canvasColor;
+        this.spinnerColor = tinycolor.mostReadable(canvasColor, [defaultSpinnerColor, '#fff']);
+      }
     }
 
     const preview = children ? children : (

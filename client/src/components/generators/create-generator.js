@@ -1,6 +1,6 @@
 import React from 'react';
 import { extend } from 'underscore';
-import { getState, startLoading, finishLoading } from '../../util/helpers';
+import { getState, finishLoading } from '../../util/helpers';
 
 function createStateObject(state, name) {
   if (state === undefined) return {};
@@ -16,8 +16,6 @@ export default function createGenerator (WrappedGenerator, state, stateTypes, op
   return class extends React.Component {
     constructor(props) {
       super(props);
-      
-      startLoading('page');
 
       const { isDefaultPreview, mutateInitialState } = options;
       
