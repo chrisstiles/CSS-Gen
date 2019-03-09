@@ -252,10 +252,9 @@ class CodeViewer extends React.Component {
 
   componentDidMount() {
     document.addEventListener('mouseup', this.enableOtherSelect);
-    this.wrapper.focus()
     
     if (this.wrapper && this.props.isExpanded) {
-      this.wrapper.scrollIntoView();
+      this.wrapper.focus();
       selectText(this.wrapper.querySelector('.output-code'));
     }
   }
