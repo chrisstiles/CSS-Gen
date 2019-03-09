@@ -276,6 +276,10 @@ textarea {
     background-color: $accent-color-hover;
   }
 
+  &:focus {
+    box-shadow: 0px 0px 0px 3px rgba(72, 52, 212, 0.4) !important;
+  }
+
   &.full {
     width:100%;
   }

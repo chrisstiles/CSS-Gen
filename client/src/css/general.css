@@ -1810,6 +1810,8 @@ textarea {
   user-select: none; }
   .button:hover {
     background-color: #5b49d8; }
+  .button:focus {
+    box-shadow: 0px 0px 0px 3px rgba(72, 52, 212, 0.4) !important; }
   .button.full {
     width: 100%; }
   .button.small {
