@@ -1,26 +1,29 @@
 import React from 'react';
 
 const LoadingSpinner = props => {
-	const { width = 100, height = width, color = '#4834d4', borderWidth = 9 } = props;
+	const { size = 65, color = '#4834d4' } = props;
 
-	const divs = [];
-
-	for (var i = 0; i <= 4; i++) {
-		const style = {
-			borderWidth,
-			borderColor: `${color} transparent transparent transparent`
-		}
-
-		divs.push(<div key={i} style={style} />)
-	}
+	const spinnerStyle = { width: size, height: size };
+	const circleStyle = { stroke: color }
 
 	return (
-		<div 
-			className="loading-spinner"
-			style={{ width, height }}
+		<svg 
+			className="spinner" 
+			style={spinnerStyle} 
+			viewBox="0 0 66 66" 
+			xmlns="http://www.w3.org/2000/svg"
 		>
-	    {divs}
-	  </div>
+			<circle 
+				fill="none"
+				style={circleStyle}
+				strokeDashoffset="0" 
+				strokeWidth="6" 
+				strokeLinecap="round" 
+				cx="33" 
+				cy="33" 
+				r="30"
+			/>
+		</svg>
 	);
 }
 

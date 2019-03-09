@@ -39,7 +39,7 @@ class Select extends React.Component {
 		window.removeEventListener('resize', this.scrollMenu, true);
 	}
 
-	shouldComponentUpdate({ value, options}) {
+	shouldComponentUpdate({ value, options }) {
 		return (
 			value !== this.props.value ||
 			!_.isEqual(options, this.props.options)
@@ -95,12 +95,12 @@ class Select extends React.Component {
 			const borderLeftWidth = getComputedStyle(this.scrollWrapper, null).getPropertyValue('border-left-width');
 			const scrollWrapperHeight = containerRect.height;
 
-			var top = selectRect.top + selectRect.height;
+			let top = selectRect.top + selectRect.height;
 			if (top >= (containerRect.top + scrollWrapperHeight)) {
 				top = containerRect.top + scrollWrapperHeight;
 			}
 
-			var maxHeight = window.innerHeight - top - 35;
+			let maxHeight = window.innerHeight - top - 35;
 
 			if (maxHeight > 400) {
 				maxHeight = 400;

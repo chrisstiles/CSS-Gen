@@ -91,7 +91,7 @@ class TextShadowInputs extends React.Component {
 
 	// loadFont(font = this.props.googleFont, variantOptions = this.props.variantOptions, forceLoad) {
 	loadFont = (font, forceLoad) => {
-		startLoading('load-font');
+		startLoading('preview');
 
 		if (forceLoad || this.fontList[font]) {
 			const list = this.fontList;
@@ -113,7 +113,7 @@ class TextShadowInputs extends React.Component {
 					classes: false
 				});
 			} catch(error) {
-				finishLoading('load-font');
+				finishLoading('preview');
 				console.log('Font load error');
 			}
 			
@@ -149,7 +149,7 @@ class TextShadowInputs extends React.Component {
 			this.props.updateGenerator({ googleFont, fontFamily, variantOptions, variant });
 		}
 
-		finishLoading('load-font');
+		finishLoading('preview');
 	}
 
 	handleFontError = () => {

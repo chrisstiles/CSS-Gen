@@ -1,5 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
+import LoadingSpinner from './LoadingSpinner';
 import { isObjectOfShape } from '../util/helpers';
 import _ from 'underscore';
 import WebFont from 'webfontloader';
@@ -35,7 +37,6 @@ let getGlobalDefaults;
 let updateGlobalState; 
 let getGlobalVariable;
 let setGlobalVariable;
-let setLoading;
 let startLoading;
 let finishLoading;
 
@@ -49,8 +50,7 @@ class PrimaryLayout extends React.Component {
       persistGeneratorState: true,
       showTooltips: true,
       outputPreviewStyles: false,
-      showBrowserPrefixes: false,
-      isLoading: false
+      showBrowserPrefixes: false
     };
 
     this.globalDefaults = _.extend({}, this.state);
@@ -59,12 +59,11 @@ class PrimaryLayout extends React.Component {
       showPreviewText: Boolean,
       persistGeneratorState: Boolean,
       outputPreviewStyles: Boolean,
-      showBrowserPrefixes: Boolean,
-      isLoading: Boolean
+      showBrowserPrefixes: Boolean
     };
 
-    this.state.isLoading = false;
-    this.state.loadingItems = [];
+    this.loadingStartTimes = {};
+    this.loadingItems = [];
 
     // Load main web font asynchronously
     WebFont.load({
@@ -101,7 +100,6 @@ class PrimaryLayout extends React.Component {
     getGlobalDefaults = this.getGlobalDefaults.bind(this);
     getGlobalVariable = this.getGlobalVariable.bind(this);
     setGlobalVariable = this.setGlobalVariable.bind(this);
-    setLoading = this.setLoading.bind(this);
     startLoading = this.startLoading.bind(this);
     finishLoading = this.finishLoading.bind(this);
   }
@@ -143,37 +141,57 @@ class PrimaryLayout extends React.Component {
     this[name] = value;
   }
 
-  setLoading(isLoading) {
-    this.setState({ isLoading });
-  }
-
   startLoading(name) {
-    const { loadingItems: currentLoadingItems } = this.state;
-    
-    if (!currentLoadingItems.includes(name)) {
-      const loadingItems = currentLoadingItems.slice();
-      loadingItems.push(name);
+    if (!this.loadingItems.includes(name)) {
+      this.loadingItems.push(name);
 
-      this.setState({ loadingItems, isLoading: true });
+      if (!this.loadingStartTimes[name]) {
+        this.loadingStartTimes[name] = new Date();
+      }
+    }
+
+    if (this.loadingItems.length) {
+      document.body.classList.add('loading');
+      document.body.classList.add(`${name}-loading`);
     }
   }
 
   finishLoading(name) {
-    const { loadingItems: currentLoadingItems } = this.state;
-  
-    if (currentLoadingItems.includes(name)) {
+    if (this.loadingItems.includes(name)) {
 
-      const loadingItems = _.filter(currentLoadingItems, item => {
+      this.loadingItems = _.filter(this.loadingItems, item => {
         return item !== name;
       });
+    }
 
-      // Stop loading if everything has finished
-      const isLoading = loadingItems.length >= 1;
+    if (this.loadingStartTimes[name]) {
+      // If the loading time is long enough for the user to see the spinner
+      // but too short to see any animation we artificially add delay
+      let delay = 0;
+      
+      const loadingEnd = new Date();
+      const difference = loadingEnd.getTime() - this.loadingStartTimes[name].getTime();
+      const minDiff = 100;
+      const maxDiff = 350;
 
-      this.setState({ loadingItems, isLoading });
+      if (difference >= minDiff && difference <= maxDiff) {
+        const minDelay = 400;
+        const maxDelay = 700;
+        delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
+      }
+
+      this.loadingStartTimes[name] = null;
+
+      setTimeout(() => {
+        document.body.classList.remove(`${name}-loading`);
+
+        if (!this.loadingItems.length) {
+          document.body.classList.remove('loading');
+        }
+      }, delay);
     } else {
-      if (!currentLoadingItems.length) {
-        this.setState({ isLoading: false });
+      if (!this.loadingItems.length) {
+        document.body.classList.remove('loading');
       }
     }
   }
@@ -185,40 +203,44 @@ class PrimaryLayout extends React.Component {
           exact
           path={path}
           key={path}
-          render={props => <Component globalState={this.state} />}
+          render={() => <Component globalState={this.state} />}
         />
       );
     });
-
-    const className = this.state.isLoading ? 'app-loading' : '';
   
-    return (
-      <div className={className}>
-        {routeComponents}
-      </div>
-    );
+    return routeComponents;
   }
 }
 
 class App extends React.Component {
+  renderLoadingSpinner = () => {
+    const spinner = (
+      <div id="loading-wrapper">
+        <LoadingSpinner />
+      </div>
+    );
+
+    return ReactDOM.createPortal(spinner, document.body);
+  }
+
   render() {
     return (
       <BrowserRouter>
-        <PrimaryLayout />
+        <div>
+          {this.renderLoadingSpinner()}
+            <PrimaryLayout />
+        </div>
       </BrowserRouter>
     );
   }
 }
 
 export { 
-  // addNotification, 
-  // notificationTypes,
   getGlobalState, 
   updateGlobalState, 
   getGlobalDefaults ,
   getGlobalVariable,
   setGlobalVariable,
-  setLoading,
   startLoading,
   finishLoading
  };

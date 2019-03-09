@@ -1,42 +1,78 @@
-.loading-spinner {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
+#loading-wrapper {
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  background-color:rgba(#fff, .8);
+  z-index: 3500;
+  justify-content:center;
+  align-items:center;
+  display:none !important;
+}
 
-  div {
-    box-sizing: border-box;
-    display: block;
-    position: absolute;
-    top:0;
-    bottom:0;
-    right:0;
-    left:0;
-    border: 6px solid $accent-color;
-    border-radius: 50%;
-    animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: $accent-color transparent transparent transparent;
-
-    &:nth-child(1) {
-      animation-delay: -0.45s;
+body{
+  &.page-loading {
+    #loading-wrapper {
+      display:flex !important;
     }
 
-    &:nth-child(2) {
-      animation-delay: -0.3s;
+    #preview-wrapper,
+    #canvas * {
+      opacity:0;
     }
 
-    &:nth-child(3) {
-      animation-delay: -0.15s;
+    input[type="text"],
+    input[type="number"] {
+      font-size:0 !important;
     }
   }
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
+$offset: 187;
+$duration: 1.4s;
+
+.spinner {
+  animation: rotator $duration linear infinite;
+
+  circle {
+    stroke-dasharray: $offset;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    animation: dash $duration ease-in-out infinite;
+    // Uncomment to enable animating spinner color
+    // animation:
+    //   dash $duration ease-in-out infinite, 
+    //   colors ($duration*4) ease-in-out infinite;
+    stroke:$accent-color;
+  }
+}
+
+@keyframes rotator {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(270deg); }
+}
+
+@keyframes colors {
+	0% { stroke: #4285F4; }
+	25% { stroke: #DE3E35; }
+	50% { stroke: #F7C223; }
+	75% { stroke: #1B9A59; }
+  100% { stroke: #4285F4; }
+}
+
+@keyframes dash {
+ 0% {
+   stroke-dashoffset: $offset; 
   }
 
-  100% {
-    transform: rotate(360deg);
-  }
+ 50% {
+   stroke-dashoffset: $offset / 4;
+   transform:rotate(135deg);
+ }
+ 
+ 100% {
+   stroke-dashoffset: $offset;
+   transform:rotate(450deg);
+ }
 }

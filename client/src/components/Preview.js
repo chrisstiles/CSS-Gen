@@ -4,7 +4,8 @@ import LoadingSpinner from './LoadingSpinner';
 import Draggable from 'react-draggable';
 import Resizable from 're-resizable';
 import { extend, isEqual } from 'underscore';
-import { getImageSize, addNotification, getNotificationTypes, getGlobalState } from '../util/helpers';
+import tinycolor from 'tinycolor2';
+import { getImageSize, addNotification, getNotificationTypes } from '../util/helpers';
 
 class PreviewWindow extends React.Component {
   constructor(props) {
@@ -337,10 +338,6 @@ class PreviewWindow extends React.Component {
 }
 
 class Preview extends React.Component {
-  shouldComponentUpdate(prevProps) {
-    return !isEqual(prevProps, this.props);
-  }
-
   render() {
     const {
       canvasColor,
@@ -351,21 +348,23 @@ class Preview extends React.Component {
 
     const canvasProps = { color: canvasColor };
     if (className) canvasProps.className = className;
+    
+    if (canvasColor !== this.previewCanvasColor) {
+      const defaultSpinnerColor = '#4834d4';
+      this.previousCanvasColor = canvasColor;
+      this.spinnerColor = tinycolor.mostReadable(canvasColor, [defaultSpinnerColor, '#fff']);
+    }
 
     const preview = children ? children : (
       <PreviewWindow {...previewProps} />
     );
 
-    const { isLoading } = getGlobalState();
-
     return (
       <div id="generator-preview">
-        { isLoading ? 
-          <div id="generator-loading">
-            <LoadingSpinner />
-          </div>
-        : null}
         <Canvas {...canvasProps}>
+          <div id="preview-loading">
+            <LoadingSpinner color={this.spinnerColor} />
+          </div>
           {preview}
         </Canvas>
       </div>
