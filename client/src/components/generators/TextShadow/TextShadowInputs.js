@@ -39,7 +39,7 @@ class TextShadowInputs extends React.Component {
 	}
 
 	componentDidMount() {
-		this.loadFont(this.props.googleFont, true);
+		this.loadFont(this.props.googleFont, true, 'page');
 	}
 
 	handleChange = (value, name) => {
@@ -90,8 +90,8 @@ class TextShadowInputs extends React.Component {
 	}
 
 	// loadFont(font = this.props.googleFont, variantOptions = this.props.variantOptions, forceLoad) {
-	loadFont = (font, forceLoad) => {
-		startLoading('preview');
+	loadFont = (font, forceLoad, loadingKey = 'preview') => {
+		startLoading(loadingKey);
 
 		if (forceLoad || this.fontList[font]) {
 			const list = this.fontList;
@@ -108,12 +108,16 @@ class TextShadowInputs extends React.Component {
 					google: {
 						families: [query]
 					},
-					fontactive: this.handleFontLoaded,
-					fontinactive: this.handleFontError,
+					fontactive: googleFont => {
+						this.handleFontLoaded(googleFont, loadingKey);
+					},
+					fontinactive: () => {
+						this.handleFontError(loadingKey)
+					},
 					classes: false
 				});
 			} catch(error) {
-				finishLoading('preview');
+				finishLoading(loadingKey);
 				console.log('Font load error');
 			}
 			
@@ -130,7 +134,7 @@ class TextShadowInputs extends React.Component {
 		}
 	}
 
-	handleFontLoaded = googleFont => {
+	handleFontLoaded = (googleFont, loadingKey = 'preview') => {
 		if (this.fontList) {
 			const { fontFamily, variantOptions } = this.fontList[googleFont];
 			let variant = variantOptions[0];
@@ -149,12 +153,13 @@ class TextShadowInputs extends React.Component {
 			this.props.updateGenerator({ googleFont, fontFamily, variantOptions, variant });
 		}
 
-		finishLoading('preview');
+		finishLoading(loadingKey);
 	}
 
-	handleFontError = () => {
+	handleFontError = (loadingKey = 'preview') => {
 		const error = 'Font could not be loaded';
 		addNotification(getNotificationTypes().error, error);
+		finishLoading(loadingKey);
 	}
 
 	setFontOptions = fontData => {
