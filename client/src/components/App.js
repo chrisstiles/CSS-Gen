@@ -171,7 +171,7 @@ class PrimaryLayout extends React.Component {
       
       const loadingEnd = new Date();
       const difference = loadingEnd.getTime() - this.loadingStartTimes[name].getTime();
-      const minDiff = 100;
+      const minDiff = 60;
       const maxDiff = 350;
 
       if (difference >= minDiff && difference <= maxDiff) {
