@@ -175,8 +175,8 @@ class PrimaryLayout extends React.Component {
       const maxDiff = 350;
 
       if (difference >= minDiff && difference <= maxDiff) {
-        const minDelay = 400;
-        const maxDelay = 700;
+        const minDelay = 350;
+        const maxDelay = 600;
         delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
       }
 
