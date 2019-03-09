@@ -338,7 +338,7 @@ class PreviewWindow extends React.Component {
 
 class Preview extends React.Component {
   shouldComponentUpdate(prevProps) {
-    return (!isEqual(prevProps), this.props);
+    return !isEqual(prevProps, this.props);
   }
 
   render() {
