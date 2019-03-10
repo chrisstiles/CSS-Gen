@@ -3,7 +3,7 @@ import LoadingSpinner from './LoadingSpinner';
 import { 
 	addNotification, 
 	getNotificationTypes, 
-	getNativeImageSize, 
+	getNaturalImageSize, 
 	getImageSize 
 } from '../util/helpers';
 
@@ -110,7 +110,7 @@ class FileDrop extends React.Component {
 			reader.onload = e => {
 			  const image = e.target.result;
 
-			  getNativeImageSize(image).then(({ width: naturalWidth, height: naturalHeight }) => {
+				getNaturalImageSize(image).then(({ width: naturalWidth, height: naturalHeight }) => {
 			    // Image successfully added
 			    setTimeout(() => {
 			    	const { width, height } = getImageSize(naturalWidth, naturalHeight);

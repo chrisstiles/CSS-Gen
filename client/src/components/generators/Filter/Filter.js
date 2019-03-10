@@ -91,6 +91,7 @@ class Filter extends React.Component {
           canvasColor={previewState.canvasColor}
           previewState={previewState}
           defaultState={defaultState}
+          resetCount={generatorState.resetCount}
           updatePreview={updatePreview}
           updateDefaultPreviewState={updateDefaultPreviewState}
           style={previewStyle}
@@ -140,7 +141,9 @@ const defaultState = _.mapObject(filters, ({ title, name, min, max, defaultValue
 });
 
 defaultState.previewState = {
-  image: waterfall
+  image: waterfall,
+  naturalWidth: 1451,
+  naturalHeight: 968
 };
 
 // Add drop shadow separately

@@ -158,14 +158,14 @@ export function isObjectOfShape(object, shape) {
 	var correctShape = true;
 
 	_.each(shape, (value, key) => {
+		// Do nothing if type is allowed to be null
+		if (value === null) {
+			return;
+		}
+		
 		// Object does not have this key
 		if (!object.hasOwnProperty(key)) {
 			correctShape = false;
-			return;
-		}
-
-		// Do nothing if type is allowed to be null
-		if (value === null) {
 			return;
 		}
 
@@ -618,9 +618,9 @@ export function getFullHeight() {
 }
 
 // Returns a Promise that resolves with the image dimensions
-export function getNativeImageSize(src) {
-  return new Promise((resolve, reject = () => {}) => {
-    var image = new Image();
+export function getNaturalImageSize(src) {
+  return new Promise((resolve, reject) => {
+    let image = new Image();
     image.src = src;
 
     image.onload = () => {

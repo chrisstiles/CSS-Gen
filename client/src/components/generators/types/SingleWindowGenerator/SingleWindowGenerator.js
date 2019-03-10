@@ -4,7 +4,7 @@ import SingleWindowToolbar from '../../toolbars/SingleWindowToolbar';
 import Settings from './SingleWindowSettings';
 import SingleWindowPreview from '../../previews/SingleWindowPreview';
 import FileDrop from '../../../FileDrop';
-import { getGlobalDefaults, updateGlobalState, getImageSize, getNativeImageSize, getState, startLoading } from '../../../../util/helpers';
+import { getGlobalDefaults, updateGlobalState, getImageSize, getNaturalImageSize, getState, startLoading } from '../../../../util/helpers';
 import _ from 'underscore';
 
 class SingleWindowGenerator extends React.Component {
@@ -105,7 +105,7 @@ class SingleWindowGenerator extends React.Component {
     if (defaultImage || currentImage) {
       if (defaultImage) {
         // This generator has an image set by default
-        getNativeImageSize(defaultImage)
+        getNaturalImageSize(defaultImage)
           .then(({ width, height }) => {
             const size = getImageSize(width, height, wrapper);
             _.extend(this.defaultState, size);        

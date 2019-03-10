@@ -7,6 +7,7 @@ import { extend, isEqual } from 'underscore';
 import tinycolor from 'tinycolor2';
 import { 
   getImageSize, 
+  getNaturalImageSize,
   addNotification, 
   getNotificationTypes,
   startLoading,
@@ -17,10 +18,11 @@ class PreviewWindow extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = { wrapperStyle: {} }
+
     this.hasLoaded = !props.previewState.image;
     this.isResizing = false;
     this.resizePosition = extend({}, props.previewState.resizePosition);
-    this.wrapperStyle = {};
 
     this.constraints = {
       min: { width: 80, height: 80 },
@@ -35,8 +37,21 @@ class PreviewWindow extends React.Component {
   }
 
   componentDidMount() {
-    this.setDefaultSize();
     window.addEventListener('resize', this.handleWindowResize);
+    this.setDefaultSize();
+
+    // Save natural default image size if not passed in
+    if (this.props.defaultState) {
+      const { image: currentImage } = this.props.previewState;
+      const { image: defaultImage, naturalWidth, naturalHeight } = this.props.defaultState.previewState;
+
+      if (currentImage !== defaultImage && (!naturalWidth || !naturalHeight)) {
+        getNaturalImageSize(defaultImage)
+          .then(({ width: naturalWidth, height: naturalHeight }) => {
+            this.props.updateDefaultPreviewState({ naturalWidth, naturalHeight });
+          });
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -44,8 +59,13 @@ class PreviewWindow extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!this.isResizing && !isEqual(prevProps, this.props) && this.isOutOfBounds()) {
-      this.reset();
+    const { resetCount: prevResetCount } = prevProps;
+    const { resetCount: currentResetCount } = this.props;
+    const shouldResetWrapper = prevResetCount !== currentResetCount;
+    const shouldResetPreview = !this.isResizing && !isEqual(prevProps, this.props) && this.isOutOfBounds();
+
+    if (shouldResetWrapper || shouldResetPreview) {
+      this.reset(shouldResetWrapper);
     }
   }
 
@@ -80,12 +100,12 @@ class PreviewWindow extends React.Component {
     return false;
   }
 
-  reset = () => {
+  reset = shouldResetWrapper => {
     const state = {
       hasDragged: false,
       hasResized: false,
       position: { x: 0, y: 0 },
-      ...this.getDefaultSize()
+      ...this.getDefaultSize(shouldResetWrapper)
     };
 
     this.props.updatePreview(state);
@@ -93,9 +113,23 @@ class PreviewWindow extends React.Component {
     this.size = null;
     this.isResizing = false;
     this.resizePosition = { x: 0, y: 0 };
+
+    if (shouldResetWrapper) {
+      this.setWrapperStyle(state.width, state.height);
+    }
   }
 
-  getDefaultSize = () => {
+  getDefaultSize = shouldResetWrapper => {
+    const { defaultState } = this.props;
+    
+    if (defaultState && shouldResetWrapper) {
+      const { image, naturalWidth, naturalHeight } = defaultState.previewState;
+
+      if (image && naturalWidth && naturalHeight) {
+        return getImageSize(naturalWidth, naturalHeight);
+      }
+    }
+
     const width = this.wrapper ? this.wrapper.offsetWidth : defaultPreviewState.width;
     const height = this.wrapper ? this.wrapper.offsetHeight : defaultPreviewState.height;
 
@@ -177,12 +211,14 @@ class PreviewWindow extends React.Component {
   }
 
   setWrapperStyle = (width, height) => {
-    this.wrapperStyle = {
+    const wrapperStyle = {
       width,
       height,
       marginLeft: -(width / 2),
       marginTop: -(height / 2)
     };
+
+    this.setState({ wrapperStyle });
   }
 
   handleImageLoaded = (event) => {
@@ -193,7 +229,7 @@ class PreviewWindow extends React.Component {
     const { image: defaultImage } = this.props.defaultState.previewState;
 
     if (currentImage === defaultImage) {
-      this.props.updateDefaultPreviewState({ width, height });
+      this.props.updateDefaultPreviewState({ width, height, naturalWidth, naturalHeight });
     }
 
     const { hasResized, width: currentWidth, height: currentHeight } = this.props.previewState;
@@ -294,7 +330,7 @@ class PreviewWindow extends React.Component {
       minHeight += borderAdjustment;
     }
 
-    const wrapperStyle = extend({}, this.wrapperStyle);
+    const wrapperStyle = extend({}, this.state.wrapperStyle);
 
     if (previewStyle.image) {
       if (this.hasLoaded) {
@@ -354,6 +390,7 @@ class Preview extends React.Component {
   render() {
     const {
       canvasColor,
+      resetCount,
       children,
       className,
       ...previewProps
@@ -373,11 +410,11 @@ class Preview extends React.Component {
     }
 
     const preview = children ? children : (
-      <PreviewWindow {...previewProps} />
+      <PreviewWindow resetCount={resetCount} {...previewProps} />
     );
-
+    
     return (
-      <div id="generator-preview">
+      <div id="generator-preview" >
         <Canvas {...canvasProps}>
           <div id="preview-loading">
             <LoadingSpinner color={this.spinnerColor} />
