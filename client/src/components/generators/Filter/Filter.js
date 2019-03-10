@@ -149,7 +149,7 @@ defaultState.previewState = {
 // Add drop shadow separately
 defaultState.dropShadow = {
   isActive: false,
-  shadowColor: '#000'
+  shadowColor: 'rgba(0, 0, 0, 0.5)'
 };
 
 _.each(dropShadowSliders, ({ name, defaultValue }) => {
@@ -171,7 +171,7 @@ const stateTypes = {
     blurRadius: Number,
     horizontalShift: Number,
     verticalShift: Number,
-    shadowColor: null,
+    shadowColor: String,
     shadowOpacity: Number
   },
   previewState: {
