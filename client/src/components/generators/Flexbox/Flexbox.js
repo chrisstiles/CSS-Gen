@@ -36,32 +36,31 @@ class Flexbox extends React.Component {
   }
 
   generate = () => {
-    const css = `
+    const {
+      childElements
+    } = this.props.generatorState;
+
+    let html, css;
+
+    css = `
       .flex-container {
         background-color:red;
       }
     `;
 
-    const html = `
-      <div class="flex-container">
-        Testing
-      </div>
-      <div class="flex-container">
-        Testing
-      </div>
-      <div class="flex-container">
-        Testing
-      </div>
-      <div class="flex-container">
-        Testing
-      </div>
-      <div class="flex-container">
-        Testing
-      </div>
-      <div class="flex-container">
-        Testing
-      </div>
-    `;
+    if (childElements.length) {
+      const elements = [];
+      childElements.forEach(element => {
+        elements.push('  <div class="item"></div>');
+      });
+
+      elements.unshift('<div class="container">');
+      elements.push('</div>');
+
+      html = elements.join('\n');
+    } else {
+      html = '<div class="container"></div>';
+    }
 
     return [
       { language: 'css', code: css },
