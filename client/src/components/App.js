@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
-import LoadingSpinner from './LoadingSpinner';
 import { isObjectOfShape } from '../util/helpers';
-import _ from 'underscore';
 import WebFont from 'webfontloader';
+import LoadingSpinner from './LoadingSpinner';
+import { NotificationContainer } from 'react-notifications';
+import _ from 'underscore';
 
 // CSS Styles
 import '../css/general.css';
@@ -94,7 +95,6 @@ class PrimaryLayout extends React.Component {
       }
     }
 
-    // addNotification = this.createNotification.bind(this);
     getGlobalState = this.getGlobalState.bind(this);
     updateGlobalState = this.updateGlobalState.bind(this);
     getGlobalDefaults = this.getGlobalDefaults.bind(this);
@@ -228,7 +228,8 @@ class App extends React.Component {
       <BrowserRouter>
         <div>
           {this.renderLoadingSpinner()}
-            <PrimaryLayout />
+          <PrimaryLayout />
+          <NotificationContainer />
         </div>
       </BrowserRouter>
     );

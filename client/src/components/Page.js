@@ -1,6 +1,5 @@
 import React from 'react';
 import NavWindow from './NavWindow';
-import { NotificationContainer } from 'react-notifications';
 import { startLoading, finishLoading } from '../util/helpers';
 
 class Page extends React.Component {
@@ -26,7 +25,6 @@ class Page extends React.Component {
       <div {...pageProps}>
         <NavWindow />
         {children}
-        <NotificationContainer />
       </div>
     );
   }
