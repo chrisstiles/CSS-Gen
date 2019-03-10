@@ -5,7 +5,8 @@ import FlexboxInputs from './FlexboxInputs';
 import FlexboxBottom from './FlexboxBottom';
 import Generator from '../../Generator';
 import Header from '../../Header';
-import { map, uniqueId, extend } from 'underscore';
+import { map, uniqueId, extend, mapObject } from 'underscore';
+import { generateCSSString } from '../../../util/helpers';
 
 const maxChildElements = 50;
 
@@ -37,34 +38,59 @@ class Flexbox extends React.Component {
 
   generate = () => {
     const {
+      containerStyles,
+      itemStyles,
       childElements
     } = this.props.generatorState;
 
-    let html, css;
+    const html = [];
+    const css = [];
 
-    css = `
-      .flex-container {
-        background-color:red;
-      }
-    `;
-
+    css.push(generateCSSString(containerStyles, '.container'));
+    css.push(generateCSSString(itemStyles, '.item'));
+    
     if (childElements.length) {
-      const elements = [];
-      childElements.forEach(element => {
-        elements.push('  <div class="item"></div>');
+      childElements.forEach((child, index) => {
+        const { id, ...restStyles } = child;
+        
+        let hasUniqueValues = false;
+        const childStyles = mapObject({ ...restStyles }, (value, key) => {
+          // We only output items for individual items
+          // if their values are different than the default
+          const newValue = itemStyles[key] === value ? null : value;
+          if (newValue) hasUniqueValues = true;
+          return newValue;
+        });
+
+        if (hasUniqueValues) {
+          let selector;
+
+          if (index === 0) {
+            selector = `.item:first-child`;
+          } else if (index === childElements.length - 1) {
+            selector = `.item:last-child`;
+          } else {
+            selector = `.item:nth-child(${index + 1})`;
+          }
+          css.push(generateCSSString(childStyles, selector));
+        }
+
+        html.push('  <div class="item"></div>');
       });
 
-      elements.unshift('<div class="container">');
-      elements.push('</div>');
+      html.unshift('<div class="container">');
+      html.push('</div>');
 
-      html = elements.join('\n');
     } else {
-      html = '<div class="container"></div>';
+      html.push('<div class="container"></div>');
     }
 
+    // css = css.join('\n\n');
+    // html = html.join('\n');
+
     return [
-      { language: 'css', code: css },
-      { language: 'html', code: html }
+      { language: 'css', code: css.join('\n\n') },
+      { language: 'html', code: html.join('\n') }
     ];
   }
 

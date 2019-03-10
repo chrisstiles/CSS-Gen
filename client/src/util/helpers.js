@@ -374,17 +374,25 @@ export function numberInConstraints(num, min = null, max = null) {
   }
 }
 
-export function generateCSSString(css) {
-	let cssString = '';
+export function generateCSSString(css, selector) {
+	// let cssString = '';
+	const cssString = [];
+	const indent = selector ? '  ' : '';
 
 	_.each(css, (value, key) => {
-		if (value) {
+		if (value !== undefined && value !== null) {
 			key = jsToCss(key);
-			cssString += ` ${key}: ${value};\n`;
+			const property = `${indent}${key}: ${value};`;
+			cssString.push(property);
 		}
 	});
 
-	return cssString;
+	if (selector && cssString.length) {
+		cssString.unshift(`${selector} {`);
+		cssString.push('}');
+	}
+
+	return cssString.join('\n');
 }
 
 export function stripZeroUnits(str) {
