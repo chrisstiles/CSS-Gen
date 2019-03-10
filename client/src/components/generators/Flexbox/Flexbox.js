@@ -184,6 +184,7 @@ function addUniqueIds(state) {
   }
 
   state.canAddChildElement = state.childElements.length < maxChildElements;
+  state.selectedIndexes = [];
 
   return state;
 }

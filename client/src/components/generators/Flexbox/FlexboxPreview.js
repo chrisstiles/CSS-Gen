@@ -118,10 +118,22 @@ class FlexboxPreviewContent extends React.PureComponent {
       return;
     }
     
-    const isEscapeKey = event.key === 'Escape';
-    const isMouseEvent = event.type === 'click' || event.type === 'mousedown';
-    const isFlexItem = event.target.classList.contains('item');
-    const isSidebar = sameOrChild(event.target, '#sidebar');
+    let isEscapeKey, isLink, isMouseEvent, isFlexItem, isSidebar;
+    
+    isEscapeKey = event.key === 'Escape';
+
+    if (!isEscapeKey) {
+      isMouseEvent = event.type === 'click' || event.type === 'mousedown';
+
+      if (isMouseEvent) {
+        // Don't deselect while user navigates away from page
+        isLink = event.target.tagName === 'A';
+        if (isLink) return;
+
+        isFlexItem = event.target.classList.contains('item');
+        isSidebar = sameOrChild(event.target, '#sidebar');
+      }
+    }
 
     if (isEscapeKey || (isMouseEvent && !isFlexItem && !isSidebar)) {
       this.props.updateGenerator({ selectedIndexes: [] });
