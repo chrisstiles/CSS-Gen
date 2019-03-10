@@ -58,7 +58,7 @@ class PreviewWindow extends React.Component {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { resetCount: prevResetCount } = prevProps;
     const { resetCount: currentResetCount } = this.props;
     const shouldResetWrapper = prevResetCount !== currentResetCount;
@@ -66,6 +66,13 @@ class PreviewWindow extends React.Component {
 
     if (shouldResetWrapper || shouldResetPreview) {
       this.reset(shouldResetWrapper);
+    }
+
+    const { opacity: prevOpacity } = prevState.wrapperStyle;
+    const { opacity: currentOpacity, width, height } = this.state.wrapperStyle;
+
+    if (!currentOpacity && prevOpacity !== currentOpacity) {
+      this.setWrapperStyle(width, height, 1);
     }
   }
 
@@ -115,7 +122,8 @@ class PreviewWindow extends React.Component {
     this.resizePosition = { x: 0, y: 0 };
 
     if (shouldResetWrapper) {
-      this.setWrapperStyle(state.width, state.height);
+      const opacity = shouldResetWrapper ? 0 : 1;
+      this.setWrapperStyle(state.width, state.height, opacity);
     }
   }
 
@@ -210,12 +218,13 @@ class PreviewWindow extends React.Component {
     }
   }
 
-  setWrapperStyle = (width, height) => {
+  setWrapperStyle = (width, height, opacity = 1) => {
     const wrapperStyle = {
       width,
       height,
       marginLeft: -(width / 2),
-      marginTop: -(height / 2)
+      marginTop: -(height / 2),
+      opacity
     };
 
     this.setState({ wrapperStyle });
@@ -225,14 +234,18 @@ class PreviewWindow extends React.Component {
     const { width: naturalWidth, height: naturalHeight } = event.target;
     let { width, height } = getImageSize(naturalWidth, naturalHeight);
 
-    const { image: currentImage } = this.props.previewState;
-    const { image: defaultImage } = this.props.defaultState.previewState;
+    const { previewState, defaultState } = this.props;
 
-    if (currentImage === defaultImage) {
-      this.props.updateDefaultPreviewState({ width, height, naturalWidth, naturalHeight });
+    if (previewState && defaultState) {
+      const { image: currentImage } = previewState;
+      const { image: defaultImage } = defaultState.previewState;
+
+      if (currentImage && defaultImage && currentImage === defaultImage) {
+        this.props.updateDefaultPreviewState({ width, height, naturalWidth, naturalHeight });
+      }
     }
 
-    const { hasResized, width: currentWidth, height: currentHeight } = this.props.previewState;
+    const { hasResized, width: currentWidth, height: currentHeight } = previewState;
 
     this.hasLoaded = true;
     this.setWrapperStyle(width, height);
