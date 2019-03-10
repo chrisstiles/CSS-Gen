@@ -36,21 +36,72 @@ class PreviewWindow extends React.Component {
     }
   }
 
+  // componentDidMount() {
+  //   window.addEventListener('resize', this.handleWindowResize);
+  //   this.setDefaultSize();
+
+  //   // Save natural default image size if not passed in
+  //   if (this.props.defaultState) {
+  //     const { image: currentImage } = this.props.previewState;
+  //     const { image: defaultImage, naturalWidth, naturalHeight } = this.props.defaultState.previewState;
+
+  //     if (defaultImage && currentImage !== defaultImage && (!naturalWidth || !naturalHeight)) {
+  //       getNaturalImageSize(defaultImage)
+  //         .then(({ width: naturalWidth, height: naturalHeight }) => {
+  //           this.props.updateDefaultPreviewState({ naturalWidth, naturalHeight });
+  //         });
+  //     }
+  //   }
+  // }
+
   componentDidMount() {
     window.addEventListener('resize', this.handleWindowResize);
     this.setDefaultSize();
 
-    // Save natural default image size if not passed in
-    if (this.props.defaultState) {
-      const { image: currentImage } = this.props.previewState;
-      const { image: defaultImage, naturalWidth, naturalHeight } = this.props.defaultState.previewState;
+    // Size and position images
+    const { image: currentImage } = this.props.previewState;
 
-      if (currentImage !== defaultImage && (!naturalWidth || !naturalHeight)) {
-        getNaturalImageSize(defaultImage)
-          .then(({ width: naturalWidth, height: naturalHeight }) => {
-            this.props.updateDefaultPreviewState({ naturalWidth, naturalHeight });
-          });
+    if (currentImage) {
+      const { defaultState, useImgTag } = this.props;
+      
+      // Save natural default image size if not passed in
+      if (defaultState) {
+        const { image: defaultImage, naturalWidth, naturalHeight } = defaultState.previewState;
+
+        if (defaultImage) {
+          if (useImgTag) {
+            
+          } else {
+            const isDefaultImage = currentImage === defaultImage;
+            if (!isDefaultImage || !naturalWidth || !naturalHeight) {
+              if (!isDefaultImage) {
+                getNaturalImageSize(currentImage)
+                  .then(({ width: naturalWidth, height: naturalHeight }) => {
+                    this.positionImage(naturalWidth, naturalHeight);
+                  });
+              }
+
+              getNaturalImageSize(defaultImage)
+                .then(({ width: naturalWidth, height: naturalHeight }) => {
+                  if (isDefaultImage) this.positionImage(naturalWidth, naturalHeight);
+                  this.props.updateDefaultPreviewState({ naturalWidth, naturalHeight });
+                });
+            } else {
+              this.positionImage(naturalWidth, naturalHeight);
+              this.props.updateDefaultPreviewState({ naturalWidth, naturalHeight });
+            }
+          }
+
+          return;
+        }
       }
+
+      // Set initial size for user provided image for
+      // generators that don't have an image by default
+      getNaturalImageSize(currentImage)
+        .then(({ width: naturalWidth, height: naturalHeight }) => {
+          this.positionImage(naturalWidth, naturalHeight);
+        });
     }
   }
 
@@ -108,6 +159,14 @@ class PreviewWindow extends React.Component {
   }
 
   reset = shouldResetWrapper => {
+    if (this.wrapper && shouldResetWrapper) {
+      const { defaultState } = this.props;
+
+      if (!defaultState || !defaultState.previewState.image) {
+        this.wrapper.removeAttribute('style');
+      }
+    }
+    
     const state = {
       hasDragged: false,
       hasResized: false,
@@ -230,8 +289,7 @@ class PreviewWindow extends React.Component {
     this.setState({ wrapperStyle });
   }
 
-  handleImageLoaded = (event) => {
-    const { width: naturalWidth, height: naturalHeight } = event.target;
+  positionImage = (naturalWidth, naturalHeight) => {
     let { width, height } = getImageSize(naturalWidth, naturalHeight);
 
     const { previewState, defaultState } = this.props;
@@ -259,13 +317,18 @@ class PreviewWindow extends React.Component {
     this.props.updatePreview({ width, height });
   }
 
+  handleImageLoaded = (event) => {
+    const { width: naturalWidth, height: naturalHeight } = event.target;
+    this.positionImage(naturalWidth, naturalHeight);
+  }
+
   handleImageError = () => {
     finishLoading('preview');
     addNotification(getNotificationTypes().error, 'Error adding image');
   }
 
   handleFileDrop = data => {
-    this.hasLoaded = false;
+    this.hasLoaded = true;
     this.setWrapperStyle(data.width, data.height);
     const props = extend(data, {
       hasDragged: false,
@@ -281,25 +344,17 @@ class PreviewWindow extends React.Component {
 
     if (image) {
       // Render img tag with preview styles
-      const { width, height } = previewStyle;
+      const { 
+        width,
+        height,
+        image, 
+        background, 
+        backgroundImage, 
+        backgroundColor, 
+        ...restStyle 
+      } = previewStyle;
 
-      if (this.props.userImageAsBackground) {
-        return (
-          <div
-            className="preview-style"
-            style={{ width, height }}
-          >
-            <div
-              className="style"
-              style={previewStyle}
-            />
-            <div
-              className="background"
-              style={{ backgroundImage: `url('${image}')` }}
-            />
-          </div>
-        );
-      } else {
+      if (this.props.useImgTag) {
         return (
           <img
             src={image}
@@ -309,6 +364,22 @@ class PreviewWindow extends React.Component {
             onError={this.handleImageError}
             alt="Generator Preview"
           />
+        );
+      } else {
+        return (
+          <div
+            className="preview-style"
+            style={{ width, height, ...restStyle }}
+          >
+            <div
+              className="image"
+              style={{ width, height, backgroundImage: `url('${image}')` }}
+            />
+            <div
+              className="background"
+              style={{ width, height, background }}
+            />
+          </div>
         );
       }
     }

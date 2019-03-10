@@ -55,6 +55,7 @@ class Gradient extends React.Component {
         <Preview
           canvasColor={previewState.canvasColor}
           previewState={previewState}
+          resetCount={generatorState.resetCount}
           updatePreview={updatePreview}
           style={previewStyle}
         />

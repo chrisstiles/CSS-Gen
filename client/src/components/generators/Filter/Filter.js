@@ -175,9 +175,7 @@ const stateTypes = {
     shadowOpacity: Number
   },
   previewState: {
-    image: String,
-    naturalWidth: Number,
-    naturalHeight: Number
+    image: String
   }
 };
 

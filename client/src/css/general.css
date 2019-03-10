@@ -507,10 +507,22 @@ body.preview-loading #canvas > * {
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 4px; }
+  border-radius: 4px;
+  overflow: hidden; }
+  .preview-style .image,
+  .preview-style .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none; }
+  .preview-style .image {
+    background-size: 100% 100%; }
+  .preview-style .background {
+    z-index: -1; }
 
 img.preview-style {
-  position: relative; }
+  position: relative;
+  overflow: unset; }
 
 /* ------------------------- */
 /* Static Window Preview */
