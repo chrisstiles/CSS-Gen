@@ -175,13 +175,15 @@ const stateTypes = {
     shadowOpacity: Number
   },
   previewState: {
-    image: String
+    image: String,
+    naturalWidth: Number,
+    naturalHeight: Number
   }
 };
 
 function setDropShadowOpacity(state) {
   const { shadowColor, shadowOpacity } = state.dropShadow;
-  state.dropShadow.shadowColor = tinycolor(shadowColor).setAlpha(shadowOpacity / 100);
+  state.dropShadow.shadowColor = hexOrRgba(tinycolor(shadowColor).setAlpha(shadowOpacity / 100));
 
   return state;
 }
