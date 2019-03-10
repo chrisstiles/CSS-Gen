@@ -223,7 +223,6 @@ export function getPersistedState(defaultState) {
 			const daysLimit = 365;
 
 			if (timestamp) {
-				// const previousDate = new Date(timestamp);
 				const today = new Date();
 				const timeDifference = Math.abs(today.getTime() - timestamp);
 				const dayDifference = Math.ceil(timeDifference / (1000 * 3600 * 25));
