@@ -8,15 +8,15 @@ class Header extends React.Component {
 
   render() {
     const headerProps = { id: 'header' };
-    const { defaultState, updateGenerator, children } = this.props;
+    const { resetGenerator, children } = this.props;
 
     return (
       <header {...headerProps}>
         <div className="content">
-          {defaultState && updateGenerator ?
+          {resetGenerator ?
             <div
               className="button reset"
-              onClick={() => { updateGenerator(defaultState) }}
+              onClick={resetGenerator}
             >
               Reset
           </div>

@@ -63,7 +63,8 @@ class Filter extends React.Component {
       defaultState,
       updateGenerator,
       updatePreview,
-      updateDefaultPreviewState
+      updateDefaultPreviewState,
+      resetGenerator
     } = this.props;
 
     const { width, height } = previewState;
@@ -76,10 +77,7 @@ class Filter extends React.Component {
         previewState={previewState}
         globalState={globalState}
       >
-        <Header
-          defaultState={defaultState}
-          updateGenerator={updateGenerator}
-        >
+        <Header resetGenerator={resetGenerator}>
           <h1>CSS Filter Generator</h1>
           <p>Test Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
         </Header>

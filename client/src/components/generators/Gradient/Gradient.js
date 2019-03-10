@@ -30,7 +30,8 @@ class Gradient extends React.Component {
       generatorState,
       previewState,
       updateGenerator,
-      updatePreview
+      updatePreview,
+      resetGenerator
     } = this.props;
 
     const { width, height } = previewState;
@@ -43,10 +44,7 @@ class Gradient extends React.Component {
         previewState={previewState}
         globalState={globalState}
       >
-        <Header
-          defaultState={defaultState}
-          updateGenerator={updateGenerator}
-        >
+        <Header resetGenerator={resetGenerator}>
           <h1>CSS Gradient Generator</h1>
           <p>Create linear and radial gradients with CSS.</p>
         </Header>

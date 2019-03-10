@@ -45,7 +45,8 @@ class BoxShadow extends React.Component {
       generatorState, 
       previewState, 
       updateGenerator, 
-      updatePreview
+      updatePreview,
+      resetGenerator
     } = this.props;
 
     const { width, height, background } = previewState;
@@ -58,10 +59,7 @@ class BoxShadow extends React.Component {
         previewState={previewState}
         globalState={globalState}
       >
-        <Header
-          defaultState={defaultState}
-          updateGenerator={updateGenerator}
-        >
+        <Header resetGenerator={resetGenerator}>
           <h1>CSS Box Shadow Generator</h1>
           <p>Test Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
         </Header>

@@ -17,9 +17,11 @@ export default function createGenerator (WrappedGenerator, state, stateTypes, op
     constructor(props) {
       super(props);
 
-      const { isDefaultPreview, mutateInitialState } = options;
-      
+
+      const { isDefaultPreview, mutateInitialState, ...restOptions } = options;
+
       this.state = getState(state, stateTypes, isDefaultPreview);
+      this.options = { ...restOptions };
 
       if (mutateInitialState) this.state = mutateInitialState(this.state);
     }
@@ -48,8 +50,24 @@ export default function createGenerator (WrappedGenerator, state, stateTypes, op
       });
     }
 
+    resetGenerator = () => {
+      let defaultState = extend(this.state.defaultState);
+
+      // Generators can pass function to modify
+      // default state before resetting generator
+      const { mutateResetState } = this.options;
+      if (mutateResetState) defaultState = mutateResetState(defaultState);
+
+      this.setState(defaultState);
+    }
+
     render() {
-      const { previewState, defaultState, ...generatorState } = this.state;
+      const { 
+        previewState, 
+        defaultState, 
+        ...generatorState 
+      } = this.state;
+
       return (
         <WrappedGenerator
           generatorState={{ ...generatorState }}
@@ -58,6 +76,7 @@ export default function createGenerator (WrappedGenerator, state, stateTypes, op
           updateGenerator={this.updateGenerator}
           updatePreview={this.updatePreview}
           updateDefaultPreviewState={this.updateDefaultPreviewState}
+          resetGenerator={this.resetGenerator}
           {...this.props}
         />
       );

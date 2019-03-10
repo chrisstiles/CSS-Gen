@@ -75,7 +75,8 @@ class Flexbox extends React.Component {
       generatorState,
       previewState,
       updateGenerator,
-      updatePreview
+      updatePreview,
+      resetGenerator
     } = this.props;
 
     const output = this.generate();
@@ -98,10 +99,7 @@ class Flexbox extends React.Component {
         previewState={previewState}
         globalState={globalState}
       >
-        <Header 
-          defaultState={defaultState}
-          updateGenerator={updateGenerator}
-        >
+        <Header resetGenerator={resetGenerator}>
           <h1>CSS Flexbox Generator</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
         </Header>

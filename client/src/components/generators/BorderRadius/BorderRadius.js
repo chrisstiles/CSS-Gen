@@ -98,7 +98,8 @@ class BorderRadius extends React.Component {
       generatorState,
       previewState,
       updateGenerator,
-      updatePreview
+      updatePreview,
+      resetGenerator
     } = this.props;
 
     const { width, height, background } = previewState;
@@ -111,10 +112,7 @@ class BorderRadius extends React.Component {
         previewState={previewState}
         globalState={globalState}
       >
-        <Header
-          defaultState={defaultState}
-          updateGenerator={updateGenerator}
-        >
+        <Header resetGenerator={resetGenerator}>
           <h1>CSS Border Radius Generator</h1>
           <p>Use the controls on to the right to create any kind of border. Once you are done, copy your CSS from the code output box in the bottom right.</p>
         </Header>
