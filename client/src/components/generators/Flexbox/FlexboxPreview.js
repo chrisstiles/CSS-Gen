@@ -260,9 +260,7 @@ class FlexboxPreviewContent extends React.PureComponent {
 
 const FlexboxPreview = ({ canvasColor, ...previewProps }) => {
   return (
-    <Preview
-      canvasColor={canvasColor}
-    >
+    <Preview canvasColor={canvasColor}>
       <FlexboxPreviewContent {...previewProps} />
     </Preview>
   );
