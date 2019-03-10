@@ -375,12 +375,11 @@ export function numberInConstraints(num, min = null, max = null) {
 }
 
 export function generateCSSString(css, selector) {
-	// let cssString = '';
 	const cssString = [];
 	const indent = selector ? '  ' : '';
 
 	_.each(css, (value, key) => {
-		if (value !== undefined && value !== null) {
+		if (value || value === 0) {
 			key = jsToCss(key);
 			const property = `${indent}${key}: ${value};`;
 			cssString.push(property);
