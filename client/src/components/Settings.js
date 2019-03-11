@@ -5,7 +5,7 @@ import Toggle from './input/Toggle';
 import { mapObject } from 'underscore';
 import { getGlobalState, updateGlobalState } from '../util/helpers';
 
-class Settings extends React.PureComponent {
+class Settings extends React.Component {
   // Default generator preview windows will have:
   // width, height and optionally background
   renderDefaultPreviewSettings = () => {
