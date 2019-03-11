@@ -5,8 +5,10 @@ elements is easier in one separate file
 
 */
 
+$nav-height: 55px;
+
 #navigation {
-  height:55px;
+  height:$nav-height;
 }
 
 #header {
@@ -16,7 +18,7 @@ elements is easier in one separate file
 
 #sidebar {
   position:fixed;
-  top:55px;
+  top:$nav-height;
   right:0;
   width:320px;
   bottom:210px;
@@ -27,7 +29,7 @@ elements is easier in one separate file
 }
 
 #page-wrapper {
-  padding-top:55px;
+  padding-top:$nav-height;
 
   &.generator {
     display:flex;
@@ -54,24 +56,31 @@ elements is easier in one separate file
   display:flex;
   width:100%;
   flex-grow:1;
+  justify-content:flex-end;
 }
 
 #generator-preview {
   display:flex;
-  flex-grow:1;
+  flex-grow:0;
   padding:25px;
   position:relative;
   width:calc(100% - 360px);
-}
-
-#bottom-content-wrapper {
-  height:210px;
 }
 
 #generator-output {
   flex-grow:0;
   width:360px;
   flex-shrink:0;
+  overflow:auto;
+
+  &.fixed {
+    top:$nav-height;
+    left:0;
+  }
+}
+
+#bottom-content-wrapper {
+  height:210px;
 }
 
 @media (min-height: 920px) {
