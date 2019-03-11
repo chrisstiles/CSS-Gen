@@ -59,6 +59,7 @@ class Gradient extends React.Component {
             previewState={previewState}
             resetCount={generatorState.resetCount}
             updatePreview={updatePreview}
+            useBackgroundImage={true}
             style={previewStyle}
           />
         </GeneratorContent>

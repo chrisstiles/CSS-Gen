@@ -193,6 +193,7 @@ body {
   border-radius:4px;
   overflow:hidden;
 
+  .style,
   .image,
   .background {
     position:absolute;
@@ -203,10 +204,11 @@ body {
 
   .image {
     background-size:100% 100%;
+    z-index: -1;
   }
 
   .background {
-    z-index: -1;
+    z-index: -2;
   }
 }
 
