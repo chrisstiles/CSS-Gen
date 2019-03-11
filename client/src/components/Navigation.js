@@ -34,10 +34,7 @@ class Navigation extends React.PureComponent {
 					<Logo />
 				</NavLink>
 
-				<div id="page-links">
-					<h2>CSS Generators</h2>
-					{navLinkComponents}
-				</div>
+				<div id="page-links">{navLinkComponents}</div>
 			</nav>
 		);
 	}

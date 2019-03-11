@@ -5,104 +5,48 @@
 	left:0;
 	right:0;
 	z-index: 3000;
+	display:flex;
+	justify-content:center;
+	align-items:center;
 
 	svg {
 		display:none;
 	}
 }
 
-// Old
-#nav-window {
-	position: fixed;
-	background-color: #fff;
-	border-radius: 7px;
-	z-index: 4000;
-	box-shadow: 0px 9px 29px 0px rgba(184, 185, 218, 0.36);
-	// border:1px solid rgba($accent-color, .23);
-	display:flex;
-	flex-direction: column;
-	overflow:hidden;
-
-	.logo {
-		margin:20px 30px 15px 30px;
-		padding:10px;
-		display: block;
-		overflow: visible;
-
-		svg {
-			width:100%;
-			height:24px;
-			overflow: visible;
-		}
-
-		.title {
-			fill: #444545;
-		}
-
-		.bracket {
-			fill: #c6c6c5;
-			transition: all .4s;
-		}
-
-		&:hover .bracket {
-			fill:$accent-color;
-
-			&.left {
-				transform:translateX(-6px);
-			}
-
-			&.right {
-				transform:translateX(6px);
-			}
-		}
-	}
-}
-
 #page-links {
-	background-color:#fbfbfb;
-	padding:20px 15px;
-	display:none;
-
-	h2 {
-		text-align:center;
-		font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom:15px;
-    color:#9c9c9c;
-	}
-
 	a {
-		text-decoration:none;
-		color:$dark-grey;
-		display:block;
-		line-height:1;
-		padding:8px 15px 8px 43px;
-		margin-bottom:2px;
-		position:relative;
-		font-size:15px;
+		color:#fff;
 		font-weight:600;
-		border-radius:2px;
+		font-size:14px;
+		text-decoration:none;
+		display:inline-flex;
+		line-height:35px;
+    margin: 0 2px;
+    padding:0 15px;
+		border-radius:3px;
+		position:relative;
+		justify-content: center;
+		align-items: center;
 
 		&:hover {
-			background-color:#f3f3f3;
+			background-color:rgba(#000, .12);
 		}
 
 		&:before {
 			content:"";
-			position:absolute;
 			width: 15px;
 			height: 15px;
 			left:16px;
 			top:8px;
 			background-size:contain;
 			background-repeat:no-repeat;
+			margin-right:10px;
 			filter:grayscale(1);
 		}
 
 		&.current {
-			color:$accent-color;
-			opacity: 1 !important;
+			background-color:rgba(#000, .1);
 
 			&:before {
 				filter:none;
@@ -136,12 +80,3 @@
 		}
 	}
 }
-
-
-/* Media Queries */
-
-// @media screen and (max-width: 1250px) {
-//   #nav-window {
-//     width:270px;
-//   }
-// }

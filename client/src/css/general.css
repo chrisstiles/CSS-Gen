@@ -216,99 +216,61 @@ elements is easier in one separate file
   top: 0;
   left: 0;
   right: 0;
-  z-index: 3000; }
+  z-index: 3000;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
   #navigation svg {
     display: none; }
 
-#nav-window {
-  position: fixed;
-  background-color: #fff;
-  border-radius: 7px;
-  z-index: 4000;
-  box-shadow: 0px 9px 29px 0px rgba(184, 185, 218, 0.36);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; }
-  #nav-window .logo {
-    margin: 20px 30px 15px 30px;
-    padding: 10px;
-    display: block;
-    overflow: visible; }
-    #nav-window .logo svg {
-      width: 100%;
-      height: 24px;
-      overflow: visible; }
-    #nav-window .logo .title {
-      fill: #444545; }
-    #nav-window .logo .bracket {
-      fill: #c6c6c5;
-      transition: all .4s; }
-    #nav-window .logo:hover .bracket {
-      fill: #4834d4; }
-      #nav-window .logo:hover .bracket.left {
-        transform: translateX(-6px); }
-      #nav-window .logo:hover .bracket.right {
-        transform: translateX(6px); }
+#page-links a {
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  line-height: 35px;
+  margin: 0 2px;
+  padding: 0 15px;
+  border-radius: 3px;
+  position: relative;
+  justify-content: center;
+  align-items: center; }
+  #page-links a:hover {
+    background-color: rgba(0, 0, 0, 0.12); }
+  #page-links a:before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    left: 16px;
+    top: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+    filter: grayscale(1); }
+  #page-links a.current {
+    background-color: rgba(0, 0, 0, 0.1); }
+    #page-links a.current:before {
+      filter: none; }
+  #page-links a.box-shadow:before {
+    width: 17px;
+    height: 17px;
+    top: 7px;
+    left: 15px;
+    background-image: url("../images/nav-icons/box-shadow.svg"); }
+  #page-links a.border-radius:before {
+    width: 14px;
+    height: 14px;
+    top: 8px;
+    background-image: url("../images/nav-icons/border-radius.svg"); }
+  #page-links a.gradient:before {
+    background-image: url("../images/nav-icons/gradient.svg"); }
+  #page-links a.text-shadow:before {
+    background-image: url("../images/nav-icons/text-shadow.svg");
+    width: 16px;
+    height: 16px;
+    left: 18px; }
 
-#page-links {
-  background-color: #fbfbfb;
-  padding: 20px 15px;
-  display: none; }
-  #page-links h2 {
-    text-align: center;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-    color: #9c9c9c; }
-  #page-links a {
-    text-decoration: none;
-    color: #505050;
-    display: block;
-    line-height: 1;
-    padding: 8px 15px 8px 43px;
-    margin-bottom: 2px;
-    position: relative;
-    font-size: 15px;
-    font-weight: 600;
-    border-radius: 2px; }
-    #page-links a:hover {
-      background-color: #f3f3f3; }
-    #page-links a:before {
-      content: "";
-      position: absolute;
-      width: 15px;
-      height: 15px;
-      left: 16px;
-      top: 8px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      filter: grayscale(1); }
-    #page-links a.current {
-      color: #4834d4;
-      opacity: 1 !important; }
-      #page-links a.current:before {
-        filter: none; }
-    #page-links a.box-shadow:before {
-      width: 17px;
-      height: 17px;
-      top: 7px;
-      left: 15px;
-      background-image: url("../images/nav-icons/box-shadow.svg"); }
-    #page-links a.border-radius:before {
-      width: 14px;
-      height: 14px;
-      top: 8px;
-      background-image: url("../images/nav-icons/border-radius.svg"); }
-    #page-links a.gradient:before {
-      background-image: url("../images/nav-icons/gradient.svg"); }
-    #page-links a.text-shadow:before {
-      background-image: url("../images/nav-icons/text-shadow.svg");
-      width: 16px;
-      height: 16px;
-      left: 18px; }
-
-/* Media Queries */
 /* ------------------------- */
 /* Variables */
 /* ------------------------- */
