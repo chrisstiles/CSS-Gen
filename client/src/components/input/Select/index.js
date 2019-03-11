@@ -100,7 +100,7 @@ class Select extends React.Component {
 				top = containerRect.top + scrollWrapperHeight;
 			}
 
-			let maxHeight = window.innerHeight - top - 35;
+			let maxHeight = window.innerHeight - top - 35 - this.menuContainer.offsetTop;
 			if (maxHeight > 400) maxHeight = 400;
 
 			return {
