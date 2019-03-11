@@ -12,7 +12,7 @@ const navLinks = [
 	{ to: '/text-shadow', className: 'text-shadow', title: 'Text Shadow' }
 ];
 
-class NavWindow extends React.PureComponent {
+class Navigation extends React.PureComponent {
 	render() {
 		const navLinkComponents = navLinks.map(({ to, className, title }) => {
 			return (
@@ -29,7 +29,7 @@ class NavWindow extends React.PureComponent {
 		});
 
 		return (
-			<div id="nav-window">
+			<nav id="navigation">
 				<NavLink activeClassName="current" exact to="/" className="logo">
 					<Logo />
 				</NavLink>
@@ -38,9 +38,9 @@ class NavWindow extends React.PureComponent {
 					<h2>CSS Generators</h2>
 					{navLinkComponents}
 				</div>
-			</div>
+			</nav>
 		);
 	}
 }
 
-export default NavWindow;
+export default Navigation;

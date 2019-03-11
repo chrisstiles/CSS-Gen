@@ -1,10 +1,24 @@
+#navigation {
+	@include gradient;
+	position:fixed;
+	top:0;
+	left:0;
+	right:0;
+	z-index: 3000;
+
+	svg {
+		display:none;
+	}
+}
+
+// Old
 #nav-window {
 	position: fixed;
 	background-color: #fff;
 	border-radius: 7px;
 	z-index: 4000;
 	box-shadow: 0px 9px 29px 0px rgba(184, 185, 218, 0.36);
-	border:1px solid rgba($accent-color, .23);
+	// border:1px solid rgba($accent-color, .23);
 	display:flex;
 	flex-direction: column;
 	overflow:hidden;
@@ -47,6 +61,7 @@
 #page-links {
 	background-color:#fbfbfb;
 	padding:20px 15px;
+	display:none;
 
 	h2 {
 		text-align:center;

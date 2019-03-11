@@ -69,7 +69,7 @@ class PrimaryLayout extends React.Component {
     // Load main web font asynchronously
     WebFont.load({
       google: {
-        families: ['Montserrat:400,500,600,700']
+        families: ['Montserrat:400,500,600,700,900']
       },
       classes: false
     });

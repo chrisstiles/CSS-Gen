@@ -1,5 +1,7 @@
 import React from 'react';
+import GeneratorContent from '../../GeneratorContent';
 import Preview from '../../Preview';
+
 import { 
   contains, 
   extend, 
@@ -270,12 +272,14 @@ class FlexboxPreviewContent extends React.PureComponent {
   }
 }
 
-const FlexboxPreview = ({ canvasColor, ...previewProps }) => {
+const FlexboxContent = ({ canvasColor, output, ...previewProps }) => {
   return (
-    <Preview canvasColor={canvasColor}>
-      <FlexboxPreviewContent {...previewProps} />
-    </Preview>
+    <GeneratorContent output={output}>
+      <Preview canvasColor={canvasColor}>
+        <FlexboxPreviewContent {...previewProps} />
+      </Preview>
+    </GeneratorContent>
   );
 }
 
-export default FlexboxPreview;
+export default FlexboxContent;

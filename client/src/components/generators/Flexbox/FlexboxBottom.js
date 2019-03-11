@@ -6,7 +6,6 @@ import Toggle from '../../input/Toggle';
 class FlexboxBottom extends React.PureComponent {
   render() {
     const { 
-      output,
       showAddButton,
       isFullHeight,
       canvasColor,
@@ -14,7 +13,7 @@ class FlexboxBottom extends React.PureComponent {
     } = this.props;
 
     return (
-      <BottomContent output={output}>
+      <BottomContent>
         <Settings 
           updatePreview={updatePreview}
           canvasColor={canvasColor}

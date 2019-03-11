@@ -81,21 +81,6 @@ p {
   position:relative;
 }
 
-@mixin no-select() {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none; 
-  -ms-user-select: none;
-  user-select: none;
-}
-
-@mixin allow-select {
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
-  user-select: text !important; 
-}
-
 
 /* ------------------------- */
 /* Media Queries */
@@ -112,7 +97,7 @@ p {
 
 @import './_notifications.scss';
 @import './_layout';
-@import './_nav-window.scss';
+@import './_navigation.scss';
 @import './_header.scss';
 @import './_preview.scss';
 @import './_static-window-preview.scss';

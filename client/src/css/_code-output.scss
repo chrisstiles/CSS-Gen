@@ -1,33 +1,47 @@
 #generator-output {
-  display:flex;
-  flex-grow:0;
-  align-items: flex-end;
-  padding: 11px 11px 12px 11px;
-  background-color: #ececec;
-  // z-index: 200;
-  width:360px;
+  padding: 25px;
+  background-color:#f5f5f5;
+  border-right: 1px solid #e6e6e6;
 
   &.multiple {
-    width:560px;
+    .output-wrapper {
+      height:220px;
+    }
   }
 }
 
 .output-wrapper {
-  height:100%;
+  height:300px;
   display:flex;
   flex-direction:column;
-  margin-right:10px;
-  box-shadow: 0px 6px 20px 0px rgba(184, 185, 218, 0.52);
+  box-shadow: 0 15px 45px 0 rgba(37, 32, 74, 0.15);
   border-radius: 0px 0px 3px 3px;
-  flex-grow:1;
-  max-width:100%;
-  width:100%;
+  margin-bottom:25px;
+  position: relative;
+  border-radius:3px;
 
-  &:last-child {
-    margin-right:0;
+  &:before {
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:10px;
+    border-radius: 3px 3px 0 0;
+    z-index: 1;
+    @include gradient;
   }
 
-  .bottom-title {
+  &:last-child {
+    margin-bottom:0;
+  }
+
+  > * {
+    position:relative;
+    z-index: 2;
+  }
+
+  .output-title {
     border-radius: 3px 3px 0px 0px;
     padding:4px 7px 5px 8px !important;
     display:flex;
@@ -35,8 +49,10 @@
     align-items:center;
     min-height:40px;
     border:none !important;
-    background: $accent-color;
-    background: linear-gradient(to right, $accent-color 0%, lighten($accent-color, 8%) 100%);
+    font-size: 14px;
+    line-height: 1;
+    font-weight: 600;
+    color:#fff;
 
     &:before {
       font-size:12px;
@@ -48,12 +64,12 @@
     }
   }
 
-  &.css .bottom-title:before {
+  &.css .output-title:before {
     content:"CSS";
     background-color:#1ca8e0;
   }
 
-  &.html .bottom-title:before {
+  &.html .output-title:before {
     content: "HTML";
     background-color:#e34c26;
   }
@@ -73,13 +89,13 @@
   }
 
   .bottom {
-    padding:8px;
+    padding:9px;
     display:flex;
     justify-content: flex-end;
     align-items:center;
     background-color:#fdfdfd;
     flex-shrink:0;
-    border-radius: 0px 0px 3px 3px;
+    border-radius: 0 0 3px 3px;
 
     .field-wrapper {
       margin:0;
@@ -110,8 +126,6 @@
   display:flex;
   align-items:center;
   justify-content:center;
-  // background-color:rgba($accent-color, .87);
-  // background-color:rgba(#fff, .4);
   padding:30px;
 
   .output-wrapper {
@@ -198,28 +212,18 @@ body {
 /* ------------------------- */
 /* Code Theme */
 
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+
 .language-wrapper {
   outline:none;
   position:relative;
-  background-color:#fff;
-  border-bottom:1px solid #efefef;
+  background: rgba(23, 11, 15, 0.5);
+  background: linear-gradient(130deg, rgba(77, 34, 78, 0.46) 0%, rgba(29, 13, 74, 0.79) 100%);
   flex-grow:1;
   display:flex;
-  
-  &:after {
-    content:"";
-    position:absolute;
-    pointer-events: none;
-    top:0;
-    left:0;
-    right:0;
-    bottom:-1px;
-    box-shadow: inset 0px -35px 20px -30px rgba(16, 13, 33, 0.07);
-  }
+  z-index: 300;
 
   &:focus {
-    box-shadow: inset -25px 0px 95px -20px rgba(181, 173, 240, 0.55);
-
     &:before {
       content:"";
       display:block;
@@ -230,8 +234,24 @@ body {
       right:0;
       border-radius:1px;
       border:1px solid $accent-color !important;
-      box-shadow: 0px 0px 0px 3px #b5adf0 !important;
+      box-shadow: 0px 0px 0px 4px #b5adf0 !important;
       pointer-events:none;
+      z-index: 600;
+    }
+
+    &:after {
+      content:"";
+      position:absolute;
+      pointer-events: none;
+      top:0;
+      left:0;
+      right:0;
+      bottom:-1px;
+      background-color:rgba(#000, .13);
+    }
+
+    .hljs {
+      box-shadow:inset 0 59px 63px -36px rgba(33, 27, 78, 0.65);
     }
   }
 
@@ -267,145 +287,254 @@ body {
 }
 
 .hljs {
-  font-size:12px;
+  font-size:14px;
   display:block;
-  color:#383838;
+  color:#CDD3D8;
   overflow-x: auto;
   cursor:text;
   line-height:1.3em;
   min-width:100%;
+  z-index:500;
+  box-shadow:inset 0 59px 63px -36px rgba(33, 27, 78, 0.29);
 
   code {
-    padding-top:6px !important;
-    padding-bottom:6px !important;
+    padding-top:8px !important;
+    padding-bottom:8px !important;
+    font-family: 'Inconsolata', monospace;
+    font-weight:400;
 
     &:first-child {
       min-height:100%;
-      padding-right: 8px !important;
-      padding-left:8px !important;
-      background-color:#f9f9f9;
-      color: #8f8f8f;
+      padding-right: 9px !important;
+      padding-left:10px !important;
+      background-color: rgba(17, 11, 60, 0.54);
+      color: #9993ca;
       font-weight: 600;
-      margin-right: 10px !important;
-      border-right: 1px solid #efeaea;
+      margin-right: 12px !important;
     }
 
     &:last-child {
       display:inline-block;
-      padding-right:7px !important;
+      padding-right:8px !important;
     }
   }
 }
 
+.hljs > *::selection {
+  background-color: #3e4451;
+}
+
 .hljs-comment {
-  color:#969896;
-}
-
-.hljs-meta {
-  color:#969896;
-}
-
-.hljs-string {
-  color:#df5000;
-}
-
-.hljs-variable {
-  color:#df5000;
-}
-
-.hljs-template-variable {
-  color:#df5000;
-}
-
-.hljs-strong {
-  color:#df5000;
-}
-
-.hljs-emphasis {
-  color:#df5000;
-}
-
-.hljs-quote {
-  color:#df5000;
-}
-
-.hljs-keyword {
-  color:#a71d5d;
+  color: #656565;
+  font-style: italic;
 }
 
 .hljs-selector-tag {
-  color:#a71d5d;
+  color: #C792EA;
 }
 
+.hljs-string,
+.hljs-subst {
+  color:#c6ff73;
+}
+
+.hljs-number,
+.hljs-regexp,
+.hljs-variable,
+.hljs-template-variable {
+  color: #F77669;
+}
+
+.hljs-keyword {
+  color: #C792EA;
+}
+.hljs-function > .hljs-title {
+  color: #75A5FF;
+}
+.hljs-tag {
+  color: #f2f7ff;
+}
+.hljs-name {
+  color: #ff7e88;
+}
 .hljs-type {
-  color:#a71d5d;
-}
-
-.hljs-literal {
-  color:#0086b3;
-}
-
-.hljs-symbol {
-  color:#0086b3;
-}
-
-.hljs-bullet {
-  color:#0086b3;
+  color: #da4939;
 }
 
 .hljs-attribute {
-  color:#0086b3;
+  color: #90e4d7;
 }
 
-.hljs-section {
-  color:#63a35c;
+.hljs-symbol,
+.hljs-bullet,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-link {
+  color: #C792EA;
 }
 
-.hljs-name {
-  color:#63a35c;
+.hljs-params {
+  color: #EEFFF7;
 }
 
-.hljs-tag {
-  color:#333333;
+
+.hljs-meta {
+  color: #75A5FF;
 }
 
 .hljs-title {
-  color:#795da3;
+  color: #75A5FF;
 }
 
-.hljs-attr {
-  color:#795da3;
-}
-
-.hljs-selector-id {
-  color:#795da3;
-}
-
-.hljs-selector-class {
-  color:#795da3;
-}
-
-.hljs-selector-attr {
-  color:#795da3;
-}
-
-.hljs-selector-pseudo {
-  color:#795da3;
+.hljs-section {
+  color: #ffc66d;
 }
 
 .hljs-addition {
-  color:#55a532;
-  background-color:#eaffea;
+  background-color: #144212;
+  color: #e6e1dc;
+  display: inline-block;
+  width: 100%;
 }
 
 .hljs-deletion {
-  color:#bd2c00;
-  background-color:#ffecec;
+  background-color: #600;
+  color: #e6e1dc;
+  display: inline-block;
+  width: 100%;
+}
+
+.hljs-selector-class {
+  color: #ffc14c;
+}
+
+.hljs-selector-id {
+  color: #F77669;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
 }
 
 .hljs-link {
-  text-decoration:underline;
+  text-decoration: underline;
 }
+
+// Old Colors
+
+// .hljs-comment {
+//   color:#969896;
+// }
+
+// .hljs-meta {
+//   color:#969896;
+// }
+
+// .hljs-string {
+//   color:#df5000;
+// }
+
+// .hljs-variable {
+//   color:#df5000;
+// }
+
+// .hljs-template-variable {
+//   color:#df5000;
+// }
+
+// .hljs-strong {
+//   color:#df5000;
+// }
+
+// .hljs-emphasis {
+//   color:#df5000;
+// }
+
+// .hljs-quote {
+//   color:#df5000;
+// }
+
+// .hljs-keyword {
+//   color:#a71d5d;
+// }
+
+// .hljs-selector-tag {
+//   color:#a71d5d;
+// }
+
+// .hljs-type {
+//   color:#a71d5d;
+// }
+
+// .hljs-literal {
+//   color:#0086b3;
+// }
+
+// .hljs-symbol {
+//   color:#0086b3;
+// }
+
+// .hljs-bullet {
+//   color:#0086b3;
+// }
+
+// .hljs-attribute {
+//   color:#0086b3;
+// }
+
+// .hljs-section {
+//   color:#63a35c;
+// }
+
+// .hljs-name {
+//   color:#63a35c;
+// }
+
+// .hljs-tag {
+//   color:#333333;
+// }
+
+// .hljs-title {
+//   color:#795da3;
+// }
+
+// .hljs-attr {
+//   color:#795da3;
+// }
+
+// .hljs-selector-id {
+//   color:#795da3;
+// }
+
+// .hljs-selector-class {
+//   color:#795da3;
+// }
+
+// .hljs-selector-attr {
+//   color:#795da3;
+// }
+
+// .hljs-selector-pseudo {
+//   color:#795da3;
+// }
+
+// .hljs-addition {
+//   color:#55a532;
+//   background-color:#eaffea;
+// }
+
+// .hljs-deletion {
+//   color:#bd2c00;
+//   background-color:#ffecec;
+// }
+
+// .hljs-link {
+//   text-decoration:underline;
+// }
 
 
 

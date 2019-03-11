@@ -20,15 +20,16 @@ import {
   setGlobalVariable 
 } from '../util/helpers';
 
-registerLanguage('css', cssHighlighter);
-registerLanguage('html', htmlHighlighter);
-
 // Only one code viewer can be expanded at a time
 let currentExpandedOutput = null;
 
 class CodeOutput extends React.PureComponent {
   constructor(props) {
     super(props);
+
+    const { language } = props;
+    if (language === 'css') registerLanguage('css', cssHighlighter);
+    if (language === 'html') registerLanguage('html', htmlHighlighter);
 
     this.state = {
       outputCode: '',
@@ -186,7 +187,7 @@ class CodeOutput extends React.PureComponent {
 
       const output = (
         <div {...outputWrapperProps}>
-          <div className="bottom-title color">
+          <div className="output-title">
             <span>Generater Output</span>
             <div
               className="expand-toggle"

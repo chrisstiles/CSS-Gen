@@ -1,6 +1,6 @@
 import React from 'react'
 import createGenerator from '../create-generator';
-import FlexboxPreview from './FlexboxPreview';
+import FlexboxContent from './FlexboxContent';
 import FlexboxInputs from './FlexboxInputs';
 import FlexboxBottom from './FlexboxBottom';
 import Generator from '../../Generator';
@@ -129,14 +129,14 @@ class Flexbox extends React.Component {
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
         </Header>
         <FlexboxInputs {...props} />
-        <FlexboxPreview 
+        <FlexboxContent 
           canvasColor={canvasColor}
           showAddButton={showAddButton}
           isFullHeight={isFullHeight}
+          output={output}
           {...props}
         />
         <FlexboxBottom
-          output={output}
           showAddButton={showAddButton}
           isFullHeight={isFullHeight}
           canvasColor={canvasColor}

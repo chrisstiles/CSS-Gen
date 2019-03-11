@@ -1,5 +1,5 @@
 import React from 'react';
-import NavWindow from './NavWindow';
+import Navigation from './Navigation';
 import { startLoading, finishLoading } from '../util/helpers';
 
 class Page extends React.Component {
@@ -14,17 +14,18 @@ class Page extends React.Component {
 
   render() {
     const { className, noSidebar, children } = this.props;
-    const pageProps = { id: 'page-wrapper' };
+    const wrapperProps = { id: 'page-wrapper' };
+    if (className) wrapperProps.className = className;
 
-    const wrapperClassName = [];
-    if (className) wrapperClassName.push(className);
-    if (noSidebar) wrapperClassName.push('no-sidebar');
-    if (wrapperClassName.length) pageProps.className = wrapperClassName.join(' ');
+    const contentProps = { id: 'page-content' };
+    if (noSidebar) contentProps.className = 'no-sidebar';
 
     return (
-      <div {...pageProps}>
-        <NavWindow />
-        {children}
+      <div {...wrapperProps}>
+        <Navigation />
+        <main {...contentProps}>
+          {children}
+        </main>
       </div>
     );
   }

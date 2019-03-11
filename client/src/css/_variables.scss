@@ -1,3 +1,6 @@
+/* ------------------------- */
+/* Variables */
+
 $accent-color: #4834d4;
 $accent-color-hover: lighten($accent-color, 5%);
 $dark-grey: #505050;
@@ -5,3 +8,27 @@ $main-font: 'Montserrat', sans-serif;
 $input-height: 35px;
 $small-input-height: 27px;
 $input-text-color: #505050;
+
+
+/* ------------------------- */
+/* Mixins */
+
+@mixin no-select() {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none; 
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin allow-select {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important; 
+}
+
+@mixin gradient($start-color: $accent-color, $end-color: lighten($start-color, 8%)) {
+  background: $start-color;
+  background: linear-gradient(to right, $start-color 0%, $end-color 100%);
+}
