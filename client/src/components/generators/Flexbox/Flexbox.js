@@ -46,8 +46,9 @@ class Flexbox extends React.Component {
     const html = [];
     const css = [];
 
-    css.push(generateCSSString(containerStyles, '.container'));
-    css.push(generateCSSString(itemStyles, '.item'));
+    const { display, ...containerDefaults } = defaultState.containerStyles;
+    css.push(generateCSSString(containerStyles, '.container', { ...containerDefaults }));
+    css.push(generateCSSString(itemStyles, '.item', defaultState.itemStyles));
     
     if (childElements.length) {
       childElements.forEach((child, index) => {
@@ -153,14 +154,14 @@ const defaultState = {
   containerStyles: {
     display: 'flex',
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
     justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    alignContent: 'flex-start'
+    alignItems: 'stretch',
+    alignContent: 'stretch'
   },
   itemStyles: {
-    flexGrow: 1,
-    flexShrink: 0,
+    flexGrow: 0,
+    flexShrink: 1,
     alignSelf: 'auto'
   },
   selectedIndexes: [],
@@ -168,7 +169,7 @@ const defaultState = {
   previewState: {
     canvasColor: '#fdfdfd',
     showAddButton: true,
-    isFullHeight: true
+    isFullHeight: false
   }
 };
 

@@ -373,12 +373,12 @@ export function numberInConstraints(num, min = null, max = null) {
   }
 }
 
-export function generateCSSString(css, selector) {
+export function generateCSSString(css, selector, defaults = {}) {
 	const cssString = [];
 	const indent = selector ? '  ' : '';
 
 	_.each(css, (value, key) => {
-		if (value || value === 0) {
+		if ((value || value === 0) && defaults[key] !== value) {
 			key = jsToCss(key);
 			const property = `${indent}${key}: ${value};`;
 			cssString.push(property);
