@@ -1,14 +1,13 @@
 import React from 'react';
 import createGenerator from '../create-generator';
 import FilterInputs from './FilterInputs';
-
 import Generator from '../../Generator';
 import Header from '../../Header';
+import GeneratorContent from '../../GeneratorContent';
 import Preview from '../../Preview';
 import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
 import Tooltip from '../../Tooltip';
-
 import tinycolor from 'tinycolor2';
 import _ from 'underscore';
 import waterfall from './images/waterfall.jpg';
@@ -87,16 +86,18 @@ class Filter extends React.Component {
           dropShadowSliders={dropShadowSliders}
           {...generatorState}
         />
-        <Preview
-          canvasColor={previewState.canvasColor}
-          previewState={previewState}
-          defaultState={defaultState}
-          resetCount={generatorState.resetCount}
-          updatePreview={updatePreview}
-          updateDefaultPreviewState={updateDefaultPreviewState}
-          style={previewStyle}
-        />
-        <BottomContent output={output}>
+        <GeneratorContent output={output}>
+          <Preview
+            canvasColor={previewState.canvasColor}
+            previewState={previewState}
+            defaultState={defaultState}
+            resetCount={generatorState.resetCount}
+            updatePreview={updatePreview}
+            updateDefaultPreviewState={updateDefaultPreviewState}
+            style={previewStyle}
+          />
+        </GeneratorContent>
+        <BottomContent>
           <Settings
             updatePreview={updatePreview}
             previewState={{ width, height }}

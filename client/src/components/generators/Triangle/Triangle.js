@@ -4,6 +4,7 @@ import TriangleInputs from './TriangleInputs';
 import TrianglePreview from './TrianglePreview';
 import Generator from '../../Generator';
 import Header from '../../Header';
+import GeneratorContent from '../../GeneratorContent';
 import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
 import { hexOrRgba, generateCSSString } from '../../../util/helpers';
@@ -173,11 +174,13 @@ class Triangle extends React.Component {
           updateGenerator={updateGenerator}
           {...generatorState}
         />
-        <TrianglePreview
-          canvasColor={previewState.canvasColor}
-          {...previewStyle} 
-        />
-        <BottomContent output={output}>
+        <GeneratorContent output={output}>
+          <TrianglePreview
+            canvasColor={previewState.canvasColor}
+            {...previewStyle}
+          />
+        </GeneratorContent>
+        <BottomContent>
           <Settings
             canvasColor={previewState.canvasColor} 
             updatePreview={updatePreview}

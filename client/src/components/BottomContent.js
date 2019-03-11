@@ -1,11 +1,6 @@
 import React from 'react';
-import { propsHaveChanged } from '../util/helpers';
 
-class BottomContent extends React.Component {
-  shouldComponentUpdate(prevProps) {
-    return propsHaveChanged(prevProps, this.props);
-  }
-
+class BottomContent extends React.PureComponent {
   render() {
     return (
       <div id="bottom-content-wrapper">

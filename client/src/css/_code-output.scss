@@ -11,7 +11,7 @@
 }
 
 .output-wrapper {
-  height:300px;
+  height:250px;
   display:flex;
   flex-direction:column;
   box-shadow: 0 15px 45px 0 rgba(37, 32, 74, 0.15);
@@ -59,7 +59,7 @@
       border-radius: 2px;
       line-height: 22px;
       padding: 0px 8px;
-      margin-right:8px;
+      margin-right:10px;
       font-weight:700;
     }
   }
@@ -257,8 +257,8 @@ body {
 
   &.disabled {
     opacity:1 !important;
-    background-color:#fbfbfb;
-    box-shadow: inset 25px 0px 95px -20px rgba($accent-color, .02);
+    background-color:rgba(255, 255, 255, 0.31);
+    box-shadow: inset -3px 8px 95px -30px rgba(20, 16, 43, 0.82);
     
     &:before {
       display:none;
@@ -276,7 +276,7 @@ body {
       justify-content: center;
       align-items:center;
       z-index: 200;
-      color:#a5a5a5;
+      color:#fff;
       font-weight: 600;
     }
 

@@ -2,12 +2,11 @@ import React from 'react';
 import createGenerator from '../create-generator';
 import TextShadowInputs from './TextShadowInputs';
 import TextShadowPreview from './TextShadowPreview';
-
 import Generator from '../../Generator';
 import Header from '../../Header';
+import GeneratorContent from '../../GeneratorContent';
 import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
-
 import { generateCSSString, hexOrRgba } from '../../../util/helpers';
 
 const defaultFont = 'Montserrat';
@@ -80,15 +79,17 @@ class TextShadow extends React.Component {
           updateGenerator={updateGenerator}
           {...generatorState}
         />
-        <TextShadowPreview
-          value={generatorState.text}
-          name="text"
-          style={previewStyle}
-          canvasColor={previewState.canvasColor}
-          placeholder="Click here to enter text"
-          updateGenerator={updateGenerator}
-        />
-        <BottomContent output={output}>
+        <GeneratorContent output={output}>
+          <TextShadowPreview
+            value={generatorState.text}
+            name="text"
+            style={previewStyle}
+            canvasColor={previewState.canvasColor}
+            placeholder="Click here to enter text"
+            updateGenerator={updateGenerator}
+          />
+        </GeneratorContent>
+        <BottomContent>
           <Settings
             canvasColor={previewState.canvasColor}
             updatePreview={updatePreview}

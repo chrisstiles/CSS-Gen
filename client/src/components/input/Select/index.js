@@ -94,17 +94,14 @@ class Select extends React.Component {
 			const containerRect = this.scrollWrapper.getBoundingClientRect();
 			const borderLeftWidth = getComputedStyle(this.scrollWrapper, null).getPropertyValue('border-left-width');
 			const scrollWrapperHeight = containerRect.height;
-
-			let top = selectRect.top + selectRect.height;
+			
+			let top = selectRect.top + selectRect.height - this.menuContainer.offsetTop;
 			if (top >= (containerRect.top + scrollWrapperHeight)) {
 				top = containerRect.top + scrollWrapperHeight;
 			}
 
 			let maxHeight = window.innerHeight - top - 35;
-
-			if (maxHeight > 400) {
-				maxHeight = 400;
-			}
+			if (maxHeight > 400) maxHeight = 400;
 
 			return {
 				width: selectRect.width,

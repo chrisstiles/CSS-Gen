@@ -3,6 +3,7 @@ import createGenerator from '../create-generator';
 import BoxShadowInputs from './BoxShadowInputs';
 import Generator from '../../Generator';
 import Header from '../../Header';
+import GeneratorContent from '../../GeneratorContent';
 import Preview from '../../Preview';
 import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
@@ -67,14 +68,16 @@ class BoxShadow extends React.Component {
           updateGenerator={updateGenerator}
           {...generatorState} 
         />
-        <Preview 
-          canvasColor={previewState.canvasColor}
-          previewState={previewState}
-          resetCount={generatorState.resetCount}
-          updatePreview={updatePreview}
-          style={previewStyle}
-        />
-        <BottomContent output={output}>
+        <GeneratorContent output={output}>
+          <Preview
+            canvasColor={previewState.canvasColor}
+            previewState={previewState}
+            resetCount={generatorState.resetCount}
+            updatePreview={updatePreview}
+            style={previewStyle}
+          />
+        </GeneratorContent>
+        <BottomContent>
           <Settings
             updatePreview={updatePreview}
             previewState={{ width, height, background }}

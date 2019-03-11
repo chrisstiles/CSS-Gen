@@ -2,13 +2,12 @@ import React from 'react';
 import createGenerator from '../create-generator';
 import BorderRadiusInputs from './BorderRadiusInputs';
 import BorderRadiusPresets from './BorderRadiusPresets';
-
 import Generator from '../../Generator';
 import Header from '../../Header';
+import GeneratorContent from '../../GeneratorContent';
 import Preview from '../../Preview';
 import BottomContent from '../../BottomContent';
 import Settings from '../../Settings';
-
 import { generateCSSString } from '../../../util/helpers';
 
 const defaultRadius = 10;
@@ -120,14 +119,16 @@ class BorderRadius extends React.Component {
           updateGenerator={updateGenerator}
           {...generatorState}
         />
-        <Preview
-          canvasColor={previewState.canvasColor}
-          previewState={previewState}
-          resetCount={generatorState.resetCount}
-          updatePreview={updatePreview}
-          style={previewStyle}
-        />
-        <BottomContent output={output}>
+        <GeneratorContent output={output}>
+          <Preview
+            canvasColor={previewState.canvasColor}
+            previewState={previewState}
+            resetCount={generatorState.resetCount}
+            updatePreview={updatePreview}
+            style={previewStyle}
+          />
+        </GeneratorContent>
+        <BottomContent>
           <Settings
             updatePreview={updatePreview}
             previewState={{ width, height, background }}

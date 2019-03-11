@@ -147,8 +147,7 @@ elements is easier in one separate file
   height: 55px; }
 
 #header {
-  flex-basis: 100%;
-  flex-shrink: 0;
+  flex-basis: 0;
   flex-grow: 0; }
 
 #sidebar {
@@ -220,48 +219,64 @@ elements is easier in one separate file
   display: flex;
   justify-content: center;
   align-items: center; }
-  #navigation svg {
-    display: none; }
+  #navigation .logo {
+    display: block;
+    overflow: visible;
+    margin-right: 25px;
+    width: 140px;
+    flex-grow: 0; }
+    #navigation .logo svg {
+      width: 100%;
+      height: 24px;
+      display: block;
+      overflow: visible; }
+    #navigation .logo .title {
+      fill: #fff; }
+    #navigation .logo .bracket {
+      fill: #c6c6c5;
+      transition: all .4s; }
+    #navigation .logo:hover .bracket {
+      fill: #fff; }
+      #navigation .logo:hover .bracket.left {
+        transform: translateX(-6px); }
+      #navigation .logo:hover .bracket.right {
+        transform: translateX(6px); }
 
 #page-links a {
   color: #fff;
   font-weight: 600;
   font-size: 14px;
   text-decoration: none;
-  display: inline-flex;
+  display: inline-block;
   line-height: 35px;
-  margin: 0 2px;
-  padding: 0 15px;
+  margin: 0 5px;
+  padding: 0 12px 0 36px;
   border-radius: 3px;
-  position: relative;
-  justify-content: center;
-  align-items: center; }
+  position: relative; }
   #page-links a:hover {
     background-color: rgba(0, 0, 0, 0.12); }
   #page-links a:before {
     content: "";
-    width: 15px;
-    height: 15px;
-    left: 16px;
-    top: 8px;
+    width: 14px;
+    height: 14px;
+    left: 12px;
+    top: 10px;
     background-size: contain;
     background-repeat: no-repeat;
-    margin-right: 10px;
+    position: absolute;
     filter: grayscale(1); }
   #page-links a.current {
     background-color: rgba(0, 0, 0, 0.1); }
-    #page-links a.current:before {
-      filter: none; }
   #page-links a.box-shadow:before {
-    width: 17px;
-    height: 17px;
-    top: 7px;
-    left: 15px;
+    width: 16px;
+    height: 16px;
+    top: 9px;
+    left: 12px;
     background-image: url("../images/nav-icons/box-shadow.svg"); }
   #page-links a.border-radius:before {
     width: 14px;
     height: 14px;
-    top: 8px;
+    top: 10px;
     background-image: url("../images/nav-icons/border-radius.svg"); }
   #page-links a.gradient:before {
     background-image: url("../images/nav-icons/gradient.svg"); }
@@ -269,7 +284,8 @@ elements is easier in one separate file
     background-image: url("../images/nav-icons/text-shadow.svg");
     width: 16px;
     height: 16px;
-    left: 18px; }
+    top: 8px;
+    left: 12px; }
 
 /* ------------------------- */
 /* Variables */
@@ -287,7 +303,7 @@ elements is easier in one separate file
     padding: 25px 30px; }
   #header h1 {
     color: #4834d4;
-    font-weight: 900;
+    font-weight: 700;
     font-size: 28px;
     margin-bottom: 5px;
     line-height: 1; }
@@ -673,11 +689,10 @@ img.preview-style {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(247, 247, 247, 0.95);
+  background-color: rgba(247, 247, 247, 0.98);
   border-top: 2px solid #dedede;
   display: flex;
-  justify-content: space-between;
-  z-index: 5000; }
+  justify-content: space-between; }
   #bottom-content-wrapper .bottom-title {
     font-size: 14px;
     line-height: 1;
@@ -740,7 +755,7 @@ body.code-expanded #bottom-content-wrapper {
     height: 220px; }
 
 .output-wrapper {
-  height: 300px;
+  height: 250px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 15px 45px 0 rgba(37, 32, 74, 0.15);
@@ -781,7 +796,7 @@ body.code-expanded #bottom-content-wrapper {
       border-radius: 2px;
       line-height: 22px;
       padding: 0px 8px;
-      margin-right: 8px;
+      margin-right: 10px;
       font-weight: 700; }
   .output-wrapper.css .output-title:before {
     content: "CSS";
@@ -929,8 +944,8 @@ body.code-expanded .expanded-code-wrapper .output-wrapper {
     box-shadow: inset 0 59px 63px -36px rgba(33, 27, 78, 0.65); }
   .language-wrapper.disabled {
     opacity: 1 !important;
-    background-color: #fbfbfb;
-    box-shadow: inset 25px 0px 95px -20px rgba(72, 52, 212, 0.02); }
+    background-color: rgba(255, 255, 255, 0.31);
+    box-shadow: inset -3px 8px 95px -30px rgba(20, 16, 43, 0.82); }
     .language-wrapper.disabled:before {
       display: none; }
     .language-wrapper.disabled:after {
@@ -945,7 +960,7 @@ body.code-expanded .expanded-code-wrapper .output-wrapper {
       justify-content: center;
       align-items: center;
       z-index: 200;
-      color: #a5a5a5;
+      color: #fff;
       font-weight: 600; }
     .language-wrapper.disabled pre {
       visibility: hidden; }
