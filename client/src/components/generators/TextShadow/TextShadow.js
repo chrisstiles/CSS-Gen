@@ -129,7 +129,7 @@ const defaultState = {
   horizontalShift: 0,
   verticalShift: 2,
   blurRadius: 10,
-  shadowOpacity: 15,
+  shadowOpacity: 65,
   shadowColor: '#000',
   fontColor: '#000',
   fontLoaded: true,
