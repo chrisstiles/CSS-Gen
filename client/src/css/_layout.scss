@@ -61,6 +61,7 @@ elements is easier in one separate file
   flex-grow:1;
   padding:25px;
   position:relative;
+  width:calc(100% - 360px);
 }
 
 #bottom-content-wrapper {

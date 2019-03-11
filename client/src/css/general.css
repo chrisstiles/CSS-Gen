@@ -187,7 +187,8 @@ elements is easier in one separate file
   display: flex;
   flex-grow: 1;
   padding: 25px;
-  position: relative; }
+  position: relative;
+  width: calc(100% - 360px); }
 
 #bottom-content-wrapper {
   height: 210px; }
