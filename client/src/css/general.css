@@ -195,16 +195,13 @@ elements is easier in one separate file
 #generator-output {
   flex-grow: 0;
   width: 360px;
-  flex-shrink: 0;
-  max-height: calc(100vh - 210px); }
+  flex-shrink: 0; }
 
 @media (min-height: 920px) {
   #sidebar {
     bottom: 250px; }
   #page-wrapper.generator {
     padding-bottom: 250px; }
-  #generator-output {
-    max-height: calc(100vh - 250px); }
   #bottom-content-wrapper {
     height: 250px; } }
 
@@ -692,7 +689,8 @@ img.preview-style {
   background-color: rgba(247, 247, 247, 0.98);
   border-top: 2px solid #dedede;
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+  z-index: 500; }
   #bottom-content-wrapper .bottom-title {
     font-size: 14px;
     line-height: 1;

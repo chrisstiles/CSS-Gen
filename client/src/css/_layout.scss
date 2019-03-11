@@ -71,7 +71,6 @@ elements is easier in one separate file
   flex-grow:0;
   width:360px;
   flex-shrink:0;
-  max-height:calc(100vh - 210px);
 }
 
 @media (min-height: 920px) {
@@ -83,10 +82,6 @@ elements is easier in one separate file
     &.generator {
       padding-bottom:250px;
     }
-  }
-
-  #generator-output {
-    max-height:calc(100vh - 250px);
   }
 
   #bottom-content-wrapper {
