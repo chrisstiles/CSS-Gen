@@ -74,14 +74,24 @@ $output-width: 360px;
   flex-grow:0;
   width:$output-width;
   flex-shrink:0;
-  overflow:auto;
 
   &.fixed {
-    position:fixed;
-    left:0;
-    top:$nav-height;
-    bottom:$bottom-content-height;
+    #output-scroller {
+      position:fixed;
+      left:0;
+      top:$nav-height;
+      bottom:$bottom-content-height;
+      min-height:0;
+    }
   }
+}
+
+
+#output-scroller {
+  padding: 25px;
+  overflow:auto;
+  width:$output-width;
+  min-height:100%;
 }
 
 #bottom-content-wrapper {

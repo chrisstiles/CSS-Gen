@@ -6,7 +6,6 @@ class GeneratorOutput extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = { isFixed: false };
     this.isFixed = false;
   }
 
@@ -21,9 +20,12 @@ class GeneratorOutput extends React.PureComponent {
     window.removeEventListener('resize', this.positionWrapper);
   }
 
-  positionWrapper = () => {
+  positionWrapper = event => {
     if (!this.wrapper || !this.wrapper.parentElement) return;
-    
+    if (!event || event.type === 'resize') {
+      this.wrapper.style.minHeight = `${this.scroller.offsetHeight}px`;
+    }
+
     if (window.pageYOffset >= this.wrapper.parentElement.offsetTop) {
       if (!this.isFixed) {
         this.wrapper.classList.add('fixed');
@@ -61,7 +63,12 @@ class GeneratorOutput extends React.PureComponent {
         ref={wrapper => { this.wrapper = wrapper }}
         {...outputWrapperProps}
       >
-        {codeViewers}
+        <div 
+          id="output-scroller"
+          ref={scroller => { this.scroller = scroller }}
+        >
+          {codeViewers}
+        </div>
       </div>
     );
   }
