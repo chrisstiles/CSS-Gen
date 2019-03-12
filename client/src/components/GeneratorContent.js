@@ -22,6 +22,8 @@ class GeneratorOutput extends React.PureComponent {
   }
 
   positionWrapper = () => {
+    if (!this.wrapper || !this.wrapper.parentElement) return;
+    
     if (window.pageYOffset >= this.wrapper.parentElement.offsetTop) {
       if (!this.isFixed) {
         this.wrapper.classList.add('fixed');
