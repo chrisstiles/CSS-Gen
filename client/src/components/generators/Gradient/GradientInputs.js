@@ -7,20 +7,13 @@ import Toggle from '../../input/Toggle';
 import AnglePicker from '../../input/AnglePicker';
 
 class GradientInputs extends React.PureComponent {
-  handleChange = (value, name) => {
-    var state = {};
-    state[name] = value;
-    
-    this.props.updateGenerator(state);
-  }
-
   renderTypeSettings = () => {
     if (this.props.type === 'linear') {
       return (
         <AnglePicker 
           label="Gradient Angle"
           angle={this.props.angle}
-          onChange={this.handleChange}
+          onChange={this.props.updateGenerator}
           name="angle"
         />
       );
@@ -32,7 +25,7 @@ class GradientInputs extends React.PureComponent {
               name="shape"
               value={this.props.shape}
               label="Shape"
-              onChange={this.handleChange}
+              onChange={this.props.updateGenerator}
               options={[
                 { value: 'circle', label: 'Circle' },
                 { value: 'ellipse', label: 'Ellipse' }
@@ -43,7 +36,7 @@ class GradientInputs extends React.PureComponent {
               name="extendKeyword"
               value={this.props.extendKeyword}
               label="Extend To"
-              onChange={this.handleChange}
+              onChange={this.props.updateGenerator}
               options={[
                 { value: 'none', label: 'None' },
                 { value: 'closest-side', label: 'Closest Side' },
@@ -60,7 +53,7 @@ class GradientInputs extends React.PureComponent {
             position={this.props.position}
             offsetX={this.props.offsetX}
             offsetY={this.props.offsetY}
-            onClick={this.handleChange}
+            onClick={this.props.updateGenerator}
           />
         </div>
       );
@@ -72,8 +65,9 @@ class GradientInputs extends React.PureComponent {
       <Sidebar>
         <GradientPicker 
           name="palette"
+          activeId={this.props.activeId}
           palette={this.props.palette}
-          onChange={this.handleChange}
+          onChange={this.props.updateGenerator}
         />
         <div className="divider" />
         <div className="inputs-row">
@@ -81,7 +75,7 @@ class GradientInputs extends React.PureComponent {
             name="type"
             value={this.props.type}
             label="Type"
-            onChange={this.handleChange}
+            onChange={this.props.updateGenerator}
             options={[
               { value: 'linear', label: 'Linear' },
               { value: 'radial', label: 'Radial' }
@@ -93,7 +87,7 @@ class GradientInputs extends React.PureComponent {
           />
           <div className="field-wrapper right">
             <Toggle
-              onChange={this.handleChange}
+              onChange={this.props.updateGenerator}
               checked={this.props.repeating}
               label="Repeating"
               name="repeating"

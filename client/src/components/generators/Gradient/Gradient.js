@@ -83,6 +83,7 @@ const defaultState = {
     { pos: 0.64, color: '#bd2c61' },
     { pos: 1.00, color: '#7e20cf' }
   ],
+  activeId: 1,
   type: 'linear',
   repeating: false,
   shape: 'circle',
@@ -97,6 +98,7 @@ const stateTypes = {
   palette: [
     { pos: Number, color: String }
   ],
+  activeId: Number,
   type: String,
   repeating: Boolean,
   shape: String,
