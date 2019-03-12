@@ -51,6 +51,14 @@ const presets = [
 	}
 ];
 
+presets.forEach(preset => {
+	preset.generatorStyles.activeId = 1;
+	preset.generatorStyles.palette = preset.generatorStyles.palette.map((stop, i) => {
+		stop.id = i + 1;
+		return stop;
+	});
+});
+
 const GradientPresets = ({ setPreset }) => {
 	return (
 		<PresetsWrapper

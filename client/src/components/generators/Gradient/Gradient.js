@@ -78,10 +78,10 @@ class Gradient extends React.Component {
 
 const defaultState = {
   palette: [
-    { pos: 0.00, color: '#f1b50b' },
-    { pos: 0.36, color: '#d78025' },
-    { pos: 0.64, color: '#bd2c61' },
-    { pos: 1.00, color: '#7e20cf' }
+    { id: 1, pos: 0.00, color: '#f1b50b' },
+    { id: 2, pos: 0.36, color: '#d78025' },
+    { id: 3, pos: 0.64, color: '#bd2c61' },
+    { id: 4, pos: 1.00, color: '#7e20cf' }
   ],
   activeId: 1,
   type: 'linear',
@@ -96,9 +96,10 @@ const defaultState = {
 
 const stateTypes = {
   palette: [
-    { pos: Number, color: String }
+    { id: Number, pos: Number, color: String }
   ],
   activeId: Number,
+  pointX: null,
   type: String,
   repeating: Boolean,
   shape: String,

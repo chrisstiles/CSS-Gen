@@ -5,30 +5,22 @@ import tinycolor from 'tinycolor2';
 import ColorPicker from '../ColorPicker';
 import Slider from '../Slider';
 import { sidebarControlsWidth, hexOrRgba } from '../../../util/helpers';
-import _ from 'underscore';
 
 const HALF_STOP_WIDTH = 5;
 
-// const toState = (palette, activeId = 1, activeElement = null) => ({
-//   palette: palette.map((c, i) => {
-//     const stop = ({ id: i + 1, pos: Number(c.pos).toPrecision(3), ...c });
-//     return stop;
-//   }),
-//   activeId: activeId,
-//   activeElement: activeElement
-// });
-
 const toState = (palette, _activeId = 1, activeElement) => {
-  let activeId = _activeId;
-
+  let activeId = null;
+  
   const state = {
     palette: palette.map((c, i) => {
+      const prevId = c.id;
       const id = i + 1;
       const stop = ({ ...c, id, pos: Number(c.pos).toPrecision(3) });
+
       if (activeId === null) {
         if (activeElement && activeElement.pos === stop.pos) {
           activeId = id;
-        } else if (id === _activeId) {
+        } else if (prevId === _activeId) {
           activeId = id;
         }
       }
@@ -37,28 +29,20 @@ const toState = (palette, _activeId = 1, activeElement) => {
     })
   }
 
-  state.activeId = activeId;
+  state.palette = state.palette.sort(({ pos: pos1, color }, { pos: pos2 }) => {
+    return ((pos1 < pos2) ? -1 : ((pos1 > pos2) ? 1 : 0));
+  });
+
+  state.activeId = activeId !== null ? activeId : 1;
 
   return state;
 }
-
 
 class GradientPicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = { ...toState(props.palette) };
-
-    this.setWidth = this.setWidth.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handlePosChange = this.handlePosChange.bind(this);
-    this.handleAddColor = this.handleAddColor.bind(this);
-    this.handleActivate = this.handleActivate.bind(this);
-    this.handleDeleteColor = this.handleDeleteColor.bind(this);
-    this.handleSelectColor = this.handleSelectColor.bind(this);
-    this.handleOpacityChange = this.handleOpacityChange.bind(this);
-
-    this.state.width = sidebarControlsWidth();
+    this.state = { width: sidebarControlsWidth() };
   }
 
   componentDidMount() {
@@ -70,32 +54,7 @@ class GradientPicker extends React.PureComponent {
     window.removeEventListener('resize', this.setWidth, false);
   }
 
-  static getDerivedStateFromProps(newProps, state) {
-    if (!_.isEqual(newProps.palette, state.prevPalette)) {
-      const next = newProps.palette;
-      const current = state.prevPalette || state.palette;
-      const length = Math.min(next.length, current.length);
-      const activeId = state.activeId <= next.length ? state.activeId : state.palette[0].id;
-
-      let newState = next;
-
-      for (let i = 0; i < length; i++) {
-        if (next[i].pos !== current[i].pos || next[i].color !== current[i].color) {
-          newState = { ...toState(next, activeId) };
-          break;
-        }
-      }
-
-      const prevPalette = newState.palette;
-      newState.prevPalette = prevPalette;
-
-      return newState;
-    }
-
-    return state.palette;
-  }
-
-  setWidth() {
+  setWidth = () => {
     const width = sidebarControlsWidth();
     this.setState({ width });
   }
@@ -105,23 +64,23 @@ class GradientPicker extends React.PureComponent {
   }
 
   get nextId() {
-    return Math.max(...this.state.palette.map(c => c.id)) + 1;
+    return Math.max(...this.props.palette.map(c => c.id)) + 1;
   }
 
   get activeStop() {
-    let stop = this.state.palette.find(s => s.id === this.state.activeId);
+    let stop = this.props.palette.find(s => s.id === this.props.activeId);
 
     if (!stop) {
-      stop = this.state.palette[0];
+      stop = this.props.palette[0];
     }
 
     return stop;
   }
 
   get mapStateToStops() {
-    const activeId = this.state.activeId;
-    const pointX = this.state.pointX;
-    return this.state.palette.map(c => ({
+    const activeId = this.props.activeId;
+    const pointX = this.props.pointX;
+    return this.props.palette.map(c => ({
       ...c,
       pos: this.width1 * c.pos - HALF_STOP_WIDTH,
       isActive: c.id === activeId,
@@ -129,7 +88,7 @@ class GradientPicker extends React.PureComponent {
     }))
   }
 
-  renderColorPicker() {
+  renderColorPicker = () => {
     const { children } = this.props
     const props = {
       color: this.activeStop.color,
@@ -151,51 +110,44 @@ class GradientPicker extends React.PureComponent {
     return React.cloneElement(child, props)
   }
 
-  handleChange(palette, name = this.props.name) {
-    const sortedPalette = palette.sort(({ pos: pos1, color }, { pos: pos2 }) => {
-      return ((pos1 < pos2) ? -1 : ((pos1 > pos2) ? 1 : 0));
-    });
-
-    this.props.onChange(sortedPalette, name);
+  handleChange = (palette, activeId = this.props.activeId, pointX = this.props.pointX) => {
+    this.props.onChange({ ...toState(palette, activeId), pointX });
   }
 
-  handleActivate(activeId, activeElement) {
-    this.setState({ activeId, activeElement });
+  handleActivate = (activeId) => {
+    this.props.onChange({ activeId });
   }
 
-  handleDeleteColor(id) {
-    if (this.state.palette.length < 3) return
-    const palette = this.state.palette.filter(c => c.id !== id)
+  handleDeleteColor = (id) => {
+    if (this.props.palette.length < 3) return
+    const palette = this.props.palette.filter(c => c.id !== id)
     const activeId = palette.reduce((a, x) => x.pos < a.pos ? x : a, palette[0]).id
-    this.setState({ palette, activeId })
-    this.handleChange(palette)
+    this.handleChange(palette, activeId)
   }
 
-  handlePosChange({ id, pos }) {
-    const palette = this.state.palette.map(c => {
+  handlePosChange = ({ id, pos }) => {
+    const palette = this.props.palette.map(c => {
       if (id === c.id) {
-        const xPosition = Number(((Number(pos) + HALF_STOP_WIDTH) / this.width1).toPrecision(3));
-        c.pos = xPosition;
+        const pointX = Number(((Number(pos) + HALF_STOP_WIDTH) / this.width1).toPrecision(3));
+        c.pos = pointX;
       }
 
       return c;
     })
 
-    this.setState({ palette });
-    this.handleChange(palette);
+    this.props.onChange({ palette });
   }
 
-  handleAddColor({ pos, pointX }) {
+  handleAddColor = ({ pos, pointX }) => {
     const { color } = this.activeStop;
     const entry = { id: this.nextId, pos: pos / this.width1, color };
-    const palette = [...this.state.palette, entry];
+    const palette = [...this.props.palette, entry];
 
-    this.setState({ palette, pointX });
-    this.handleChange(palette);
+    this.handleChange(palette, entry.id, pointX);
   }
 
-  handleSelectColor(color) {
-    let { palette, activeId } = this.state;
+  handleSelectColor = (color) => {
+    let { palette, activeId } = this.props;
 
     palette = palette.map(c => {
 
@@ -209,8 +161,8 @@ class GradientPicker extends React.PureComponent {
     this.handleChange(palette);
   }
 
-  handleOpacityChange(value) {
-    let { palette, activeId } = this.state;
+  handleOpacityChange = (value) => {
+    let { palette, activeId } = this.props;
 
     palette = palette.map(c => {
 
@@ -236,7 +188,7 @@ class GradientPicker extends React.PureComponent {
     return (
       <div>
         <div className="inputs-row gradient-wrapper">
-          <Palette width={width} height={height} palette={this.state.palette} />
+          <Palette width={width} height={height} palette={this.props.palette} />
           <ColorStopsHolder
             width={width}
             stops={this.mapStateToStops}
