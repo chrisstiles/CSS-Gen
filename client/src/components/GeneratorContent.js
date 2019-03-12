@@ -3,10 +3,36 @@ import CodeOutput from './CodeOutput';
 import { isArray } from 'underscore';
 
 class GeneratorOutput extends React.PureComponent {
-  calculateScrollPoints = () => {
-    if (!this.wrapper) return;
+  constructor(props) {
+    super(props);
 
-    
+    this.state = { isFixed: false };
+    this.isFixed = false;
+  }
+
+  componentDidMount() {
+    this.positionWrapper();
+    window.addEventListener('scroll', this.positionWrapper, true);
+    window.addEventListener('resize', this.positionWrapper, true);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.positionWrapper);
+    window.removeEventListener('resize', this.positionWrapper);
+  }
+
+  positionWrapper = () => {
+    if (window.pageYOffset >= this.wrapper.parentElement.offsetTop) {
+      if (!this.isFixed) {
+        this.wrapper.classList.add('fixed');
+        this.isFixed = true;
+      }
+    } else {
+      if (this.isFixed) {
+        this.wrapper.classList.remove('fixed');
+        this.isFixed = false;
+      }
+    }
   }
 
   render() {
@@ -23,8 +49,10 @@ class GeneratorOutput extends React.PureComponent {
       );
     });
 
-    const outputWrapperProps = { id: 'generator-output' };
-    if (output.length > 1) outputWrapperProps.className = 'multiple';
+    const outputWrapperProps = { id: 'generator-output', className: [] };
+    if (output.length > 1) outputWrapperProps.className.push('multiple');
+    if (this.isFixed) outputWrapperProps.className.push('fixed');
+    outputWrapperProps.className = outputWrapperProps.className.join(' ');
 
     return (
       <div 

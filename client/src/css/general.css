@@ -197,8 +197,10 @@ elements is easier in one separate file
   flex-shrink: 0;
   overflow: auto; }
   #generator-output.fixed {
+    position: fixed;
+    left: 0;
     top: 55px;
-    left: 0; }
+    bottom: 210px; }
 
 #bottom-content-wrapper {
   height: 210px; }
@@ -208,6 +210,8 @@ elements is easier in one separate file
     bottom: 250px; }
   #page-wrapper.generator {
     padding-bottom: 250px; }
+  #generator-output.fixed {
+    bottom: 250px; }
   #bottom-content-wrapper {
     height: 250px; } }
 

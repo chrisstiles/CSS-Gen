@@ -6,6 +6,9 @@ elements is easier in one separate file
 */
 
 $nav-height: 55px;
+$sidebar-width: 320px;
+$bottom-content-height: 210px;
+$output-width: 360px;
 
 #navigation {
   height:$nav-height;
@@ -20,12 +23,12 @@ $nav-height: 55px;
   position:fixed;
   top:$nav-height;
   right:0;
-  width:320px;
-  bottom:210px;
+  width:$sidebar-width;
+  bottom:$bottom-content-height;
 }
 
 #tooltip-wrapper {
-  right:320px;
+  right:$sidebar-width;
 }
 
 #page-wrapper {
@@ -35,7 +38,7 @@ $nav-height: 55px;
     display:flex;
     flex-direction:column;
     min-height:100vh;
-    padding-bottom:210px;
+    padding-bottom:$bottom-content-height;
 
     #page-content {
       display:flex;
@@ -47,7 +50,7 @@ $nav-height: 55px;
 }
 
 #page-content {
-  padding-right:320px;
+  padding-right:$sidebar-width;
   flex-grow:1;
   position:relative;
 }
@@ -64,37 +67,47 @@ $nav-height: 55px;
   flex-grow:0;
   padding:25px;
   position:relative;
-  width:calc(100% - 360px);
+  width:calc(100% - #{$output-width});
 }
 
 #generator-output {
   flex-grow:0;
-  width:360px;
+  width:$output-width;
   flex-shrink:0;
   overflow:auto;
 
   &.fixed {
-    top:$nav-height;
+    position:fixed;
     left:0;
+    top:$nav-height;
+    bottom:$bottom-content-height;
   }
 }
 
 #bottom-content-wrapper {
-  height:210px;
+  height:$bottom-content-height;
 }
 
 @media (min-height: 920px) {
+  $bottom-content-height: 250px;
+
   #sidebar {
-    bottom:250px;
+    bottom:$bottom-content-height;
   }
 
   #page-wrapper {
     &.generator {
-      padding-bottom:250px;
+      padding-bottom:$bottom-content-height;
+    }
+  }
+
+  #generator-output {
+    &.fixed {
+      bottom: $bottom-content-height;
     }
   }
 
   #bottom-content-wrapper {
-    height:250px;
+    height:$bottom-content-height;
   }
 }
