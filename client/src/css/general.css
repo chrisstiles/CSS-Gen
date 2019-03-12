@@ -216,7 +216,7 @@ elements is easier in one separate file
     bottom: 250px; }
   #page-wrapper.generator {
     padding-bottom: 250px; }
-  #generator-output.fixed {
+  #generator-output.fixed #output-scroller {
     bottom: 250px; }
   #bottom-content-wrapper {
     height: 250px; } }

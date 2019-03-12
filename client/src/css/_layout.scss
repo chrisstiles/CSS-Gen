@@ -113,7 +113,9 @@ $output-width: 360px;
 
   #generator-output {
     &.fixed {
-      bottom: $bottom-content-height;
+      #output-scroller {
+        bottom: $bottom-content-height;
+      }
     }
   }
 
