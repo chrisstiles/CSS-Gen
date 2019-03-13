@@ -265,7 +265,9 @@ class FlexboxPreviewContent extends React.PureComponent {
       <div id="flexbox-preview">
         <div {...containerProps}>
           <div className="title">Flex Container</div>
-          {items}
+          <div className="items-wrapper" style={containerStyles}>
+            {items}
+          </div>
         </div>
       </div>
     );

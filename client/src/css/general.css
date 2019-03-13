@@ -2761,6 +2761,10 @@ input.angle-input {
 
 /* ------------------------- */
 /* Controls */
+.flexbox-generator #canvas {
+  padding: 0;
+  overflow: visible; }
+
 .flexbox-generator .item-settings .add-item {
   margin-bottom: 12px;
   padding-top: 10px; }
@@ -2772,13 +2776,14 @@ input.angle-input {
 /* Preview */
 #flexbox-preview {
   min-height: 100%;
-  width: 100%; }
+  width: 100%;
+  padding: 15px 3px 15px 15px;
+  overflow: auto; }
   #flexbox-preview .container {
     display: flex;
-    border: 2px dashed #4834d4;
-    border-top: none;
-    padding: 14px 12px 12px 12px;
-    position: relative; }
+    border-left: 2px dashed #4834d4;
+    position: relative;
+    max-width: calc(100% - 12px); }
     #flexbox-preview .container.has-background {
       border-color: transparent; }
     #flexbox-preview .container:before, #flexbox-preview .container:after {
@@ -2810,6 +2815,20 @@ input.angle-input {
       text-transform: uppercase;
       white-space: nowrap;
       z-index: 110; }
+  #flexbox-preview .items-wrapper {
+    flex-grow: 1;
+    padding: 14px 14px 14px 12px; }
+    #flexbox-preview .items-wrapper:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      pointer-events: none;
+      border-right: 2px dashed #4834d4;
+      border-bottom: 2px dashed #4834d4;
+      z-index: 200; }
   #flexbox-preview .item {
     cursor: pointer;
     flex-basis: 100px;

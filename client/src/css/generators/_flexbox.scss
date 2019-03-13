@@ -2,6 +2,11 @@
 /* Controls */
 
 .flexbox-generator {
+  #canvas {
+    padding:0;
+    overflow: visible;
+  }
+
   .item-settings {
     .add-item {
       margin-bottom:12px;
@@ -21,13 +26,14 @@
 #flexbox-preview {
   min-height:100%;
   width:100%;
+  padding:15px 3px 15px 15px;
+  overflow:auto;
 
   .container {
     display:flex;
-    border:2px dashed $accent-color;
-    border-top:none;
-    padding:14px 12px 12px 12px;
+    border-left:2px dashed $accent-color;
     position:relative;
+    max-width:calc(100% - 12px);
 
     &.has-background {
       border-color:transparent;
@@ -69,6 +75,24 @@
       text-transform: uppercase;
       white-space: nowrap;
       z-index: 110;
+    }
+  }
+
+  .items-wrapper {
+    flex-grow:1;
+    padding:14px 14px 14px 12px;
+    
+    &:before {
+      content:"";
+      position:absolute;
+      top:0;
+      bottom:0;
+      left:0;
+      right:0;
+      pointer-events:none;
+      border-right:2px dashed $accent-color;
+      border-bottom:2px dashed $accent-color;
+      z-index: 200;
     }
   }
 
