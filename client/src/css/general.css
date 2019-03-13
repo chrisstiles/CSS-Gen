@@ -977,9 +977,6 @@ body.code-expanded .expanded-code-wrapper .output-wrapper {
       display: inline-block;
       padding-right: 8px !important; }
 
-.hljs > *::selection {
-  background-color: #3e4451; }
-
 .hljs-comment {
   color: #656565;
   font-style: italic; }
