@@ -2817,7 +2817,7 @@ input.angle-input {
       z-index: 110; }
   #flexbox-preview .items-wrapper {
     flex-grow: 1;
-    padding: 14px 14px 14px 12px; }
+    padding: 14px 15px 14px 12px; }
     #flexbox-preview .items-wrapper:before {
       content: "";
       position: absolute;
@@ -2838,6 +2838,7 @@ input.angle-input {
     background-color: #4834d4;
     margin: 2px;
     border-radius: 2px;
+    z-index: 200;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
