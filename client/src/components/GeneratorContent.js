@@ -6,6 +6,7 @@ class GeneratorOutput extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.outputHeight = 0;
     this.isFixed = false;
   }
 
@@ -20,11 +21,23 @@ class GeneratorOutput extends React.PureComponent {
     window.removeEventListener('resize', this.positionWrapper);
   }
 
+  componentDidUpdate() {
+    this.positionWrapper();
+  }
+
+  updateWrapperHeight = () => {
+    if (!this.wrapper || !this.content) return;
+
+    const height = this.content.offsetHeight;
+
+    if (this.outputHeight !== height) {
+      this.wrapper.style.minHeight = `${height}px`;
+      this.outputHeight = height;
+    }
+  }
+
   positionWrapper = event => {
     if (!this.wrapper || !this.wrapper.parentElement) return;
-    if (!event || event.type === 'resize') {
-      this.wrapper.style.minHeight = `${this.scroller.offsetHeight}px`;
-    }
 
     if (window.pageYOffset >= this.wrapper.parentElement.offsetTop) {
       if (!this.isFixed) {
@@ -37,6 +50,8 @@ class GeneratorOutput extends React.PureComponent {
         this.isFixed = false;
       }
     }
+
+    this.updateWrapperHeight();
   }
 
   render() {
@@ -63,11 +78,10 @@ class GeneratorOutput extends React.PureComponent {
         ref={wrapper => { this.wrapper = wrapper }}
         {...outputWrapperProps}
       >
-        <div 
-          id="output-scroller"
-          ref={scroller => { this.scroller = scroller }}
-        >
-          {codeViewers}
+        <div id="output-scroller">
+          <div ref={content => { this.content = content }}>
+            {codeViewers}
+          </div>
         </div>
       </div>
     );
@@ -79,7 +93,9 @@ class GeneratorContent extends React.PureComponent {
     return (
       <div id="generator-content">
         <GeneratorOutput output={this.props.output} />
-        {this.props.children}
+        <div id="generator-preview">
+          {this.props.children}
+        </div>
       </div>
     );
   }

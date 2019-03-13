@@ -473,14 +473,12 @@ class Preview extends React.Component {
     );
     
     return (
-      <div id="generator-preview">
-        <Canvas {...canvasProps}>
-          <div id="preview-loading">
-            <LoadingSpinner color={this.spinnerColor} />
-          </div>
-          {preview}
-        </Canvas>
-      </div>
+      <Canvas {...canvasProps}>
+        <div id="preview-loading">
+          <LoadingSpinner color={this.spinnerColor} />
+        </div>
+        {preview}
+      </Canvas>
     );
   }
 }
