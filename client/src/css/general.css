@@ -559,10 +559,10 @@ img.preview-style {
     border-bottom: 1px solid #dadada;
     border-top: 2px solid #dadada; }
   #sidebar p {
-    font-size: 11px;
+    font-size: 12px;
     margin-bottom: 10px;
     line-height: 1.3em;
-    font-weight: 400; }
+    font-weight: 500; }
     #sidebar p:last-child {
       margin-bottom: 0; }
   #sidebar > .sidebar-title {
@@ -2810,7 +2810,7 @@ input.angle-input {
       border-bottom: none;
       color: #4834d4;
       top: -4px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
       white-space: nowrap;

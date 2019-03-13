@@ -387,7 +387,7 @@ export function generateCSSString(css, selector, defaults = {}) {
 
 	if (selector && cssString.length) {
 		cssString.unshift(`${selector} {`);
-		cssString.push('}');
+		cssString.push('}\n');
 	}
 
 	return cssString.join('\n');

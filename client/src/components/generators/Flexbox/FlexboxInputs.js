@@ -77,17 +77,13 @@ class FlexboxInputs extends React.PureComponent {
 
       if (numSelected === 1) {
         selectedText = (
-          <p>
-            <strong>{numSelected} item selected:</strong> Changes only affect this child element. Press escape to deselect
-          </p>
+          <p>Styles for <strong>{numSelected} selected item</strong></p>
         );
 
         removeText = 'Remove element';
       } else {
         selectedText = (
-          <p>
-            <strong>{numSelected} items selected:</strong> Changes only affect these child elements. Press escape to deselect
-          </p>
+          <p>Styles for <strong>{numSelected} selected items</strong></p>
         );
 
         removeText = `Remove ${numSelected} elements`;
@@ -145,7 +141,7 @@ class FlexboxInputs extends React.PureComponent {
             <div>
               <div className="section-title">Shared Item Settings</div>
               <div className="section-info">
-                <p>Affects all child elements. You can change modify a specific item by selecting it.</p>
+                <p>General styles for all flex items</p>
               </div>
               <ItemInputs
                 onChange={this.handleAllItemsChange}

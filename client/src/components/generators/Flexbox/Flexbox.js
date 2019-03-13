@@ -52,7 +52,8 @@ class Flexbox extends React.Component {
       ...containerDefaults 
     }));
 
-    css.push(generateCSSString(itemStyles, '.item', defaultState.itemStyles));
+    const itemCSS = generateCSSString(itemStyles, '.item', defaultState.itemStyles);
+    if (itemCSS) css.push(itemCSS);
     
     if (childElements.length) {
       childElements.forEach((child, index) => {
@@ -77,6 +78,7 @@ class Flexbox extends React.Component {
           } else {
             selector = `.item:nth-child(${index + 1})`;
           }
+          
           css.push(generateCSSString(childStyles, selector));
         }
 
@@ -90,11 +92,8 @@ class Flexbox extends React.Component {
       html.push('<div class="container"></div>');
     }
 
-    // css = css.join('\n\n');
-    // html = html.join('\n');
-
     return [
-      { language: 'css', code: css.join('\n\n') },
+      { language: 'css', code: css.join('\n') },
       { language: 'html', code: html.join('\n') }
     ];
   }
