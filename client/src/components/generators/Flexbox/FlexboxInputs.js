@@ -120,7 +120,7 @@ class FlexboxInputs extends React.PureComponent {
           >
             Add flex item
           </div>
-          {selectedIndexes.length ?
+          {selectedIndexes.length && selectedIndexes.length < childElements.length ?
             <div>
               <div className="section-title">Selected Item Settings</div>
               <div className="section-info">
