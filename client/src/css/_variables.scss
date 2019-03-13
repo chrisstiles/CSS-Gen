@@ -28,7 +28,7 @@ $input-text-color: #505050;
   user-select: text !important; 
 }
 
-@mixin gradient($start-color: $accent-color, $end-color: lighten($start-color, 8%)) {
+@mixin gradient($start-color: $accent-color, $end-color: lighten($start-color, 8%), $angle: 'to right') {
   background: $start-color;
-  background: linear-gradient(to right, $start-color 0%, $end-color 100%);
+  background: linear-gradient(unquote($angle), $start-color 0%, $end-color 100%);
 }

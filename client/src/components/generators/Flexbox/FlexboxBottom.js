@@ -9,6 +9,7 @@ class FlexboxBottom extends React.Component {
       showAddButton,
       isFullHeight,
       canvasColor,
+      shouldChildNumber,
       updatePreview
     } = this.props;
 
@@ -30,6 +31,12 @@ class FlexboxBottom extends React.Component {
             label="Full Height"
             onChange={updatePreview}
             checked={isFullHeight}
+          />
+          <Toggle
+            name="shouldChildNumber"
+            label="Show Child Number"
+            onChange={updatePreview}
+            checked={shouldChildNumber}
           />
         </Settings>
       </BottomContent>

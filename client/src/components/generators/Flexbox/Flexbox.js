@@ -46,8 +46,12 @@ class Flexbox extends React.Component {
     const html = [];
     const css = [];
 
-    const { display, ...containerDefaults } = defaultState.containerStyles;
-    css.push(generateCSSString(containerStyles, '.container', { ...containerDefaults }));
+    const { display, flexWrap, ...containerDefaults } = defaultState.containerStyles;
+    css.push(generateCSSString(containerStyles, '.container', { 
+      flexWrap: 'nowrap',
+      ...containerDefaults 
+    }));
+
     css.push(generateCSSString(itemStyles, '.item', defaultState.itemStyles));
     
     if (childElements.length) {
@@ -114,7 +118,8 @@ class Flexbox extends React.Component {
     const {
       showAddButton,
       isFullHeight,
-      canvasColor
+      canvasColor,
+      shouldChildNumber
     } = previewState;
 
     return (
@@ -134,6 +139,7 @@ class Flexbox extends React.Component {
           canvasColor={canvasColor}
           showAddButton={showAddButton}
           isFullHeight={isFullHeight}
+          shouldChildNumber={shouldChildNumber}
           output={output}
           {...props}
         />
@@ -141,6 +147,7 @@ class Flexbox extends React.Component {
           showAddButton={showAddButton}
           isFullHeight={isFullHeight}
           canvasColor={canvasColor}
+          shouldChildNumber={shouldChildNumber}
           updatePreview={updatePreview}
           updateGenerator={updateGenerator}
         />
@@ -154,7 +161,7 @@ const defaultState = {
   containerStyles: {
     display: 'flex',
     flexDirection: 'row',
-    flexWrap: 'nowrap',
+    flexWrap: 'wrap',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     alignContent: 'stretch'
@@ -169,6 +176,7 @@ const defaultState = {
   previewState: {
     canvasColor: '#fdfdfd',
     showAddButton: true,
+    shouldChildNumber: true,
     isFullHeight: false
   }
 };
@@ -193,6 +201,7 @@ const stateTypes = {
   previewState: {
     canvasColor: String,
     showAddButton: Boolean,
+    shouldChildNumber: Boolean,
     isFullHeight: Boolean
   }
 };

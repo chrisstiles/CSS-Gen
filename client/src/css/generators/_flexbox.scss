@@ -102,33 +102,58 @@
     min-width:100px;
     min-height:100px;
     position:relative;
-    background-color:$accent-color;
     margin:2px;
-    border-radius:2px;
+    border-radius:3px;
     z-index: 200;
+    background-color:$accent-color;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    color:#fff;
     @include no-select;
 
     &:hover {
-      opacity:.8;
+      background-color:darken($accent-color, 15%);
+    }
+
+    .item-content {
+      font-size:30px;
+      font-weight: 700;
+      text-align:center;
+      line-height:1;
+      margin-top:2px;
+
+      span {
+        display:block;
+        font-weight:700;
+        font-size:12px;
+        margin-bottom: 3px;
+        color: #b8adfb
+      }
     }
 
     &.selected {
-      background-color:green;
+      background-color:darken($accent-color, 30%);
+
+      .item-content {
+        span {
+          color:#aca2c9;
+        }
+      }
     }
 
     &.new-item {
-      display:flex;
-      justify-content: center;
-      align-items: center;
       line-height:1;
       font-size:13px;
       color:#6f6f6f;
       font-weight:600;
+      background:none;
       background-color:#e7e7e7 !important;
+      box-shadow:none !important;
 
       &:hover {
         opacity:1;
-        background-color:#e2e2e2 !important;
+        background-color:#dbdbdb !important;
       }
 
       &.disabled {

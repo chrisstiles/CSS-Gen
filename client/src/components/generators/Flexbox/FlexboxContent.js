@@ -14,34 +14,20 @@ import {
 } from '../../../util/helpers';
 
 class FlexItem extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-    this.handleMouseDown = this.handleMouseDown.bind(this);
-  }
-
-  handleClick() {
+  handleClick = () => {
     this.props.onClick(this.props.id);
   }
 
-  handleMouseDown() {
-    if (this.props.onMouseDown) {
-      this.props.onMouseDown();
-    }
+  handleMouseDown = () => {
+    if (this.props.onMouseDown) this.props.onMouseDown();
   }
 
   render() {
     const { className, selected, style, text } = this.props;
     const classes = ['item'];
 
-    if (className) {
-      classes.push(className);
-    }
-
-    if (selected) {
-      classes.push('selected');
-    }
+    if (className) classes.push(className);
+    if (selected) classes.push('selected');
     
     return (
       <div
@@ -210,12 +196,19 @@ class FlexboxPreviewContent extends React.PureComponent {
       addChildElement, 
       canAddChildElement,
       childElements,
+      shouldChildNumber,
       selectedIndexes
     } = this.props;
 
     const items = childElements.map(({ id, ...props }, index) => {
       const selected = contains(selectedIndexes, index);
       const style = extend({}, itemStyles, props);
+      const text = shouldChildNumber ? (
+        <div className="item-content">
+          <span>Child:</span>
+          {index + 1}
+        </div>
+      ) : null;
 
       return (
         <FlexItem
@@ -223,7 +216,7 @@ class FlexboxPreviewContent extends React.PureComponent {
           id={id}
           selected={selected}
           style={style}
-          text={<div style={{ color: '#fff', padding: '8px' }}>{index}</div>}
+          text={text}
           onClick={this.selectChildElements}
           onMouseDown={this.preventDeselect}
         />
