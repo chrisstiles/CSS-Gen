@@ -308,12 +308,15 @@ class PreviewWindow extends React.Component {
   handleFileDrop = data => {
     this.hasLoaded = true;
     this.setWrapperStyle(data.width, data.height);
+    
     const props = extend(data, {
       hasDragged: false,
       hasResized: false,
       position: { x: 0, y: 0 },
-      resizePosition: { x: 0, y: 0 }
-    })
+      resizePosition: { x: 0, y: 0 },
+      background: 'transparent'
+    });
+
     this.props.updatePreview(props);
   }
 
