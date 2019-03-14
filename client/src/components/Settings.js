@@ -10,7 +10,7 @@ class Settings extends React.Component {
   // width, height and optionally background
   renderDefaultPreviewSettings = () => {
     const { previewState, updatePreview } = this.props;
-    if (!this.props.previewState) return;
+    if (!previewState) return;
 
     const previewComponents= mapObject(previewState, (value, key) => {
       // Capitalize first letter of key for label
