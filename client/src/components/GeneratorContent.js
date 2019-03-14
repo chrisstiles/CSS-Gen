@@ -5,24 +5,36 @@ import { isArray } from 'underscore';
 class GeneratorOutput extends React.PureComponent {
   constructor(props) {
     super(props);
+    
+    // Will use fallback for output if position: sticky is not supported
+    this.hasStickySupport = function() {
+      const el = document.createElement('a');
+      const mStyle = el.style;
+      mStyle.cssText = "position:sticky;position:-webkit-sticky;position:-ms-sticky;";
+      return mStyle.position.indexOf('sticky') !== -1;
+    }();
 
     this.outputHeight = 0;
     this.isFixed = false;
   }
 
   componentDidMount() {
-    this.positionWrapper();
-    window.addEventListener('scroll', this.positionWrapper, true);
-    window.addEventListener('resize', this.positionWrapper, true);
+    if (!this.hasStickySupport) {
+      this.positionWrapper();
+      window.addEventListener('scroll', this.positionWrapper, true);
+      window.addEventListener('resize', this.positionWrapper, true);
+    }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.positionWrapper);
-    window.removeEventListener('resize', this.positionWrapper);
+    if (!this.hasStickySupport) {
+      window.removeEventListener('scroll', this.positionWrapper);
+      window.removeEventListener('resize', this.positionWrapper);
+    }
   }
 
   componentDidUpdate() {
-    this.positionWrapper();
+    if (!this.hasStickySupport) this.positionWrapper();
   }
 
   updateWrapperHeight = () => {
@@ -71,6 +83,7 @@ class GeneratorOutput extends React.PureComponent {
     const outputWrapperProps = { id: 'generator-output', className: [] };
     if (output.length > 1) outputWrapperProps.className.push('multiple');
     if (this.isFixed) outputWrapperProps.className.push('fixed');
+    if (!this.hasStickySupport) outputWrapperProps.className.push('no-sticky');
     outputWrapperProps.className = outputWrapperProps.className.join(' ');
 
     return (
@@ -79,7 +92,10 @@ class GeneratorOutput extends React.PureComponent {
         {...outputWrapperProps}
       >
         <div id="output-scroller">
-          <div ref={content => { this.content = content }}>
+          <div 
+            id="output-content" 
+            ref={content => { this.content = content }}
+          >
             {codeViewers}
           </div>
         </div>
