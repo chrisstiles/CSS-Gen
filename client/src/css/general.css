@@ -211,7 +211,7 @@ elements is easier in one separate file
     padding-bottom: 250px; }
   #generator-output.fixed #output-scroller {
     bottom: 250px; }
-  #output-scroller {
+  #output-content {
     max-height: calc(100vh - 55px - 250px); }
   #bottom-content-wrapper {
     height: 250px; } }
@@ -749,7 +749,10 @@ body.code-expanded #bottom-content-wrapper {
   box-shadow: 0 15px 45px 0 rgba(37, 32, 74, 0.15);
   border-radius: 0px 0px 3px 3px;
   position: relative;
-  border-radius: 3px; }
+  border-radius: 3px;
+  position: relative;
+  min-height: 0;
+  flex-shrink: 1; }
   .output-wrapper:before {
     content: "";
     position: absolute;
@@ -901,6 +904,7 @@ body.code-expanded .expanded-code-wrapper .output-wrapper {
   background: rgba(23, 11, 15, 0.5);
   background: linear-gradient(130deg, rgba(77, 34, 78, 0.46) 0%, rgba(29, 13, 74, 0.79) 100%);
   flex-grow: 1;
+  min-height: 0;
   display: flex;
   z-index: 300; }
   .language-wrapper:focus:before {

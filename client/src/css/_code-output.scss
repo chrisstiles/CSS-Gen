@@ -28,6 +28,9 @@
   border-radius: 0px 0px 3px 3px;
   position: relative;
   border-radius:3px;
+  position:relative;
+  min-height:0;
+  flex-shrink:1;
 
   &:before {
     content:"";
@@ -225,6 +228,7 @@ body {
   background: rgba(23, 11, 15, 0.5);
   background: linear-gradient(130deg, rgba(77, 34, 78, 0.46) 0%, rgba(29, 13, 74, 0.79) 100%);
   flex-grow:1;
+  min-height:0;
   display:flex;
   z-index: 300;
 

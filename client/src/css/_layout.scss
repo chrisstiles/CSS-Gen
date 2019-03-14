@@ -129,7 +129,7 @@ $output-width: 360px;
     }
   }
 
-  #output-scroller {
+  #output-content {
     max-height:calc(100vh - #{$nav-height} - #{$bottom-content-height});
   }
 
