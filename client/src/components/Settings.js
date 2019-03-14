@@ -91,7 +91,7 @@ class Settings extends React.Component {
               label="Canvas background"
               color={canvasColor}
               inline={true}
-              transparentButton={true}
+              checkerButton={true}
               className="small-preview"
               onChange={updatePreview}
             />

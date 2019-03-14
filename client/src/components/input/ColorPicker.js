@@ -161,12 +161,12 @@ class ColorPicker extends React.PureComponent {
   }
 
   renderPicker = color => {
-    const { transparentButton, disableAlpha } = this.props;
+    const { checkerButton, disableAlpha } = this.props;
     const style = extend({}, this.state.position);
     if (!this.state.displayColorPicker) style.display = 'none';
     
     const className = ['color-picker'];
-    if (transparentButton) className.push('has-transparency');
+    if (checkerButton) className.push('has-checker-button');
     if (this.state.transparent) className.push('transparent-active');
 
     const picker = (
@@ -182,9 +182,9 @@ class ColorPicker extends React.PureComponent {
           disableAlpha={disableAlpha}
           style={{ opacity: .4 }}
         />
-        {transparentButton ? 
+        {checkerButton ? 
           <div
-            className="transparent-button"
+            className="checker-button"
             onClick={this.setTransparent}
           />
         : null}
@@ -199,6 +199,7 @@ class ColorPicker extends React.PureComponent {
       color: _color, 
       className, 
       inline,
+      checkerButton,
       disableAlpha,
     } = this.props;
 
@@ -220,6 +221,7 @@ class ColorPicker extends React.PureComponent {
 
     if (className) wrapperClassName.push(className);
     if (inline) wrapperClassName.push('inline');
+    if (checkerButton) wrapperClassName.push('has-checker-button');
     if (this.state.transparent) wrapperClassName.push('transparent-active');
     
     return (

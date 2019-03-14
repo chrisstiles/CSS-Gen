@@ -2087,9 +2087,9 @@ textarea {
   z-index: 99999;
   width: 226px !important;
   height: 245px !important; }
-  .color-picker.has-transparency .chrome-picker > div > .flexbox-fix:first-child {
+  .color-picker.has-checker-button .chrome-picker > div > .flexbox-fix:first-child {
     padding-right: 40px; }
-  .color-picker .transparent-button {
+  .color-picker .checker-button {
     position: absolute;
     width: 29px;
     height: 29px;
@@ -2105,7 +2105,7 @@ textarea {
     background-size: 12px 12px;
     background-repeat: repeat;
     background-color: #fff !important; }
-    .color-picker .transparent-button:after {
+    .color-picker .checker-button:after {
       content: "";
       position: absolute;
       top: 0;
@@ -2114,22 +2114,38 @@ textarea {
       right: 0;
       background-color: rgba(0, 0, 0, 0.05);
       opacity: 0; }
-    .color-picker .transparent-button:hover:before {
+    .color-picker .checker-button:hover:before {
       opacity: .8; }
-    .color-picker .transparent-button:hover:after {
+    .color-picker .checker-button:hover:after {
       opacity: 1; }
 
-.transparent-active .transparent-button {
+.transparent-active .checker-button {
   border: 1px solid #4834d4 !important;
   box-shadow: 0px 0px 0px 3px rgba(72, 52, 212, 0.4) !important; }
 
 .transparent-active .color-preview {
   position: relative;
+  overflow: hidden; }
+  .transparent-active .color-preview:before {
+    content: "";
+    position: absolute;
+    height: 5px;
+    width: calc(100% + 20px);
+    background-color: #f18383;
+    top: 50%;
+    left: 50%;
+    transform-origin: center center;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    z-index: 300; }
+
+.transparent-active.has-checker-button .color-preview {
   background-image: url("../images/checker-bg.svg");
   overflow: hidden;
   background-size: 12px 12px;
   background-repeat: repeat;
   background-color: #fff !important; }
+  .transparent-active.has-checker-button .color-preview:before {
+    display: none; }
 
 .color-preview {
   width: 50px;

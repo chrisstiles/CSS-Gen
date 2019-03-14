@@ -37,11 +37,11 @@
   width: 226px !important;
   height:245px !important;
 
-  &.has-transparency .chrome-picker > div > .flexbox-fix:first-child {
+  &.has-checker-button .chrome-picker > div > .flexbox-fix:first-child {
     padding-right:40px;
   }
 
-  .transparent-button {
+  .checker-button {
     position: absolute;
     width: 29px;
     height: 29px;
@@ -52,7 +52,6 @@
     border-radius:2px;
     overflow: hidden;
     cursor: pointer;
-
     @include transparent-bg;
 
     &:after {
@@ -79,15 +78,37 @@
 }
 
 .transparent-active {
-  .transparent-button {
+  .checker-button {
     border:1px solid $accent-color !important;
     box-shadow: 0px 0px 0px 3px rgba(72, 52, 212, 0.4) !important;
   }
 
   .color-preview {
     position:relative;
-    
-    @include transparent-bg;
+    overflow: hidden;
+
+    &:before {
+      content:"";
+      position:absolute;
+      height:5px;
+      width:calc(100% + 20px);
+      background-color:#f18383;
+      top:50%;
+      left:50%;
+      transform-origin:center center;
+      transform:translate(-50%, -50%) rotate(-45deg);
+      z-index:300;
+    }
+  }
+
+  &.has-checker-button {
+    .color-preview {
+      @include transparent-bg;
+
+      &:before {
+        display:none;
+      }
+    }
   }
 }
 
