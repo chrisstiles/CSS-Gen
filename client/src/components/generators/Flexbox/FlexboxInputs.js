@@ -17,8 +17,8 @@ class FlexboxInputs extends React.PureComponent {
 
   handleContainerChange(value, name) {
     const { containerStyles: _containerStyles, updateGenerator } = this.props;
-    // const containerStyles = _.extend({}, _containerStyles);
     const containerStyles = clone(_containerStyles);
+
     containerStyles[name] = value;
 
     updateGenerator({ containerStyles });
@@ -26,8 +26,8 @@ class FlexboxInputs extends React.PureComponent {
 
   handleAllItemsChange(value, name) {
     const { itemStyles: _itemStyles, updateGenerator } = this.props;
-    // const itemStyles = _.extend({}, _itemStyles);
     const itemStyles = clone(_itemStyles);
+
     itemStyles[name] = value;
 
     updateGenerator({ itemStyles });
@@ -48,13 +48,23 @@ class FlexboxInputs extends React.PureComponent {
       return;
     }
 
-    const childElements = clone(_childElements);
+    const state = { childElements: clone(_childElements) };
+    const allSelected = state.childElements.length === selectedIndexes.length;
 
     _.each(selectedIndexes, index => {
-      childElements[index][name] = value;
+      if (allSelected) {
+        delete state.childElements[index][name];
+      } else {
+        state.childElements[index][name] = value;
+      }
     });
+
+    if (allSelected) {
+      state.itemStyles = _.extend({}, itemStyles);
+      state.itemStyles[name] = value;
+    }
     
-    updateGenerator({ childElements });
+    updateGenerator(state);
   }
 
   removeChild() {
