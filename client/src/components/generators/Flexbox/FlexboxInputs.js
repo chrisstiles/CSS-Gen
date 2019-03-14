@@ -3,6 +3,7 @@ import Sidebar from '../../Sidebar';
 import ContainerInputs from './ContainerInputs';
 import ItemInputs from './ItemInputs';
 import _ from 'underscore';
+import { clone } from '../../../util/helpers';
 
 class FlexboxInputs extends React.PureComponent {
   constructor(props) {
@@ -10,13 +11,14 @@ class FlexboxInputs extends React.PureComponent {
 
     this.handleContainerChange = this.handleContainerChange.bind(this);
     this.handleAllItemsChange = this.handleAllItemsChange.bind(this);
-    this.handleSingleItemChange = this.handleSingleItemChange.bind(this);
+    this.handleSelectedItemsChange = this.handleSelectedItemsChange.bind(this);
     this.removeChild = this.removeChild.bind(this);
   }
 
   handleContainerChange(value, name) {
     const { containerStyles: _containerStyles, updateGenerator } = this.props;
-    const containerStyles = _.extend({}, _containerStyles);
+    // const containerStyles = _.extend({}, _containerStyles);
+    const containerStyles = clone(_containerStyles);
     containerStyles[name] = value;
 
     updateGenerator({ containerStyles });
@@ -24,14 +26,20 @@ class FlexboxInputs extends React.PureComponent {
 
   handleAllItemsChange(value, name) {
     const { itemStyles: _itemStyles, updateGenerator } = this.props;
-    const itemStyles = _.extend({}, _itemStyles);
+    // const itemStyles = _.extend({}, _itemStyles);
+    const itemStyles = clone(_itemStyles);
     itemStyles[name] = value;
 
     updateGenerator({ itemStyles });
   }
 
-  handleSingleItemChange(value, name) {
-    const { childElements: _childElements, itemStyles, selectedIndexes, updateGenerator } = this.props;
+  handleSelectedItemsChange(value, name) {
+    const { 
+      childElements: _childElements, 
+      itemStyles, 
+      selectedIndexes, 
+      updateGenerator 
+    } = this.props;
 
     if (!selectedIndexes.length
         || itemStyles[name] === undefined
@@ -40,7 +48,7 @@ class FlexboxInputs extends React.PureComponent {
       return;
     }
 
-    const childElements = _childElements.slice();
+    const childElements = clone(_childElements);
 
     _.each(selectedIndexes, index => {
       childElements[index][name] = value;
@@ -52,15 +60,13 @@ class FlexboxInputs extends React.PureComponent {
   removeChild() {
     const { childElements: _childElements, selectedIndexes, updateGenerator } = this.props;
     
-    if (!selectedIndexes.length) {
-      return;
-    }
+    if (!selectedIndexes.length) return;
 
-    var childElements = [];
+    let childElements = [];
 
     _.each(_childElements, (element, index) => {
       if (!_.contains(selectedIndexes, index)) {
-        childElements.push(element);
+        childElements.push(clone(element));
       }
     });
 
@@ -71,10 +77,10 @@ class FlexboxInputs extends React.PureComponent {
     const { selectedIndexes, containerStyles, itemStyles: _itemStyles, childElements, canAddChildElement } = this.props;
 
     const numSelected = selectedIndexes.length;
-    var itemStyles, selectedText, removeText;
+    let itemStyles, selectedText, removeText;
     if (numSelected) {
       itemStyles = _.extend({}, _itemStyles, childElements[selectedIndexes[numSelected - 1]]);
-
+      
       if (numSelected === 1) {
         selectedText = (
           <p>Styles for <strong>{numSelected} selected item</strong></p>
@@ -120,14 +126,14 @@ class FlexboxInputs extends React.PureComponent {
           >
             Add flex item
           </div>
-          {selectedIndexes.length && selectedIndexes.length < childElements.length ?
+          {selectedIndexes.length ?
             <div>
               <div className="section-title">Selected Item Settings</div>
               <div className="section-info">
                 {selectedText}
               </div>
               <ItemInputs
-                onChange={this.handleSingleItemChange}
+                onChange={this.handleSelectedItemsChange}
                 {...itemStyles}
               />
               <div

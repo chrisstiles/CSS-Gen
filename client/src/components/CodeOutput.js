@@ -15,7 +15,7 @@ import {
   getNotificationTypes, 
   updateGlobalState, 
   formatCode,
-  cloneObject, 
+  clone, 
   selectText, 
   setGlobalVariable 
 } from '../util/helpers';
@@ -94,7 +94,7 @@ class CodeOutput extends React.PureComponent {
   }
 
   getCode(newProps) {
-    const props = cloneObject(newProps);
+    const props = clone(newProps);
 
     if (this.props.language.toLowerCase() === 'css') {
       this.getCSS(props);

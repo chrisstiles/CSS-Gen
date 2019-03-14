@@ -6,7 +6,7 @@ import FlexboxBottom from './FlexboxBottom';
 import Generator from '../../Generator';
 import Header from '../../Header';
 import { map, uniqueId, extend, mapObject } from 'underscore';
-import { generateCSSString } from '../../../util/helpers';
+import { generateCSSString, clone } from '../../../util/helpers';
 
 const maxChildElements = 50;
 
@@ -30,7 +30,7 @@ class Flexbox extends React.Component {
     if (_canAddChildElement) {
       const canAddChildElement = _childElements.length + 1 < maxChildElements;
       const child = { id: uniqueId('child-') };
-      const childElements = _childElements.slice();
+      const childElements = clone(_childElements);
       childElements.push(child);
       this.props.updateGenerator({ childElements, canAddChildElement });
     }
@@ -113,6 +113,8 @@ class Flexbox extends React.Component {
       updateGenerator,
       addChildElement: this.addChildElement
     });
+
+    // console.log(generatorState)
 
     const {
       showAddButton,
@@ -207,14 +209,14 @@ const stateTypes = {
 
 // Add unique keys to each child element
 function addUniqueIds(state) {
-  state.childElements = state.childElements || [];
+  state.childElements = state.childElements ? clone(state.childElements) : [];
 
   map(state.childElements, child => {
     child.id = uniqueId('child-');
   });
 
   if (state.childElements.length > maxChildElements) {
-    state.childElements = defaultState.childElements.slice();
+    state.childElements = clone(defaultState.childElements);
   }
 
   state.canAddChildElement = state.childElements.length < maxChildElements;

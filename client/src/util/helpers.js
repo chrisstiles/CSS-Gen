@@ -753,7 +753,7 @@ export function selectText(node) {
 	}
 }
 
-export function cloneObject(obj) {
+export function clone(obj) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
