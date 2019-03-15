@@ -205,7 +205,7 @@ class FlexboxPreviewContent extends React.PureComponent {
       const style = extend({}, itemStyles, props);
       const text = shouldChildNumber ? (
         <div className="item-content">
-          <span>Child:</span>
+          <span>Item:</span>
           {index + 1}
         </div>
       ) : null;
@@ -257,7 +257,7 @@ class FlexboxPreviewContent extends React.PureComponent {
     return (
       <div id="flexbox-preview">
         <div {...containerProps}>
-          <div className="title">Flex Container</div>
+          <div className="title">Container</div>
           <div className="items-wrapper" style={containerStyles}>
             {items}
           </div>

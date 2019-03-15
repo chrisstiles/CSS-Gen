@@ -2814,15 +2814,14 @@ input.angle-input {
       z-index: 200; }
     #flexbox-preview .container:before {
       left: 0;
-      width: 14px; }
+      width: 25px; }
     #flexbox-preview .container:after {
-      left: 135px;
+      left: 113px;
       right: 0; }
     #flexbox-preview .container .title {
       position: absolute;
-      width: 115px;
-      left: 15px;
-      padding: 0 5px;
+      width: 110px;
+      left: 14px;
       line-height: 1;
       text-align: center;
       border-bottom: none;
@@ -2849,9 +2848,9 @@ input.angle-input {
       z-index: 200; }
   #flexbox-preview .item {
     cursor: pointer;
-    flex-basis: 100px;
-    min-width: 100px;
-    min-height: 100px;
+    flex-basis: 110px;
+    min-width: 110px;
+    min-height: 110px;
     position: relative;
     margin: 2px;
     border-radius: 3px;
