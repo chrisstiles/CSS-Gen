@@ -3,10 +3,11 @@ import createGenerator from '../create-generator';
 import FlexboxContent from './FlexboxContent';
 import FlexboxInputs from './FlexboxInputs';
 import FlexboxBottom from './FlexboxBottom';
+import generate from './generate-flexbox';
 import Generator from '../../Generator';
 import Header from '../../Header';
-import { map, uniqueId, extend, mapObject } from 'underscore';
-import { generateCSSString, clone } from '../../../util/helpers';
+import { map, uniqueId, extend } from 'underscore';
+import { clone } from '../../../util/helpers';
 
 const maxChildElements = 50;
 
@@ -36,68 +37,6 @@ class Flexbox extends React.Component {
     }
   }
 
-  generate = () => {
-    const {
-      containerStyles,
-      itemStyles,
-      childElements
-    } = this.props.generatorState;
-
-    const html = [];
-    const css = [];
-
-    const { display, flexWrap, ...containerDefaults } = defaultState.containerStyles;
-    css.push(generateCSSString(containerStyles, '.container', { 
-      flexWrap: 'nowrap',
-      ...containerDefaults 
-    }));
-
-    const itemCSS = generateCSSString(itemStyles, '.item', defaultState.itemStyles);
-    if (itemCSS) css.push(itemCSS);
-    
-    if (childElements.length) {
-      childElements.forEach((child, index) => {
-        const { id, ...restStyles } = child;
-        
-        let hasUniqueValues = false;
-        const childStyles = mapObject({ ...restStyles }, (value, key) => {
-          // We only output items for individual items
-          // if their values are different than the default
-          const newValue = itemStyles[key] === value ? null : value;
-          if (newValue) hasUniqueValues = true;
-          return newValue;
-        });
-
-        if (hasUniqueValues) {
-          let selector;
-
-          if (index === 0) {
-            selector = `.item:first-child`;
-          } else if (index === childElements.length - 1) {
-            selector = `.item:last-child`;
-          } else {
-            selector = `.item:nth-child(${index + 1})`;
-          }
-          
-          css.push(generateCSSString(childStyles, selector));
-        }
-
-        html.push('  <div class="item"></div>');
-      });
-
-      html.unshift('<div class="container">');
-      html.push('</div>');
-
-    } else {
-      html.push('<div class="container"></div>');
-    }
-
-    return [
-      { language: 'css', code: css.join('\n') },
-      { language: 'html', code: html.join('\n') }
-    ];
-  }
-
   render() {
     const {
       globalState,
@@ -108,13 +47,11 @@ class Flexbox extends React.Component {
       resetGenerator
     } = this.props;
 
-    const output = this.generate();
+    const output = generate(generatorState, defaultState);
     const props = extend({}, { ...generatorState }, {
       updateGenerator,
       addChildElement: this.addChildElement
     });
-
-    // console.log(generatorState)
 
     const {
       showAddButton,
