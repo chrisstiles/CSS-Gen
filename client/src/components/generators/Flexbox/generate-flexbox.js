@@ -1,4 +1,4 @@
-import { mapObject } from 'underscore';
+import { each } from 'underscore';
 import { generateCSSString } from '../../../util/helpers';
 
 export default function generate({ containerStyles, itemStyles, childElements }, defaultState) {
@@ -13,10 +13,6 @@ export default function generate({ containerStyles, itemStyles, childElements },
 
   const itemCSS = generateCSSString(itemStyles, '.item', defaultState.itemStyles);
   if (itemCSS) css.push(itemCSS);
-
-  const uniqueItemStyles = [];
-  const uniqueItemSelectors = [];
-  const uniqueItemValues = [];
 
   const uniqueStyles = {};
 
@@ -34,10 +30,7 @@ export default function generate({ containerStyles, itemStyles, childElements },
         selector = `.item:nth-child(${childIndex + 1})`;
       }
 
-      // let hasUniqueValues = false;
-      const uniqueValues = [];
-
-      const childStyles = mapObject({ ...restStyles }, (_value, key) => {
+      each({ ...restStyles }, (_value, key) => {
         // We only output items for individual items
         // if their values are different than the default
         const value = itemStyles[key] === _value ? null : _value;
@@ -50,75 +43,62 @@ export default function generate({ containerStyles, itemStyles, childElements },
             }
           } else {
             const data = uniqueStyles[key];
-            // const valueIndex = styles.values.indexOf(value);
 
-            // Another child item uses this same style
             if (data.values.includes(value)) {
+              // Another child item uses this same style
               data.styles = data.styles.map(style => {
                 if (style.value === value) style.selector += `,\n${selector}`;
                 return style;
               });
             } else {
+              // This is the first child item with this style
               data.values.push(value);
               data.styles.push({ selector, value: value });
             }
           }
-
-
-          const style = {};
-          style[key] = value;
-
-          uniqueValues.push(style);
-          // hasUniqueValues = true;
-          // console.log(key, newValue);
         }
-
-        return value;
       });
-
-      // console.log(uniqueValues)
-
-      // if (hasUniqueValues) {
-      // This item has some different css than the default item styles
-      if (uniqueValues.length) {
-        // let selector;
-
-        // if (childIndex === 0) {
-        //   selector = `.item:first-child`;
-        // } else if (childIndex === childElements.length - 1) {
-        //   selector = `.item:last-child`;
-        // } else {
-        //   selector = `.item:nth-child(${childIndex + 1})`;
-        // }
-
-        // Check if this item's styles are the same as any other 
-        // child so we can combine them in the output CSS
-        const styles = JSON.stringify(uniqueValues);
-        const styleIndex = uniqueItemStyles.indexOf(styles);
-
-        if (styleIndex === -1) {
-          // These styles are not shared by another child item
-          uniqueItemStyles.push(styles);
-          uniqueItemSelectors.push(selector);
-          uniqueItemValues.push(childStyles);
-        } else {
-          // Another child item uses the same styles, so combine the selectors
-          uniqueItemSelectors[styleIndex] = `${uniqueItemSelectors[styleIndex]},\n${selector}`;
-        }
-
-
-
-        // css.push(generateCSSString(childStyles, selector));
-      }
 
       html.push('  <div class="item"></div>');
     });
+    
+    // Group selectors that have similar styles
+    if (Object.keys(uniqueStyles).length) {
+      const selectorStyles = {};
 
-    console.log(uniqueStyles)
+      each(uniqueStyles, (data, property) => {
+        data.styles.forEach(({ selector, value }) => {
+          if (!selectorStyles.hasOwnProperty(selector)) {
+            selectorStyles[selector] = {};
+          }
 
-    if (uniqueItemSelectors.length) {
-      uniqueItemSelectors.forEach((selector, index) => {
-        css.push(generateCSSString(uniqueItemValues[index], selector));
+          selectorStyles[selector][property] = value;
+        });
+      });
+
+      const selectorGroups = Object.keys(selectorStyles).sort((a, b) => {
+        const last = '.item:last-child';
+        if (a.indexOf(last) === 0) {
+          return 1;
+        }
+
+        if (b.indexOf(last) === 0) {
+          return -1;
+        }
+
+        if (a < b) {
+          return -1;
+        }
+
+        if (a > b) {
+          return 1;
+        }
+
+        return 0;
+      });
+
+      selectorGroups.forEach((selectors) => {
+        css.push(generateCSSString(selectorStyles[selectors], selectors));
       });
     }
 
