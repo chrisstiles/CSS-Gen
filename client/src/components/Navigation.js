@@ -4,6 +4,7 @@ import Logo from '../images/logo.svg';
 
 const navLinks = [
 	{ to: '/flexbox-generator', className: 'gradient', title: 'Flexbox' },
+	{ to: '/transform-generator', className: 'gradient', title: 'Transform' },
 	{ to: '/box-shadow-generator', className: 'box-shadow', title: 'Box Shadow' },
 	{ to: '/border-radius-generator', className: 'border-radius', title: 'Border Radius' },
 	{ to: '/gradient-generator', className: 'gradient', title: 'Gradient' },

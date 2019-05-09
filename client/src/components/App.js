@@ -13,6 +13,7 @@ import '../css/general.css';
 // Generator Pages
 import Home from './Home';
 import Flexbox from './generators/Flexbox/';
+import Transform from './generators/Transform/';
 import BoxShadow from './generators/BoxShadow/';
 import BorderRadius from './generators/BorderRadius/';
 import Gradient from './generators/Gradient';
@@ -24,6 +25,7 @@ import TextShadow from './generators/TextShadow';
 const routes = [
   { path: '/', component: Home },
   { path: '/flexbox-generator', component: Flexbox },
+  { path: '/transform-generator', component: Transform },
   { path: '/box-shadow-generator', component: BoxShadow },
   { path: '/border-radius-generator', component: BorderRadius },
   { path: '/gradient-generator', component: Gradient },

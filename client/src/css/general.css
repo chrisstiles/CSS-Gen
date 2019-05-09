@@ -142,7 +142,7 @@ elements is easier in one separate file
   top: 55px;
   right: 0;
   width: 320px;
-  bottom: 210px; }
+  bottom: 0; }
 
 #tooltip-wrapper {
   right: 320px; }
@@ -153,7 +153,7 @@ elements is easier in one separate file
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding-bottom: 210px; }
+    padding-bottom: 0; }
     #page-wrapper.generator #page-content {
       display: flex;
       flex-wrap: wrap;
@@ -185,7 +185,7 @@ elements is easier in one separate file
   #generator-output.fixed #output-scroller {
     position: fixed !important;
     left: 0;
-    bottom: 210px;
+    bottom: 0;
     min-height: 0 !important; }
   #generator-output.no-sticky #output-scroller {
     position: static;
@@ -199,10 +199,10 @@ elements is easier in one separate file
   top: 55px; }
 
 #output-content {
-  max-height: calc(100vh - 55px - 210px); }
+  max-height: calc(100vh - 55px - 0); }
 
 #bottom-content-wrapper {
-  height: 210px; }
+  height: 0; }
 
 @media (min-height: 920px) {
   #sidebar {
