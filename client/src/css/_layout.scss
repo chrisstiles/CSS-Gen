@@ -63,12 +63,23 @@ $output-width: 360px;
   justify-content:flex-end;
 }
 
+#generator-preview-wrapper {
+  width:calc(100% - #{$output-width});
+  display: flex;
+  flex-direction: column;
+}
+
+#preview-toolbar {
+  top:$nav-height;
+  position:sticky;
+  z-index: 9000;
+}
+
 #generator-preview {
   display:flex;
-  flex-grow:0;
+  flex-grow:1;
   padding:25px;
   position:relative;
-  width:calc(100% - #{$output-width});
 }
 
 #generator-output {

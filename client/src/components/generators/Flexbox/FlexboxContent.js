@@ -1,6 +1,7 @@
 import React from 'react';
 import GeneratorContent from '../../GeneratorContent';
 import Preview from '../../Preview';
+import PreviewToolbar from '../../PreviewToolbar';
 
 import { 
   contains, 
@@ -267,9 +268,13 @@ class FlexboxPreviewContent extends React.PureComponent {
   }
 }
 
-const FlexboxContent = ({ canvasColor, output, ...previewProps }) => {
+const FlexboxContent = ({ resetGenerator, canvasColor, output, ...previewProps }) => {
+  const previewSettings = (
+    <PreviewToolbar resetGenerator={resetGenerator} />
+  );
+
   return (
-    <GeneratorContent output={output}>
+    <GeneratorContent output={output} previewSettings={previewSettings}>
       <Preview canvasColor={canvasColor}>
         <FlexboxPreviewContent {...previewProps} />
       </Preview>

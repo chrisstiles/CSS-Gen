@@ -171,12 +171,21 @@ elements is easier in one separate file
   flex-grow: 1;
   justify-content: flex-end; }
 
+#generator-preview-wrapper {
+  width: calc(100% - 360px);
+  display: flex;
+  flex-direction: column; }
+
+#preview-toolbar {
+  top: 55px;
+  position: sticky;
+  z-index: 9000; }
+
 #generator-preview {
   display: flex;
-  flex-grow: 0;
+  flex-grow: 1;
   padding: 25px;
-  position: relative;
-  width: calc(100% - 360px); }
+  position: relative; }
 
 #generator-output {
   flex-grow: 0;
@@ -352,6 +361,8 @@ body.preview-loading #canvas #text-area-preview {
   text-shadow: none !important;
   color: transparent !important; }
 
+/* ------------------------- */
+/* Canvas */
 #canvas {
   width: 100%;
   flex-grow: 1;
@@ -397,6 +408,30 @@ body.preview-loading #canvas #text-area-preview {
 .app-loading #generator-loading {
   display: flex; }
 
+/* ------------------------- */
+/* Preview Toolbar */
+#preview-toolbar {
+  background-color: rgba(253, 253, 253, 0.98);
+  padding: 10px 10px 10px 20px;
+  display: flex;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(238, 238, 238, 0.58);
+  line-height: 1;
+  color: #505050;
+  justify-content: space-between;
+  align-items: center; }
+  #preview-toolbar .title {
+    margin-right: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    flex-grow: 0; }
+  #preview-toolbar .content {
+    flex-grow: 1; }
+  #preview-toolbar .reset {
+    flex-grow: 0; }
+
+/* ------------------------- */
+/* Preview Window */
 #preview-wrapper {
   position: absolute;
   top: 50%;

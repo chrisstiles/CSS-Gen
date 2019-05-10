@@ -40,6 +40,9 @@ body {
   }
 }
 
+/* ------------------------- */
+/* Canvas */
+
 #canvas {
   width:100%;
   flex-grow:1;
@@ -95,6 +98,41 @@ body {
 .app-loading #generator-loading {
   display:flex;
 }
+
+
+/* ------------------------- */
+/* Preview Toolbar */
+
+#preview-toolbar {
+  background-color:rgba(#fdfdfd, .98);
+  padding:10px 10px 10px 20px;
+  display:flex;
+  font-size:13px;
+  border-bottom: 1px solid rgba(238, 238, 238, 0.58);
+  line-height:1;
+  color:$dark-grey;
+  justify-content: space-between;
+  align-items:center;
+
+  .title {
+    margin-right:10px;
+    font-weight:700;
+    text-transform:uppercase;
+    flex-grow:0;
+  }
+
+  .content {
+    flex-grow:1;
+  }
+
+  .reset {
+    flex-grow:0;
+  }
+}
+
+
+/* ------------------------- */
+/* Preview Window */
 
 #preview-wrapper {
   position:absolute;

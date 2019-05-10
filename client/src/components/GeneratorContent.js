@@ -106,11 +106,16 @@ class GeneratorOutput extends React.PureComponent {
 
 class GeneratorContent extends React.PureComponent {
   render() {
+    const { previewSettings, output, children } = this.props;
+
     return (
       <div id="generator-content">
-        <GeneratorOutput output={this.props.output} />
-        <div id="generator-preview">
-          {this.props.children}
+        <GeneratorOutput output={output} />
+        <div id="generator-preview-wrapper">
+          {previewSettings ? previewSettings : null}
+          <div id="generator-preview">
+            {children}
+          </div>
         </div>
       </div>
     );
