@@ -72,7 +72,7 @@ class Transform extends React.Component {
 
 const defaultState = {
   translateX: 0,
-  translateXY: 0,
+  translateY: 0,
   scaleX: 0,
   scaleY: 0,
   previewState: {
@@ -82,7 +82,7 @@ const defaultState = {
 
 const stateTypes = {
   translateX: Number,
-  translateXY: Number,
+  translateY: Number,
   scaleX: Number,
   scaleY: Number,
   previewState: {
