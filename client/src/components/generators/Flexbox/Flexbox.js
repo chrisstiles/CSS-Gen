@@ -2,7 +2,6 @@ import React from 'react'
 import createGenerator from '../create-generator';
 import FlexboxContent from './FlexboxContent';
 import FlexboxInputs from './FlexboxInputs';
-import FlexboxBottom from './FlexboxBottom';
 import generate from './generate-flexbox';
 import Generator from '../../Generator';
 import Header from '../../Header';
@@ -67,6 +66,7 @@ class Flexbox extends React.Component {
         generatorState={generatorState}
         previewState={previewState}
         globalState={globalState}
+        canvasColor={canvasColor}
       >
         <Header>
           <h1>CSS Flexbox Generator</h1>
@@ -74,21 +74,14 @@ class Flexbox extends React.Component {
         </Header>
         <FlexboxInputs {...props} />
         <FlexboxContent 
-          resetGenerator={resetGenerator}
           canvasColor={canvasColor}
           showAddButton={showAddButton}
           isFullHeight={isFullHeight}
           shouldChildNumber={shouldChildNumber}
           output={output}
-          {...props}
-        />
-        <FlexboxBottom
-          showAddButton={showAddButton}
-          isFullHeight={isFullHeight}
-          canvasColor={canvasColor}
-          shouldChildNumber={shouldChildNumber}
+          resetGenerator={resetGenerator}
           updatePreview={updatePreview}
-          updateGenerator={updateGenerator}
+          {...props}
         />
       </Generator>
     );

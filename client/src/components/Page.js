@@ -26,6 +26,9 @@ class Page extends React.Component {
         <main {...contentProps}>
           {children}
         </main>
+        <footer id="main-footer">
+          © { new Date().getFullYear() } CSS-Gen
+        </footer>
       </div>
     );
   }

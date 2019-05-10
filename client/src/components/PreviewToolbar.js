@@ -6,7 +6,7 @@ class PreviewToolbar extends React.PureComponent {
 
     return (
       <div id="preview-toolbar">
-        <div className="title">Preview</div>
+        <h3>Preview</h3>
         <div className="content">{children}</div>
         {resetGenerator ?
           <div

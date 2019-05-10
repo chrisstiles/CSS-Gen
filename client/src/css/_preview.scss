@@ -105,7 +105,7 @@ body {
 
 #preview-toolbar {
   background-color:rgba(#fdfdfd, .98);
-  padding:10px 10px 10px 20px;
+  padding:10px 10px 10px 17px;
   display:flex;
   font-size:13px;
   border-bottom: 1px solid rgba(238, 238, 238, 0.58);
@@ -114,15 +114,39 @@ body {
   justify-content: space-between;
   align-items:center;
 
-  .title {
-    margin-right:10px;
+  h3 {
+    margin-right:12px;
+    padding-right:12px;
     font-weight:700;
     text-transform:uppercase;
     flex-grow:0;
+    font-size:13px;
+    border-right:1px solid #c7c7c7;
   }
 
   .content {
     flex-grow:1;
+    display:flex;
+
+    .field-wrapper {
+      margin-bottom:0 !important;
+    }
+
+    > .field-wrapper {
+      margin-right:16px;
+
+      &:last-child {
+        margin-right:0;
+      }
+    }
+
+    .toggle-label.inline > span {
+      margin-right:8px;
+    }
+
+    .title {
+      font-size:12px;
+    }
   }
 
   .reset {

@@ -10,7 +10,7 @@ class BottomContent extends React.PureComponent {
           </div>
           <footer id="main-footer">
             Footer content goes here
-            </footer>
+          </footer>
         </div>
       </div>
     );

@@ -142,7 +142,7 @@ elements is easier in one separate file
   top: 55px;
   right: 0;
   width: 320px;
-  bottom: 0; }
+  bottom: 50px; }
 
 #tooltip-wrapper {
   right: 320px; }
@@ -153,7 +153,7 @@ elements is easier in one separate file
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding-bottom: 0; }
+    padding-bottom: 50px; }
     #page-wrapper.generator #page-content {
       display: flex;
       flex-wrap: wrap;
@@ -194,7 +194,7 @@ elements is easier in one separate file
   #generator-output.fixed #output-scroller {
     position: fixed !important;
     left: 0;
-    bottom: 0;
+    bottom: 50px;
     min-height: 0 !important; }
   #generator-output.no-sticky #output-scroller {
     position: static;
@@ -208,26 +208,30 @@ elements is easier in one separate file
   top: 55px; }
 
 #output-content {
-  max-height: calc(100vh - 55px - 0); }
+  max-height: calc(100vh - 55px - 50px); }
 
 #bottom-content-wrapper {
-  height: 0; }
+  height: 50px; }
+
+#main-footer {
+  height: 50px;
+  z-index: 8000; }
 
 @media (min-height: 920px) {
   #sidebar {
-    bottom: 250px; }
+    bottom: 50px; }
   #page-wrapper.generator {
-    padding-bottom: 250px; }
+    padding-bottom: 50px; }
   #generator-output.fixed #output-scroller {
-    bottom: 250px; }
+    bottom: 50px; }
   #output-content {
-    max-height: calc(100vh - 55px - 250px); }
+    max-height: calc(100vh - 55px - 50px); }
   #bottom-content-wrapper {
-    height: 250px; } }
+    height: 50px; } }
 
 #navigation {
-  background: #4834d4;
-  background: linear-gradient(to right, #4834d4 0%, #6656db 100%);
+  background-color: #fdfdfd;
+  border-bottom: 1px solid #e5e5e5;
   position: fixed;
   top: 0;
   left: 0;
@@ -248,19 +252,19 @@ elements is easier in one separate file
       display: block;
       overflow: visible; }
     #navigation .logo .title {
-      fill: #fff; }
+      fill: #505050; }
     #navigation .logo .bracket {
       fill: #c6c6c5;
       transition: all .4s; }
     #navigation .logo:hover .bracket {
-      fill: #fff; }
+      fill: #4834d4; }
       #navigation .logo:hover .bracket.left {
         transform: translateX(-6px); }
       #navigation .logo:hover .bracket.right {
         transform: translateX(6px); }
 
 #page-links a {
-  color: #fff;
+  color: #505050;
   font-weight: 600;
   font-size: 14px;
   text-decoration: none;
@@ -271,7 +275,7 @@ elements is easier in one separate file
   border-radius: 3px;
   position: relative; }
   #page-links a:hover {
-    background-color: rgba(0, 0, 0, 0.12); }
+    background-color: rgba(0, 0, 0, 0.03); }
   #page-links a:before {
     content: "";
     width: 14px;
@@ -283,7 +287,9 @@ elements is easier in one separate file
     position: absolute;
     filter: grayscale(1); }
   #page-links a.current {
-    background-color: rgba(0, 0, 0, 0.1); }
+    color: #4834d4; }
+    #page-links a.current:before {
+      filter: none; }
   #page-links a.box-shadow:before {
     width: 16px;
     height: 16px;
@@ -299,10 +305,10 @@ elements is easier in one separate file
     background-image: url("../images/nav-icons/gradient.svg"); }
   #page-links a.text-shadow:before {
     background-image: url("../images/nav-icons/text-shadow.svg");
-    width: 16px;
-    height: 16px;
-    top: 8px;
-    left: 12px; }
+    width: 15px;
+    height: 15px;
+    top: 10px;
+    left: 13px; }
 
 /* ------------------------- */
 /* Variables */
@@ -412,7 +418,7 @@ body.preview-loading #canvas #text-area-preview {
 /* Preview Toolbar */
 #preview-toolbar {
   background-color: rgba(253, 253, 253, 0.98);
-  padding: 10px 10px 10px 20px;
+  padding: 10px 10px 10px 17px;
   display: flex;
   font-size: 13px;
   border-bottom: 1px solid rgba(238, 238, 238, 0.58);
@@ -420,13 +426,27 @@ body.preview-loading #canvas #text-area-preview {
   color: #505050;
   justify-content: space-between;
   align-items: center; }
-  #preview-toolbar .title {
-    margin-right: 10px;
+  #preview-toolbar h3 {
+    margin-right: 12px;
+    padding-right: 12px;
     font-weight: 700;
     text-transform: uppercase;
-    flex-grow: 0; }
+    flex-grow: 0;
+    font-size: 13px;
+    border-right: 1px solid #c7c7c7; }
   #preview-toolbar .content {
-    flex-grow: 1; }
+    flex-grow: 1;
+    display: flex; }
+    #preview-toolbar .content .field-wrapper {
+      margin-bottom: 0 !important; }
+    #preview-toolbar .content > .field-wrapper {
+      margin-right: 16px; }
+      #preview-toolbar .content > .field-wrapper:last-child {
+        margin-right: 0; }
+    #preview-toolbar .content .toggle-label.inline > span {
+      margin-right: 8px; }
+    #preview-toolbar .content .title {
+      font-size: 12px; }
   #preview-toolbar .reset {
     flex-grow: 0; }
 
@@ -735,14 +755,18 @@ img.preview-style {
   flex-grow: 1; }
 
 #main-footer {
-  background-color: #d4d4d4;
-  position: relative;
-  padding: 12px;
+  background: #4834d4;
+  background: linear-gradient(to right, #4834d4 0%, #6656db 100%);
+  color: #fff;
+  position: fixed;
+  padding: 10px 15px;
   font-size: 12px;
-  height: 40px;
-  width: 100%;
-  flex-shrink: 0;
-  align-self: flex-end; }
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  font-weight: 500; }
 
 body.code-expanded #bottom-content-wrapper {
   z-index: 9999; }

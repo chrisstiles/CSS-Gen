@@ -2,6 +2,7 @@ import React from 'react';
 import GeneratorContent from '../../GeneratorContent';
 import Preview from '../../Preview';
 import PreviewToolbar from '../../PreviewToolbar';
+import Toggle from '../../input/Toggle';
 
 import { 
   contains, 
@@ -268,15 +269,53 @@ class FlexboxPreviewContent extends React.PureComponent {
   }
 }
 
-const FlexboxContent = ({ resetGenerator, canvasColor, output, ...previewProps }) => {
+const FlexboxContent = props => {
+  const {
+    isFullHeight,
+    showAddButton,
+    shouldChildNumber,
+    canvasColor,
+    output,
+    resetGenerator,
+    updatePreview,
+    ...previewProps
+  } = props;
+
   const previewSettings = (
-    <PreviewToolbar resetGenerator={resetGenerator} />
+    <PreviewToolbar resetGenerator={resetGenerator}>
+      <Toggle
+        name="showAddButton"
+        label="Add Button"
+        onChange={updatePreview}
+        checked={showAddButton}
+        inline={true}
+      />
+      <Toggle
+        name="isFullHeight"
+        label="Full Height"
+        onChange={updatePreview}
+        checked={isFullHeight}
+        inline={true}
+      />
+      <Toggle
+        name="shouldChildNumber"
+        label="Child Number"
+        onChange={updatePreview}
+        checked={shouldChildNumber}
+        inline={true}
+      />
+    </PreviewToolbar>
   );
 
   return (
     <GeneratorContent output={output} previewSettings={previewSettings}>
       <Preview canvasColor={canvasColor}>
-        <FlexboxPreviewContent {...previewProps} />
+        <FlexboxPreviewContent
+          isFullHeight={isFullHeight}
+          showAddButton={showAddButton}
+          shouldChildNumber={shouldChildNumber}
+          {...previewProps}
+        />
       </Preview>
     </GeneratorContent>
   );

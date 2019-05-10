@@ -8,7 +8,7 @@ elements is easier in one separate file
 $nav-height: 55px;
 $sidebar-width: 320px;
 // $bottom-content-height: 210px;
-$bottom-content-height: 0;
+$bottom-content-height: 50px;
 $output-width: 360px;
 
 #navigation {
@@ -120,8 +120,13 @@ $output-width: 360px;
   height:$bottom-content-height;
 }
 
+#main-footer {
+  height:$bottom-content-height;
+  z-index: 8000;
+}
+
 @media (min-height: 920px) {
-  $bottom-content-height: 250px;
+  // $bottom-content-height: 50px;
 
   #sidebar {
     bottom:$bottom-content-height;
