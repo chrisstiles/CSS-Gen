@@ -476,7 +476,8 @@ body.preview-loading #canvas #text-area-preview {
   right: 0;
   bottom: 0;
   border-radius: 4px;
-  overflow: hidden; }
+  overflow: hidden;
+  z-index: 200; }
   .preview-style .style,
   .preview-style .image,
   .preview-style .background {
@@ -2925,3 +2926,19 @@ input.angle-input {
     #flexbox-preview .item > div {
       position: relative;
       z-index: 10; }
+
+/* ------------------------- */
+/* Variables */
+/* ------------------------- */
+/* Mixins */
+.transform-generator .preview-style {
+  border-radius: 0; }
+
+#transform-original {
+  position: absolute;
+  border: 2px dashed rgba(72, 52, 212, 0.4);
+  background-color: rgba(72, 52, 212, 0.1);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }

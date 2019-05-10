@@ -372,7 +372,7 @@ class PreviewWindow extends React.Component {
   }
 
   render() {
-    const { previewState, style } = this.props;
+    const { previewState, style, children } = this.props;
     const { position, width: _width, height: _height, ...restPreviewState } = previewState;
     const { isResizing, resizePosition } = this;
     const { x: left, y: top } = resizePosition;
@@ -439,6 +439,7 @@ class PreviewWindow extends React.Component {
                 <div className="drag-handle" />
                 <div className="resize-handle" />
                 {this.renderPreview(previewStyle)}
+                {children}
               </Resizable>
             </div>
           </Draggable>
@@ -455,6 +456,7 @@ class Preview extends React.Component {
       resetCount,
       children,
       className,
+      useDefault,
       ...previewProps
     } = this.props;
 
@@ -471,8 +473,10 @@ class Preview extends React.Component {
       }
     }
 
-    const preview = children ? children : (
-      <PreviewWindow resetCount={resetCount} {...previewProps} />
+    const preview = children && !useDefault ? children : (
+      <PreviewWindow resetCount={resetCount} {...previewProps}>
+        { children ? children : null }
+      </PreviewWindow>
     );
     
     return (

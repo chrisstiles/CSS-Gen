@@ -1,0 +1,17 @@
+@import '../_variables.scss';
+
+.transform-generator {
+  .preview-style {
+    border-radius:0;
+  }
+}
+
+#transform-original {
+  position: absolute;
+  border:2px dashed rgba($accent-color, .4);
+  background-color:rgba($accent-color, .1);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
