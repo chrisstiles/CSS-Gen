@@ -13,9 +13,9 @@ class Transform extends React.Component {
     return {
       output: {
         language: 'css',
-        code: `transform: skew(10deg)`
+        code: `transform: skew(10deg) translate(100px, -50px)`
       },
-      previewStyle: { transform: 'skewX(15deg) translate(100px, -10px)' }
+      previewStyle: { transform: 'skewX(15deg) translate(100px, -50px)' }
     };
   }
 
@@ -32,7 +32,7 @@ class Transform extends React.Component {
     } = this.props;
 
     const { width, height, background } = previewState;
-    console.log(previewState)
+
     return (
       <Generator
         title="CSS Transform Generator"

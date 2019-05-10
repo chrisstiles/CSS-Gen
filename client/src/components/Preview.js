@@ -436,10 +436,10 @@ class PreviewWindow extends React.Component {
                 onResize={this.handleResize}
                 onResizeStop={this.handleResizeStop}
               >
+                {children}
                 <div className="drag-handle" />
                 <div className="resize-handle" />
                 {this.renderPreview(previewStyle)}
-                {children}
               </Resizable>
             </div>
           </Draggable>
