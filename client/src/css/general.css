@@ -939,7 +939,7 @@ body.code-expanded #bottom-content-wrapper {
     margin-left: 7px;
     cursor: pointer; }
   .output-wrapper .bottom {
-    padding: 9px;
+    padding: 6px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
