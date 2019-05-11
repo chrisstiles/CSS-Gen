@@ -62,7 +62,7 @@ class Toolbar extends React.PureComponent {
 
     return (
       <div id="preview-toolbar">
-        { previewState ? <h3>Preview</h3> : null }
+        { previewState || children ? <h3>Preview</h3> : null }
         <div className="content">
           {this.renderDefaultPreviewSettings()}
           {children}
