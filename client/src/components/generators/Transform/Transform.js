@@ -6,6 +6,8 @@ import Header from '../../Header';
 import GeneratorContent from '../../GeneratorContent';
 import Preview from '../../Preview';
 import Toolbar from '../../Toolbar';
+import tinycolor from 'tinycolor2';
+import { hexOrRgba } from '../../../util/helpers';
 
 class Transform extends React.Component {
   generate = () => {
@@ -31,6 +33,10 @@ class Transform extends React.Component {
     } = this.props;
 
     const { width, height, background } = previewState;
+
+    // Displays an untransformed copy of the preview window
+    const borderColor = hexOrRgba(tinycolor(background).setAlpha(.4));
+    const backgroundColor = hexOrRgba(tinycolor(background).setAlpha(.1));
 
     return (
       <Generator
@@ -67,7 +73,7 @@ class Transform extends React.Component {
             style={previewStyle}
             useDefault={true}
           >
-            <div id="transform-original" />
+            <div id="transform-original" style={{ borderColor, backgroundColor }} />
           </Preview>
         </GeneratorContent>
       </Generator>
