@@ -323,11 +323,11 @@ elements is easier in one separate file
   position: relative;
   z-index: 500; }
   #header .content {
-    padding: 25px 30px; }
+    padding: 21px 23px; }
   #header h1 {
     color: #4834d4;
     font-weight: 700;
-    font-size: 28px;
+    font-size: 24px;
     margin-bottom: 5px;
     line-height: 1; }
   #header p {
