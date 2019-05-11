@@ -135,24 +135,34 @@ input[type="number"],
 .chrome-picker input,
 .select-wrapper .Select-control {
   height: $small-input-height !important;
-  padding: 0 6px;
-  font-size: 14px;
-  line-height: normal;
+  padding: 0 6px 1px 7px;
+  font-size: 12px;
   cursor: pointer;
 
   @include text-input-styles;
 }
 
+.number-input-wrapper {
+  &.inline {
+    display:flex;
+    align-items:center;
+
+    .title {
+      margin-right:8px;
+    }
+  }
+}
+
 input.number-input {
-  font-weight: 600;
-  width: 65px;
+  font-weight: 700;
+  width: 62px;
 }
 
 input.slider-input {
   float: right;
   position: relative;
-  margin-top: -27px;
-  width: 59px;
+  margin-top: -26px;
+  width: 56px;
 
   &.has-string {
     padding-right: 0 !important;

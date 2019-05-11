@@ -68,10 +68,6 @@ class Flexbox extends React.Component {
         globalState={globalState}
         canvasColor={canvasColor}
       >
-        <Header>
-          <h1>CSS Flexbox Generator</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
-        </Header>
         <FlexboxInputs {...props} />
         <FlexboxContent 
           canvasColor={canvasColor}
@@ -79,10 +75,16 @@ class Flexbox extends React.Component {
           isFullHeight={isFullHeight}
           shouldChildNumber={shouldChildNumber}
           output={output}
+          globalState={globalState}
           resetGenerator={resetGenerator}
           updatePreview={updatePreview}
           {...props}
-        />
+        >
+          <Header>
+            <h1>CSS Flexbox Generator</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
+          </Header>
+        </FlexboxContent>
       </Generator>
     );
   }

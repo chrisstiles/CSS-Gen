@@ -1,14 +1,13 @@
 import React from 'react';
 import createGenerator from '../create-generator';
 import GradientInputs from './GradientInputs';
-import GradientPresets from './GradientPresets';
+// import GradientPresets from './GradientPresets';
 import generateGradient from './generate-gradient';
 import Generator from '../../Generator';
 import Header from '../../Header';
 import GeneratorContent from '../../GeneratorContent';
 import Preview from '../../Preview';
-import BottomContent from '../../BottomContent';
-import Settings from '../../Settings';
+import Toolbar from '../../Toolbar';
 
 class Gradient extends React.Component {
   generate = () => {
@@ -45,15 +44,25 @@ class Gradient extends React.Component {
         previewState={previewState}
         globalState={globalState}
       >
-        <Header resetGenerator={resetGenerator}>
-          <h1>CSS Gradient Generator</h1>
-          <p>Create linear and radial gradients with CSS.</p>
-        </Header>
         <GradientInputs
           updateGenerator={updateGenerator}
           {...generatorState}
         />
-        <GeneratorContent output={output}>
+        <GeneratorContent
+          output={output}
+          canvasColor={previewState.canvasColor}
+          globalState={globalState}
+          updatePreview={updatePreview}
+        >
+          <Header>
+            <h1>CSS Gradient Generator</h1>
+            <p>Create linear and radial gradients with CSS.</p>
+          </Header>
+          <Toolbar
+            previewState={{ width, height }}
+            updatePreview={updatePreview}
+            resetGenerator={resetGenerator}
+          />
           <Preview
             canvasColor={previewState.canvasColor}
             previewState={previewState}
@@ -63,14 +72,6 @@ class Gradient extends React.Component {
             style={previewStyle}
           />
         </GeneratorContent>
-        <BottomContent>
-          <Settings
-            updatePreview={updatePreview}
-            previewState={{ width, height }}
-            canvasColor={previewState.canvasColor}
-          />
-          <GradientPresets setPreset={updateGenerator} />
-        </BottomContent>
       </Generator>
     );
   }

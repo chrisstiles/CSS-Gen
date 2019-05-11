@@ -2,21 +2,20 @@
 
 #header {
   background-color: #fff;
-  box-shadow:0 3px 20px -5px rgba(0, 0, 0, 0.1);
+  box-shadow:0 3px 5px -5px rgba(0, 0, 0, 0.07);
   border-bottom:1px solid #eeeeee;
   color: #6b6b6b;
   font-size: 13px;
   position: relative;
-  z-index: 500;
 
   .content {
-    padding:21px 23px;
+    padding:20px 23px 21px 23px;
   }
 
   h1 {
     color:$accent-color;
     font-weight:700;
-    font-size:24px;
+    font-size:23px;
     margin-bottom:5px;
     line-height:1;
   }

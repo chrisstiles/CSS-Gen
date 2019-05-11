@@ -21,7 +21,7 @@
 }
 
 .output-wrapper {
-  flex-basis:240px;
+  flex-basis:300px;
   display:flex;
   flex-direction:column;
   box-shadow: 0 15px 45px 0 rgba(37, 32, 74, 0.15);
@@ -269,6 +269,7 @@ body {
     opacity:1 !important;
     background-color:rgba(255, 255, 255, 0.31);
     box-shadow: inset -3px 8px 95px -30px rgba(20, 16, 43, 0.82);
+    pointer-events:none;
     
     &:before {
       display:none;

@@ -137,19 +137,23 @@ class NumberInput extends React.PureComponent {
     const { 
       name, 
       value: _value, 
+      inline,
       className, 
       appendString, 
       step, 
-      label 
+      label
     } = this.props;
+
     const value = this.formatValue(_value);
-    
+    const wrapperClassName = ['number-input-wrapper'];
     const inputClassName = ['number-input'];
+
+    if (inline) wrapperClassName.push('inline');
     if (className) inputClassName.push(className);
     if (appendString) inputClassName.push('has-string');
 
     return (
-      <div>
+      <div className={wrapperClassName.join(' ')}>
         {label ?
           <label className="title">{label}</label>
         : null}

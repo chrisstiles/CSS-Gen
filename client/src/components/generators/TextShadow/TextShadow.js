@@ -5,8 +5,7 @@ import TextShadowPreview from './TextShadowPreview';
 import Generator from '../../Generator';
 import Header from '../../Header';
 import GeneratorContent from '../../GeneratorContent';
-import BottomContent from '../../BottomContent';
-import Settings from '../../Settings';
+import Toolbar from '../../Toolbar';
 import { generateCSSString, hexOrRgba } from '../../../util/helpers';
 
 const defaultFont = 'Montserrat';
@@ -71,15 +70,24 @@ class TextShadow extends React.Component {
         previewState={previewState}
         globalState={globalState}
       >
-        <Header resetGenerator={resetGenerator}>
-          <h1>CSS Triangle Generator</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
-        </Header>
         <TextShadowInputs
           updateGenerator={updateGenerator}
           {...generatorState}
         />
-        <GeneratorContent output={output}>
+        <GeneratorContent
+          output={output}
+          canvasColor={previewState.canvasColor}
+          globalState={globalState}
+          updatePreview={updatePreview}
+        >
+          <Header>
+            <h1>CSS Triangle Generator</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
+          </Header>
+          <Toolbar
+            updatePreview={updatePreview}
+            resetGenerator={resetGenerator}
+          />
           <TextShadowPreview
             value={generatorState.text}
             name="text"
@@ -89,12 +97,6 @@ class TextShadow extends React.Component {
             updateGenerator={updateGenerator}
           />
         </GeneratorContent>
-        <BottomContent>
-          <Settings
-            canvasColor={previewState.canvasColor}
-            updatePreview={updatePreview}
-          />
-        </BottomContent>
       </Generator>
     );
   }

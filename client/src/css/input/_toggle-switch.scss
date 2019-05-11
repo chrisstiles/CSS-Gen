@@ -12,6 +12,12 @@
   }
 }
 
+.disabled {
+  .toggle-wrapper {
+    pointer-events:none;
+  }
+}
+
 .toggle-label {
   &.inline {
     display:flex;

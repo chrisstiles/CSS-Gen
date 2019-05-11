@@ -1,13 +1,12 @@
 import React from 'react';
 import createGenerator from '../create-generator';
 import BorderRadiusInputs from './BorderRadiusInputs';
-import BorderRadiusPresets from './BorderRadiusPresets';
+// import BorderRadiusPresets from './BorderRadiusPresets';
 import Generator from '../../Generator';
 import Header from '../../Header';
 import GeneratorContent from '../../GeneratorContent';
 import Preview from '../../Preview';
-import BottomContent from '../../BottomContent';
-import Settings from '../../Settings';
+import Toolbar from '../../Toolbar';
 import { generateCSSString } from '../../../util/helpers';
 
 const defaultRadius = 10;
@@ -111,15 +110,25 @@ class BorderRadius extends React.Component {
         previewState={previewState}
         globalState={globalState}
       >
-        <Header resetGenerator={resetGenerator}>
-          <h1>CSS Border Radius Generator</h1>
-          <p>Use the controls on to the right to create any kind of border. Once you are done, copy your CSS from the code output box in the bottom right.</p>
-        </Header>
         <BorderRadiusInputs
           updateGenerator={updateGenerator}
           {...generatorState}
         />
-        <GeneratorContent output={output}>
+        <GeneratorContent
+          output={output}
+          canvasColor={previewState.canvasColor}
+          globalState={globalState}
+          updatePreview={updatePreview}
+        >
+          <Header>
+            <h1>CSS Border Radius Generator</h1>
+            <p>Use the controls on to the right to create any kind of border. Once you are done, copy your CSS from the code output box in the bottom right.</p>
+          </Header>
+          <Toolbar
+            previewState={{ width, height, background }}
+            updatePreview={updatePreview}
+            resetGenerator={resetGenerator}
+          />
           <Preview
             canvasColor={previewState.canvasColor}
             previewState={previewState}
@@ -128,14 +137,6 @@ class BorderRadius extends React.Component {
             style={previewStyle}
           />
         </GeneratorContent>
-        <BottomContent>
-          <Settings
-            updatePreview={updatePreview}
-            previewState={{ width, height, background }}
-            canvasColor={previewState.canvasColor}
-          />
-          <BorderRadiusPresets setPreset={updateGenerator} />
-        </BottomContent>
       </Generator>
     );
   }

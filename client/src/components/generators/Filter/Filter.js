@@ -5,8 +5,7 @@ import Generator from '../../Generator';
 import Header from '../../Header';
 import GeneratorContent from '../../GeneratorContent';
 import Preview from '../../Preview';
-import BottomContent from '../../BottomContent';
-import Settings from '../../Settings';
+import Toolbar from '../../Toolbar';
 import Tooltip from '../../Tooltip';
 import tinycolor from 'tinycolor2';
 import _ from 'underscore';
@@ -76,17 +75,27 @@ class Filter extends React.Component {
         previewState={previewState}
         globalState={globalState}
       >
-        <Header resetGenerator={resetGenerator}>
-          <h1>CSS Filter Generator</h1>
-          <p>Test Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
-        </Header>
         <FilterInputs
           updateGenerator={updateGenerator}
           filterSliders={filterSliders}
           dropShadowSliders={dropShadowSliders}
           {...generatorState}
         />
-        <GeneratorContent output={output}>
+        <GeneratorContent
+          output={output}
+          canvasColor={previewState.canvasColor}
+          globalState={globalState}
+          updatePreview={updatePreview}
+        >
+          <Header resetGenerator={resetGenerator}>
+            <h1>CSS Filter Generator</h1>
+            <p>Test Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
+          </Header>
+          <Toolbar
+            updatePreview={updatePreview}
+            previewState={{ width, height }}
+            canvasColor={previewState.canvasColor}
+          />
           <Preview
             canvasColor={previewState.canvasColor}
             previewState={previewState}
@@ -97,13 +106,6 @@ class Filter extends React.Component {
             style={previewStyle}
           />
         </GeneratorContent>
-        <BottomContent>
-          <Settings
-            updatePreview={updatePreview}
-            previewState={{ width, height }}
-            canvasColor={previewState.canvasColor}
-          />
-        </BottomContent>
       </Generator>
     );
   }

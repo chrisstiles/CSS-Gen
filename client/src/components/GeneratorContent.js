@@ -1,5 +1,6 @@
 import React from 'react';
 import CodeOutput from './CodeOutput';
+import GeneratorSettings from './GeneratorSettings';
 import { isArray } from 'underscore';
 
 class GeneratorOutput extends React.PureComponent {
@@ -106,16 +107,26 @@ class GeneratorOutput extends React.PureComponent {
 
 class GeneratorContent extends React.PureComponent {
   render() {
-    const { previewSettings, output, children } = this.props;
+    const { 
+      previewSettings,
+      output,
+      canvasColor,
+      updatePreview,
+      children,
+      globalState
+    } = this.props;
 
     return (
-      <div id="generator-content">
+      <div id="generator-content-wrapper">
         <GeneratorOutput output={output} />
-        <div id="generator-preview-wrapper">
+        <GeneratorSettings
+          canvasColor={canvasColor}
+          updatePreview={updatePreview}
+          globalState={globalState}
+        />
+        <div id="generator-content">
           {previewSettings ? previewSettings : null}
-          <div id="generator-preview">
-            {children}
-          </div>
+          {children}
         </div>
       </div>
     );

@@ -5,8 +5,7 @@ import Generator from '../../Generator';
 import Header from '../../Header';
 import GeneratorContent from '../../GeneratorContent';
 import Preview from '../../Preview';
-import BottomContent from '../../BottomContent';
-import Settings from '../../Settings';
+import Toolbar from '../../Toolbar';
 
 class Transform extends React.Component {
   generate = () => {
@@ -41,15 +40,25 @@ class Transform extends React.Component {
         previewState={previewState}
         globalState={globalState}
       >
-        <Header resetGenerator={resetGenerator}>
-          <h1>CSS Transform Generator</h1>
-          <p>Test Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
-        </Header>
         <TransformInputs
           updateGenerator={updateGenerator}
           {...generatorState}
         />
-        <GeneratorContent output={output}>
+        <GeneratorContent
+          output={output}
+          canvasColor={previewState.canvasColor}
+          globalState={globalState}
+          updatePreview={updatePreview}
+        >
+          <Header>
+            <h1>CSS Transform Generator</h1>
+            <p>Test Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
+          </Header>
+          <Toolbar
+            previewState={{ width, height, background }}
+            updatePreview={updatePreview}
+            resetGenerator={resetGenerator}
+          />
           <Preview
             canvasColor={previewState.canvasColor}
             previewState={previewState}
@@ -61,13 +70,6 @@ class Transform extends React.Component {
             <div id="transform-original" />
           </Preview>
         </GeneratorContent>
-        <BottomContent>
-          <Settings
-            updatePreview={updatePreview}
-            previewState={{ width, height, background }}
-            canvasColor={previewState.canvasColor}
-          />
-        </BottomContent>
       </Generator>
     );
   }

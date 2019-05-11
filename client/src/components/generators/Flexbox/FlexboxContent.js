@@ -1,7 +1,7 @@
 import React from 'react';
 import GeneratorContent from '../../GeneratorContent';
 import Preview from '../../Preview';
-import PreviewToolbar from '../../PreviewToolbar';
+import Toolbar from '../../Toolbar';
 import Toggle from '../../input/Toggle';
 
 import { 
@@ -271,44 +271,49 @@ class FlexboxPreviewContent extends React.PureComponent {
 
 const FlexboxContent = props => {
   const {
+    children,
     isFullHeight,
     showAddButton,
     shouldChildNumber,
     canvasColor,
     output,
+    globalState,
     resetGenerator,
     updatePreview,
     ...previewProps
   } = props;
 
-  const previewSettings = (
-    <PreviewToolbar resetGenerator={resetGenerator}>
-      <Toggle
-        name="showAddButton"
-        label="Add Button"
-        onChange={updatePreview}
-        checked={showAddButton}
-        inline={true}
-      />
-      <Toggle
-        name="isFullHeight"
-        label="Full Height"
-        onChange={updatePreview}
-        checked={isFullHeight}
-        inline={true}
-      />
-      <Toggle
-        name="shouldChildNumber"
-        label="Child Number"
-        onChange={updatePreview}
-        checked={shouldChildNumber}
-        inline={true}
-      />
-    </PreviewToolbar>
-  );
-
   return (
-    <GeneratorContent output={output} previewSettings={previewSettings}>
+    <GeneratorContent
+      output={output}
+      canvasColor={canvasColor}
+      globalState={globalState}
+      updatePreview={updatePreview}
+    >
+      {children}
+      <Toolbar resetGenerator={resetGenerator}>
+        <Toggle
+          name="showAddButton"
+          label="Add Button"
+          onChange={updatePreview}
+          checked={showAddButton}
+          inline={true}
+        />
+        <Toggle
+          name="isFullHeight"
+          label="Full Height"
+          onChange={updatePreview}
+          checked={isFullHeight}
+          inline={true}
+        />
+        <Toggle
+          name="shouldChildNumber"
+          label="Child Number"
+          onChange={updatePreview}
+          checked={shouldChildNumber}
+          inline={true}
+        />
+      </Toolbar>
       <Preview canvasColor={canvasColor}>
         <FlexboxPreviewContent
           isFullHeight={isFullHeight}

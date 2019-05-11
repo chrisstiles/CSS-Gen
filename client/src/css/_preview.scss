@@ -105,7 +105,7 @@ body {
 
 #preview-toolbar {
   background-color:rgba(#fdfdfd, .98);
-  padding:10px 10px 10px 17px;
+  padding:5px 10px 5px 17px;
   display:flex;
   font-size:13px;
   border-bottom: 1px solid rgba(238, 238, 238, 0.58);
@@ -113,6 +113,28 @@ body {
   color:$dark-grey;
   justify-content: space-between;
   align-items:center;
+  height:52px;
+
+  @mixin right-line {
+    position:relative;
+
+    &:after {
+      content:"";
+      height:13px;
+      width:1px;
+      background-color:#c7c7c7;
+      position:absolute;
+      right:1px;
+      top:50%;
+      margin-top:-6px;
+    }
+
+    &:last-child {
+      &:after {
+        display:none;
+      }
+    }
+  }
 
   h3 {
     margin-right:12px;
@@ -121,7 +143,7 @@ body {
     text-transform:uppercase;
     flex-grow:0;
     font-size:13px;
-    border-right:1px solid #c7c7c7;
+    @include right-line;
   }
 
   .content {
@@ -132,12 +154,17 @@ body {
       margin-bottom:0 !important;
     }
 
-    > .field-wrapper {
-      margin-right:16px;
+    > .field-wrapper,
+    .number-input-wrapper {
+      margin-right:12px;
 
       &:last-child {
-        margin-right:0;
+        margin-right:0 !important;
       }
+    }
+
+    .toggle-wrapper {
+      margin-right:16px;
     }
 
     .toggle-label.inline > span {
@@ -146,6 +173,20 @@ body {
 
     .title {
       font-size:12px;
+    }
+
+    .color-wrapper {
+      @include right-line;
+      padding-right:15px;
+    }
+
+    .color-preview {
+      margin:0;
+      position:relative;
+      top:1px;
+      height:30px;
+      width:30px;
+      border-radius:2px;
     }
   }
 
