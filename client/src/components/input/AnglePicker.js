@@ -61,9 +61,22 @@ class AnglePicker extends React.PureComponent {
   }
 
   handleTrackingChange(event) {
+    let clientX, clientY;
+    
+    if (event.type === 'touchmove') {
+      const target = event.targetTouches[0];
+      clientX = target.clientX;
+      clientY = target.clientY;
+    } else {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    }
+
+    if (clientX === undefined || clientY === undefined) return;
+
     const vector = {
-      x: event.clientX,
-      y: event.clientY
+      x: clientX,
+      y: clientY
     };
 
     const deg = this.getAngle(vector);
@@ -92,6 +105,8 @@ class AnglePicker extends React.PureComponent {
     document.body.classList.add('no-select');
     document.body.addEventListener('mousemove', this.handleMouseMove, false);
     document.body.addEventListener('mouseup', this.handleMouseUp, false);
+    document.body.addEventListener('touchmove', this.handleMouseMove, false);
+    document.body.addEventListener('touchend', this.handleMouseUp, false);
   }
 
   endTracking() {
@@ -99,6 +114,8 @@ class AnglePicker extends React.PureComponent {
     document.body.classList.remove('no-select');
     document.body.removeEventListener('mousemove', this.handleMouseMove, false);
     document.body.removeEventListener('mouseup', this.handleMouseUp, false);
+    document.body.removeEventListener('touchmove', this.handleMouseMove, false);
+    document.body.removeEventListener('touchend', this.handleMouseUp, false);
   }
 
   handleTextChange(value) {
@@ -153,6 +170,7 @@ class AnglePicker extends React.PureComponent {
               className="angle-picker"
               ref={element => {this.element = element}}
               onMouseDown={this.handleMouseDown}
+              onTouchStart={this.handleMouseDown}
               onBlur={this.endTracking}
             >
               <div 

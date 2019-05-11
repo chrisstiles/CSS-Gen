@@ -1980,8 +1980,8 @@ textarea {
   background-color: #fff;
   outline: none;
   transition: transform .2s ease;
-  -ms-touch-action: pan-x;
-  touch-action: pan-x; }
+  -ms-touch-action: none;
+  touch-action: none; }
   .rc-slider-handle.dragging, .rc-slider-handle:hover {
     transform: scale(1.2); }
   .rc-slider-handle:active {
@@ -2741,7 +2741,8 @@ textarea {
   margin-top: 9px;
   float: left;
   margin-left: -12px;
-  top: -12px; }
+  top: -12px;
+  touch-action: none; }
   .angle-picker:before {
     content: "";
     position: absolute;

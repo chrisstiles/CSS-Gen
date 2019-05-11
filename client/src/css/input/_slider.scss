@@ -41,8 +41,8 @@
   background-color: #fff;
   outline:none;
   transition:transform .2s ease;
-  -ms-touch-action: pan-x;
-      touch-action: pan-x;
+  -ms-touch-action: none;
+      touch-action: none;
 
   &.dragging,
   &:hover {
