@@ -215,7 +215,7 @@ elements is easier in one separate file
 
 #main-footer {
   height: 50px;
-  z-index: 8000; }
+  z-index: 400; }
 
 @media (min-height: 920px) {
   #sidebar {
@@ -387,7 +387,7 @@ body.preview-loading #canvas #text-area-preview {
     left: 0;
     box-shadow: inset 0px 0 8px 0px rgba(0, 0, 0, 0.06);
     pointer-events: none;
-    z-index: 999; }
+    z-index: 400; }
   #canvas.default {
     background-image: url("../images/checker-bg.svg");
     background-size: 18px 18px;
