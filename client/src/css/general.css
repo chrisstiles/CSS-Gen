@@ -2412,10 +2412,13 @@ textarea {
   .options-wrapper.has-container {
     position: absolute; }
   .options-wrapper .Select-option {
-    padding: 7px 12px 8px 12px !important;
+    padding: 8px 12px !important;
     color: #5a5a5a !important;
     text-align: left !important;
-    border-radius: 0 !important; }
+    border-radius: 0 !important;
+    line-height: 1 !important;
+    display: flex;
+    align-items: center; }
     .options-wrapper .Select-option.is-focused {
       background-color: #f9f9f9; }
     .options-wrapper .Select-option.is-selected {
