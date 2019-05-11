@@ -87,14 +87,14 @@ class Filter extends React.Component {
           globalState={globalState}
           updatePreview={updatePreview}
         >
-          <Header resetGenerator={resetGenerator}>
+          <Header>
             <h1>CSS Filter Generator</h1>
             <p>Test Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sagittis orci ac ipsum sagittis commodo. Ut ac porta nunc. Cras diam neque, vehicula vitae diam non.</p>
           </Header>
           <Toolbar
-            updatePreview={updatePreview}
             previewState={{ width, height }}
-            canvasColor={previewState.canvasColor}
+            updatePreview={updatePreview}
+            resetGenerator={resetGenerator}
           />
           <Preview
             canvasColor={previewState.canvasColor}
