@@ -7,13 +7,13 @@
 	right:0;
 	z-index: 3000;
 	display:flex;
-	justify-content:center;
 	align-items:center;
+	padding:0 25px;
 
 	.logo {
 		display:block;
 		overflow:visible;
-		margin-right:25px;
+		margin-right:20px;
 		width:140px;
 		flex-grow:0;
 
@@ -55,8 +55,8 @@
 		text-decoration:none;
 		display:inline-block;
 		line-height:35px;
-    margin: 0 5px;
-    padding:0 12px 0 36px;
+    margin: 0 1px;
+    padding:0 12px 0 33px;
 		border-radius:3px;
 		position:relative;
 
