@@ -1842,22 +1842,23 @@ input.slider-input {
     left: -1px; }
     .has-units .select-wrapper.units-select .Select .Select-control {
       background-color: #f6f6f6;
-      height: 25px !important;
+      height: 24px !important;
       border-top-left-radius: 0 !important;
       border-bottom-left-radius: 0 !important; }
       .has-units .select-wrapper.units-select .Select .Select-control:hover {
         background-color: #efefef; }
       .has-units .select-wrapper.units-select .Select .Select-control .Select-input {
-        height: 25px !important; }
+        height: 24px !important; }
       .has-units .select-wrapper.units-select .Select .Select-control .Select-value {
         padding: 0 1px 1px 0 !important;
         text-align: center;
         width: 100%;
-        line-height: 25px !important; }
+        line-height: 24px !important; }
         .has-units .select-wrapper.units-select .Select .Select-control .Select-value.px .Select-value-label {
-          line-height: 23px !important; }
+          line-height: 22px !important; }
         .has-units .select-wrapper.units-select .Select .Select-control .Select-value.percent .Select-value-label {
-          font-weight: 700; }
+          font-weight: 700;
+          padding-left: 2px; }
         .has-units .select-wrapper.units-select .Select .Select-control .Select-value .Select-value-label {
           color: #7a7a7a !important;
           font-size: 12px;

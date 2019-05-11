@@ -174,7 +174,7 @@ input.slider-input {
   .units-select {
     float:right;
     margin-top:-20px;
-    height:26px;
+    height:$small-input-height;
   }
 
   .slider-input {
@@ -191,7 +191,7 @@ input.slider-input {
 
       .Select-control {
         background-color: #f6f6f6;
-        height:25px !important;
+        height:24px !important;
         border-top-left-radius: 0 !important;
         border-bottom-left-radius: 0 !important;
 
@@ -200,21 +200,22 @@ input.slider-input {
         }
 
         .Select-input {
-          height:25px !important;
+          height:24px !important;
         }
 
         .Select-value {
           padding:0 1px 1px 0 !important;
           text-align: center;
           width:100%;
-          line-height:25px !important;
+          line-height:24px !important;
 
           &.px .Select-value-label {
-            line-height:23px !important;
+            line-height:22px !important;
           }
 
           &.percent .Select-value-label {
             font-weight:700;
+            padding-left:2px;
           }
 
           .Select-value-label {
