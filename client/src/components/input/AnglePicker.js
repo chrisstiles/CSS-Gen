@@ -91,6 +91,7 @@ class AnglePicker extends React.PureComponent {
 
   handleMouseMove(event) {
     if (this.tracking) {
+      event.preventDefault();
       this.handleTrackingChange(event);
     }
   }
@@ -106,7 +107,7 @@ class AnglePicker extends React.PureComponent {
     document.body.addEventListener('mousemove', this.handleMouseMove, false);
     document.body.addEventListener('mouseup', this.handleMouseUp, false);
     document.body.addEventListener('touchmove', this.handleMouseMove, false);
-    document.body.addEventListener('touchend', this.handleMouseUp, false);
+    document.body.addEventListener('touchend', this.handleMouseUp, { passive: false });
   }
 
   endTracking() {
