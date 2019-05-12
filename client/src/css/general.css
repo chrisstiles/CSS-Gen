@@ -143,6 +143,9 @@ elements is easier in one separate file
   top: 55px;
   right: 0;
   width: 320px;
+  bottom: 0; }
+
+#sidebar-controls {
   bottom: 50px; }
 
 #tooltip-wrapper {
@@ -739,7 +742,6 @@ img.preview-style {
   top: 34px;
   left: 0;
   right: 0;
-  bottom: 0;
   overflow: scroll;
   padding: 20px 27px 20px 27px; }
 

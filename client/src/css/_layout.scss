@@ -28,6 +28,10 @@ $settings-height: 100px;
   top:$nav-height;
   right:0;
   width:$sidebar-width;
+  bottom:0;
+}
+
+#sidebar-controls {
   bottom:$bottom-content-height;
 }
 
