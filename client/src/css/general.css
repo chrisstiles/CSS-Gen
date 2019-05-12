@@ -154,6 +154,7 @@ elements is easier in one separate file
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
     padding-bottom: 50px; }
     #page-wrapper.generator #page-content {
       display: flex;
@@ -233,18 +234,6 @@ elements is easier in one separate file
 #main-footer {
   height: 50px;
   z-index: 501; }
-
-@media (min-height: 920px) {
-  #sidebar {
-    bottom: 50px; }
-  #page-wrapper.generator {
-    padding-bottom: 50px; }
-  #generator-output.fixed #output-scroller {
-    bottom: 50px; }
-  #output-content {
-    max-height: calc(100vh - 55px - 50px); }
-  #bottom-content-wrapper {
-    height: 50px; } }
 
 #navigation {
   background-color: #fdfdfd;

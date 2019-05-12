@@ -41,7 +41,8 @@ $settings-height: 100px;
   &.generator {
     display:flex;
     flex-direction:column;
-    min-height:100vh;
+    min-height:100vh; // Fallback in case custom properties aren't supported
+    min-height: calc(var(--vh, 1vh) * 100); // Fix for incorrect vh on iOS
     padding-bottom:$bottom-content-height;
 
     #page-content {
@@ -148,32 +149,32 @@ $settings-height: 100px;
   z-index: 501;
 }
 
-@media (min-height: 920px) {
-  // $bottom-content-height: 50px;
+// @media (min-height: 920px) {
+//   // $bottom-content-height: 50px;
 
-  #sidebar {
-    bottom:$bottom-content-height;
-  }
+//   #sidebar {
+//     bottom:$bottom-content-height;
+//   }
 
-  #page-wrapper {
-    &.generator {
-      padding-bottom:$bottom-content-height;
-    }
-  }
+//   #page-wrapper {
+//     &.generator {
+//       padding-bottom:$bottom-content-height;
+//     }
+//   }
 
-  #generator-output {
-    &.fixed {
-      #output-scroller {
-        bottom: $bottom-content-height;
-      }
-    }
-  }
+//   #generator-output {
+//     &.fixed {
+//       #output-scroller {
+//         bottom: $bottom-content-height;
+//       }
+//     }
+//   }
 
-  #output-content {
-    max-height:calc(100vh - #{$nav-height} - #{$bottom-content-height});
-  }
+//   #output-content {
+//     max-height:calc(100vh - #{$nav-height} - #{$bottom-content-height});
+//   }
 
-  #bottom-content-wrapper {
-    height:$bottom-content-height;
-  }
-}
+//   #bottom-content-wrapper {
+//     height:$bottom-content-height;
+//   }
+// }

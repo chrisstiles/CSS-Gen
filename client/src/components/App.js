@@ -243,6 +243,20 @@ class App extends React.Component {
     return ReactDOM.createPortal(spinner, document.body);
   }
 
+  componentDidMount() {
+    this.setViewportHeight();
+    window.addEventListener('resize', this.setViewportHeight);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setViewportHeight);
+  }
+
+  setViewportHeight = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+
   render() {
     return (
       <BrowserRouter>
