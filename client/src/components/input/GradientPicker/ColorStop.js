@@ -40,6 +40,7 @@ class ColorStop extends React.Component {
     e.preventDefault();
     e.stopPropagation();
     disabledTouchmove();
+    document.body.classList.add('dragging');
 
     if (!e.button) this.activate(getEventPosition(e).x);
   }
@@ -69,7 +70,8 @@ class ColorStop extends React.Component {
   }
 
   handleMouseUp = () => {
-    this.deactivate()
+    this.deactivate();
+    document.body.classList.remove('dragging');
   }
 
   render () {

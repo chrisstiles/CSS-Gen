@@ -31,6 +31,10 @@
   }
 }
 
+body.dragging .csh {
+  cursor: pointer !important;
+}
+
 .cs {
   background-position: right center;
   bottom:3px;

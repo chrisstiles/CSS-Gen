@@ -2356,6 +2356,9 @@ textarea {
   .inputs-row .csh.dragging {
     cursor: pointer !important; }
 
+body.dragging .csh {
+  cursor: pointer !important; }
+
 .cs {
   background-position: right center;
   bottom: 3px;

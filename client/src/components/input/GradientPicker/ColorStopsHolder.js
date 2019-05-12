@@ -1,12 +1,16 @@
 import React from 'react';
 import ColorStop from './ColorStop';
+import { getEventPosition } from '../../../util/helpers';
 
 class ColorStopsHolder extends React.Component {
   handleMouseDown = e => {
     e.preventDefault();
     if (e.button) return;
-    const pos = e.clientX - e.target.getBoundingClientRect().left;
-    this.props.onAddColor({ pos, pointX: e.clientX });
+    const { x } = getEventPosition(e);
+    if (!x) return;
+
+    const pos = x - e.target.getBoundingClientRect().left;
+    this.props.onAddColor({ pos, pointX: x });
   }
 
   render() {
