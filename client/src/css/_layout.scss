@@ -110,6 +110,7 @@ $settings-height: 100px;
   flex-grow:0;
   width:$output-width;
   flex-shrink:0;
+  padding-bottom:$bottom-content-height;
 
   &:before {
     width:$output-width;
@@ -142,6 +143,7 @@ $settings-height: 100px;
 
 #output-content {
   max-height:calc(100vh - #{$nav-height} - #{$bottom-content-height} - #{$settings-offset} - #{$settings-height});
+  max-height:calc(calc(var(--vh, 1vh) * 100) - #{$nav-height} - #{$bottom-content-height} - #{$settings-offset} - #{$settings-height});
 }
 
 #bottom-content-wrapper {
