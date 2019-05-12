@@ -40,17 +40,6 @@
   flex-grow:1;
 }
 
-// #main-footer {
-//   background-color: #d4d4d4;
-//   position: relative;
-//   padding: 12px;
-//   font-size: 12px;
-//   height:40px;
-//   width:100%;
-//   flex-shrink:0;
-//   align-self:flex-end;
-// }
-
 #main-footer {
   @include gradient;
   color:#fff;

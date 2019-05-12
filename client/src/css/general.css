@@ -232,7 +232,7 @@ elements is easier in one separate file
 
 #main-footer {
   height: 50px;
-  z-index: 400; }
+  z-index: 501; }
 
 @media (min-height: 920px) {
   #sidebar {
