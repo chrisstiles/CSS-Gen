@@ -245,11 +245,13 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setViewportHeight();
-    window.addEventListener('resize', this.setViewportHeight);
+    this.vhEventName = 'onorientationchange' in window ? 'orientationchange' : 'resize';
+
+    window.addEventListener(this.vhEventName, this.setViewportHeight);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.setViewportHeight);
+    window.removeEventListener(this.vhEventName, this.setViewportHeight);
   }
 
   setViewportHeight = () => {
