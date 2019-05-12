@@ -11,7 +11,8 @@ import {
   addNotification, 
   getNotificationTypes,
   startLoading,
-  finishLoading
+  finishLoading,
+  disabledTouchmove
 } from '../util/helpers';
 
 class PreviewWindow extends React.Component {
@@ -188,6 +189,7 @@ class PreviewWindow extends React.Component {
   }
 
   handleResizeStart = () => {
+    disabledTouchmove();
     const { width, height } = this.props.previewState;
     this.size = { width, height };
     this.isResizing = true;
@@ -417,6 +419,7 @@ class PreviewWindow extends React.Component {
             handle=".drag-handle"
             cancel=".resize-handle"
             position={position}
+            onStart={disabledTouchmove}
             onStop={this.handleDragStop}
           >
             <div

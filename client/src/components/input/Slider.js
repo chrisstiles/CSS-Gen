@@ -4,6 +4,7 @@ import RCHandle from 'rc-slider/lib/Handle';
 import NumberInput from './NumberInput';
 import Toggle from './Toggle';
 import Select from './Select';
+import { disabledTouchmove } from '../../util/helpers';
 
 class Slider extends React.PureComponent {
   constructor(props) {
@@ -20,6 +21,7 @@ class Slider extends React.PureComponent {
   }
 
   handleBeforeChange = () => {
+    disabledTouchmove();
     document.activeElement.blur();
   }
 

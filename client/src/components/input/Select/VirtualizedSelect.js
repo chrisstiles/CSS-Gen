@@ -232,6 +232,9 @@ var VirtualizedSelect = function (_Component) {
         onMouseDown: function onMouseDown() {
           onChange(option);
         },
+        onTouchStart: function onTouchStart() {
+          onChange(option);
+        },
         onMouseEnter: function onMouseEnter() {
           return focusOption(option);
         }

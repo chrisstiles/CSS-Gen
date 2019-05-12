@@ -1,22 +1,13 @@
 import React from 'react';
 import NumberInput from './NumberInput';
 import Toggle from './Toggle';
-import { radToDeg } from '../../util/helpers';
+import { radToDeg, disabledTouchmove } from '../../util/helpers';
 
 class AnglePicker extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.checkActive(props);
-
-    this.handleTrackingChange = this.handleTrackingChange.bind(this);
-    this.handleMouseDown = this.handleMouseDown.bind(this);
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    this.handleMouseUp = this.handleMouseUp.bind(this);
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.beginTracking = this.beginTracking.bind(this);
-    this.endTracking = this.endTracking.bind(this); 
-    this.handleActiveToggle = this.handleActiveToggle.bind(this);
   }
 
   componentDidMount() {
@@ -31,18 +22,18 @@ class AnglePicker extends React.PureComponent {
     document.removeEventListener('visibilitychange', this.endTracking, false);
   }
 
-  checkActive(props = this.props) {
+  checkActive = (props = this.props) => {
     const { isActive = true } = props;
     this.isActive = isActive;
   }
 
-  handleActiveToggle(active) {
+  handleActiveToggle = (active) => {
     if (this.props.onActiveToggle) {
       this.props.onActiveToggle(active, this.props.name);
     }
   }
 
-  getCenter() {
+  getCenter = () => {
     const rect = this.element.getBoundingClientRect();
 
     return {
@@ -51,7 +42,7 @@ class AnglePicker extends React.PureComponent {
     };
   }
 
-  getAngle(vector) {
+  getAngle = (vector) => {
     const center = this.getCenter();
     const x = vector.x - center.x;
     const y = vector.y - center.y;
@@ -60,7 +51,7 @@ class AnglePicker extends React.PureComponent {
     return Math.round(Math.abs(deg - 180));
   }
 
-  handleTrackingChange(event) {
+  handleTrackingChange = (event) => {
     let clientX, clientY;
     
     if (event.type === 'touchmove') {
@@ -84,25 +75,26 @@ class AnglePicker extends React.PureComponent {
     this.props.onChange(deg, this.props.name);
   }
 
-  handleMouseDown(event) {
+  handleMouseDown = (event) => {
     this.handleTrackingChange(event);
     this.beginTracking();
   }
 
-  handleMouseMove(event) {
+  handleMouseMove = (event) => {
     if (this.tracking) {
       event.preventDefault();
       this.handleTrackingChange(event);
     }
   }
 
-  handleMouseUp(event) {
+  handleMouseUp = (event) => {
     this.handleTrackingChange(event);
     this.endTracking();
   }
 
-  beginTracking() {
+  beginTracking = () => {
     this.tracking = true;
+    disabledTouchmove();
     document.body.classList.add('no-select');
     document.body.addEventListener('mousemove', this.handleMouseMove, false);
     document.body.addEventListener('mouseup', this.handleMouseUp, false);
@@ -110,7 +102,7 @@ class AnglePicker extends React.PureComponent {
     document.body.addEventListener('touchend', this.handleMouseUp, { passive: false });
   }
 
-  endTracking() {
+  endTracking = () => {
     this.tracking = false;
     document.body.classList.remove('no-select');
     document.body.removeEventListener('mousemove', this.handleMouseMove, false);
@@ -119,7 +111,7 @@ class AnglePicker extends React.PureComponent {
     document.body.removeEventListener('touchend', this.handleMouseUp, false);
   }
 
-  handleTextChange(value) {
+  handleTextChange = (value) => {
     var deg = value % 360;
 
     if (deg < 0) {

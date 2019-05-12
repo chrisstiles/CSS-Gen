@@ -792,5 +792,27 @@ export function propsHaveChanged(prevProps, currentProps) {
 	return !_.isEqual({ ...prev }, { ...current });
 }
 
+export function disabledTouchmove() {
+	setGlobalVariable(true, 'touchmoveDisabled');
+}
+
+export function enableTouchmove() {
+	setGlobalVariable(false, 'touchmoveDisabled');
+}
+
+export function getEventPosition(e) {
+	let x, y;
+
+	if (e.type.toLowerCase().includes('touch')) {
+		const target = e.targetTouches[0];
+		x = target.clientX;
+		y = target.clientY;
+	} else {
+		x = e.clientX;
+		y = e.clientY;
+	}
+
+	return { x, y };
+}
 
 

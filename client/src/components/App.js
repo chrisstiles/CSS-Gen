@@ -106,15 +106,33 @@ class PrimaryLayout extends React.Component {
     finishLoading = this.finishLoading.bind(this);
   }
 
-  getGlobalState() {
+  componentDidMount() {
+    document.addEventListener('touchmove', this.handleTouchmove, { passive: false });
+    document.addEventListener('touchend', this.handleTouchend);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('touchmove', this.handleTouchmove);
+    document.removeEventListener('touchend', this.handleTouchend);
+  }
+
+  handleTouchmove = e => {
+    if (this.touchmoveDisabled) e.preventDefault();
+  }
+
+  handleTouchend = () => {
+    this.touchmoveDisabled = false;
+  }
+
+  getGlobalState = () => {
     return this.state;
   }
 
-  getGlobalDefaults() {
+  getGlobalDefaults = () => {
     return this.globalDefaults;
   }
 
-  updateGlobalState(newState) {
+  updateGlobalState = (newState) => {
     const state = _.extend({}, this.state, newState);
     this.setState(state);
 
@@ -135,15 +153,15 @@ class PrimaryLayout extends React.Component {
     }
   }
 
-  getGlobalVariable(name) {
+  getGlobalVariable = (name) => {
     return this[name];
   }
 
-  setGlobalVariable(value, name) {
+  setGlobalVariable = (value, name) => {
     this[name] = value;
   }
 
-  startLoading(name) {
+  startLoading = (name) => {
     if (!this.loadingItems.includes(name)) {
       this.loadingItems.push(name);
 
@@ -158,7 +176,7 @@ class PrimaryLayout extends React.Component {
     }
   }
 
-  finishLoading(name) {
+  finishLoading = (name) => {
     if (this.loadingItems.includes(name)) {
 
       this.loadingItems = _.filter(this.loadingItems, item => {

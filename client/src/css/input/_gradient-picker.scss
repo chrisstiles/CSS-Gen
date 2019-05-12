@@ -1,6 +1,7 @@
 .palette,
 .csh {
   width:100% !important;
+  @include no-select;
 }
 
 .inputs-row {
@@ -22,6 +23,7 @@
     top: 0;
     bottom: -10px;
     cursor: copy !important;
+    @include no-select;
 
     &.dragging {
       cursor: pointer !important;
@@ -38,6 +40,7 @@
   cursor: pointer;
   background-image: url('../images/color-stop.png');
   background-size:22px 17px;
+  @include no-select;
 
   &.active {
     background-position: left center;

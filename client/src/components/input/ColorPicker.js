@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ChromePicker from 'react-color/lib/Chrome';
 import tinycolor from 'tinycolor2';
-import { hexOrRgba, isSameOrChild, getBorderColor } from '../../util/helpers';
+import { hexOrRgba, isSameOrChild, getBorderColor, disabledTouchmove } from '../../util/helpers';
 import { extend } from 'underscore';
 
 // Only one picker should be open at a time
@@ -174,6 +174,7 @@ class ColorPicker extends React.PureComponent {
         className={className.join(' ')}
         ref={picker => { this.picker = picker }}
         style={style}
+        onTouchStart={disabledTouchmove}
       >
         <ChromePicker
           color={color.toRgbString()}
