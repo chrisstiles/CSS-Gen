@@ -35,6 +35,17 @@ $settings-height: 100px;
   bottom:$bottom-content-height;
 }
 
+body.select-open {
+  #sidebar {
+    bottom:$bottom-content-height;
+    z-index: 9999;
+  }
+
+  #sidebar-controls {
+    bottom:0;
+  }
+}
+
 #tooltip-wrapper {
   right:$sidebar-width;
 }

@@ -148,6 +148,13 @@ elements is easier in one separate file
 #sidebar-controls {
   bottom: 50px; }
 
+body.select-open #sidebar {
+  bottom: 50px;
+  z-index: 9999; }
+
+body.select-open #sidebar-controls {
+  bottom: 0; }
+
 #tooltip-wrapper {
   right: 320px; }
 

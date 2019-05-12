@@ -74,6 +74,7 @@ class Select extends React.Component {
 
 	handleOpen() {
 		this.isOpen = true;
+		document.body.classList.add('select-open');
 
 		if (this.props.onOpen) {
 			this.props.onOpen();
@@ -82,6 +83,7 @@ class Select extends React.Component {
 
 	handleClose() {
 		this.isOpen = false;
+		document.body.classList.remove('select-open');
 
 		if (this.props.onClose) {
 			this.props.onClose();
