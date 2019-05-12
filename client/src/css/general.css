@@ -2935,18 +2935,16 @@ input.angle-input {
       transform: rotate(90deg);
       right: -1px; }
     .triangle-direction .option.bottom-right svg {
-      transform: rotate(135deg); }
+      transform: rotate(135deg);
+      right: -1px; }
     .triangle-direction .option.bottom svg {
       transform: rotate(180deg); }
     .triangle-direction .option.bottom-left svg {
-      transform: rotate(225deg);
-      left: -1px; }
+      transform: rotate(225deg); }
     .triangle-direction .option.left svg {
-      transform: rotate(270deg);
-      left: -1px; }
+      transform: rotate(270deg); }
     .triangle-direction .option.top-left svg {
       transform: rotate(315deg);
-      left: -1px;
       top: -1px; }
   .triangle-direction svg {
     width: 16px;
