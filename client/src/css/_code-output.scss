@@ -1,6 +1,13 @@
 #generator-output {
-  background-color:#f5f5f5;
-  border-right: 1px solid #e6e6e6;
+  &:before {
+    content:"";
+    position:fixed;
+    background-color:#f5f5f5;
+    border-right: 1px solid #e6e6e6;
+    top:0;
+    bottom:0;
+    left:-1px;
+  }
 
   &.multiple {
     .output-wrapper {
